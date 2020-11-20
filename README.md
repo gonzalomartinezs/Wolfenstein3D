@@ -3,7 +3,7 @@
 
 #### Integrantes
 
-- ##### Bento Inneo Veiga, Sebastián - 100998
+- ##### Inneo Veiga, Sebastian Bento - 100998
 - ##### Martinez Sastre, Gonzalo Gabriel - 102321
 - ##### Riedel, Nicolas Agustín - 102130 
 - ##### Zbogar, Ezequiel - 102216  
