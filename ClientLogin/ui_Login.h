@@ -35,6 +35,7 @@ public:
     QLineEdit *inputHost;
     QLineEdit *inputPort;
     QLabel *label_4;
+    QLabel *label_5;
 
     void setupUi(QWidget *Login)
     {
@@ -82,7 +83,10 @@ public:
 
         label_4 = new QLabel(Login);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(20, 10, 291, 61));
+        label_4->setGeometry(QRect(20, 50, 291, 61));
+        label_5 = new QLabel(Login);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(170, 60, 81, 51));
 
         retranslateUi(Login);
 
@@ -96,7 +100,8 @@ public:
         label->setText(QApplication::translate("Login", "Name", Q_NULLPTR));
         label_2->setText(QApplication::translate("Login", "Host", Q_NULLPTR));
         label_3->setText(QApplication::translate("Login", "Port", Q_NULLPTR));
-        label_4->setText(QApplication::translate("Login", "<html><head/><body><p><span style=\" font-size:28pt; color:#cc0000;\">Log In Precario</span></p></body></html>", Q_NULLPTR));
+        label_4->setText(QApplication::translate("Login", "<html><head/><body><p><span style=\" font-family:'-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji'; font-size:xx-large; font-weight:600; color:#cc0000; background-color:#ffffff;\">Wolfenstein</span><span style=\" font-family:'-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji'; font-size:xx-large; font-weight:600; color:#24292e; background-color:#ffffff;\"/></p><p><br/></p></body></html>", Q_NULLPTR));
+        label_5->setText(QApplication::translate("Login", "<html><head/><body><p><span style=\" font-size:36pt; color:#4e9a06;\">3D</span></p></body></html>", Q_NULLPTR));
     } // retranslateUi
 
 };
