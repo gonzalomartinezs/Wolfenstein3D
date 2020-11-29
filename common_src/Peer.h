@@ -5,6 +5,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#define SIZE_BUFFER 10
+
 class Peer {
 private:
 	int peer;
@@ -15,8 +17,10 @@ public:
 	Peer(Peer&& other);
 	Peer& operator=(Peer&& other);
 	Peer& operator=(int other);
-	int send() const;
-	int recv() const;
+	int send(const char* buffer, int bytes_to_send) const;
+	int recv(char* buffer, int bytes_to_recv) const;
+	void stop();
+	void close();
 	~Peer();
 };
 

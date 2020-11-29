@@ -26,22 +26,22 @@ Socket::Socket(const char* ip, const char* port, int flag) :
 }
 
 Peer Socket::connect() {
-	struct addrinfo* result_aux = result;
+	struct addrinfo* result_tmp = result;
 
-	while (result_aux) {
-		int peer = socket(result_aux->ai_family, result_aux->ai_socktype,
-							result_aux->ai_protocol);
+	while (result_tmp) {
+		int peer = socket(result_tmp->ai_family, result_tmp->ai_socktype,
+							result_tmp->ai_protocol);
 
 		if (peer != PEER_ERROR) {
-			if (::connect(peer, result_aux->ai_addr,
-				result_aux->ai_addrlen)	== SUCCESS) {
+			if (::connect(peer, result_tmp->ai_addr,
+				result_tmp->ai_addrlen)	== SUCCESS) {
 				return Peer(peer);
 			} else {
 				close(peer);
 			}
 		}
 
-		result_aux = result_aux->ai_next;
+		result_tmp = result_tmp->ai_next;
 	}
 
 	throw ErrorSocket("Can't connect to the server.");
@@ -49,26 +49,26 @@ Peer Socket::connect() {
 
 void Socket::bind() {
 	bool is_connected = false;
-	struct addrinfo* result_aux = result;
+	struct addrinfo* result_tmp = result;
 
-	while (result_aux && !is_connected) {
-		file_descriptor = socket(result_aux->ai_family,
-								result_aux->ai_socktype, 
-								result_aux->ai_protocol);
+	while (result_tmp && !is_connected) {
+		file_descriptor = socket(result_tmp->ai_family,
+								result_tmp->ai_socktype, 
+								result_tmp->ai_protocol);
 		int option = 1;
 		setsockopt(file_descriptor, SOL_SOCKET, SO_REUSEADDR, &option,
 					sizeof(option));
 
 		if (file_descriptor != FD_ERROR) {
-			if (::bind(file_descriptor, result_aux->ai_addr,
-					result_aux->ai_addrlen) == SUCCESS) {
+			if (::bind(file_descriptor, result_tmp->ai_addr,
+					result_tmp->ai_addrlen) == SUCCESS) {
 				is_connected = true;
 			} else {
 				close(file_descriptor);
 			}
 		}
 
-		result_aux = result_aux->ai_next;
+		result_tmp = result_tmp->ai_next;
 	}
 
 	if (!is_connected) throw ErrorSocket("Can't bind to the server.");
@@ -79,7 +79,9 @@ void Socket::listen() {
 }
 
 Peer Socket::acceptClient() {
-	return Peer(accept(file_descriptor, NULL, NULL));
+	Peer peer(accept(file_descriptor, NULL, NULL));
+
+	return peer;
 }
 
 void Socket::stop() {

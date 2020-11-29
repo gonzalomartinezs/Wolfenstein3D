@@ -32,17 +32,54 @@ Peer& Peer::operator=(int other) {
 	return *this;
 }
 
-int Peer::send() const {
-	return 0;
+int Peer::send(const char* buffer, int bytes_to_send) const {
+	int total_bytes_sent = 0;
+	bool is_open = true;
+
+	while (total_bytes_sent < bytes_to_send && is_open) {
+		int bytes_sent = ::send(peer, &buffer[total_bytes_sent],
+							bytes_to_send - total_bytes_sent, MSG_NOSIGNAL);
+
+		if (bytes_sent == ERROR || bytes_sent == SOCKET_CLOSED) {
+			is_open = false;
+		} else {
+			total_bytes_sent += bytes_sent;
+		}
+	}
+
+	return total_bytes_sent;
 }
 
-int Peer::recv() const {
-	return 0;
+int Peer::recv(char* buffer, int bytes_to_recv) const {
+	int total_bytes_recv = 0;
+	bool is_open = true;
+
+	while (total_bytes_recv < bytes_to_recv && is_open) {
+		int bytes_received = ::recv(peer, &buffer[total_bytes_recv],
+							bytes_to_recv - total_bytes_recv, MSG_NOSIGNAL);
+
+		if (bytes_received == ERROR || bytes_received == SOCKET_CLOSED) {
+			is_open = false;
+		} else {
+			total_bytes_recv += bytes_received;
+		}
+	}
+
+	return total_bytes_recv;
+}
+
+void Peer::stop() {
+	if (peer != PEER_CLOSED) shutdown(peer, SHUT_RDWR);
+}
+
+void Peer::close() {
+	if (peer != PEER_CLOSED) {
+		::close(peer);
+		peer = PEER_CLOSED;
+	}
 }
 
 Peer::~Peer() {
-	if (peer != PEER_CLOSED) {
-		shutdown(peer, SHUT_RDWR);
-		close(peer);	
-	}
+	Peer::stop();
+	Peer::close();
 }

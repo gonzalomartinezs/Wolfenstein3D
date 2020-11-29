@@ -9,8 +9,6 @@
 
 #include "Peer.h"
 
-#define TAM_BUFFER 64
-
 class Socket {
 private:
 	struct addrinfo* result;
