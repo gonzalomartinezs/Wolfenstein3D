@@ -17,6 +17,8 @@ public:
 	Socket(const char* ip, const char* port, int flag);
 	Socket(const Socket& other) = delete;
 	Socket& operator=(const Socket& other) = delete;
+	Socket(Socket&& other) = delete;
+	Socket& operator=(Socket&& other) = delete;
 	Peer connect();
 	void bind();
 	void listen();
