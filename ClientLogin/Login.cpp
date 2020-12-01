@@ -5,13 +5,20 @@
 #include "Login.h"
 #include "ui_Login.h"
 
+
 Login::Login(std::string& name, std::string &port, std::string& host) :
                                                         name(name),
                                                         port(port),
                                                         host(host){
     Ui::Login login;
-    login.setupUi(this);
-    connectEvents();  //  cargo en this la configuracion del uic.
+    login.setupUi(this); //  cargo en this la configuracion del uic.
+    this->setWindowTitle("Wolfenstein 3D");
+    connectEvents();
+    QPixmap bkgnd("../background.png");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
 }
 
 void Login::getArguments() {
