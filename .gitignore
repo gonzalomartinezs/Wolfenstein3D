@@ -1,20 +1,5 @@
-#Archivos de automatización
-*.sh
-filter_options
-Makefile
-
-#Archivo comprimidos
-*.zip
-
-#Archivos objeto
-*.o
-*.o-tsan
-
-#Carpetas de prueba
-tests/
-test
-
-#Ejecutables
-client
-server
-*t-san
+cmake-build-debug
+.idea
+CMakeLists.txt
+main.cpp
+.gitignore
