@@ -24,6 +24,10 @@ Map::Map(const char* file_name) : n_row(0), n_col(0) {
 	}
 }
 
+int Map::get(int x, int y) const {
+	return map[x][y];
+}
+
 Map::~Map() {
 	for (std::size_t i = 0; i < n_row; ++i) {
 		delete[] map[i];

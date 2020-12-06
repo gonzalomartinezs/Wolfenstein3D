@@ -10,6 +10,7 @@ private:
 	int** map;
 public:
 	Map(const char* file_name);
+	int get(int x, int y) const;
 	~Map();
 };
 
