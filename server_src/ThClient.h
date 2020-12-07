@@ -5,10 +5,12 @@
 
 #include "../common_src/Thread.h"
 #include "../common_src/Peer.h"
+#include "ProtectedQueue.h"
 
 class ThClient : public Thread {
 	std::atomic<bool> is_connected;
 	Peer peer;
+	ProtectedQueue queue;
 public:
 	ThClient(Peer& _peer);
 	void run() override;
