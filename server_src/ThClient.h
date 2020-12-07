@@ -8,18 +8,22 @@
 #include "ProtectedQueue.h"
 
 class ThClient : public Thread {
+private:
 	std::atomic<bool> is_connected;
 	Peer peer;
 	ProtectedQueue queue;
 public:
 	ThClient(Peer& _peer);
 	void run() override;
+	bool isEmpty();
+	uint8_t pop();
+	void send(uint8_t buffer, int bytes_to_send);
 	void stop() override;
 	bool finished() override;
 	~ThClient();
 private:
-	void recvFrom();
-	void sendTo();
+	void recv();
+	
 };
 
 #endif

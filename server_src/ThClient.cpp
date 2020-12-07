@@ -1,41 +1,35 @@
 #include "ThClient.h"
 #include <thread>
 
-//TESTING
-#include <chrono>
-#include <string>
-
-#define SECONDS 1
-static const std::string STD_MSG = "Dis is a random meSSage XD\n";
-//TESTING
-
 #define EMPTY ""
 
 ThClient::ThClient(Peer& _peer) : is_connected(true),
 					peer(std::move(_peer)) {}
 
-void ThClient::recvFrom() {
-	char buffer[SIZE_BUFFER] = EMPTY;
+void ThClient::recv() {
+	uint8_t buffer[SIZE_BUFFER] = EMPTY;
 	int read = 0;
 
 	do {
 		read = peer.recv(buffer, SIZE_BUFFER);
-		fwrite(buffer, 1, read, stdout);
-	} while (read > 0);
+		queue.push(buffer);
+	} while (read > 0 && is_connected);
 }
 
-void ThClient::sendTo() {
-	int len_std_msg = STD_MSG.length();
+void ThClient::send(uint8_t buffer, int bytes_to_send) {
+	peer.send(buffer, bytes_to_send);
+}
 
-	while (is_connected) {
-		peer.send(STD_MSG.c_str(), len_std_msg);
-		std::this_thread::sleep_for(std::chrono::seconds(SECONDS));
-	}
+uint8_t ThClient::pop() {
+	return queue.pop();
+}
+
+bool ThClient::isEmpty() {
+	return queue.isEmpty();
 }
 
 void ThClient::run() {
 	std::thread recv_thread(&ThClient::recvFrom, this);
-	sendTo();
 
 	recv_thread.join();
 }
