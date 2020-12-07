@@ -2,7 +2,9 @@
 #define CLIENTMANAGER_H
 
 #include <atomic>
+#include <vector>
 
+#include "ThClient.h"
 #include "../common_src/Socket.h"
 
 class ClientManager {

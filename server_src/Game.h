@@ -13,6 +13,8 @@ public:
 
     void update();
 
+    void execute();
+
     /* Destructor */
     ~Game();
 

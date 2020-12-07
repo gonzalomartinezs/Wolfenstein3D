@@ -1,5 +1,7 @@
 #include "GameManager.h"
 #include "yaml-cpp/yaml.h"
+#include "ErrorYAML.h"
+#include "Game.h"
 
 #include <string>
 
