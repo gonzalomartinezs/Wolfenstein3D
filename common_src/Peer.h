@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <cstdint>
 
 #define SIZE_BUFFER 10
 
@@ -17,8 +18,8 @@ public:
 	Peer(Peer&& other);
 	Peer& operator=(Peer&& other);
 	Peer& operator=(int other);
-	int send(const char* buffer, int bytes_to_send) const;
-	int recv(char* buffer, int bytes_to_recv) const;
+	int send(const uint8_t* buffer, int bytes_to_send) const;
+	int recv(uint8_t* buffer, int bytes_to_recv) const;
 	void stop();
 	void close();
 	~Peer();

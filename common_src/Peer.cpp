@@ -32,7 +32,7 @@ Peer& Peer::operator=(int other) {
 	return *this;
 }
 
-int Peer::send(const char* buffer, int bytes_to_send) const {
+int Peer::send(const uint8_t* buffer, int bytes_to_send) const {
 	int total_bytes_sent = 0;
 	bool is_open = true;
 
@@ -50,7 +50,7 @@ int Peer::send(const char* buffer, int bytes_to_send) const {
 	return total_bytes_sent;
 }
 
-int Peer::recv(char* buffer, int bytes_to_recv) const {
+int Peer::recv(uint8_t* buffer, int bytes_to_recv) const {
 	int total_bytes_recv = 0;
 	bool is_open = true;
 
