@@ -15,9 +15,9 @@ private:
 public:
 	ThClient(Peer& _peer);
 	void run() override;
-	bool isEmpty();
+	bool isEmpty() const;
 	uint8_t pop();
-	void send(uint8_t buffer, int bytes_to_send);
+	void send(uint8_t* buffer, int bytes_to_send);
 	void stop() override;
 	bool finished() override;
 	~ThClient();

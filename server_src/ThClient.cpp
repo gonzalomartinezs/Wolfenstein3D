@@ -7,16 +7,16 @@ ThClient::ThClient(Peer& _peer) : is_connected(true),
 					peer(std::move(_peer)) {}
 
 void ThClient::recv() {
-	uint8_t buffer[SIZE_BUFFER] = EMPTY;
+	uint8_t buffer;
 	int read = 0;
 
 	do {
-		read = peer.recv(buffer, SIZE_BUFFER);
+		read = peer.recv(&buffer, SIZE_BUFFER);
 		queue.push(buffer);
 	} while (read > 0 && is_connected);
 }
 
-void ThClient::send(uint8_t buffer, int bytes_to_send) {
+void ThClient::send(uint8_t* buffer, int bytes_to_send) {
 	peer.send(buffer, bytes_to_send);
 }
 
@@ -24,12 +24,12 @@ uint8_t ThClient::pop() {
 	return queue.pop();
 }
 
-bool ThClient::isEmpty() {
-	return queue.isEmpty();
+bool ThClient::isEmpty() const {
+	return this->queue.isEmpty();
 }
 
 void ThClient::run() {
-	std::thread recv_thread(&ThClient::recvFrom, this);
+	std::thread recv_thread(&ThClient::recv, this);
 
 	recv_thread.join();
 }
