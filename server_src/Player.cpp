@@ -57,6 +57,10 @@ void Player::updatePlayer() {
     std::cout << ", dirY: " << this->dirY << std::endl;
 }
 
+void Player::setState(uint8_t newState) {
+    this->state = newState;
+}
+
 void Player::die() {
     std::fill(this->weapons.begin(), this->weapons.end(), false);
     this->lives--;

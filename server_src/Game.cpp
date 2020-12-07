@@ -40,7 +40,13 @@ void Game::execute() {
 
 void Game::getInstructions() {
     /* Recibir data de los clientes y actualizar players */
-
+    uint8_t stateRecv;
+    for (int i = 0; i < this->clients.size(); i++) {
+        if (this->clients[i].isEmpty) {
+            stateRecv = this->clients[i].pop();
+        }
+        this->players[i].setState(stateRecv);
+    }
 }
 
 void Game::update() {
