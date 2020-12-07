@@ -2,7 +2,9 @@
 #define CLIENTMANAGER_H
 
 #include <atomic>
+#include <vector>
 
+#include "ThClient.h"
 #include "../common_src/Socket.h"
 
 class ClientManager {
@@ -11,7 +13,9 @@ private:
 	std::atomic<bool> is_connected;
 public:
 	ClientManager(const char* port);
-	void operator()();
+//	void cleanClients(std::vector<ThClient*>& clients);
+	void stopClients(const std::vector<ThClient*>& clients);
+	void operator()(std::vector<ThClient*>& clients);
 	void stop();
 	~ClientManager();
 };

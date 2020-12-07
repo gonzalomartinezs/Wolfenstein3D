@@ -1,5 +1,7 @@
 #include "GameManager.h"
 #include "yaml-cpp/yaml.h"
+#include "ErrorYAML.h"
+#include "Game.h"
 
 #include <string>
 
@@ -12,12 +14,20 @@ GameManager::GameManager(const char* file_name) {
 		const std::string port = file[KEY_PORT].as<std::string>();
 		client_manager = new ClientManager(port.c_str());
 	} else {
-		throw -1;
+		throw ErrorYAML("Key '%s' does not exist in %s.", KEY_PORT,
+						file_name);
 	}
 }
 
 void GameManager::operator()() {
-	(*client_manager)();
+	std::vector<ThClient*> clients;
+	(*client_manager)(clients);
+
+	Game game(clients);
+
+	game.execute();
+
+	(*client_manager).stopClients(clients);
 }
 
 void GameManager::stop() {

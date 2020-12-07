@@ -16,6 +16,8 @@ class Game {
 
     void execute();
 
+    void execute();
+
     /* Destructor */
     ~Game();
 
