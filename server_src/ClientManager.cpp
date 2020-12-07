@@ -4,13 +4,15 @@
 
 #include <vector>
 
+#define MAX_CLIENTS 4
+
 ClientManager::ClientManager(const char* port) :
 							socket(NULL, port, AI_PASSIVE),
 							is_connected(true) {
 	socket.bind();
 }
-
-static void cleanClients(std::vector<ThClient*>& clients) {
+/*
+void ClientManager::cleanClients(std::vector<ThClient*>& clients) {
 	std::size_t len_clients = clients.size();
 	std::vector<ThClient*> clients_tmp;
 
@@ -25,8 +27,8 @@ static void cleanClients(std::vector<ThClient*>& clients) {
 
 	clients.swap(clients_tmp);
 }
-
-static void stopClients(const std::vector<ThClient*>& clients) {
+*/
+void ClientManager::stopClients(const std::vector<ThClient*>& clients) {
 	for (auto client : clients) {
 		client->stop();
 		client->join();
@@ -34,21 +36,14 @@ static void stopClients(const std::vector<ThClient*>& clients) {
 	}
 }
 
-void ClientManager::operator()() {
-	std::vector<ThClient*> clients;
-
+void ClientManager::operator()(std::vector<ThClient*>& clients) {
 	socket.listen();
 
-	while (is_connected) {
-		try {
-			Peer peer = socket.acceptClient();
+	while (is_connected && clients.size() < MAX_CLIENTS) {
+		Peer peer = socket.acceptClient();
 
-			clients.push_back(new ThClient(peer));
-			clients.back()->start();
-			cleanClients(clients);
-		} catch (const ErrorSocket& e) {
-			stopClients(clients);
-		}
+		clients.push_back(new ThClient(peer));
+		clients.back()->start();
 	}
 }
 

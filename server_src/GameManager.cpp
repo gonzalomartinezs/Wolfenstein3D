@@ -18,7 +18,14 @@ GameManager::GameManager(const char* file_name) {
 }
 
 void GameManager::operator()() {
-	(*client_manager)();
+	std::vector<ThClient*> clients;
+	(*client_manager)(clients);
+
+	Game game(clients);
+
+	game.execute();
+
+	(*client_manager).stopClients(clients);
 }
 
 void GameManager::stop() {
