@@ -20,14 +20,16 @@ class Player {
     //Movement Speed
     float moveSpeed, rotSpeed;
 
-    //State Variables
-    int state;
+    //State Variable
+    uint8_t state;
 
  public:
     /* Constructor */
     Player(float moveSpeed, float rotSpeed, float posX, float posY);
 
     void updatePlayer();
+
+    void setState(uint8_t newState);
 
     void die();
 
