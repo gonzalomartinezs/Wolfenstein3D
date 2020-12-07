@@ -14,7 +14,7 @@ Login::Login(std::string& name, std::string &port, std::string& host) :
     login.setupUi(this); //  cargo en this la configuracion del uic.
     this->setWindowTitle("Wolfenstein 3D");
     connectEvents();
-    QPixmap bkgnd("../background.png");
+    QPixmap bkgnd("../login/background.png");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);

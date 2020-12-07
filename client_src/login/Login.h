@@ -7,8 +7,6 @@
 
 
 #include <QWidget>
-#include <QtMultimedia/QAudioOutput>
-
 
 class Login : public QWidget {
  private:

@@ -2,11 +2,10 @@
 #include <cmath>
 
 PlayerPosition::PlayerPosition(float pos_x, float pos_y, float dir_x, float dir_y):
-                    pos_x(pos_x), pos_y(pos_y), dir_x(dir_x), dir_y(dir_y){
-    float delta = 0.01;
+                    pos_x(pos_x), pos_y(pos_y){
     float norm = std::sqrt(dir_x*dir_x + dir_y*dir_y);
-    if ((norm - delta) > 1 || (norm + delta) < 1)
-        throw ; // direccion debe tener norma 1
+    this-> dir_x = dir_x/norm;
+    this-> dir_y = dir_y/norm;
 }
 
 PlayerPosition PlayerPosition::operator=(const PlayerPosition &other) {

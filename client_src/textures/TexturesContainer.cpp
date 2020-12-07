@@ -1,6 +1,6 @@
 #include "TexturesContainer.h"
-#define WALL_PATH "../Wolfen/img/rocky.bmp"
-#define BARREL_PATH "../Wolfen/img/barrel.bmp"
+#define WALL_PATH "../textures/img/rocky.bmp"
+#define BARREL_PATH "../textures/img/barrel.bmp"
 
 TexturesContainer::TexturesContainer(SDL_Renderer* renderer): renderer(renderer){
     textures.emplace(Wall, new Texture(WALL_PATH, this->renderer));
