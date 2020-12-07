@@ -8,9 +8,8 @@ private:
 public:
     // el vector (plane_x, plane_y) debe ser perpendicular al vector direccion
     // del jugador
-    PlayerView(float plane_x, float plane_y): camera_plane_x(plane_x),
-                                                camera_plane_y(plane_y){}
-
+    PlayerView(float plane_x=1, float plane_y=-1) : camera_plane_x(plane_x),
+                                                    camera_plane_y(plane_y){}
     void movePlaneX(float movement);
     void movePlaneY(float movement);
     float getPlaneX() const;
