@@ -12,7 +12,8 @@ GameManager::GameManager(const char* file_name) {
 		const std::string port = file[KEY_PORT].as<std::string>();
 		client_manager = new ClientManager(port.c_str());
 	} else {
-		throw -1;
+		throw ErrorYAML("Key '%s' does not exist in %s.", KEY_PORT,
+						file_name);
 	}
 }
 
