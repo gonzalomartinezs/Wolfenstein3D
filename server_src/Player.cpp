@@ -9,11 +9,12 @@
 #define INITIAL_SCORE 0
 #define TOTAL_LIVES 3
 
-#define KEY_UP 1
-#define KEY_DOWN 2
-#define KEY_LEFT 3
-#define KEY_RIGHT 4
-
+//Actions
+#define ISNOTMOVING 0
+#define ISMOVINGFORWARDS 1
+#define ISMOVINGBACKWARDS 2
+#define ISTURNINGLEFT 3
+#define ISTURNINGRIGHT 4
 
 Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
     this->moveSpeed = moveSpeed;
@@ -22,6 +23,7 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
     this->posY = posY;
     this->dirX = 1;  // Initial Direction
     this->dirY = 0;  // Initial Direction
+    this->state = ISNOTMOVING;
 
     this->weapons.resize(COLLECTIBLE_WEAPONS_AMOUNT, false);
     this->health = MAX_HEALTH;
@@ -30,6 +32,33 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
     this->lives = TOTAL_LIVES;
     this->hasKey = false;
     this->isAlive = true;
+}
+
+void Player::updatePlayer() {
+    if (this->state != ISNOTMOVING) {
+        if (this->state == ISMOVINGFORWARDS) {
+            this->_moveForwards();
+        }
+        if (this->state == ISMOVINGBACKWARDS) {
+            this->_moveBackwards();
+        }
+        if (this->state == ISTURNINGLEFT) {
+            this->_turnLeft();
+        }
+        if (this->state == ISTURNINGRIGHT) {
+            this->_turnRight();
+        }
+    }
+    //Throw si no es ninguna
+    // Borrar
+    std::cout << "posX: " << this->posX;
+    std::cout << ", posY: " << this->posY;
+    std::cout << ", dirX: " << this->dirX;
+    std::cout << ", dirY: " << this->dirY << std::endl;
+}
+
+void Player::setState(uint8_t newState) {
+    this->state = newState;
 }
 
 void Player::die() {
@@ -50,23 +79,6 @@ void Player::shoot() {
     /* Logica del disparo */
 }
 
-void Player::move(int keyType) {
-    if (keyType == KEY_UP) {
-        this->_moveUp();
-    } else if (keyType == KEY_DOWN) {
-        this->_moveDown();
-    } else if (keyType == KEY_LEFT) {
-        this->_turnLeft();
-    } else if (keyType == KEY_RIGHT) {
-        this->_turnRight();
-    }
-    // Borrar
-    std::cout << "posX: " << this->posX;
-    std::cout << ", posY: " << this->posY;
-    std::cout << ", dirX: " << this->dirX;
-    std::cout << ", dirY: " << this->dirY << std::endl;
-}
-
 void Player::receiveShot(int damage) {
     this->health -= damage;
     if (this->health <= 0) {
@@ -74,12 +86,12 @@ void Player::receiveShot(int damage) {
     }
 }
 
-void Player::_moveUp() {
+void Player::_moveForwards() {
     this->posX += this->dirX * this->moveSpeed;
     this->posY += this->dirY * this->moveSpeed;
 }
 
-void Player::_moveDown() {
+void Player::_moveBackwards() {
     this->posX -= this->dirX * this->moveSpeed;
     this->posY -= this->dirY * this->moveSpeed;
 }
