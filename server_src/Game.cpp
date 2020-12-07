@@ -6,7 +6,7 @@ const double TICK_DURATION = 1/60.f; /* miliseconds que tarda en actualizarse el
 
 Game::Game(std::vector<ThClient*>& clients) : clients(clients) {
     this->isRunning = true;
-    for (int i = 0; i < this->clients.size(); i ++) {
+    for (size_t i = 0; i < this->clients.size(); i ++) {
         this->players.emplace_back(0.1, 0.1, 2, 2);
     }
 }
@@ -41,16 +41,16 @@ void Game::execute() {
 void Game::getInstructions() {
     /* Recibir data de los clientes y actualizar players */
     uint8_t stateRecv;
-    for (int i = 0; i < this->clients.size(); i++) {
-        if (this->clients[i].isEmpty) {
-            stateRecv = this->clients[i].pop();
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        if (this->clients[i]->isEmpty) {
+            stateRecv = this->clients[i]->pop();
         }
         this->players[i].setState(stateRecv);
     }
 }
 
 void Game::update() {
-    for (int i = 0; i < this->players.size(); i++) {
+    for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i].updatePlayer();
     }
 }
