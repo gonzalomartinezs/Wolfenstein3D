@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <cstdint>
 
-#define SIZE_BUFFER 10
+#define SIZE_BUFFER 1
 
 class Peer {
 private:

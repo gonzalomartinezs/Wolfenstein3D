@@ -7,12 +7,12 @@ ThClient::ThClient(Peer& _peer) : is_connected(true),
 					peer(std::move(_peer)) {}
 
 void ThClient::recv() {
-	uint8_t buffer;
+	uint8_t buffer; //buffer[SIZE_BUFFER]
 	int read = 0;
 
 	do {
 		read = peer.recv(&buffer, SIZE_BUFFER);
-		queue.push(buffer);
+		queue.push(buffer); //for (i = 0; i < read) push(buffer[i])
 	} while (read > 0 && is_connected);
 }
 

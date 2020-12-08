@@ -7,7 +7,7 @@
 
 #define KEY_PORT "port"
 
-GameManager::GameManager(const char* file_name) {
+GameManager::GameManager(const char* _file_name) : file_name(_file_name){
 	YAML::Node file = YAML::LoadFile(file_name);
 
 	if (file[KEY_PORT]) {
@@ -24,7 +24,7 @@ void GameManager::operator()() {
 	try {
 		(*client_manager)(clients);
 
-		Game game(clients);
+		Game game(clients, this->file_name);
 
 		game.execute();
 	} catch (const std::exception& e) {
