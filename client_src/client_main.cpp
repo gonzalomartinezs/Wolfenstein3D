@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Raycaster.h"
 #include "PlayerView.h"
+#include "EventHandler.h"
 #include "textures/TexturesContainer.h"
 #include "login/ClientLoginScreen.h"
 #include "../common_src/Map.h"
@@ -11,18 +12,15 @@
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
-#define IS_NOT_MOVING 0
-#define IS_MOVING_FORWARDS 1
-#define IS_MOVING_BACKWARDS 2
-#define IS_TURNING_LEFT 3
-#define IS_TURNING_RIGHT 4
 #define REFRESH_RATE 10
+#define IS_NOT_MOVING 0
+
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
     log(); //  genera la nueva pestaña.
     bool quit = false;
-    SDL_Event event;
+
     try {
         Client client(log.getHost(), log.getPort());
 
@@ -34,6 +32,8 @@ int main(int argc, char *argv[]) {
 
         Map map("../../common_src/config.yaml");
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, *renderer, tex);
+        EventHandler event_handler(client);
+
         PlayerPosition player;
         PlayerView view;
 
@@ -49,39 +49,8 @@ int main(int argc, char *argv[]) {
             float old_plane_x = view.getPlaneX();
             float old_plane_y = view.getPlaneY();
 
-            while (SDL_PollEvent(&event) != 0) {
-                if (event.type == SDL_QUIT) {
-                    quit = true;
-                }
-                if (keys[SDL_SCANCODE_UP]){
-                    if (flag != IS_MOVING_FORWARDS){
-                        flag = IS_MOVING_FORWARDS;
-                        client.sendInstruction(IS_MOVING_FORWARDS);
-                    }
-                } else if (keys[SDL_SCANCODE_DOWN]) {
-                    if (flag != IS_MOVING_BACKWARDS) {
-                        flag = IS_MOVING_BACKWARDS;
-                        client.sendInstruction(IS_MOVING_BACKWARDS);
-                    }
-                } else if (keys[SDL_SCANCODE_RIGHT]) {
-                    if (flag != IS_TURNING_RIGHT) {
-                        flag = IS_TURNING_RIGHT;
-                        client.sendInstruction(IS_TURNING_RIGHT);
-                    }
-                } else if (keys[SDL_SCANCODE_LEFT]) {
-                    if (flag != IS_TURNING_LEFT) {
-                        flag = IS_TURNING_LEFT;
-                        client.sendInstruction(IS_TURNING_LEFT);
-                    }
-                } else if (!keys[SDL_SCANCODE_UP] && !keys[SDL_SCANCODE_DOWN]
-                            && !keys[SDL_SCANCODE_RIGHT]
-                            && !keys[SDL_SCANCODE_LEFT]) {
-                    if (flag != IS_NOT_MOVING) {
-                        flag = IS_NOT_MOVING;
-                        client.sendInstruction(IS_NOT_MOVING);
-                    }
-                }
-            }
+            event_handler.run(quit, flag, keys);
+
             client.receiveCoordenates(player, view, players);
             float step_pos_x = (player.getPosX() - old_pos_x)/REFRESH_RATE;
             float step_pos_y = (player.getPosY() - old_pos_y)/REFRESH_RATE;
