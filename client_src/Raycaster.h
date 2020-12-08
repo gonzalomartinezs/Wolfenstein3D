@@ -1,9 +1,9 @@
 #ifndef RAYCASTER_H
 #define RAYCASTER_H
 #include <SDL2/SDL_render.h>
-#include "Map.h"
 #include "textures/TexturesContainer.h"
-#include "PlayerPosition.h"
+#include "../common_src/PlayerPosition.h"
+#include "../common_src/Map.h"
 
 struct RayDirection{
     float x = 0;
