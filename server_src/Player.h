@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <vector>
+#include "Exceptions/GameException.h"
 
 class Player {
  private:
@@ -17,6 +18,7 @@ class Player {
     float posX, posY;
     //Direction Variables
     float dirX, dirY;
+    float camPlaneX, camPlaneY;
     //Movement Speed
     float moveSpeed, rotSpeed;
 
