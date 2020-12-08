@@ -23,6 +23,8 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
     this->posY = posY;
     this->dirX = 1;  // Initial Direction
     this->dirY = 0;  // Initial Direction
+    this->camPlaneX = 0;  // Perpendicular to direction
+    this->camPlaneY = 1;  // Perpendicular to direction
     this->state = ISNOTMOVING;
 
     this->weapons.resize(COLLECTIBLE_WEAPONS_AMOUNT, false);
@@ -38,18 +40,16 @@ void Player::updatePlayer() {
     if (this->state != ISNOTMOVING) {
         if (this->state == ISMOVINGFORWARDS) {
             this->_moveForwards();
-        }
-        if (this->state == ISMOVINGBACKWARDS) {
+        } else if (this->state == ISMOVINGBACKWARDS) {
             this->_moveBackwards();
-        }
-        if (this->state == ISTURNINGLEFT) {
+        } else if (this->state == ISTURNINGLEFT) {
             this->_turnLeft();
-        }
-        if (this->state == ISTURNINGRIGHT) {
+        } else if (this->state == ISTURNINGRIGHT) {
             this->_turnRight();
+        } else {
+            throw GameException("Player has an invalid state!");
         }
     }
-    //Throw si no es ninguna
     // Borrar
     std::cout << "posX: " << this->posX;
     std::cout << ", posY: " << this->posY;
@@ -100,12 +100,20 @@ void Player::_turnLeft() {
     float oldDirX = this->dirX;
     this->dirX = (this->dirX * cos(this->rotSpeed) - this->dirY * sin(this->rotSpeed));
     this->dirY = (oldDirX * sin(this->rotSpeed) + this->dirY * cos(this->rotSpeed));
+
+    float oldPlaneX = this->camPlaneX;
+    this->camPlaneX = this->camPlaneX * cos(this->rotSpeed) - this->camPlaneY * sin(this->rotSpeed);
+    this->camPlaneY = oldPlaneX * sin(this->rotSpeed) + this->camPlaneY * cos(this->rotSpeed);
 }
 
 void Player::_turnRight() {
     float oldDirX = this->dirX;
     this->dirX = (this->dirX * cos(-this->rotSpeed) - this->dirY * sin(-this->rotSpeed));
     this->dirY = (oldDirX * sin(-this->rotSpeed) + this->dirY * cos(-this->rotSpeed));
+
+    float oldPlaneX = this->camPlaneX;
+    this->camPlaneX = (this->camPlaneX * cos(-this->rotSpeed) - this->camPlaneY * sin(-this->rotSpeed));
+    this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) + this->camPlaneY * cos(-this->rotSpeed));
 }
 
 Player::~Player() {}
