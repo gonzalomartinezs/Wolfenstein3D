@@ -34,7 +34,7 @@ void Raycaster::draw(PlayerPosition player_pos, float camera_plane_x,
 // Calcula la distancia euclidea entre el rayo perpendicular a la camara
 // del jugador y la pared/objeto mas cercano.
 float
-Raycaster::_calculatePerpWallDist(PlayerPosition &player, RayDirection ray_dir,
+Raycaster::_calculatePerpWallDist(PlayerPosition player, RayDirection ray_dir,
                                   char &hit_axis, int &map_x, int &map_y) {
 
     float side_dist_x, side_dist_y;

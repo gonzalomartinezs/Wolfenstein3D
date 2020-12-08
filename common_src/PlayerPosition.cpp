@@ -24,6 +24,14 @@ void PlayerPosition::moveVertically(float movement) {
     this->pos_y += movement;
 }
 
+void PlayerPosition::setPosX(float pos) {
+    this->pos_x = pos;
+}
+
+void PlayerPosition::setPosY(float pos) {
+    this->pos_x = pos;
+}
+
 float PlayerPosition::getPosX() const {
     return this->pos_x;
 }
