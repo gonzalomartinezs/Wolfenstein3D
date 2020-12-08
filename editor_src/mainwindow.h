@@ -18,6 +18,7 @@ public:
     void loadImage(const QString &path);
 
 private:
+    void setupWidgets();
     Ui::MainWindow *ui;
     ItemsList *list;
 };

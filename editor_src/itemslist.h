@@ -7,8 +7,8 @@ class ItemsList : public QListWidget
 {
     Q_OBJECT
 public:
-    ItemsList();
-    void add(const QPixmap &pixmap, const QPoint &location);
+    ItemsList(QWidget *parent = nullptr);
+    void add(const QPixmap &pixmap);
 };
 
 #endif // ITEMSLIST_H

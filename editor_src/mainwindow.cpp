@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QHBoxLayout>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -8,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    list = new ItemsList(this);
+    setupWidgets();
     setWindowTitle(tr("Level-Editor"));
 }
 
@@ -27,5 +29,16 @@ void MainWindow::loadImage(const QString &fileName)
                              QMessageBox::Close);
         return;
     }
+    list->add(newImage);
+}
 
+
+void MainWindow::setupWidgets()
+{
+    QFrame *frame = new QFrame;
+    QHBoxLayout *frameLayout = new QHBoxLayout(frame);
+    list = new ItemsList(this);
+    //aca deberia hacer el connect?
+    frameLayout->addWidget(list);
+    setCentralWidget(frame);
 }
