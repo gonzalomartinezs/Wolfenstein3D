@@ -17,11 +17,6 @@ class Player : public DirectedPositionable {
     bool hasKey;
     bool isAlive;
 
-    //Position
-//    float posX, posY;
-
-    //Direction Variables
-//    float dirX, dirY;
     float camPlaneX, camPlaneY;
 
     //Movement Speed
