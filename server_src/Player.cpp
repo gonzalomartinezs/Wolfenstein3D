@@ -12,6 +12,8 @@
 #define TOTAL_LIVES 3
 
 #define WALKABLE 0
+#define PLAYER_SIZE 0.1
+#define RAYS_AMOUNT 20
 
 //Actions
 #define ISNOTMOVING 0
@@ -37,7 +39,21 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
     this->isAlive = true;
 }
 
+static void initialize_rays(float *x, float *y, float radius, int rays) {
+    float two_pi = 2*3.14159;
+    float step = two_pi/rays;
+
+    for (int i = 0; i < rays; ++i){
+        x[i] = radius * cos (step*i);
+        y[i] = radius * sin (step*i);
+    }
+}
+
 void Player::updatePlayer(const Map& map) {
+    float player_x_rays[RAYS_AMOUNT];
+    float player_y_rays[RAYS_AMOUNT];
+    initialize_rays(player_x_rays, player_y_rays, PLAYER_SIZE, RAYS_AMOUNT);
+
     float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {
@@ -53,13 +69,24 @@ void Player::updatePlayer(const Map& map) {
             throw GameException("Player has an invalid state!");
         }
     }
+
+    bool collided = false;
     try {
-        if (map.get(int(this->x), int(this->y)) != WALKABLE) {
+        for (int i = 0; i < RAYS_AMOUNT; i++) {
+            if (map.get(int(this->x + player_x_rays[i]),
+                        int(this->y + player_y_rays[i])) != WALKABLE) {
+                collided = true;
+                break;
+            }
+        }
+        if (collided) {
             this->x = old_x;
             this->y = old_y;
         }
     } catch(const ErrorMap& e) {
         std::cerr << e.what() << std::endl;
+        this->x = old_x;
+        this->y = old_y;
     }
     // Borrar
     std::cout << "posX: " << this->x;
