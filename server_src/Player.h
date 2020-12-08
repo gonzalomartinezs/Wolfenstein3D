@@ -14,11 +14,14 @@ class Player {
     uint8_t lives;
     bool hasKey;
     bool isAlive;
+
     //Position
     float posX, posY;
+
     //Direction Variables
     float dirX, dirY;
     float camPlaneX, camPlaneY;
+
     //Movement Speed
     float moveSpeed, rotSpeed;
 
@@ -42,6 +45,16 @@ class Player {
     void getHealth();
 
     void receiveShot(int damage);
+
+    /* Escribe los primeros 16 bytes del buffer con la informacion de
+     * la posicion del jugador de la siguiente manera (floats):
+     * [ posX, posY, dirX, dirY ] */
+    void getPositionData(uint8_t* msg);
+
+    /* Escribe los primeros 24 bytes del buffer con la informacion de
+     * la posicion del jugador de la siguiente manera (floats):
+     * [ posX, posY, dirX, dirY, camPlaneX, camPlaneY ] */
+    void getPositionDataWithPlane(uint8_t* msg);
 
     /* Destructor */
     ~Player();

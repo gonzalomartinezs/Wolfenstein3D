@@ -2,12 +2,14 @@
 #include <iostream>
 #include <unistd.h>
 
+#define MAX_MSG_SIZE 256
+
 const double TICK_DURATION = 1/60.f; /* miliseconds que tarda en actualizarse el juego */
 
 Game::Game(std::vector<ThClient*>& clients) : clients(clients) {
     this->isRunning = true;
     for (size_t i = 0; i < this->clients.size(); i ++) {
-        this->players.emplace_back(0.1, 0.1, 2, 2);
+        this->players.emplace_back(0.1, 0.1, 2, 2); //Cambiar (No todos aparecen en la misma posicion)
     }
 }
 
@@ -39,7 +41,7 @@ void Game::execute() {
 }
 
 void Game::getInstructions() {
-    /* Recibir data de los clientes y actualizar players */
+    /* Recibir data de los clientes y actualizar "players" */
     uint8_t stateRecv = -1;
     for (size_t i = 0; i < this->clients.size(); i++) {
         if (!this->clients[i]->isEmpty()) {
@@ -56,7 +58,26 @@ void Game::update() {
 }
 
 void Game::sendUpdate() {
-    /*Enviar update a los clientes*/
+    /* Enviar update a los clientes */
+    uint8_t msg[MAX_MSG_SIZE];
+    int bytesToSend;
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        bytesToSend = this->createMsg(msg, i);
+        this->clients[i]->send(msg, bytesToSend);
+    }
+}
+
+int Game::createMsg(uint8_t* msg, size_t clientNumber) {
+    int playersLoaded = 0;
+    this->players[clientNumber].getPositionDataWithPlane(msg + 1);
+    for (size_t i = 0; i < this->clients.size() - 1; i++) {
+        if (i != clientNumber) {
+            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 16);
+            playersLoaded++;
+        }
+    }
+    msg[0] = 24 + playersLoaded * 16;
+    return msg[0] + 1;
 }
 
 Game::~Game() {}

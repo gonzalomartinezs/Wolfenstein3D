@@ -10,6 +10,7 @@ class Game {
     std::vector<Player> players;
     std::vector<ThClient*>& clients;
     bool isRunning;
+
  public:
     /* Constructor */
     Game(std::vector<ThClient*>& clients);
@@ -25,5 +26,8 @@ class Game {
     void update();
 
     void sendUpdate();
+
+    int createMsg(uint8_t* msg, size_t clientNumber);
 };
+
 #endif  // WOLFENSTEIN3D_GAME_H

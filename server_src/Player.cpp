@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream> //Borrar
 #include <cmath>
+#include <cstring>
 
 #define INITIAL_AMMO 8
 #define MAX_HEALTH 100
@@ -114,6 +115,19 @@ void Player::_turnRight() {
     float oldPlaneX = this->camPlaneX;
     this->camPlaneX = (this->camPlaneX * cos(-this->rotSpeed) - this->camPlaneY * sin(-this->rotSpeed));
     this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) + this->camPlaneY * cos(-this->rotSpeed));
+}
+
+void Player::getPositionData(uint8_t *msg) {
+    memcpy(msg, &this->posX, sizeof(float));
+    memcpy(msg + sizeof(float), &this->posY, sizeof(float));
+    memcpy(msg + 2 * sizeof(float), &this->dirX, sizeof(float));
+    memcpy(msg + 3 * sizeof(float), &this->dirY, sizeof(float));
+}
+
+void Player::getPositionDataWithPlane(uint8_t *msg) {
+    this->getPositionData(msg);
+    memcpy(msg + 4 * sizeof(float), &this->camPlaneX, sizeof(float));
+    memcpy(msg + 5 * sizeof(float), &this->camPlaneY, sizeof(float));
 }
 
 Player::~Player() {}
