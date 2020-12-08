@@ -3,7 +3,7 @@
 
 
 class Positionable {
-private:
+protected:
     float x;
     float y;
 public:

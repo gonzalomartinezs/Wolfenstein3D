@@ -4,12 +4,12 @@
 #include "Positionable.h"
 
 class DirectedPositionable: public Positionable{
-private:
+protected:
     float dir_x;
     float dir_y;
 
 public:
-    // Crea un posicionable dirigdo listo para ser utilizado.
+    // Crea un posicionable dirigido listo para ser utilizado.
     explicit DirectedPositionable(float pos_x, float pos_y,
                                   float dir_x, float dir_y);
 
@@ -23,7 +23,7 @@ public:
     float getDirX() const;
     float getDirY() const;
 
-    // Libera los recursos utilziados por el posicionable dirigido.
+    // Libera los recursos utilzados por el posicionable dirigido.
     ~DirectedPositionable(){}
 
 };

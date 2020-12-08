@@ -20,13 +20,10 @@
 #define ISTURNINGLEFT 3
 #define ISTURNINGRIGHT 4
 
-Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
+Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
+                DirectedPositionable(posX, posY, 1, 0) {
     this->moveSpeed = moveSpeed;
     this->rotSpeed = rotSpeed;
-    this->posX = posX;
-    this->posY = posY;
-    this->dirX = 1;  // Initial Direction
-    this->dirY = 0;  // Initial Direction
     this->camPlaneX = 0;  // Perpendicular to direction
     this->camPlaneY = 1;  // Perpendicular to direction
     this->state = ISNOTMOVING;
@@ -41,7 +38,7 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
 }
 
 void Player::updatePlayer(const Map& map) {
-    float old_x = this->posX, old_y = this->posY;
+    float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {
         if (this->state == ISMOVINGFORWARDS) {
@@ -57,18 +54,18 @@ void Player::updatePlayer(const Map& map) {
         }
     }
     try {
-        if (map.get(int(this->posX), int(this->posY)) != WALKABLE) {
-            this->posX = old_x;
-            this->posY = old_y;
+        if (map.get(int(this->x), int(this->y)) != WALKABLE) {
+            this->x = old_x;
+            this->y = old_y;
         }
     } catch(const ErrorMap& e) {
         std::cerr << e.what() << std::endl;
     }
     // Borrar
-    std::cout << "posX: " << this->posX;
-    std::cout << ", posY: " << this->posY;
-    std::cout << ", dirX: " << this->dirX;
-    std::cout << ", dirY: " << this->dirY << std::endl;
+    std::cout << "posX: " << this->x;
+    std::cout << ", posY: " << this->y;
+    std::cout << ", dir_x: " << this->dir_x;
+    std::cout << ", dir_y: " << this->dir_y << std::endl;
 }
 
 void Player::setState(uint8_t newState) {
@@ -101,19 +98,19 @@ void Player::receiveShot(int damage) {
 }
 
 void Player::_moveForwards() {
-    this->posX += this->dirX * this->moveSpeed;
-    this->posY += this->dirY * this->moveSpeed;
+    this->x += this->dir_x * this->moveSpeed;
+    this->y += this->dir_y * this->moveSpeed;
 }
 
 void Player::_moveBackwards() {
-    this->posX -= this->dirX * this->moveSpeed;
-    this->posY -= this->dirY * this->moveSpeed;
+    this->x -= this->dir_x * this->moveSpeed;
+    this->y -= this->dir_y * this->moveSpeed;
 }
 
 void Player::_turnLeft() {
-    float oldDirX = this->dirX;
-    this->dirX = (this->dirX * cos(this->rotSpeed) - this->dirY * sin(this->rotSpeed));
-    this->dirY = (oldDirX * sin(this->rotSpeed) + this->dirY * cos(this->rotSpeed));
+    float oldDirX = this->dir_x;
+    this->dir_x = (this->dir_x * cos(this->rotSpeed) - this->dir_y * sin(this->rotSpeed));
+    this->dir_y = (oldDirX * sin(this->rotSpeed) + this->dir_y * cos(this->rotSpeed));
 
     float oldPlaneX = this->camPlaneX;
     this->camPlaneX = this->camPlaneX * cos(this->rotSpeed) - this->camPlaneY * sin(this->rotSpeed);
@@ -121,9 +118,9 @@ void Player::_turnLeft() {
 }
 
 void Player::_turnRight() {
-    float oldDirX = this->dirX;
-    this->dirX = (this->dirX * cos(-this->rotSpeed) - this->dirY * sin(-this->rotSpeed));
-    this->dirY = (oldDirX * sin(-this->rotSpeed) + this->dirY * cos(-this->rotSpeed));
+    float oldDirX = this->dir_x;
+    this->dir_x = (this->dir_x * cos(-this->rotSpeed) - this->dir_y * sin(-this->rotSpeed));
+    this->dir_y = (oldDirX * sin(-this->rotSpeed) + this->dir_y * cos(-this->rotSpeed));
 
     float oldPlaneX = this->camPlaneX;
     this->camPlaneX = (this->camPlaneX * cos(-this->rotSpeed) - this->camPlaneY * sin(-this->rotSpeed));
@@ -131,10 +128,10 @@ void Player::_turnRight() {
 }
 
 void Player::getPositionData(uint8_t *msg) {
-    memcpy(msg, &this->posX, sizeof(float));
-    memcpy(msg + sizeof(float), &this->posY, sizeof(float));
-    memcpy(msg + 2 * sizeof(float), &this->dirX, sizeof(float));
-    memcpy(msg + 3 * sizeof(float), &this->dirY, sizeof(float));
+    memcpy(msg, &this->x, sizeof(float));
+    memcpy(msg + sizeof(float), &this->y, sizeof(float));
+    memcpy(msg + 2 * sizeof(float), &this->dir_x, sizeof(float));
+    memcpy(msg + 3 * sizeof(float), &this->dir_y, sizeof(float));
 }
 
 void Player::getPositionDataWithPlane(uint8_t *msg) {

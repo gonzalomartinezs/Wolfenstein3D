@@ -5,8 +5,9 @@
 #include <vector>
 #include "Exceptions/GameException.h"
 #include "../common_src/Map.h"
+#include "../common_src/DirectedPositionable.h"
 
-class Player {
+class Player : public DirectedPositionable {
  private:
     uint8_t health;
     uint8_t ammo;
@@ -17,10 +18,10 @@ class Player {
     bool isAlive;
 
     //Position
-    float posX, posY;
+//    float posX, posY;
 
     //Direction Variables
-    float dirX, dirY;
+//    float dirX, dirY;
     float camPlaneX, camPlaneY;
 
     //Movement Speed
