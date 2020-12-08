@@ -3,7 +3,7 @@
 #include <fstream>
 #include "../common_src/Socket.h"
 #include "../common_src/Peer.h"
-#include "../common_src/PlayerPosition.h"
+#include "../common_src/DirectedPositionable.h"
 #include "PlayerView.h"
 #include <string>
 #include <utility>
@@ -35,8 +35,8 @@ public:
     ssize_t sendInstruction(uint8_t instruction);
 
     // Recibe informacion del servidor y la escribe en el archivo 'file'.
-    ssize_t receiveCoordenates(PlayerPosition &player, PlayerView &view,
-                               std::vector<PlayerPosition> &players);
+    ssize_t receiveCoordenates(DirectedPositionable &player, PlayerView &view,
+                               std::vector<DirectedPositionable> &players);
 
     // Realiza un shut down del cliente de acuerdo al modo recibido.
     // 0 -> SHUT_RD, cierra el socket para lectura.
@@ -48,10 +48,10 @@ public:
     ~Client(){}
 
 private:
-    void _assignPlayerCoordenates(PlayerPosition &player, PlayerView &view,
+    void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                                   const std::vector<float> &coordenates);
     void
-    _assignOtherPlayersCoordenates(std::vector<PlayerPosition> &players,
+    _assignOtherPlayersCoordenates(std::vector<DirectedPositionable> &players,
                                    const std::vector<float> &coordenates);
 
 };

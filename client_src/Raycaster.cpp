@@ -8,18 +8,18 @@
 #define SHADE 128
 
 
-void Raycaster::draw(PlayerPosition player_pos, float camera_plane_x,
+void Raycaster::draw(DirectedPositionable player_pos, float camera_plane_x,
                      float camera_plane_y) {
 
-    PlayerPosition player = player_pos;
+    DirectedPositionable player = player_pos;
     RayDirection ray_dir;
     for(int i = 0; i < RAY_AMOUNT; i++) {
 
         float alfa = (2*i) / (float)RAY_AMOUNT - 1;
         ray_dir.x = player.getDirX() + camera_plane_x * alfa;
         ray_dir.y = player.getDirY() + camera_plane_y * alfa;
-        int map_x = int(player.getPosX());
-        int map_y = int(player.getPosY());
+        int map_x = int(player.getX());
+        int map_y = int(player.getY());
         char hit_axis;
 
         float perp_wall_dist = _calculatePerpWallDist(player, ray_dir,
@@ -34,7 +34,7 @@ void Raycaster::draw(PlayerPosition player_pos, float camera_plane_x,
 // Calcula la distancia euclidea entre el rayo perpendicular a la camara
 // del jugador y la pared/objeto mas cercano.
 float
-Raycaster::_calculatePerpWallDist(PlayerPosition player, RayDirection ray_dir,
+Raycaster::_calculatePerpWallDist(DirectedPositionable player, RayDirection ray_dir,
                                   char &hit_axis, int &map_x, int &map_y) {
 
     float side_dist_x, side_dist_y;
@@ -43,9 +43,9 @@ Raycaster::_calculatePerpWallDist(PlayerPosition player, RayDirection ray_dir,
 
     int ray_dir_x_sign, ray_dir_y_sign;
 
-    _calculateSideDist(side_dist_x, ray_dir_x_sign, player.getPosX(),
+    _calculateSideDist(side_dist_x, ray_dir_x_sign, player.getX(),
                        float(map_x), delta_dist_x, ray_dir.x);
-    _calculateSideDist(side_dist_y, ray_dir_y_sign, player.getPosY(),
+    _calculateSideDist(side_dist_y, ray_dir_y_sign, player.getY(),
                        float(map_y), delta_dist_y, ray_dir.y);
 
     bool hit= false;
@@ -63,9 +63,9 @@ Raycaster::_calculatePerpWallDist(PlayerPosition player, RayDirection ray_dir,
     }
 
     if (hit_axis == 'x') {
-        return (map_x - player.getPosX() + (1 - ray_dir_x_sign)/2) / ray_dir.x;
+        return (map_x - player.getX() + (1 - ray_dir_x_sign)/2) / ray_dir.x;
     }
-    return (map_y - player.getPosY() + (1 - ray_dir_y_sign)/2) / ray_dir.y;
+    return (map_y - player.getY() + (1 - ray_dir_y_sign)/2) / ray_dir.y;
 }
 
 
@@ -86,7 +86,7 @@ void Raycaster::_calculateSideDist(float &side_dist, int &ray_dir_sign,
 
 // Renderiza el rayo actual en 'renderer'.
 void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
-                           PlayerPosition player, RayDirection ray_dir,
+                           DirectedPositionable player, RayDirection ray_dir,
                            int map_x, int map_y) {
 
     int line_height = (int)(height/(wall_dist * VISUAL_PROPORTION));
@@ -121,15 +121,15 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
 }
 
 // Calcula la coordenada x de la textura que se debe graficar.
-int Raycaster::_calculateTextureXCoordinate(PlayerPosition player,
+int Raycaster::_calculateTextureXCoordinate(DirectedPositionable player,
                                             RayDirection ray_dir,
                                             float wall_dist, char hit_axis,
                                             int ray_number) {
     double wall_x;
     if (hit_axis == 'x')
-        wall_x = player.getPosY() + wall_dist * ray_dir.y;
+        wall_x = player.getY() + wall_dist * ray_dir.y;
     else
-        wall_x = player.getPosX() + wall_dist * ray_dir.x;
+        wall_x = player.getX() + wall_dist * ray_dir.x;
     wall_x -= int((wall_x));
 
     int tex_x = int((wall_x+ray_number/RAY_AMOUNT) * TEX_WIDTH);
