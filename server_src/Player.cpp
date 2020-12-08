@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "../common_src/Exceptions/ErrorMap.h"
 #include <algorithm>
 #include <iostream> //Borrar
 #include <cmath>
@@ -9,6 +10,8 @@
 #define COLLECTIBLE_WEAPONS_AMOUNT 3
 #define INITIAL_SCORE 0
 #define TOTAL_LIVES 3
+
+#define WALKABLE 0
 
 //Actions
 #define ISNOTMOVING 0
@@ -37,7 +40,9 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) {
     this->isAlive = true;
 }
 
-void Player::updatePlayer() {
+void Player::updatePlayer(const Map& map) {
+    float old_x = this->posX, old_y = this->posY;
+
     if (this->state != ISNOTMOVING) {
         if (this->state == ISMOVINGFORWARDS) {
             this->_moveForwards();
@@ -50,6 +55,14 @@ void Player::updatePlayer() {
         } else {
             throw GameException("Player has an invalid state!");
         }
+    }
+    try {
+        if (map.get(int(this->posX), int(this->posY)) != WALKABLE) {
+            this->posX = old_x;
+            this->posY = old_y;
+        }
+    } catch(const ErrorMap& e) {
+        std::cerr << e.what() << std::endl;
     }
     // Borrar
     std::cout << "posX: " << this->posX;

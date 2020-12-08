@@ -1,6 +1,5 @@
 #include "ClientManager.h"
 #include "ThClient.h"
-#include "../common_src/ErrorSocket.h"
 
 #include <vector>
 

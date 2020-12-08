@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "yaml-cpp/yaml.h"
+#include "Exceptions/ErrorMap.h"
 
 #define KEY_MAP "map"
 #define KEY_ROW "length"
@@ -8,28 +9,33 @@
 Map::Map(const char* file_name) : n_row(0), n_col(0) {
 	YAML::Node file = YAML::LoadFile(file_name);
 
-	n_row = file[KEY_ROW].as<size_t>();
-	n_col = file[KEY_COL].as<size_t>();
+	n_row = file[KEY_ROW].as<int>();
+	n_col = file[KEY_COL].as<int>();
 
 	map = new int*[n_row];
 
-	for (std::size_t i = 0; i < n_row; ++i) {
+	for (int i = 0; i < n_row; ++i) {
 		map[i] = new int[n_col];
 	}
 
-	for (std::size_t i = 0; i < n_row; ++i) {
-		for (std::size_t j = 0; j < n_col; ++j) {
+	for (int i = 0; i < n_row; ++i) {
+		for (int j = 0; j < n_col; ++j) {
 			map[i][j] = file[KEY_MAP][i][j].as<int>();
 		}
 	}
 }
 
+bool Map::outOfRange(int x, int y) const {
+	return ((x >= this->n_row) || (x < 0) || (y >= this->n_col) || (y < 0));
+}
+
 int Map::get(int x, int y) const {
+	if (Map::outOfRange(x, y)) throw ErrorMap("Out of range");
 	return map[x][y];
 }
 
 Map::~Map() {
-	for (std::size_t i = 0; i < n_row; ++i) {
+	for (int i = 0; i < n_row; ++i) {
 		delete[] map[i];
 	}
 

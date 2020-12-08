@@ -55,7 +55,7 @@ void Game::getInstructions() {
 
 void Game::update() {
     for (size_t i = 0; i < this->players.size(); i++) {
-        this->players[i].updatePlayer();
+        this->players[i].updatePlayer(this->map);
     }
 }
 

@@ -1,5 +1,5 @@
 #include "Socket.h"
-#include "ErrorSocket.h"
+#include "Exceptions/ErrorSocket.h"
 
 #define SUCCESS 0
 

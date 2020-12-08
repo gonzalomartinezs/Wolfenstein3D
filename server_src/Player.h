@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "Exceptions/GameException.h"
+#include "../common_src/Map.h"
 
 class Player {
  private:
@@ -32,7 +33,7 @@ class Player {
     /* Constructor */
     Player(float moveSpeed, float rotSpeed, float posX, float posY);
 
-    void updatePlayer();
+    void updatePlayer(const Map& map);
 
     void setState(uint8_t newState);
 
