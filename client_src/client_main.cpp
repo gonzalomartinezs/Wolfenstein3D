@@ -14,7 +14,10 @@
 #define WINDOW_HEIGHT 480
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
-
+#define IS_MOVING_FORWARDS 1
+#define IS_MOVING_BACKWARDS 2
+#define IS_TURNING_LEFT 3
+#define IS_TURNING_RIGHT 4
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
@@ -23,14 +26,13 @@ int main(int argc, char *argv[]) {
 
     try {
         Client client(log.getHost(), log.getPort());
-
         Window window("Wolfenstein 3D", WINDOW_WIDTH, WINDOW_HEIGHT,
                         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                         SDL_WINDOW_SHOWN);
         SDL_Renderer* renderer = window.getRenderer();
         TexturesContainer tex(renderer);
 
-        Map map("../../common_src/config.yaml");
+        Map map("../common_src/config.yaml");
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, *renderer, tex);
         EventHandler event_handler(client);
 

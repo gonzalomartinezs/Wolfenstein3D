@@ -9,13 +9,15 @@ private:
     float dir_y;
 
 public:
-    explicit PlayerPosition(float pos_x=0.0, float pos_y=0.0,
+    explicit PlayerPosition(float pos_x=2.0, float pos_y=2.0,
                             float dir_x=.707, float dir_y=.707);
 
     PlayerPosition operator=(const PlayerPosition& other);
 
     void moveHorizontally(float movement);
     void moveVertically(float movement);
+    void setPosX(float pos);
+    void setPosY(float pos);
     float getPosX() const;
     float getPosY() const;
 

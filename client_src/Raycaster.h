@@ -41,7 +41,7 @@ private:
                     PlayerPosition player, RayDirection ray_dir,
                     int map_x, int map_y);
 
-    float _calculatePerpWallDist(PlayerPosition &player, RayDirection ray_dir,
+    float _calculatePerpWallDist(PlayerPosition player, RayDirection ray_dir,
                                  char &hit_axis, int &map_x, int &map_y);
 
     void _calculateSideDist(float &side_dist, int &ray_dir_sign,
