@@ -9,6 +9,7 @@
 #include "login/ClientLoginScreen.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
+#include "../common_src/Timer.h"
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
@@ -20,6 +21,8 @@
 #define IS_MOVING_BACKWARDS 2
 #define IS_TURNING_LEFT 3
 #define IS_TURNING_RIGHT 4
+
+const double TICK_DURATION = 1/60.f; /* miliseconds que tarda en actualizarse el juego */
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
@@ -42,7 +45,10 @@ int main(int argc, char *argv[]) {
         PlayerView view;
 
         int flag = IS_NOT_MOVING;
+        Timer time_between_updates;
+        double last_tick_time;
         while (!quit) {
+            time_between_updates.start();
             std::vector<DirectedPositionable> players;
             const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
@@ -75,6 +81,10 @@ int main(int argc, char *argv[]) {
 
                 raycaster.draw(aux, old_plane_x + i * step_plane_x, old_plane_y + i * step_plane_y);
                 window.render();
+            }
+            last_tick_time = time_between_updates.getTime();
+            if (last_tick_time < TICK_DURATION*1000){
+                usleep((TICK_DURATION * 1000 - last_tick_time) * 1000);
             }
         }
     } catch(std::exception& e) {
