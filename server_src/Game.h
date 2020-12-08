@@ -3,19 +3,22 @@
 
 #include <atomic>
 
+#include "yaml-cpp/yaml.h"
 #include "Player.h"
 #include "ThClient.h"
 #include "../common_src/Timer.h"
+#include "../common_src/Map.h"
 
 class Game {
  private:
     std::vector<Player> players;
     std::vector<ThClient*>& clients;
     std::atomic<bool> isRunning;
+    Map map;
 
  public:
     /* Constructor */
-    Game(std::vector<ThClient*>& clients);
+    Game(std::vector<ThClient*>& _clients, const char* file_name);
 
     void execute();
 

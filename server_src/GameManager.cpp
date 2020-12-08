@@ -7,16 +7,16 @@
 
 #define KEY_PORT "port"
 
-GameManager::GameManager(const char* file_name) {
-//	YAML::Node file = YAML::LoadFile(file_name);
-//
-//	if (file[KEY_PORT]) {
-//		const std::string port = file[KEY_PORT].as<std::string>();
-		client_manager = new ClientManager("8080");
-//	} else {
-//		throw ErrorYAML("Key '%s' does not exist in %s.", KEY_PORT,
-//						file_name);
-//	}
+GameManager::GameManager(const char* _file_name) : file_name(_file_name){
+	YAML::Node file = YAML::LoadFile(file_name);
+
+	if (file[KEY_PORT]) {
+		const std::string port = file[KEY_PORT].as<std::string>();
+		client_manager = new ClientManager(port.c_str());
+	} else {
+		throw ErrorYAML("Key '%s' does not exist in %s.", KEY_PORT,
+						file_name);
+	}
 }
 
 void GameManager::operator()() {
@@ -24,7 +24,7 @@ void GameManager::operator()() {
 	try {
 		(*client_manager)(clients);
 
-		Game game(clients);
+		Game game(clients, this->file_name);
 
 		game.execute();
 	} catch (const std::exception& e) {
