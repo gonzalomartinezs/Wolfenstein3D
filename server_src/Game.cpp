@@ -34,9 +34,9 @@ void Game::execute() {
             }
         }
     } catch (std::exception& e) {
-    std::cerr << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     } catch (...) {
-    std::cerr << "Unknown error in Game Loop :(" << std::endl;
+        std::cerr << "Unknown error in Game Loop :(" << std::endl;
     }
 }
 

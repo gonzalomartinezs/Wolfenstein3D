@@ -1,6 +1,8 @@
 #ifndef WOLFENSTEIN3D_GAME_H
 #define WOLFENSTEIN3D_GAME_H
 
+#include <atomic>
+
 #include "Player.h"
 #include "ThClient.h"
 #include "../common_src/Timer.h"
@@ -9,7 +11,7 @@ class Game {
  private:
     std::vector<Player> players;
     std::vector<ThClient*>& clients;
-    bool isRunning;
+    std::atomic<bool> isRunning;
 
  public:
     /* Constructor */

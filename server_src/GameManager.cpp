@@ -21,13 +21,17 @@ GameManager::GameManager(const char* file_name) {
 
 void GameManager::operator()() {
 	std::vector<ThClient*> clients;
-	(*client_manager)(clients);
+	try {
+		(*client_manager)(clients);
 
-	Game game(clients);
+		Game game(clients);
 
-	game.execute();
-
-	(*client_manager).stopClients(clients);
+		game.execute();
+	} catch (const std::exception& e) {
+		printf("%s", e.what());
+	}
+	
+	client_manager->stopClients(clients);
 }
 
 void GameManager::stop() {
