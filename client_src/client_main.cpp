@@ -8,11 +8,13 @@
 #include "textures/TexturesContainer.h"
 #include "login/ClientLoginScreen.h"
 #include "../common_src/Map.h"
-#include "../common_src/PlayerPosition.h"
+#include "../common_src/DirectedPositionable.h"
 
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
+
 #define REFRESH_RATE 10
+
 #define IS_NOT_MOVING 0
 #define IS_MOVING_FORWARDS 1
 #define IS_MOVING_BACKWARDS 2
@@ -36,16 +38,16 @@ int main(int argc, char *argv[]) {
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, *renderer, tex);
         EventHandler event_handler(client);
 
-        PlayerPosition player;
+        DirectedPositionable player(2, 2, -1, 1);
         PlayerView view;
 
         int flag = IS_NOT_MOVING;
         while (!quit) {
-            std::vector<PlayerPosition> players;
+            std::vector<DirectedPositionable> players;
             const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
-            float old_pos_x = player.getPosX();
-            float old_pos_y = player.getPosY();
+            float old_pos_x = player.getX();
+            float old_pos_y = player.getY();
             float old_dir_x = player.getDirX();
             float old_dir_y = player.getDirY();
             float old_plane_x = view.getPlaneX();
@@ -54,20 +56,20 @@ int main(int argc, char *argv[]) {
             event_handler.run(quit, flag, keys);
 
             client.receiveCoordenates(player, view, players);
-            float step_pos_x = (player.getPosX() - old_pos_x)/REFRESH_RATE;
-            float step_pos_y = (player.getPosY() - old_pos_y)/REFRESH_RATE;
+            float step_pos_x = (player.getX() - old_pos_x)/REFRESH_RATE;
+            float step_pos_y = (player.getY() - old_pos_y)/REFRESH_RATE;
             float step_dir_x = (player.getDirX() - old_dir_x)/REFRESH_RATE;
             float step_dir_y = (player.getDirY() - old_dir_y)/REFRESH_RATE;
             float step_plane_x = (view.getPlaneX() - old_plane_x)/REFRESH_RATE;
             float step_plane_y = (view.getPlaneY() - old_plane_y)/REFRESH_RATE;
 
             for (int i=0; i<REFRESH_RATE; i++){
-                PlayerPosition aux(old_pos_x, old_pos_y, old_dir_x, old_dir_y);
+                DirectedPositionable aux(old_pos_x, old_pos_y, old_dir_x, old_dir_y);
                 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
                 SDL_RenderClear(renderer);
 
-                aux.moveHorizontally(step_pos_x * i);
-                aux.moveVertically(step_pos_y * i);
+                aux.moveX(step_pos_x * i);
+                aux.moveY(step_pos_y * i);
                 aux.setDirX(old_dir_x + step_dir_x * i);
                 aux.setDirY(old_dir_y + step_dir_y * i);
 
