@@ -23,3 +23,7 @@ float Positionable::getX() const{
 float Positionable::getY() const{
     return this->y;
 }
+
+TextureID Positionable::getTexture() {
+    return this->texture;
+}
