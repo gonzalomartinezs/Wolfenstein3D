@@ -23,7 +23,7 @@
 #define ISTURNINGRIGHT 4
 
 Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
-                DirectedPositionable(posX, posY, 1, 0) {
+                DirectedPositionable(posX, posY, 1, 0, None) {
     this->moveSpeed = moveSpeed;
     this->rotSpeed = rotSpeed;
     this->camPlaneX = 0;  // Perpendicular to direction
