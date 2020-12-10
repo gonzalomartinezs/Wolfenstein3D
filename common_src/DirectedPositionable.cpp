@@ -2,14 +2,15 @@
 #include <cmath>
 
 DirectedPositionable::DirectedPositionable(float pos_x, float pos_y,
-                                           float dir_x, float dir_y):
-                                           Positionable(pos_x, pos_y){
+                                           float dir_x, float dir_y,
+                                           TextureID texture):
+                                           Positionable(pos_x, pos_y, texture){
     float norm = std::sqrt(dir_x*dir_x + dir_y*dir_y);
     this-> dir_x = dir_x/norm;
     this-> dir_y = dir_y/norm;
 }
 
-DirectedPositionable DirectedPositionable::operator=(const DirectedPositionable &other) {
+DirectedPositionable& DirectedPositionable::operator=(const DirectedPositionable &other) {
     this->setX(other.getX());
     this->setY(other.getY());
     this->dir_x = other.dir_x;
@@ -33,3 +34,6 @@ float DirectedPositionable::getDirY() const {
     return this->dir_y;
 }
 
+void DirectedPositionable::setTexture(TextureID texture) {
+    this->texture = texture;
+}
