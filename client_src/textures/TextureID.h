@@ -2,6 +2,7 @@
 #define TEXTUREID_H
 
 enum TextureID{
+    None,
     Wall,
     Barrel
 };
