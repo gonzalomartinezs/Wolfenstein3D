@@ -4,7 +4,7 @@
 
 #define MAX_MSG_SIZE 256
 
-const double TICK_DURATION = 1/60.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
 
 Game::Game(std::vector<ThClient*>& _clients, const char* file_name) :
             clients(_clients), map(file_name) {
@@ -26,7 +26,7 @@ void Game::execute() {
 
             std::cout << "Nuevo Tick" << std::endl;
             this->getInstructions();
-            this->update();
+            this->update();  // Fixed Step-Time
             this->sendUpdate();
 
             timeBetweenUpdates.getTime();
