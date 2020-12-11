@@ -71,7 +71,7 @@ void Client::_assignOtherPlayersCoordenates(std::vector<DirectedPositionable>
         DirectedPositionable other_player(coordenates[j],
                                           coordenates[j + 1],
                                           coordenates[j+2],
-                                          coordenates[j+3]);
+                                          coordenates[j+3], None);
         players.push_back(other_player);
     }
 }

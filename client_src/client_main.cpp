@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, *renderer, tex);
         EventHandler event_handler(client);
 
-        DirectedPositionable player(2, 2, -1, 1);
+        DirectedPositionable player(2, 2, -1, 1, None);
         PlayerView view;
 
         int flag = IS_NOT_MOVING;
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
             float step_plane_y = (view.getPlaneY() - old_plane_y)/REFRESH_RATE;
 
             for (int i=0; i<REFRESH_RATE; i++){
-                DirectedPositionable aux(old_pos_x, old_pos_y, old_dir_x, old_dir_y);
+                DirectedPositionable aux(old_pos_x, old_pos_y, old_dir_x, old_dir_y, None);
                 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
                 SDL_RenderClear(renderer);
 
