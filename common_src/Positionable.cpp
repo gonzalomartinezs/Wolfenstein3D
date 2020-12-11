@@ -1,5 +1,12 @@
 #include "Positionable.h"
 
+Positionable &Positionable::operator=(const Positionable &other) {
+    this->x = other.x;
+    this->y = other.y;
+    this->texture = other.texture;
+    return *this;
+}
+
 void Positionable::setX(float new_x) {
     this->x = new_x;
 }
@@ -27,3 +34,4 @@ float Positionable::getY() const{
 TextureID Positionable::getTexture() {
     return this->texture;
 }
+

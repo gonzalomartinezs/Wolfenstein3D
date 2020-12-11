@@ -11,8 +11,8 @@ DirectedPositionable::DirectedPositionable(float pos_x, float pos_y,
 }
 
 DirectedPositionable& DirectedPositionable::operator=(const DirectedPositionable &other) {
-    this->setX(other.getX());
-    this->setY(other.getY());
+    this->x = other.x;
+    this->y = other.y;
     this->dir_x = other.dir_x;
     this->dir_y = other.dir_y;
     return *this;

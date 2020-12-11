@@ -12,6 +12,8 @@ public:
     // Crea un posicionable listo para ser utilizado.
     Positionable(float x, float y, TextureID tex): x(x), y(y), texture(tex){}
 
+    Positionable& operator=(const Positionable& other);
+
     // Establecen una nueva coordenada x e y del posicionable.
     void setX(float new_x);
     void setY(float new_y);
