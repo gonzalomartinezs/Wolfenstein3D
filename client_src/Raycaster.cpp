@@ -96,7 +96,7 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
     if (draw_start < 0) draw_start = 0;
     if (draw_end >= height) draw_end = height - 1;
 
-    int tex_id = map.get(map_x, map_y) - 1;
+    int tex_id = map.get(map_x, map_y);
     Texture* texture = textures.get(TextureID(tex_id));
 
     int tex_x = _calculateTextureXCoordinate(player, ray_dir, wall_dist,
