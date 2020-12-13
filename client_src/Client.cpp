@@ -28,7 +28,7 @@ ssize_t Client::receiveCoordenates(DirectedPositionable &player, PlayerView &vie
 
     if(bytes_to_receive >= FLOAT_SIZE*PLAYER_ATTRIBUTES){
         std::vector<float> coordinates;
-        for (int i = 0; i < FLOAT_SIZE*PLAYER_ATTRIBUTES; i++) {
+        for (std::size_t i = 0; i < FLOAT_SIZE*PLAYER_ATTRIBUTES; i++) {
             received_uints[i%FLOAT_SIZE] = bytes_received[i];
             if((i%FLOAT_SIZE)==(FLOAT_SIZE-1)){
                 float received_float = *(float*)(received_uints);
@@ -67,7 +67,7 @@ void Client::_assignOtherPlayersCoordenates(std::vector<DirectedPositionable>
                                             &players, const std::vector<float>
                                             &coordenates) {
 
-    for(int j=PLAYER_ATTRIBUTES; j < coordenates.size(); j+=4){
+    for(std::size_t j=PLAYER_ATTRIBUTES; j < coordenates.size(); j+=4){
         DirectedPositionable other_player(coordenates[j],
                                           coordenates[j + 1],
                                           coordenates[j+2],

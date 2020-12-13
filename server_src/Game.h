@@ -15,7 +15,7 @@ class Game {
     std::vector<ThClient*>& clients;
     std::atomic<bool> isRunning;
     Map map;
-
+    Items items;
  public:
     /* Constructor */
     Game(std::vector<ThClient*>& _clients, const char* file_name);

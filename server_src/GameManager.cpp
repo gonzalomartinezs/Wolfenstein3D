@@ -30,7 +30,7 @@ void GameManager::operator()() {
 	} catch (const std::exception& e) {
 		printf("%s", e.what());
 	}
-	
+
 	client_manager->stopClients(clients);
 }
 

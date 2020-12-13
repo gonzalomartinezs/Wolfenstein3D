@@ -7,7 +7,7 @@
 const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
 
 Game::Game(std::vector<ThClient*>& _clients, const char* file_name) :
-            clients(_clients), map(file_name) {
+            clients(_clients), map(file_name), items(file_name) {
 //    YAML::Node file = YAML::LoadFile(file_name);
     this->isRunning = true;
     for (size_t i = 0; i < this->clients.size(); i ++) {
@@ -55,7 +55,7 @@ void Game::getInstructions() {
 
 void Game::update() {
     for (size_t i = 0; i < this->players.size(); i++) {
-        this->players[i].updatePlayer(this->map);
+        this->players[i].updatePlayer(this->map, this->items);
     }
 }
 

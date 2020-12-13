@@ -14,6 +14,7 @@
 #define WALKABLE 0
 #define PLAYER_SIZE 0.1
 #define RAYS_AMOUNT 20
+#define PI 3.14159
 
 //Actions
 #define ISNOTMOVING 0
@@ -23,7 +24,7 @@
 #define ISTURNINGRIGHT 4
 
 Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
-                DirectedPositionable(posX, posY, 1, 0, None) {
+                DirectedPositionable(posX, posY, -1, 0, None) {
     this->moveSpeed = moveSpeed;
     this->rotSpeed = rotSpeed;
     this->camPlaneX = 0;  // Perpendicular to direction
@@ -40,7 +41,7 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
 }
 
 static void initialize_rays(float *x, float *y, float radius, int rays) {
-    float two_pi = 2*3.14159;
+    float two_pi = 2*PI;
     float step = two_pi/rays;
 
     for (int i = 0; i < rays; ++i){
@@ -49,11 +50,28 @@ static void initialize_rays(float *x, float *y, float radius, int rays) {
     }
 }
 
-void Player::updatePlayer(const Map& map) {
-    float player_x_rays[RAYS_AMOUNT];
-    float player_y_rays[RAYS_AMOUNT];
-    initialize_rays(player_x_rays, player_y_rays, PLAYER_SIZE, RAYS_AMOUNT);
+void Player::look_for_collision(const Map& map) {
+	float player_x_rays[RAYS_AMOUNT], player_y_rays[RAYS_AMOUNT];
+	initialize_rays(player_x_rays, player_y_rays, PLAYER_SIZE, RAYS_AMOUNT);
+	
+	for (int i = 0; i < RAYS_AMOUNT; i++) {
+        if (map.get(int(this->x + player_x_rays[i]),
+                    int(this->y + player_y_rays[i])) != WALKABLE) {
+            throw ErrorMap("Collision detected.");
+        }
+	}
+}
 
+void Player::look_for_item(Items& items) {
+
+/*
+	for (size_t i = 0; i < items.size(); ++i) {
+		items[i].equipTo(this);
+	}
+*/
+}
+
+void Player::updatePlayer(const Map& map, Items& items) {
     float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {
@@ -70,20 +88,10 @@ void Player::updatePlayer(const Map& map) {
         }
     }
 
-    bool collided = false;
     try {
-        for (int i = 0; i < RAYS_AMOUNT; i++) {
-            if (map.get(int(this->x + player_x_rays[i]),
-                        int(this->y + player_y_rays[i])) != WALKABLE) {
-                collided = true;
-                break;
-            }
-        }
-        if (collided) {
-            this->x = old_x;
-            this->y = old_y;
-        }
-    } catch(const ErrorMap& e) {
+        Player::look_for_collision(map);
+        Player::look_for_item(items);
+    } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
         this->x = old_x;
         this->y = old_y;
@@ -122,6 +130,10 @@ void Player::receiveShot(int damage) {
     if (this->health <= 0) {
         this->die();
     }
+}
+
+void Player::addHealth(int _health) {
+	this->health += _health;
 }
 
 void Player::_moveForwards() {

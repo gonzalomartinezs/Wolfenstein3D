@@ -6,6 +6,7 @@
 #include "Exceptions/GameException.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
+#include "../common_src/Items.h"
 
 class Player : public DirectedPositionable {
  private:
@@ -29,7 +30,7 @@ class Player : public DirectedPositionable {
     /* Constructor */
     Player(float moveSpeed, float rotSpeed, float posX, float posY);
 
-    void updatePlayer(const Map& map);
+    void updatePlayer(const Map& map, Items& items);
 
     void setState(uint8_t newState);
 
@@ -40,6 +41,8 @@ class Player : public DirectedPositionable {
     void shoot();
 
     void getHealth();
+
+    void addHealth(int _health);
 
     void receiveShot(int damage);
 
@@ -57,6 +60,8 @@ class Player : public DirectedPositionable {
     ~Player();
 
 private:
+    void look_for_item(Items& items);
+    void look_for_collision(const Map& map);
     void _moveForwards();
     void _moveBackwards();
     void _turnLeft();
