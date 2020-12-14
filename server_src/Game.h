@@ -8,6 +8,8 @@
 #include "ThClient.h"
 #include "../common_src/Timer.h"
 #include "../common_src/Map.h"
+#include "../client_src/textures/TextureID.h"
+
 
 class Game {
  private:

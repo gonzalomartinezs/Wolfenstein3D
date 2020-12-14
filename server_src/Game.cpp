@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <unistd.h>
+#include <cstring> //borrar
 
 #define MAX_MSG_SIZE 256
 
@@ -71,10 +72,13 @@ void Game::sendUpdate() {
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     int playersLoaded = 0;
+    uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
+
     this->players[clientNumber].getPositionDataWithPlane(msg + 1);
     for (size_t i = 0; i < this->clients.size() - 1; i++) {
         if (i != clientNumber) {
-            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 16);
+            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 17); // era *16 sin el hardcodeo del guard
+            memcpy(msg + 1 + 24 + playersLoaded * 17 + 16, &texture, 1); //harcodeado, despues hacerlo bien
             playersLoaded++;
         }
     }
