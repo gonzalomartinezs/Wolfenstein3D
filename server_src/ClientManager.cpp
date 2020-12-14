@@ -10,23 +10,7 @@ ClientManager::ClientManager(const char* port) :
 							is_connected(true) {
 	socket.bind();
 }
-/*
-void ClientManager::cleanClients(std::vector<ThClient*>& clients) {
-	std::size_t len_clients = clients.size();
-	std::vector<ThClient*> clients_tmp;
 
-	for (std::size_t i = 0; i < len_clients; ++i) {
-		if (clients[i]->finished()) {
-			clients[i]->join();
-			delete clients[i];
-		} else {
-			clients_tmp.push_back(clients[i]);
-		}
-	}
-
-	clients.swap(clients_tmp);
-}
-*/
 void ClientManager::stopClients(const std::vector<ThClient*>& clients) {
 	for (auto client : clients) {
 		client->stop();

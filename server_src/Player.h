@@ -7,6 +7,7 @@
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Items.h"
+#include "../common_src/Item.h"
 
 class Player : public DirectedPositionable {
  private:

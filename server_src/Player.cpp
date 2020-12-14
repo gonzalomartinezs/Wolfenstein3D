@@ -63,12 +63,10 @@ void Player::look_for_collision(const Map& map) {
 }
 
 void Player::look_for_item(Items& items) {
-
-/*
 	for (size_t i = 0; i < items.size(); ++i) {
-		items[i].equipTo(this);
+		items[i]->equipTo((*this));
 	}
-*/
+
 }
 
 void Player::updatePlayer(const Map& map, Items& items) {
