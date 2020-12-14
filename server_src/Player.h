@@ -4,21 +4,24 @@
 #include <cstdint>
 #include <vector>
 #include "Exceptions/GameException.h"
+#include "PlayerAttributes.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Items.h"
 #include "../common_src/Item.h"
 
 class Player : public DirectedPositionable {
- private:
-    uint8_t health;
+private:
+    PlayerAttributes attributes;
     uint8_t ammo;
     std::vector<bool> weapons;
+    /*
+    uint8_t health;
     int score;
     uint8_t lives;
     bool hasKey;
     bool isAlive;
-
+*/
     float camPlaneX, camPlaneY;
 
     //Movement Speed
@@ -27,7 +30,7 @@ class Player : public DirectedPositionable {
     //State Variable
     uint8_t state;
 
- public:
+public:
     /* Constructor */
     Player(float moveSpeed, float rotSpeed, float posX, float posY);
 
@@ -42,8 +45,6 @@ class Player : public DirectedPositionable {
     void shoot();
 
     void getHealth();
-
-    void addHealth(int _health);
 
     void receiveShot(int damage);
 

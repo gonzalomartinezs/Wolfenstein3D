@@ -19,7 +19,7 @@ Items::Items(const char* file_name) {
 */
 }
 
-Item* Items::operator[](std::size_t i) const {
+Item& Items::operator[](std::size_t i) {
 	return this->items[i];
 }
 

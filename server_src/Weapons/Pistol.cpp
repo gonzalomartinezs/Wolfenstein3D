@@ -3,8 +3,8 @@
 Pistol::Pistol() {}
 
 void Pistol::startShooting() {
-    this->shoot(/* Argumentos */);
-    this->stopShooting()
+//    this->shoot(/* Argumentos */);
+    this->stopShooting();
 }
 
 void Pistol::stopShooting() {

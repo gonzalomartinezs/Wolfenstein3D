@@ -6,7 +6,7 @@
 class Food : public Item {
 public:
 	Food(float _x, float _y, TextureID& _texture, int _value);
-	void equipTo(Player& player) override;
+	void equipTo(PlayerAttributes& attributes) override;
 	~Food();
 };
 

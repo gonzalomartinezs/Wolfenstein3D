@@ -32,12 +32,14 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
     this->state = ISNOTMOVING;
 
     this->weapons.resize(COLLECTIBLE_WEAPONS_AMOUNT, false);
-    this->health = MAX_HEALTH;
     this->ammo = INITIAL_AMMO;
+/*
+    this->health = MAX_HEALTH;
     this->score = INITIAL_SCORE;
     this->lives = TOTAL_LIVES;
     this->hasKey = false;
     this->isAlive = true;
+*/
 }
 
 static void initialize_rays(float *x, float *y, float radius, int rays) {
@@ -64,9 +66,9 @@ void Player::look_for_collision(const Map& map) {
 
 void Player::look_for_item(Items& items) {
 	for (size_t i = 0; i < items.size(); ++i) {
-		items[i]->equipTo((*this));
+        //If jugador colisiona con item[i]
+		items[i].equipTo(this->attributes);
 	}
-
 }
 
 void Player::updatePlayer(const Map& map, Items& items) {
@@ -106,16 +108,16 @@ void Player::setState(uint8_t newState) {
 }
 
 void Player::die() {
-    std::fill(this->weapons.begin(), this->weapons.end(), false);
-    this->lives--;
-    this->ammo = INITIAL_AMMO;
-    this->health = MAX_HEALTH;
 
+    std::fill(this->weapons.begin(), this->weapons.end(), false);
+//    this->lives--;
+    this->ammo = INITIAL_AMMO;
+//    this->health = MAX_HEALTH;
     /* Reiniciar posicion */
 }
 
 bool Player::isDead() {
-    return this->isAlive;
+    return this->attributes.isDead();
 }
 
 void Player::shoot() {
@@ -124,14 +126,10 @@ void Player::shoot() {
 }
 
 void Player::receiveShot(int damage) {
-    this->health -= damage;
+ /*   this->health -= damage;
     if (this->health <= 0) {
         this->die();
-    }
-}
-
-void Player::addHealth(int _health) {
-	this->health += _health;
+    } */
 }
 
 void Player::_moveForwards() {
