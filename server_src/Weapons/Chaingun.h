@@ -1,0 +1,8 @@
+#ifndef WOLFENSTEIN3D_CHAINGUN_H
+#define WOLFENSTEIN3D_CHAINGUN_H
+
+class Chaingun {
+
+};
+
+#endif //WOLFENSTEIN3D_CHAINGUN_H

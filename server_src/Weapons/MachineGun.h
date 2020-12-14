@@ -1,0 +1,9 @@
+#ifndef WOLFENSTEIN_MACHINEGUN_H
+#define WOLFENSTEIN_MACHINEGUN_H
+
+class MachineGun {
+
+};
+
+
+#endif  // WOLFENSTEIN_MACHINEGUN_H

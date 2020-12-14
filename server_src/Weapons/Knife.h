@@ -1,0 +1,8 @@
+#ifndef WOLFENSTEIN3D_KNIFE_H
+#define WOLFENSTEIN3D_KNIFE_H
+
+class Knife {
+
+};
+
+#endif //WOLFENSTEIN3D_KNIFE_H
