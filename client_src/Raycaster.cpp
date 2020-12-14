@@ -1,5 +1,5 @@
 #include "Raycaster.h"
-#include "textures/TextureID.h"
+#include "TextureID.h"
 #define RAY_AMOUNT 320
 #define VISUAL_PROPORTION 1.5
 #define TEX_HEIGHT 64
@@ -8,8 +8,29 @@
 #define SHADE 128
 
 
-void Raycaster::draw(DirectedPositionable player_pos, float camera_plane_x,
-                     float camera_plane_y) {
+Raycaster::Raycaster(Map &map, int width, int height,
+                     TexturesContainer &textures) : map(map), width(width),
+                                                    height(height), textures(textures),
+                                                    sprite_renderer(textures, width, height){}
+
+void Raycaster::draw(DirectedPositionable player_pos,
+                     std::vector<Positionable> &objects,
+                     std::vector<DirectedPositionable> &directed_objects,
+                     float camera_plane_x, float camera_plane_y) {
+    _drawMap(player_pos, camera_plane_x, camera_plane_y);
+    this->sprite_renderer.drawSprites(player_pos, directed_objects,
+                                      objects, camera_plane_x, camera_plane_y,
+                                      this->wall_distances);
+    this->wall_distances.clear();
+}
+
+
+
+// ------------------------- Metodos privados --------------------------------//
+
+// Dibuja las paredes del juego.
+void Raycaster::_drawMap(DirectedPositionable player_pos, float camera_plane_x,
+                         float camera_plane_y) {
 
     DirectedPositionable player = player_pos;
     RayDirection ray_dir;
@@ -24,17 +45,16 @@ void Raycaster::draw(DirectedPositionable player_pos, float camera_plane_x,
 
         float perp_wall_dist = _calculatePerpWallDist(player, ray_dir,
                                                       hit_axis, map_x, map_y);
-
+        this->wall_distances.push_back(perp_wall_dist);
         _renderize(perp_wall_dist, hit_axis, i, player, ray_dir, map_x, map_y);
     }
 }
 
-// ------------------------- Metodos privados --------------------------------//
 
 // Calcula la distancia euclidea entre el rayo perpendicular a la camara
 // del jugador y la pared/objeto mas cercano.
 float
-Raycaster::_calculatePerpWallDist(DirectedPositionable player, RayDirection ray_dir,
+Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray_dir,
                                   char &hit_axis, int &map_x, int &map_y) {
 
     float side_dist_x, side_dist_y;
@@ -140,5 +160,7 @@ int Raycaster::_calculateTextureXCoordinate(DirectedPositionable player,
 
     return tex_x;
 }
+
+
 
 
