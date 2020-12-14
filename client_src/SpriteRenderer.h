@@ -1,8 +1,8 @@
 #ifndef TEXTURERENDERER_H
 #define TEXTURERENDERER_H
 #include <vector>
-#include "DirectedPositionable.h"
-#include "TexturesContainer.h"
+#include "textures/TexturesContainer.h"
+#include "../common_src/DirectedPositionable.h"
 
 #define RAY_AMOUNT 320
 
@@ -47,20 +47,26 @@ private:
     static void _selectDirectedSprite(DirectedPositionable player_pos,
                                std::vector<DirectedPositionable> &directed_objects,
                                std::vector<Positionable> &directed_sprites);
+
     static void _combineAndSortSprites(const DirectedPositionable &player_pos,
                                        std::vector<Positionable> &static_sprites,
                                        std::vector<Positionable> &directed_sprites,
                                        std::vector<Positionable> &final_sprites);
+
     void _renderizeSprites(DirectedPositionable &player_pos,
                                   std::vector<Positionable> &sprites,
                                   float camera_plane_x, float camera_plane_y,
                                   const std::vector<float> &wall_distances);
+
     void _initializeSpriteInfo(SpriteInfo &info,
                                 double transform_x,
                                 double transform_y,
                                 const std::vector<float> &wall_distances);
+
     void _showSprite(const SpriteInfo& info, Positionable &sprite);
+
     static float _distance(float x_1, float y_1, float x_2, float y_2);
+
     static float _calculateAngle(const DirectedPositionable& sprite,
                                  const Positionable& player_pos);
 };
