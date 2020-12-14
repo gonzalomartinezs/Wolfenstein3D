@@ -18,6 +18,9 @@ public:
     // Renderiza el contenido de la ventana.
     void render();
 
+    // Limpia el contenido de la ventana.
+    void clearScreen();
+
     // Retorna el renderer de la ventana.
     SDL_Renderer* getRenderer() const;
 

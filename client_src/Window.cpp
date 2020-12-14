@@ -22,6 +22,12 @@ void Window::render() {
     SDL_RenderPresent(this->renderer);
 }
 
+
+void Window::clearScreen() {
+    SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
+    SDL_RenderClear(this->renderer);
+}
+
 SDL_Renderer *Window::getRenderer() const {
     return this->renderer;
 }

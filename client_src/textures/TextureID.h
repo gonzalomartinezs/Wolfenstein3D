@@ -4,7 +4,15 @@
 enum TextureID{
     None,
     Wall,
-    Barrel
+    Barrel,
+    Guard_0,
+    Guard_1,
+    Guard_2,
+    Guard_3,
+    Guard_4,
+    Guard_5,
+    Guard_6,
+    Guard_7,
 };
 
 #endif //TEXTUREID_H
