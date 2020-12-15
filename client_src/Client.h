@@ -48,11 +48,15 @@ public:
     ~Client(){}
 
 private:
-    void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
-                                  const std::vector<float> &coordenates);
     void
-    _assignOtherPlayersCoordenates(std::vector<DirectedPositionable> &players,
-                                   const std::vector<float> &coordenates);
+    _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
+                             std::vector<float> &coordenates,
+                             int player_size, uint8_t *bytes_received);
+    void
+    _assignOtherPlayersCoordenates(uint8_t *bytes_received,
+                                   uint8_t bytes_to_receive,
+                                   std::vector<DirectedPositionable> &players,
+                                   std::vector<float> &coordinates);
 
 };
 

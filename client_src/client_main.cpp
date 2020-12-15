@@ -34,15 +34,15 @@ int main(int argc, char *argv[]) {
         Window window("Wolfenstein 3D", WINDOW_WIDTH, WINDOW_HEIGHT,
                         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                         SDL_WINDOW_SHOWN);
-        SDL_Renderer* renderer = window.getRenderer();
-        TexturesContainer tex(renderer);
+        TexturesContainer tex( window.getRenderer());
 
         Map map("../common_src/config.yaml");
-        Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, *renderer, tex);
+        Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, tex);
         EventHandler event_handler(client);
 
         DirectedPositionable player(2, 2, -1, 1, None);
         PlayerView view;
+        std::vector<Positionable> static_objects;
 
         int flag = IS_NOT_MOVING;
         Timer time_between_updates;
@@ -71,15 +71,14 @@ int main(int argc, char *argv[]) {
 
             for (int i=0; i<REFRESH_RATE; i++){
                 DirectedPositionable aux(old_pos_x, old_pos_y, old_dir_x, old_dir_y, None);
-                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                SDL_RenderClear(renderer);
+                window.clearScreen();
 
                 aux.moveX(step_pos_x * i);
                 aux.moveY(step_pos_y * i);
                 aux.setDirX(old_dir_x + step_dir_x * i);
                 aux.setDirY(old_dir_y + step_dir_y * i);
 
-                raycaster.draw(aux, old_plane_x + i * step_plane_x, old_plane_y + i * step_plane_y);
+                raycaster.draw(aux, static_objects, players, old_plane_x + i * step_plane_x, old_plane_y + i * step_plane_y);
                 window.render();
             }
             last_tick_time = time_between_updates.getTime();

@@ -1,5 +1,5 @@
 #include "Raycaster.h"
-#include "TextureID.h"
+#include "textures/TextureID.h"
 #define RAY_AMOUNT 320
 #define VISUAL_PROPORTION 1.5
 #define TEX_HEIGHT 64
