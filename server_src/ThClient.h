@@ -12,21 +12,25 @@ private:
     std::atomic<bool> is_connected;
     Peer peer;
     ProtectedQueue<uint8_t> RecvQueue;
+    ProtectedQueue<std::string> SendQueue;
 
 public:
     /* Constructor */
     ThClient(Peer& _peer);
+
     void run() override;
     bool isEmpty() const;
     uint8_t pop();
-    void send(uint8_t* buffer, int bytes_to_send);
+    void push(uint8_t* buffer, int bytes_to_send);
     void stop() override;
     bool finished() override;
+
     /* Destructor */
     ~ThClient();
 
 private:
     void recv();
+    void send();
 
 };
 

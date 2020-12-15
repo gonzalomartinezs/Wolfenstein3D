@@ -5,7 +5,7 @@
 
 #define MAX_MSG_SIZE 256
 
-const double TICK_DURATION = 1/15.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
 
 Game::Game(std::vector<ThClient*>& _clients, const char* file_name) :
             clients(_clients), map(file_name), items(file_name) {
@@ -66,7 +66,7 @@ void Game::sendUpdate() {
     int bytesToSend;
     for (size_t i = 0; i < this->clients.size(); i++) {
         bytesToSend = this->createMsg(msg, i);
-        this->clients[i]->send(msg, bytesToSend);
+        this->clients[i]->push(msg, bytesToSend);
     }
 }
 

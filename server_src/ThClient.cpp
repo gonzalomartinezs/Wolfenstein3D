@@ -1,7 +1,9 @@
 #include "ThClient.h"
 #include <thread>
+#include <chrono>
 
 #define EMPTY ""
+#define MILLISECONDS_SEND_CHECK 5
 
 ThClient::ThClient(Peer& _peer) : is_connected(true),
                                   peer(std::move(_peer)) {}
@@ -16,8 +18,25 @@ void ThClient::recv() {
     } while (read > 0 && is_connected);
 }
 
-void ThClient::send(uint8_t* buffer, int bytes_to_send) {
-    peer.send(buffer, bytes_to_send);
+void ThClient::send() {
+    std::string str;
+    const uint8_t* buffer;
+    int bytesToSend, sent = 0;
+
+    while (is_connected && sent >=0 ) {
+        if (!this->SendQueue.isEmpty()) {
+            str = SendQueue.pop();
+            bytesToSend = str.size();
+            buffer = reinterpret_cast<const uint8_t*>(str.c_str());
+            peer.send(buffer, bytesToSend);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(MILLISECONDS_SEND_CHECK));
+    }
+}
+
+void ThClient::push(uint8_t *buffer, int bytes_to_send) {
+    std::string str = std::string(reinterpret_cast<const char*>(buffer), static_cast<size_t>(bytes_to_send));
+    this->SendQueue.push(str);
 }
 
 uint8_t ThClient::pop() {
@@ -30,7 +49,9 @@ bool ThClient::isEmpty() const {
 
 void ThClient::run() {
     std::thread recv_thread(&ThClient::recv, this);
+    std::thread send_thread(&ThClient::send, this);
 
+    send_thread.join();
     recv_thread.join();
 }
 
