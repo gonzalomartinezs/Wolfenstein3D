@@ -1,7 +1,6 @@
 #include <cstring>
 #include <sstream>
 #include <string>
-#include <iostream>
 #include "Client.h"
 
 #define FLOAT_SIZE sizeof(float)
@@ -91,8 +90,6 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
     }
 
     for(std::size_t j=PLAYER_ATTRIBUTES; j < coordinates.size(); j+=PLAYERS_ATTRIBUTES){
-        std::cout << "Player " << j << ", X: " << coordinates[j] << ", Y: " << coordinates[j+1] <<
-        ", dirX: " << coordinates[j+2] <<", dirY: " << coordinates[j+3] << ", tex: " << coordinates[j+4] << std::endl;
         DirectedPositionable other_player(coordinates[j],
                                           coordinates[j + 1],
                                           coordinates[j+2],
@@ -100,7 +97,6 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
                                           TextureID(coordinates[j+4]));
         players.push_back(other_player);
     }
-    std::cout << std::endl;
 }
 
 
