@@ -23,12 +23,12 @@ void ThClient::send() {
     const uint8_t* buffer;
     int bytesToSend, sent = 0;
 
-    while (is_connected && sent >=0 ) {
+    while (is_connected && sent >= 0 ) {
         if (!this->SendQueue.isEmpty()) {
             str = SendQueue.pop();
             bytesToSend = str.size();
             buffer = reinterpret_cast<const uint8_t*>(str.c_str());
-            peer.send(buffer, bytesToSend);
+            sent = peer.send(buffer, bytesToSend);
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(MILLISECONDS_SEND_CHECK));
     }
