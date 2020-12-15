@@ -43,6 +43,8 @@ int main(int argc, char *argv[]) {
         DirectedPositionable player(2, 2, -1, 1, None);
         PlayerView view;
         std::vector<Positionable> static_objects;
+        Positionable asd(3, 3, Barrel);
+        static_objects.push_back(asd);
 
         int flag = IS_NOT_MOVING;
         Timer time_between_updates;

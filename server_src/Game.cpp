@@ -5,7 +5,7 @@
 
 #define MAX_MSG_SIZE 256
 
-const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/15.f; /* miliseconds que tarda en actualizarse el juego */
 
 Game::Game(std::vector<ThClient*>& _clients, const char* file_name) :
             clients(_clients), map(file_name), items(file_name) {
@@ -75,14 +75,14 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
 
     this->players[clientNumber].getPositionDataWithPlane(msg + 1);
-    for (size_t i = 0; i < this->clients.size() - 1; i++) {
+    for (size_t i = 0; i < this->clients.size(); i++) {
         if (i != clientNumber) {
             this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 17); // era *16 sin el hardcodeo del guard
             memcpy(msg + 1 + 24 + playersLoaded * 17 + 16, &texture, 1); //harcodeado, despues hacerlo bien
             playersLoaded++;
         }
     }
-    msg[0] = 24 + playersLoaded * 16;
+    msg[0] = 24 + playersLoaded * 17;
     return msg[0] + 1;
 }
 
