@@ -6,13 +6,12 @@
 #include "ClientLoginScreen.h"
 
 void ClientLoginScreen::operator()() {
-    char** argv = &argv[0];
+    char* argv = " ";
     int argc = 1;
-    QApplication app(argc, argv);
+    QApplication app(argc,&argv);
     Login login( name, port, host);
     login.show();
     app.exec();
-
 }
 
 const std::string &ClientLoginScreen::getName() {
