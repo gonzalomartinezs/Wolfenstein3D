@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#define MAX_CLIENTS 2
+#define MAX_CLIENTS 3
 
 ClientManager::ClientManager(const char* port) :
 							socket(NULL, port, AI_PASSIVE),
