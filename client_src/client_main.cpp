@@ -1,5 +1,5 @@
-#include <iostream>
 #include <SDL2/SDL.h>
+#include <iostream>
 #include "Client.h"
 #include "Window.h"
 #include "Raycaster.h"
