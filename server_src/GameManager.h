@@ -8,6 +8,7 @@ class GameManager {
 private:
 	ClientManager* client_manager;
 	const char* file_name;
+	Game* game;
 public:
 	GameManager(const char* _file_name);
 	void operator()();

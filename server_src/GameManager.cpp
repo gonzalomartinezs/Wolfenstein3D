@@ -24,9 +24,10 @@ void GameManager::operator()() {
 	try {
 		(*client_manager)(clients);
 
-		Game game(clients, this->file_name);
+        this->game = new Game(clients, this->file_name);
 
-		game.execute();
+        this->game->execute();
+
 	} catch (const std::exception& e) {
 		printf("%s", e.what());
 	}
@@ -36,8 +37,10 @@ void GameManager::operator()() {
 
 void GameManager::stop() {
 	(*client_manager).stop();
+    this->game->stop();
 }
 
 GameManager::~GameManager() {
 	delete client_manager;
+	delete game;
 }
