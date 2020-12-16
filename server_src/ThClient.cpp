@@ -1,9 +1,7 @@
 #include "ThClient.h"
 #include <thread>
-#include <chrono>
 
 #define EMPTY ""
-#define MILLISECONDS_SEND_CHECK 5
 
 ThClient::ThClient(Peer& _peer) : is_connected(true),
                                   peer(std::move(_peer)) {}
@@ -23,14 +21,11 @@ void ThClient::send() {
     const uint8_t* buffer;
     int bytesToSend, sent = 0;
 
-    while (is_connected && sent >= 0 ) {
-        if (!this->SendQueue.isEmpty()) {
-            str = SendQueue.pop();
-            bytesToSend = str.size();
-            buffer = reinterpret_cast<const uint8_t*>(str.c_str());
-            sent = peer.send(buffer, bytesToSend);
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(MILLISECONDS_SEND_CHECK));
+    while (is_connected && sent >= 0 && !SendQueue.isWorking()){
+        str = SendQueue.pop();
+        bytesToSend = str.size();
+        buffer = reinterpret_cast<const uint8_t*>(str.c_str());
+        sent = peer.send(buffer, bytesToSend);
     }
 }
 
@@ -57,6 +52,7 @@ void ThClient::run() {
 
 void ThClient::stop() {
     is_connected = false;
+    this->SendQueue.doneAdding();
     peer.stop();
     peer.close();
 }

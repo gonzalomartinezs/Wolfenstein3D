@@ -2,17 +2,17 @@
 #define WOLFENSTEIN3D_THCLIENT_H
 
 #include <atomic>
-
 #include "../common_src/Thread.h"
 #include "../common_src/Peer.h"
-#include "ProtectedQueue.h"
+#include "../common_src/ProtectedQueue.h"
+#include "../common_src/BlockingQueue.h"
 
 class ThClient : public Thread {
 private:
     std::atomic<bool> is_connected;
     Peer peer;
     ProtectedQueue<uint8_t> RecvQueue;
-    ProtectedQueue<std::string> SendQueue;
+    BlockingQueue<std::string> SendQueue;
 
 public:
     /* Constructor */
