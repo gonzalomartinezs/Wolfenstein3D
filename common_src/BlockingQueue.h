@@ -41,7 +41,7 @@ template <typename T> T BlockingQueue<T>::pop() {
         queue.pop();
         return element;
     }
-    throw WolfensteinException("Blocking queue doesn't accept new elements anymore!");
+    throw WolfensteinException("Blocking queue doesn't accept new elements anymore!\n");
 }
 
 template <typename T>bool BlockingQueue<T>::isWorking() {
