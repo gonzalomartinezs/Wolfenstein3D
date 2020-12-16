@@ -2,8 +2,8 @@
 
 Pistol::Pistol() {}
 
-void Pistol::startShooting() {
-//    this->shoot(/* Argumentos */);
+void Pistol::startShooting(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) {
+    this->shoot(players, shootingPlayerNumber, map);
     this->stopShooting();
 }
 

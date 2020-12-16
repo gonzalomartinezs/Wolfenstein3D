@@ -16,7 +16,7 @@ public:
     /* Constructor */
     Weapon();
 
-    virtual void startShooting() = 0;
+    virtual void startShooting(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) = 0;
 
     /* Logica de disparar una sola bala */
     void shoot(std::vector<Player>& players, int shootingPlayerNumber, const Map& map);
@@ -30,8 +30,9 @@ public:
     bool _isShootable(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, const Map& map);
     float _angleProbabilityFunction(float angle);
     float _distanceProbabilityFunction(float distance);
+    bool _runProbability(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo);
 
-    /* Este metodo es equi */
+    /* Este metodo es equivalente a una distribucion uniforme [0,1] */
     float _randomNumberGenerator();
 };
 
