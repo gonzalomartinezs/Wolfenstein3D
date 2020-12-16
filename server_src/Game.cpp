@@ -86,4 +86,8 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     return msg[0] + 1;
 }
 
+void Game::stop() {
+    this->isRunning = false;
+}
+
 Game::~Game() {}
