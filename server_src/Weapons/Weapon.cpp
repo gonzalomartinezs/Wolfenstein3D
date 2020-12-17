@@ -45,9 +45,11 @@ bool Weapon::_runProbability(uint8_t *thisPlayerInfo, uint8_t *otherPlayerInfo) 
     memcpy(&xP1, thisPlayerInfo, FLOAT_SIZE);
     memcpy(&yP1, thisPlayerInfo + FLOAT_SIZE, FLOAT_SIZE);
 
-    angle = acos((dirXP1 * xP2 + dirYP1 * yP2) / std::sqrt(xP2 * xP2 + yP2 * yP2));
+    angle = acos((dirXP1 * (xP2 - xP1) + dirYP1 * (yP2 - yP1)) / std::sqrt(xP2 * xP2 + yP2 * yP2));
     distance = std::sqrt(((xP1 - xP2) * (xP1 - xP2)) + ((yP1 - yP2) * (yP1 - yP2)));
     probability = _angleProbabilityFunction(angle) * _distanceProbabilityFunction(distance);
+
+    std::cout << probability << std::endl;
 
     return (probability >= _randomNumberGenerator());
  }
@@ -69,9 +71,7 @@ bool Weapon::_isShootable(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, con
     stepY = dirY/(norm * 10);  // Step
 
     for (int i = 0; i < static_cast<int>(10 * norm); i++) {
-        std::cout << xP1 + i * stepX << ' ' << yP1 + i * stepY << std::endl;
-        std::cout << "A ver esto: "<< map.get(2, 2) << std::endl;
-        if (map.get(int(xP1 + i * stepX), int(yP1 + i * stepY) != WALKABLE)) {
+        if (map.get(int(xP1 + i * stepX), int(yP1 + i * stepY)) != WALKABLE) {
             isShootable = false;
             break;
         }
