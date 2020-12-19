@@ -8,11 +8,9 @@ public:
     /* Constructor */
     Pistol();
 
-    /* AKA started pulling the trigger */
-    void startShooting(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) override;
+    void startShooting() override;
 
-    /* AKA stopped pulling the trigger */
-    void stopShooting() override;
+    void fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) override;
 
     /* Destructor */
     ~Pistol();

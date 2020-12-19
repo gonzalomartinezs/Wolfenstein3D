@@ -4,20 +4,21 @@
 
 #define PI 3.1415926
 #define POSITION_DATA_SIZE 16
+#define DIVISIONS_AMOUNT 10
 #define WALKABLE 0
-
 #define FLOAT_SIZE sizeof(float)
 
-const float MAX_SHOOTING_ANGLE = PI/6;
+const float MAX_SHOOTING_ANGLE = PI/6.f;
 const float MAX_SHOOTING_DISTANCE = 10;
 
 Weapon::Weapon() {
-    this->isShooting = false;
+    this->weaponIsShooting = false;
 }
 
 float Weapon::_randomNumberGenerator() {
     return (static_cast<float>(this->rd())/static_cast<float>(this->rd.max()));
 }
+
 
 float Weapon::_angleProbabilityFunction(float angle) {
     float probability = (-1/MAX_SHOOTING_ANGLE * std::abs(angle)) + 1;
@@ -45,17 +46,18 @@ bool Weapon::_runProbability(uint8_t *thisPlayerInfo, uint8_t *otherPlayerInfo) 
     memcpy(&xP1, thisPlayerInfo, FLOAT_SIZE);
     memcpy(&yP1, thisPlayerInfo + FLOAT_SIZE, FLOAT_SIZE);
 
-    angle = acos((dirXP1 * (xP2 - xP1) + dirYP1 * (yP2 - yP1)) / std::sqrt(xP2 * xP2 + yP2 * yP2));
-    distance = std::sqrt(((xP1 - xP2) * (xP1 - xP2)) + ((yP1 - yP2) * (yP1 - yP2)));
-    probability = _angleProbabilityFunction(angle) * _distanceProbabilityFunction(distance);
+    float diffX = xP2 - xP1;
+    float diffY = yP2 - yP1;
 
-    std::cout << probability << std::endl;
+    angle = acos((dirXP1 * diffX + dirYP1 * diffY) / std::sqrt(diffX * diffX + diffY * diffY));
+    distance = std::sqrt((diffX * diffX) + (diffY * diffY));
+    probability = _angleProbabilityFunction(angle) * _distanceProbabilityFunction(distance);
 
     return (probability >= _randomNumberGenerator());
  }
 
-bool Weapon::_isShootable(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, const Map& map) {
-    bool isShootable = true;
+bool Weapon::_isInTheFieldOfView(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, const Map& map) {
+    bool isInTheFieldOfView = true;
     float xP1, xP2, yP1, yP2;
     float dirX, dirY, stepX, stepY, norm;
     memcpy(&xP1, thisPlayerInfo, FLOAT_SIZE);
@@ -67,16 +69,16 @@ bool Weapon::_isShootable(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, con
     dirY = yP2 - yP1;
     norm = std::sqrt(dirX * dirX + dirY * dirY);
 
-    stepX = dirX/(norm * 10);  // Step
-    stepY = dirY/(norm * 10);  // Step
+    stepX = dirX/(norm * DIVISIONS_AMOUNT);  // Step de norma igual a 1/10
+    stepY = dirY/(norm * DIVISIONS_AMOUNT);  // Step de norma igual a 1/10
 
-    for (int i = 0; i < static_cast<int>(10 * norm); i++) {
+    for (int i = 0; i < static_cast<int>(DIVISIONS_AMOUNT * norm); i++) {
         if (map.get(int(xP1 + i * stepX), int(yP1 + i * stepY)) != WALKABLE) {
-            isShootable = false;
+            isInTheFieldOfView = false;
             break;
         }
     }
-    return isShootable;
+    return isInTheFieldOfView;
 }
 
 void Weapon::shoot(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) {
@@ -87,20 +89,22 @@ void Weapon::shoot(std::vector<Player>& players, int shootingPlayerNumber, const
     for (size_t i = 0; i < players.size(); i++) {
         if (static_cast<int>(i) != shootingPlayerNumber) {
             players[i].getPositionData(otherPlayerInfo);
-            if (_isShootable(thisPlayerInfo, otherPlayerInfo, map)) {
-                std::cout << "Is shootable" << std::endl;
+            if (_isInTheFieldOfView(thisPlayerInfo, otherPlayerInfo, map)) {
+                std::cout << "Camino abierto" << std::endl;
                 shotHit = _runProbability(thisPlayerInfo, otherPlayerInfo);
                 if (shotHit) {
-                    std::cout << "La bala le llego" << std::endl;
+                    /* Bajar vida del jugador con el que impacto */
+                    std::cout << "Tiro acerto" << std::endl;
+
                     break;
-                }
-                else {
-                    std::cout << "La bala no llego" << std::endl;
                 }
             }
         }
-
     }
+}
+
+bool Weapon::isShooting() {
+    return this->weaponIsShooting;
 }
 
 Weapon::~Weapon() {}
