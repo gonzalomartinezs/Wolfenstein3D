@@ -13,7 +13,7 @@ public:
     // Crea un posicionable dirigido listo para ser utilizado.
     explicit DirectedPositionable(float pos_x, float pos_y,
                                   float dir_x, float dir_y,
-                                  TextureID texture);
+                                  TextureID texture=None);
 
     DirectedPositionable& operator=(const DirectedPositionable& other);
 

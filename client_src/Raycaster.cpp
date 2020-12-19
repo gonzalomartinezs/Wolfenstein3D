@@ -14,8 +14,8 @@ Raycaster::Raycaster(Map &map, int width, int height,
                                                     sprite_renderer(textures, width, height){}
 
 void Raycaster::draw(DirectedPositionable player_pos,
-                     std::vector<Positionable> &objects,
-                     std::vector<DirectedPositionable> &directed_objects,
+                     std::vector<Positionable> objects,
+                     std::vector<DirectedPositionable> directed_objects,
                      float camera_plane_x, float camera_plane_y) {
     _drawMap(player_pos, camera_plane_x, camera_plane_y);
     this->sprite_renderer.drawSprites(player_pos, directed_objects,

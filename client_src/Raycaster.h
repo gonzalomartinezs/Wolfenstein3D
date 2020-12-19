@@ -28,9 +28,9 @@ public:
     // Pre: el VERSOR (dir_x, dir_y) y el vector (plane_x, plane_y)
     //      son perpendiculares.
     // Post: dibuja en el renderer la imagen raycasting generada.
-    void draw(DirectedPositionable player_pos, std::vector<Positionable> &objects,
-         std::vector<DirectedPositionable> &directed_objects,
-         float camera_plane_x, float camera_plane_y);
+    void draw(DirectedPositionable player_pos, std::vector<Positionable> objects,
+              std::vector<DirectedPositionable> directed_objects,
+              float camera_plane_x, float camera_plane_y);
 
     // Libera los recursos utilizados por el RayCaster
     ~Raycaster(){}
