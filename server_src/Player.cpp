@@ -66,8 +66,14 @@ void Player::look_for_collision(const Map& map) {
 
 void Player::look_for_item(Items& items) {
 	for (size_t i = 0; i < items.size(); ++i) {
-        //If jugador colisiona con item[i]
-		items[i].equipTo(this->attributes);
+//		if (items[i].collidesWith(player)) {
+            try {
+                items[i]->equipTo(this->attributes);
+                items.remove(i);
+            } catch (...) { //Cambiar por exception
+                std::cout << "Could not use item" << std::endl;
+            }
+    //    }
 	}
 }
 
