@@ -6,23 +6,21 @@
 #define KEY_ROW "length"
 #define KEY_COL "width"
 
-Map::Map(const char* file_name) : n_row(0), n_col(0) {
-	YAML::Node file = YAML::LoadFile(file_name);
-
-	n_row = file[KEY_ROW].as<int>();
-	n_col = file[KEY_COL].as<int>();
-
+Map::Map(const Configuration& config) : n_row(config.getInt(KEY_ROW)),
+										n_col(config.getInt(KEY_COL)) {
 	map = new int*[n_row];
 
 	for (int i = 0; i < n_row; ++i) {
 		map[i] = new int[n_col];
 	}
 
+	config.initializeMatrix(this->n_row, this->n_col, this->map, KEY_MAP);
+/*
 	for (int i = 0; i < n_row; ++i) {
 		for (int j = 0; j < n_col; ++j) {
 			map[i][j] = file[KEY_MAP][i][j].as<int>();
 		}
-	}
+	}*/
 }
 
 bool Map::outOfRange(int x, int y) const {

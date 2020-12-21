@@ -2,13 +2,14 @@
 #define MAP_H
 
 #include <cstddef>
+#include "Configuration.h"
 
 class Map {
 private:
 	long int n_row, n_col;
 	int** map;
 public:
-	Map(const char* file_name);
+	Map(const Configuration& config);
 	int get(int x, int y) const;
 	~Map();
 private:

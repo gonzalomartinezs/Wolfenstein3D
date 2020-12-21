@@ -9,7 +9,7 @@
 #include "../common_src/Timer.h"
 #include "../common_src/Map.h"
 #include "../client_src/textures/TextureID.h"
-
+#include "../common_src/Configuration.h"
 
 class Game {
  private:
@@ -20,7 +20,7 @@ class Game {
     Items items;
  public:
     /* Constructor */
-    Game(std::vector<ThClient*>& _clients, const char* file_name);
+    Game(std::vector<ThClient*>& _clients, const Configuration& config);
 
     void execute();
 

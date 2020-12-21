@@ -4,12 +4,13 @@
 #include <vector>
 
 #include "Item.h"
+#include "Configuration.h"
 
 class Items {
 private:
 	std::vector<Item*> items;
 public:
-	Items(const char* file_name);
+	Items(const Configuration& config);
 	Items(Item& other) = delete;
 	Items& operator=(const Items& other) = delete;
 	Items(Item&& other) = delete;

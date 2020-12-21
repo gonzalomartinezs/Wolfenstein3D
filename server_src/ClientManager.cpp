@@ -3,11 +3,12 @@
 
 #include <vector>
 
-#define MAX_CLIENTS 1
+#define KEY_MAX_CLIENTS "max_clients"
+#define KEY_PORT "port"
 
-ClientManager::ClientManager(const char* port) :
-							socket(NULL, port, AI_PASSIVE),
-							is_connected(true) {
+ClientManager::ClientManager(const Configuration& config) :
+			socket(NULL, config.getString(KEY_PORT).c_str(), AI_PASSIVE),
+			is_connected(true), max_clients(config.getInt(KEY_MAX_CLIENTS)) {
 	socket.bind();
 }
 
@@ -22,7 +23,7 @@ void ClientManager::stopClients(const std::vector<ThClient*>& clients) {
 void ClientManager::operator()(std::vector<ThClient*>& clients) {
 	socket.listen();
 
-	while (is_connected && clients.size() < MAX_CLIENTS) {
+	while (is_connected && clients.size() < this->max_clients) {
 		Peer peer = socket.acceptClient();
 
 		clients.push_back(new ThClient(peer));

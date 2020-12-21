@@ -7,9 +7,8 @@
 
 const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
 
-Game::Game(std::vector<ThClient*>& _clients, const char* file_name) :
-            clients(_clients), map(file_name), items(file_name) {
-//    YAML::Node file = YAML::LoadFile(file_name);
+Game::Game(std::vector<ThClient*>& _clients, const Configuration& config) :
+            clients(_clients), map(config), items(config) {
     this->isRunning = true;
     for (size_t i = 0; i < this->clients.size(); i ++) {
         this->players.emplace_back(0.1, 0.1, 2, 2); //Cambiar (No todos aparecen en la misma posicion)

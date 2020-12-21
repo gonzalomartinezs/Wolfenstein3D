@@ -7,17 +7,9 @@
 
 #define KEY_PORT "port"
 
-GameManager::GameManager(const char* _file_name) : file_name(_file_name) {
+GameManager::GameManager(const char* _file_name) : config(_file_name) {
 	this->game = NULL;
-	YAML::Node file = YAML::LoadFile(file_name);
-
-	if (file[KEY_PORT]) {
-		const std::string port = file[KEY_PORT].as<std::string>();
-		client_manager = new ClientManager(port.c_str());
-	} else {
-		throw ErrorYAML("Key '%s' does not exist in %s.", KEY_PORT,
-						file_name);
-	}
+	client_manager = new ClientManager(config);
 }
 
 void GameManager::operator()() {
@@ -25,7 +17,7 @@ void GameManager::operator()() {
 	try {
 		(*client_manager)(clients);
 
-        this->game = new Game(clients, this->file_name);
+        this->game = new Game(clients, this->config);
 
         this->game->execute();
 
