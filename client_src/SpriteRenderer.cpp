@@ -7,18 +7,18 @@
 #define PI 3.141592
 #define TEXTURES_AMOUNT 8
 
-void SpriteRenderer::drawSprites(DirectedPositionable &player_pos,
+void
+SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView view,
                             std::vector<DirectedPositionable> &directed_objects,
                             std::vector<Positionable> &objects,
-                            float camera_plane_x, float camera_plane_y,
-                            const std::vector<float>& wall_dist) {
+                            const std::vector<float> &wall_dist) {
     std::vector<Positionable> directed_sprites;
     std::vector<Positionable> final_sprites;
     _selectDirectedSprite(player_pos, directed_objects, directed_sprites);
     _combineAndSortSprites(player_pos, objects, directed_sprites,
                            final_sprites);
-    _renderizeSprites(player_pos, final_sprites, camera_plane_x,
-                      camera_plane_y, wall_dist);
+    _renderizeSprites(player_pos, final_sprites, view.getPlaneX(),
+                      view.getPlaneY(), wall_dist);
 }
 
 // ------------------------- Metodos privados --------------------------------//

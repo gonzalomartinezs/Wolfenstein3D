@@ -3,6 +3,7 @@
 #include <vector>
 #include "textures/TexturesContainer.h"
 #include "../common_src/DirectedPositionable.h"
+#include "PlayerView.h"
 
 #define RAY_AMOUNT 320
 
@@ -34,11 +35,10 @@ public:
                             textures(textures), width(width), height(height){}
 
     // Renderiza en la pantalla los sprites del juego
-    void drawSprites(DirectedPositionable &player_pos,
+    void drawSprites(DirectedPositionable &player_pos, PlayerView view,
                      std::vector<DirectedPositionable> &directed_objects,
                      std::vector<Positionable> &objects,
-                     float camera_plane_x, float camera_plane_y,
-                     const std::vector<float>& wall_dist);
+                     const std::vector<float> &wall_dist);
 
     // Libera los recursos utilizados por el spriteRenderer
     ~SpriteRenderer(){}
