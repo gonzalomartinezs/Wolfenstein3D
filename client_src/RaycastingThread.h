@@ -31,6 +31,7 @@ public:
     // Detiene la ejecución del hilo.
     void stop() override;
 
+    // Retorna un bool que indica si se finalizo el proceso o no.
     bool finished() override;
 
     ~RaycastingThread(){}
