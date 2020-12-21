@@ -5,6 +5,7 @@
 #include "textures/TexturesContainer.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Map.h"
+#include "PlayerView.h"
 
 struct RayDirection{
     float x = 0;
@@ -28,9 +29,9 @@ public:
     // Pre: el VERSOR (dir_x, dir_y) y el vector (plane_x, plane_y)
     //      son perpendiculares.
     // Post: dibuja en el renderer la imagen raycasting generada.
-    void draw(DirectedPositionable player_pos, std::vector<Positionable> objects,
-              std::vector<DirectedPositionable> directed_objects,
-              float camera_plane_x, float camera_plane_y);
+    void draw(DirectedPositionable player_pos, PlayerView view,
+              std::vector<Positionable> objects,
+              std::vector<DirectedPositionable> directed_objects);
 
     // Libera los recursos utilizados por el RayCaster
     ~Raycaster(){}

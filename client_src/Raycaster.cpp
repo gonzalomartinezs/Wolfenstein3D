@@ -1,5 +1,8 @@
+#include <iostream>
 #include "Raycaster.h"
 #include "textures/TextureID.h"
+#include "PlayerView.h"
+
 #define RAY_AMOUNT 320
 #define VISUAL_PROPORTION 1.5
 #define TEX_HEIGHT 64
@@ -13,14 +16,13 @@ Raycaster::Raycaster(Map &map, int width, int height,
                                                     height(height), textures(textures),
                                                     sprite_renderer(textures, width, height){}
 
-void Raycaster::draw(DirectedPositionable player_pos,
+void Raycaster::draw(DirectedPositionable player_pos, PlayerView view,
                      std::vector<Positionable> objects,
-                     std::vector<DirectedPositionable> directed_objects,
-                     float camera_plane_x, float camera_plane_y) {
-    _drawMap(player_pos, camera_plane_x, camera_plane_y);
-    this->sprite_renderer.drawSprites(player_pos, directed_objects,
-                                      objects, camera_plane_x, camera_plane_y,
-                                      this->wall_distances);
+                     std::vector<DirectedPositionable> directed_objects) {
+    std::cout << "X: " << player_pos.getX() << ", Y: " << player_pos.getY() << std::endl;
+    _drawMap(player_pos, view.getPlaneX(), view.getPlaneY());
+    this->sprite_renderer.drawSprites(player_pos, view,directed_objects,
+                                      objects, this->wall_distances);
     this->wall_distances.clear();
 }
 
