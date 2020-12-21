@@ -11,14 +11,13 @@
 const float MAX_SHOOTING_ANGLE = PI/6.f;
 const float MAX_SHOOTING_DISTANCE = 10;
 
-Weapon::Weapon() {
+Weapon::Weapon(int _id) : id(_id) {
     this->weaponIsShooting = false;
 }
 
 float Weapon::_randomNumberGenerator() {
     return (static_cast<float>(this->rd())/static_cast<float>(this->rd.max()));
 }
-
 
 float Weapon::_angleProbabilityFunction(float angle) {
     float probability = (-1/MAX_SHOOTING_ANGLE * std::abs(angle)) + 1;
@@ -105,6 +104,10 @@ void Weapon::shoot(std::vector<Player>& players, int shootingPlayerNumber, const
 
 bool Weapon::isShooting() {
     return this->weaponIsShooting;
+}
+
+bool Weapon::operator==(int other_id) const {
+    return (this->id == other_id);
 }
 
 Weapon::~Weapon() {}

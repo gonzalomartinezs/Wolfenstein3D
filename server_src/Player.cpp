@@ -7,7 +7,7 @@
 
 #define INITIAL_AMMO 8
 #define MAX_HEALTH 100
-#define COLLECTIBLE_WEAPONS_AMOUNT 3
+//#define COLLECTIBLE_WEAPONS_AMOUNT 3
 #define INITIAL_SCORE 0
 #define TOTAL_LIVES 3
 
@@ -31,8 +31,8 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
     this->camPlaneY = 1;  // Perpendicular to direction
     this->state = ISNOTMOVING;
 
-    this->weapons.resize(COLLECTIBLE_WEAPONS_AMOUNT, false);
-    this->ammo = INITIAL_AMMO;
+//    this->weapons.resize(COLLECTIBLE_WEAPONS_AMOUNT, false);
+//    this->ammo = INITIAL_AMMO;
 /*
     this->health = MAX_HEALTH;
     this->score = INITIAL_SCORE;
@@ -68,7 +68,7 @@ void Player::look_for_item(Items& items) {
 	for (size_t i = 0; i < items.size(); ++i) {
 //		if (items[i].collidesWith(player)) {
             try {
-                items[i]->equipTo(this->attributes);
+                items[i]->equipTo(this->action);
                 items.remove(i);
             } catch (...) { //Cambiar por exception
                 std::cout << "Could not use item" << std::endl;
@@ -115,20 +115,21 @@ void Player::setState(uint8_t newState) {
 
 void Player::die() {
 
-    std::fill(this->weapons.begin(), this->weapons.end(), false);
+//   std::fill(this->weapons.begin(), this->weapons.end(), false);
 //    this->lives--;
-    this->ammo = INITIAL_AMMO;
+//    this->ammo = INITIAL_AMMO;
 //    this->health = MAX_HEALTH;
     /* Reiniciar posicion */
 }
 
 bool Player::isDead() {
-    return this->attributes.isDead();
+    return this->action.isDead();
 }
 
 void Player::shoot() {
-    this->ammo--;
+//    this->ammo--;
     /* Logica del disparo */
+    //action.shoot();
 }
 
 void Player::receiveShot(int damage) {

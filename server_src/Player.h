@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "Exceptions/GameException.h"
-#include "PlayerAttributes.h"
+#include "PlayerActions.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Items.h"
@@ -12,9 +12,9 @@
 
 class Player : public DirectedPositionable {
 private:
-    PlayerAttributes attributes;
-    uint8_t ammo;
-    std::vector<bool> weapons;
+    PlayerActions action;
+//    uint8_t ammo;
+//    std::vector<bool> weapons;
     float camPlaneX, camPlaneY;
 
     //Movement Speed

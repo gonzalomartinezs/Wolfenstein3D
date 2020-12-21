@@ -2,7 +2,7 @@
 
 #define TIME_BETWEEN_SHOTS 0.1
 
-ChainGun::ChainGun() {}
+ChainGun::ChainGun() : Weapon(CHAIN_GUN) {}
 
 void ChainGun::startShooting() {
     this->weaponIsShooting = true;

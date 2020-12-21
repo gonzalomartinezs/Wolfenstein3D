@@ -1,6 +1,6 @@
 #include "Pistol.h"
 
-Pistol::Pistol() {}
+Pistol::Pistol() : Weapon(PISTOL) {}
 
 void Pistol::startShooting() {
     this->weaponIsShooting = true;

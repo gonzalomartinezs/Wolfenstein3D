@@ -6,8 +6,8 @@
 HealthRecover::HealthRecover(float _x, float _y, TextureID& _texture,
 							int _value) : Item(_x, _y, _texture, _value) {}
 
-void HealthRecover::equipTo(PlayerAttributes& attributes) {
-	attributes.use(this);
+void HealthRecover::equipTo(PlayerActions& action) {
+	action.use(this);
 }
 
 int HealthRecover::operator+(int health) const {

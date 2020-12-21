@@ -6,16 +6,19 @@
 #include <vector>
 #include <random>
 
+enum WEAPON_ID{KNIFE = 0, PISTOL, MACHINE_GUN, CHAIN_GUN, ROCKET_LAUNCHER};
+
 class Player;
 
 class Weapon {
 protected:
     bool weaponIsShooting;
     std::random_device rd;
+    int id;
 
 public:
     /* Constructor */
-    Weapon();
+    Weapon(int _id);
 
     virtual void fireTheGun(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) = 0;
 
@@ -24,6 +27,8 @@ public:
 
     /* Return true if the player is pulling the trigger */
     bool isShooting();
+
+    bool operator==(int other_id) const;
 
     /* Destructor */
     virtual ~Weapon();
