@@ -15,13 +15,6 @@ private:
     PlayerAttributes attributes;
     uint8_t ammo;
     std::vector<bool> weapons;
-    /*
-    uint8_t health;
-    int score;
-    uint8_t lives;
-    bool hasKey;
-    bool isAlive;
-*/
     float camPlaneX, camPlaneY;
 
     //Movement Speed

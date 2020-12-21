@@ -1,4 +1,6 @@
 #include "PlayerAttributes.h"
+#include "../common_src/HealthRecover.h"
+#include "../common_src/Treasure.h"
 
 #define MAX_HEALTH 100
 #define INITIAL_SCORE 0
@@ -11,8 +13,12 @@ PlayerAttributes::PlayerAttributes() {
     this->hasKey = false;
 }
 
-void PlayerAttributes::addHealth(int _health) {
-	this->health += _health;
+void PlayerAttributes::use(HealthRecover* recover) {
+	this->health = (*recover) + this->health;
+}
+
+void PlayerAttributes::use(Treasure* treasure) {
+	this->score = (*treasure) + this->score;
 }
 
 bool PlayerAttributes::isDead() const {

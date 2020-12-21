@@ -7,7 +7,8 @@
 
 #define KEY_PORT "port"
 
-GameManager::GameManager(const char* _file_name) : file_name(_file_name){
+GameManager::GameManager(const char* _file_name) : file_name(_file_name) {
+	this->game = NULL;
 	YAML::Node file = YAML::LoadFile(file_name);
 
 	if (file[KEY_PORT]) {
@@ -42,5 +43,5 @@ void GameManager::stop() {
 
 GameManager::~GameManager() {
 	delete client_manager;
-	delete game;
+	if (this->game != NULL) delete game;
 }

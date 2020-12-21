@@ -19,7 +19,7 @@ Items::Items(const char* file_name) {
 */
 }
 
-Item& Items::operator[](std::size_t i) {
+Item* Items::operator[](std::size_t i) {
 	return this->items[i];
 }
 
@@ -27,4 +27,14 @@ size_t Items::size() const {
 	return this->items.size();
 }
 
-Items::~Items() {}
+void Items::remove(size_t i) {
+//	if (Items::size() < i || Items::size() == 0) throw "Element out of range";
+	delete this->items[i];
+	this->items.erase(this->items.begin() + i);
+}
+
+Items::~Items() {
+	for (size_t i = 0; i < this->items.size(); ++i) {
+		delete this->items[i];
+	}
+}

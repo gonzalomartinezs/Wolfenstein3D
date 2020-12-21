@@ -3,6 +3,9 @@
 
 #include <cstdint>
 
+class HealthRecover;
+class Treasure;
+
 class PlayerAttributes {
 private:
 	uint8_t health, lives;
@@ -10,7 +13,8 @@ private:
     bool hasKey;
 public:
 	PlayerAttributes();
-	void addHealth(int _health);
+	void use(HealthRecover* recover);
+	void use(Treasure* treasure);
 	bool isDead() const;
 	~PlayerAttributes();
 };
