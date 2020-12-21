@@ -5,6 +5,7 @@
 #include "Raycaster.h"
 #include "PlayerView.h"
 #include "EventHandler.h"
+#include "RaycastingThread.h"
 #include "textures/TexturesContainer.h"
 #include "login/ClientLoginScreen.h"
 #include "../common_src/Map.h"
@@ -14,85 +15,73 @@
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
-#define REFRESH_RATE 10
-
+#define REFRESH_RATE 5
 #define IS_NOT_MOVING 0
-#define IS_MOVING_FORWARDS 1
-#define IS_MOVING_BACKWARDS 2
-#define IS_TURNING_LEFT 3
-#define IS_TURNING_RIGHT 4
+
 
 const double TICK_DURATION = 1/60.f; /* miliseconds que tarda en actualizarse el juego */
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    log(); //  genera la nueva pestaña.
+ //   log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
-        Client client(log.getHost(), log.getPort());
+        ProtectedQueue<DrawingInfo> drawing_info;
+        BlockingQueue<int> instructions;
+
         Window window("Wolfenstein 3D", WINDOW_WIDTH, WINDOW_HEIGHT,
-                        SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                        SDL_WINDOW_SHOWN);
-        TexturesContainer tex( window.getRenderer());
+                      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+                      SDL_WINDOW_SHOWN);
+        TexturesContainer tex(window.getRenderer());
 
         Map map("../common_src/config.yaml");
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, tex);
-        EventHandler event_handler(client);
 
-        DirectedPositionable player(2, 2, -1, 1, None);
-        PlayerView view;
+//        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
+        EventHandler event_handler(instructions);
+
+        DirectedPositionable player(2, 2, -1, 0, None);
+        PlayerView view(0,1);
         std::vector<Positionable> static_objects;
-        Positionable asd(3, 3, Barrel);
-        static_objects.push_back(asd);
+        std::vector<DirectedPositionable> directed_objects;
+
+        DrawingInfo initial_info(player,
+                                 view, static_objects,
+                                 directed_objects);
+        RaycastingThread raycasting_thread(drawing_info, raycaster, window, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;
         Timer time_between_updates;
         double last_tick_time;
+
+        std::thread send_thread(&Client::sendInstruction, &client);
+        std::thread recv_thread(&Client::receiveInformation, &client);
+
+        raycasting_thread.start();
+
         while (!quit) {
             time_between_updates.start();
-            std::vector<DirectedPositionable> players;
+            directed_objects.clear();
             const Uint8 *keys = SDL_GetKeyboardState(NULL);
-
-            float old_pos_x = player.getX();
-            float old_pos_y = player.getY();
-            float old_dir_x = player.getDirX();
-            float old_dir_y = player.getDirY();
-            float old_plane_x = view.getPlaneX();
-            float old_plane_y = view.getPlaneY();
 
             event_handler.run(quit, flag, keys);
 
-            client.receiveCoordenates(player, view, players);
-            float step_pos_x = (player.getX() - old_pos_x)/REFRESH_RATE;
-            float step_pos_y = (player.getY() - old_pos_y)/REFRESH_RATE;
-            float step_dir_x = (player.getDirX() - old_dir_x)/REFRESH_RATE;
-            float step_dir_y = (player.getDirY() - old_dir_y)/REFRESH_RATE;
-            float step_plane_x = (view.getPlaneX() - old_plane_x)/REFRESH_RATE;
-            float step_plane_y = (view.getPlaneY() - old_plane_y)/REFRESH_RATE;
-
-            for (int i=0; i<REFRESH_RATE; i++){
-                DirectedPositionable aux(old_pos_x, old_pos_y, old_dir_x, old_dir_y, None);
-                window.clearScreen();
-
-                aux.moveX(step_pos_x * i);
-                aux.moveY(step_pos_y * i);
-                aux.setDirX(old_dir_x + step_dir_x * i);
-                aux.setDirY(old_dir_y + step_dir_y * i);
-
-                raycaster.draw(aux, static_objects, players, old_plane_x + i * step_plane_x, old_plane_y + i * step_plane_y);
-                window.render();
-            }
+            client.receiveInformation();
             last_tick_time = time_between_updates.getTime();
             if (last_tick_time < TICK_DURATION*1000){
                 usleep((TICK_DURATION * 1000 - last_tick_time) * 1000);
             }
         }
+        send_thread.join();
+        recv_thread.join();
+        raycasting_thread.stop();
+        raycasting_thread.join();
     } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
     } catch(...) {
         std::cout << "Unknown error.\n";
     }
-
     return  0;
 }
