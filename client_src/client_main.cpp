@@ -15,15 +15,15 @@
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
-#define REFRESH_RATE 7
+#define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
 
 
-const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/90.f; /* miliseconds que tarda en actualizarse el juego */
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
- //   log(); //  genera la nueva pestaña.
+    log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -38,8 +38,7 @@ int main(int argc, char *argv[]) {
         Map map("../common_src/config.yaml");
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, tex);
 
-//        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        Client client("localhost", "8080", instructions, drawing_info);
+        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         EventHandler event_handler(instructions);
 
         DirectedPositionable player(2, 2, -1, 0, None);

@@ -37,7 +37,7 @@ public:
     ~RaycastingThread(){}
 
 private:
-    void _updateScreen();
+    void _updateScreen(DrawingInfo new_info);
 };
 
 #endif //RAYCASTINGTHREAD_H

@@ -9,18 +9,11 @@ RaycastingThread::RaycastingThread(ProtectedQueue<DrawingInfo> &queue,
 
 void RaycastingThread::run() {
     while(keep_running){
-        if (this->queue.isEmpty()){
-            for (int i=0; i<refresh_rate; i++){
-                window.clearScreen();
-                raycaster.draw(latest_info.getPlayerPos(),
-                               latest_info.getCameraPlanes(),
-                               latest_info.getStaticObjects(),
-                               latest_info.getDirectedObjects());
-                window.render();
-            }
-        } else {
-            _updateScreen();
+        DrawingInfo new_info = this->latest_info;
+        while(!this->queue.isEmpty()){
+            new_info = this->queue.pop();
         }
+        _updateScreen(new_info);
     }
 }
 
@@ -35,8 +28,7 @@ bool RaycastingThread::finished() {
 // ------------------------- Metodos privados --------------------------------//
 // Refresca la pantalla gradualmente tras un movimiento de camara o del
 // jugador, de acuerdo a refresh_rate.
-void RaycastingThread::_updateScreen() {
-    DrawingInfo new_info = this->queue.pop();
+void RaycastingThread::_updateScreen(DrawingInfo new_info) {
     DirectedPositionable old_pos = latest_info.getPlayerPos();
     DirectedPositionable new_pos = new_info.getPlayerPos();
     PlayerView old_view = latest_info.getCameraPlanes();
