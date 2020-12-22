@@ -1,7 +1,6 @@
 #include "Items.h"
 
 Items::Items(const Configuration& config) {
-//	YAML::Node file = YAML::LoadFile(file_name);
 //	initialize items
 /*	TODO:
 	if (file["treasure"]) {

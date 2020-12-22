@@ -3,17 +3,18 @@
 #include "../common_src/Treasure.h"
 #include "Weapons/Weapon.h"
 
-#define MAX_HEALTH 100
-#define INITIAL_SCORE 0
-#define TOTAL_LIVES 3
-#define INITIAL_BULLETS 10
+#define KEY_INITIAL_HEALTH "initial_health"
+#define KEY_INITIAL_SCORE "initial_score"
+#define KEY_TOTAL_LIVES "total_lives"
+#define KEY_HAS_KEY "has_key"
+#define KEY_INITIAL_BULLETS "initial_bullets"
 
-PlayerActions::PlayerActions() {
-    this->health = MAX_HEALTH;
-    this->score = INITIAL_SCORE;
-    this->lives = TOTAL_LIVES;
-    this->hasKey = false;
-    this->bullets = INITIAL_BULLETS;
+PlayerActions::PlayerActions(const Configuration& config) {
+	this->health = config.getInt(KEY_INITIAL_HEALTH);
+    this->score = config.getInt(KEY_INITIAL_SCORE);
+    this->lives = config.getInt(KEY_TOTAL_LIVES);
+    this->hasKey = config.getInt(KEY_HAS_KEY);
+    this->bullets = config.getInt(KEY_INITIAL_BULLETS);
 }
 
 void PlayerActions::use(HealthRecover* recover) {

@@ -13,7 +13,14 @@ public:
 	int getInt(const std::string& key) const;
 	void initializeMatrix(const long int row, const long int col, int** map,
 						const std::string& key) const;
+	float getSubFloat(const std::string& main_key,
+						const std::string& sub_key) const;
+	int getSubInt(const std::string& main_key,
+						const std::string& sub_key) const;
 	~Configuration();
+private:
+	float getFloat(const YAML::Node& sub_file, const std::string& key) const;
+	int getInt(const YAML::Node& sub_file, const std::string& key) const;
 };
 
 #endif

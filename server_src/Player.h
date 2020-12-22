@@ -9,12 +9,11 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Items.h"
 #include "../common_src/Item.h"
+#include "../common_src/Configuration.h"
 
 class Player : public DirectedPositionable {
 private:
     PlayerActions action;
-//    uint8_t ammo;
-//    std::vector<bool> weapons;
     float camPlaneX, camPlaneY;
 
     //Movement Speed
@@ -25,7 +24,8 @@ private:
 
 public:
     /* Constructor */
-    Player(float moveSpeed, float rotSpeed, float posX, float posY);
+//    Player(float moveSpeed, float rotSpeed, float posX, float posY);
+    Player(const Configuration& config, const std::string& player_number);
 
     void updatePlayer(const Map& map, Items& items);
 
