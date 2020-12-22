@@ -19,7 +19,7 @@
 #define IS_NOT_MOVING 0
 
 
-const double TICK_DURATION = 1/90.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse el juego */
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
         Map map("../common_src/config.yaml");
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, tex);
 
+        //Client client("localhost", "5875", instructions, drawing_info);
         Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         EventHandler event_handler(instructions);
 
