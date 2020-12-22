@@ -8,6 +8,7 @@
 #include "RaycastingThread.h"
 #include "textures/TexturesContainer.h"
 #include "login/ClientLoginScreen.h"
+#include "../common_src/Configuration.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]) {
                       SDL_WINDOW_SHOWN);
         TexturesContainer tex(window.getRenderer());
 
-        Map map("../common_src/config.yaml");
+        Map map(Configuration("../common_src/config.yaml"));
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, tex);
 
         //Client client("localhost", "5875", instructions, drawing_info);

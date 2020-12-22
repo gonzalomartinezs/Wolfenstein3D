@@ -4,8 +4,6 @@
 
 #include <string>
 
-#define KEY_PORT "port"
-
 GameManager::GameManager(const char* _file_name) : config(_file_name) {
 	this->game = NULL;
 	client_manager = new ClientManager(config);

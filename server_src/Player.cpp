@@ -5,12 +5,6 @@
 #include <cmath>
 #include <cstring>
 
-#define INITIAL_AMMO 8
-#define MAX_HEALTH 100
-//#define COLLECTIBLE_WEAPONS_AMOUNT 3
-#define INITIAL_SCORE 0
-#define TOTAL_LIVES 3
-
 #define WALKABLE 0
 #define PLAYER_SIZE 0.1
 #define RAYS_AMOUNT 20
@@ -117,12 +111,8 @@ void Player::setState(uint8_t newState) {
 }
 
 void Player::die() {
-
-//   std::fill(this->weapons.begin(), this->weapons.end(), false);
-//    this->lives--;
-//    this->ammo = INITIAL_AMMO;
-//    this->health = MAX_HEALTH;
-    /* Reiniciar posicion */
+    //Reiniciar posicion
+    //this->action.respawn()
 }
 
 bool Player::isDead() {
@@ -132,7 +122,7 @@ bool Player::isDead() {
 void Player::shoot() {
 //    this->ammo--;
     /* Logica del disparo */
-    //action.shoot();
+    //this->action.shoot();
 }
 
 void Player::receiveShot(int damage) {

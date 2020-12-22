@@ -18,9 +18,6 @@ public:
 	int getSubInt(const std::string& main_key,
 						const std::string& sub_key) const;
 	~Configuration();
-private:
-	float getFloat(const YAML::Node& sub_file, const std::string& key) const;
-	int getInt(const YAML::Node& sub_file, const std::string& key) const;
 };
 
 #endif

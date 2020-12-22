@@ -5,6 +5,26 @@ Configuration::Configuration(const char* filename) {
 	this->file = YAML::LoadFile(filename);
 }
 
+static float _getFloat(const YAML::Node& sub_file,
+							const std::string& key) {
+	if (sub_file[key]) {
+		return sub_file[key].as<float>();
+	}
+
+	throw ConfigurationException("Key '%s' does not exist. Can't get float.",
+								key.c_str());
+}
+
+static int _getInt(const YAML::Node& sub_file,
+						const std::string& key) {
+	if (sub_file[key]) {
+		return sub_file[key].as<int>();
+	}
+
+	throw ConfigurationException("Key '%s' does not exist. Can't get int.",
+								key.c_str());
+}
+
 std::string Configuration::getString(const std::string& key) const {
 	if (this->file[key]) {
 		return std::move(this->file[key].as<std::string>());
@@ -15,14 +35,7 @@ std::string Configuration::getString(const std::string& key) const {
 }
 
 int Configuration::getInt(const std::string& key) const {
-/*	if (this->file[key]) {
-		return this->file[key].as<int>();
-	}
-
-	throw ConfigurationException("Key '%s' does not exist. Can't get int",
-								key.c_str());
-								*/
-	return Configuration::getInt(this->file, key);
+	return _getInt(this->file, key);
 }
 
 void Configuration::initializeMatrix(const long int row,
@@ -42,31 +55,22 @@ void Configuration::initializeMatrix(const long int row,
 
 float Configuration::getSubFloat(const std::string& main_key,
 								const std::string& sub_key) const {
-	return Configuration::getFloat(this->file[main_key], sub_key);
+	if (!this->file[main_key]){
+		throw ConfigurationException("Key '%s' does not exist.",
+									main_key.c_str());
+	}
+
+	return _getFloat(this->file[main_key], sub_key);
 }
 
 int Configuration::getSubInt(const std::string& main_key,
 							const std::string& sub_key) const {
-	return Configuration::getInt(this->file[main_key], sub_key);
-}
-
-float Configuration::getFloat(const YAML::Node& sub_file,
-							const std::string& key) const {
-	if (sub_file[key]) {
-		return sub_file[key].as<float>();
+	if (!this->file[main_key]){
+		throw ConfigurationException("Key '%s' does not exist.",
+									main_key.c_str());
 	}
 
-	throw ConfigurationException("Key '%s' does not exist. Can't get float.",
-								key.c_str());
+	return _getInt(this->file[main_key], sub_key);
 }
 
-int Configuration::getInt(const YAML::Node& sub_file,
-						const std::string& key) const {
-	if (sub_file[key]) {
-		return sub_file[key].as<int>();
-	}
-
-	throw ConfigurationException("Key '%s' does not exist. Can't get int.",
-								key.c_str());
-}
 Configuration::~Configuration() {}

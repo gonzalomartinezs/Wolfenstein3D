@@ -1,5 +1,4 @@
 #include "Map.h"
-#include "yaml-cpp/yaml.h"
 #include "Exceptions/ErrorMap.h"
 
 #define KEY_MAP "map"
