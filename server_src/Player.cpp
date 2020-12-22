@@ -33,9 +33,9 @@ Player::Player(const Configuration& config, const std::string& player_number)
                             config.getSubInt(player_number, "dir_y"), None),
             action(config) {
     this->moveSpeed = config.getSubFloat(player_number, "move_speed");
-    this->rotSpeed = config.getSubFloat(player_number, "rot_speed");;
-    this->camPlaneX = config.getSubInt(player_number, "cam_plane_x");  // Perpendicular to direction
-    this->camPlaneY = config.getSubInt(player_number, "cam_plane_y");  // Perpendicular to direction
+    this->rotSpeed = config.getSubFloat(player_number, "rot_speed");
+    this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
+    this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
 }
 
