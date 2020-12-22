@@ -1,6 +1,4 @@
-#include <iostream>
 #include "RaycastingThread.h"
-
 RaycastingThread::RaycastingThread(ProtectedQueue<DrawingInfo> &queue,
                         Raycaster &raycaster, Window &window,
                         DrawingInfo initial_info, int refresh_rate):
@@ -43,8 +41,6 @@ void RaycastingThread::_updateScreen() {
     DirectedPositionable new_pos = new_info.getPlayerPos();
     PlayerView old_view = latest_info.getCameraPlanes();
 
-    std::cout << "recvX: " << new_info.getCameraPlanes().getPlaneX() << ", recvY: " << new_info.getCameraPlanes().getPlaneY() << std::endl;
-
     float old_dir_x = old_pos.getDirX();
     float old_dir_y = old_pos.getDirY();
     float old_plane_x = old_view.getPlaneX();
@@ -62,8 +58,8 @@ void RaycastingThread::_updateScreen() {
     for (int i=0; i<refresh_rate; i++){
         window.clearScreen();
 
-        old_pos.moveX(step_pos_x * i);
-        old_pos.moveY(step_pos_y * i);
+        old_pos.moveX(step_pos_x);
+        old_pos.moveY(step_pos_y);
         old_pos.setDirX(old_dir_x + step_dir_x * i);
         old_pos.setDirY(old_dir_y + step_dir_y * i);
         old_view.movePlaneX(old_plane_x + step_plane_x * i);
