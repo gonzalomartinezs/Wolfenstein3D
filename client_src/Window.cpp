@@ -41,4 +41,5 @@ Window::~Window() {
         SDL_DestroyWindow(this->window);
         this->window = nullptr;
     }
+    SDL_Quit();
 }
