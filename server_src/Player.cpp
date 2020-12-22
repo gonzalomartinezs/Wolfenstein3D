@@ -22,7 +22,7 @@
 #define ISMOVINGBACKWARDS 2
 #define ISTURNINGLEFT 3
 #define ISTURNINGRIGHT 4
-
+/*
 Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
                 DirectedPositionable(posX, posY, -1, 0, None) {
     this->moveSpeed = moveSpeed;
@@ -30,16 +30,19 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
     this->camPlaneX = 0;  // Perpendicular to direction
     this->camPlaneY = 1;  // Perpendicular to direction
     this->state = ISNOTMOVING;
-
-//    this->weapons.resize(COLLECTIBLE_WEAPONS_AMOUNT, false);
-//    this->ammo = INITIAL_AMMO;
-/*
-    this->health = MAX_HEALTH;
-    this->score = INITIAL_SCORE;
-    this->lives = TOTAL_LIVES;
-    this->hasKey = false;
-    this->isAlive = true;
+}
 */
+Player::Player(const Configuration& config, const std::string& player_number)
+            : DirectedPositionable(config.getSubFloat(player_number, "pos_x"),
+                            config.getSubFloat(player_number, "pos_y"),
+                            config.getSubInt(player_number, "dir_x"), 
+                            config.getSubInt(player_number, "dir_y"), None),
+            action(config) {
+    this->moveSpeed = config.getSubFloat(player_number, "move_speed");
+    this->rotSpeed = config.getSubFloat(player_number, "rot_speed");;
+    this->camPlaneX = config.getSubInt(player_number, "cam_plane_x");  // Perpendicular to direction
+    this->camPlaneY = config.getSubInt(player_number, "cam_plane_y");  // Perpendicular to direction
+    this->state = ISNOTMOVING;
 }
 
 static void initialize_rays(float *x, float *y, float radius, int rays) {
@@ -70,8 +73,8 @@ void Player::look_for_item(Items& items) {
             try {
                 items[i]->equipTo(this->action);
                 items.remove(i);
-            } catch (...) { //Cambiar por exception
-                std::cout << "Could not use item" << std::endl;
+            } catch (const std::exception& e) {
+                std::cout << e.what() << std::endl;
             }
     //    }
 	}

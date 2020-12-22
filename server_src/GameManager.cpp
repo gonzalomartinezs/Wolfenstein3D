@@ -1,6 +1,5 @@
 #include "GameManager.h"
-#include "yaml-cpp/yaml.h"
-#include "ErrorYAML.h"
+#include "../common_src/Exceptions/ConfigurationException.h"
 #include "Game.h"
 
 #include <string>

@@ -11,7 +11,8 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config) :
             clients(_clients), map(config), items(config) {
     this->isRunning = true;
     for (size_t i = 0; i < this->clients.size(); i ++) {
-        this->players.emplace_back(0.02, 0.02, 2, 2); //Cambiar (No todos aparecen en la misma posicion)
+        std::string player_number = "player_" + std::to_string(i);
+        this->players.emplace_back(config, player_number);
     }
 }
 

@@ -15,12 +15,6 @@ Map::Map(const Configuration& config) : n_row(config.getInt(KEY_ROW)),
 	}
 
 	config.initializeMatrix(this->n_row, this->n_col, this->map, KEY_MAP);
-/*
-	for (int i = 0; i < n_row; ++i) {
-		for (int j = 0; j < n_col; ++j) {
-			map[i][j] = file[KEY_MAP][i][j].as<int>();
-		}
-	}*/
 }
 
 bool Map::outOfRange(int x, int y) const {
@@ -32,11 +26,11 @@ int Map::get(int x, int y) const {
 	return map[x][y];
 }
 
-long Map::get_n_row() {
+long Map::get_n_row() const{
     return this->n_row;
 }
 
-long Map::get_n_col() {
+long Map::get_n_col() const{
     return this->n_col;
 }
 

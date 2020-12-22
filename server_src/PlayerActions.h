@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <vector>
+#include "../common_src/Configuration.h"
 
 class Weapon;
 class HealthRecover;
@@ -18,7 +19,7 @@ private:
     std::vector<Weapon*> weapons;
     int bullets;
 public:
-	PlayerActions();
+	PlayerActions(const Configuration& config);
 	void use(HealthRecover* recover);
 	void use(Treasure* treasure);
 	bool hasWeapon(int id) const;
