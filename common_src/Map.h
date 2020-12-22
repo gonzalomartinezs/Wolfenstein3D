@@ -11,6 +11,8 @@ private:
 public:
 	Map(const Configuration& config);
 	int get(int x, int y) const;
+    long int get_n_row();
+    long int get_n_col();
 	~Map();
 private:
 	bool outOfRange(int x, int y) const;

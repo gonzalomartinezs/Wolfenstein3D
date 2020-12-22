@@ -32,6 +32,14 @@ int Map::get(int x, int y) const {
 	return map[x][y];
 }
 
+long Map::get_n_row() {
+    return this->n_row;
+}
+
+long Map::get_n_col() {
+    return this->n_col;
+}
+
 Map::~Map() {
 	for (int i = 0; i < n_row; ++i) {
 		delete[] map[i];
