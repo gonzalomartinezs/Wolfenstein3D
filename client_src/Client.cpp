@@ -1,6 +1,7 @@
 #include <cstring>
 #include <sstream>
 #include <string>
+#include <iostream>
 #include "Client.h"
 
 #define FLOAT_SIZE sizeof(float)
@@ -18,23 +19,23 @@ Client::Client(std::string host, std::string service,
 
 void Client::sendInstruction() {
     ssize_t sent = 0;
-    while (is_connected && sent >= 0){
-        uint8_t instruction = this->instructions.pop();
-        sent = this->peer.send(&instruction, sizeof(uint8_t));
-    }
+    try{
+        while (is_connected && sent >= 0 && !instructions.isWorking()){
+            uint8_t instruction = this->instructions.pop();
+            sent = this->peer.send(&instruction, sizeof(uint8_t));
+        }
+    } catch (WolfensteinException& e){}
+    std::cout<<"fin send\n";
 }
 
 ssize_t Client::receiveInformation() {
-    uint8_t bytes_to_receive;
-    uint8_t bytes_received[MAX_MESSAGE_SIZE];
-    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
+    while(is_connected){
+        uint8_t bytes_to_receive;
+        uint8_t bytes_received[MAX_MESSAGE_SIZE];
+        memset(bytes_received, 0, MAX_MESSAGE_SIZE);
 
-    this->peer.recv(&bytes_to_receive, 1);
-    this->peer.recv(bytes_received, bytes_to_receive);
-
-    int player_size = PLAYER_ATTRIBUTES * FLOAT_SIZE;
-
-    if(bytes_to_receive >= player_size){
+        this->peer.recv(&bytes_to_receive, 1);
+        this->peer.recv(bytes_received, bytes_to_receive);
         std::vector<float> coordinates;
         DirectedPositionable player(0, 0, 0, 0, None);
         PlayerView view;
@@ -45,9 +46,8 @@ ssize_t Client::receiveInformation() {
         _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive, directed_objects, coordinates);
         DrawingInfo new_info(player, view, objects, directed_objects);
         this->drawing_info.push(new_info);
-    } else {
-        throw ; // pocos bytes recibidos
     }
+    std::cout<<"fin recv\n";
     return 0;
 }
 
@@ -55,13 +55,11 @@ ssize_t Client::receiveInformation() {
 void Client::shutdown() {
     this->is_connected = false;
     this->socket.stop();
+    this->instructions.doneAdding();
 }
 
 Client::~Client() {
-    if (is_connected){
-        this->is_connected = false;
-        this->socket.stop();
-    }
+    if (is_connected) shutdown();
 }
 
 
@@ -119,7 +117,6 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
         players.push_back(other_player);
     }
 }
-
 
 
 

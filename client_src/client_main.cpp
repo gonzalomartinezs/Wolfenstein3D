@@ -15,11 +15,11 @@
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
-#define REFRESH_RATE 5
+#define REFRESH_RATE 7
 #define IS_NOT_MOVING 0
 
 
-const double TICK_DURATION = 1/60.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/30.f; /* miliseconds que tarda en actualizarse el juego */
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
@@ -68,15 +68,15 @@ int main(int argc, char *argv[]) {
 
             event_handler.run(quit, flag, keys);
 
-            client.receiveInformation();
             last_tick_time = time_between_updates.getTime();
             if (last_tick_time < TICK_DURATION*1000){
                 usleep((TICK_DURATION * 1000 - last_tick_time) * 1000);
             }
         }
+        client.shutdown();
+        raycasting_thread.stop();
         send_thread.join();
         recv_thread.join();
-        raycasting_thread.stop();
         raycasting_thread.join();
     } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
