@@ -37,7 +37,6 @@ Texture::Texture(std::string path, SDL_Renderer* renderer,SDL_Surface* surface):
 
 void Texture::render(SDL_Rect *source, SDL_Rect *dest) {
     SDL_RenderCopy(this->renderer, this->texture, source, dest);
-    SDL_RenderFillRect(this->renderer, source);
 }
 
 void Texture::changeColorModulation(Uint8 mod) {
