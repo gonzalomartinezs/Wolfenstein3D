@@ -1,13 +1,12 @@
-#include "RaycastingThread.h"
-RaycastingThread::RaycastingThread(ProtectedQueue<DrawingInfo> &queue,
-                        Raycaster &raycaster, Window &window,
-                        DrawingInfo initial_info, int refresh_rate):
-                        queue(queue), raycaster(raycaster), window(window),
-                        keep_running(true), refresh_rate(refresh_rate),
-                        latest_info(initial_info){}
+#include "GameInterface.h"
+GameInterface::GameInterface(UI_Handler& ui_handler,
+                             ProtectedQueue<DrawingInfo> &queue,
+                             DrawingInfo initial_info, int refresh_rate):
+                        ui_handler(ui_handler), queue(queue), keep_running(true),
+                        refresh_rate(refresh_rate), latest_info(initial_info){}
 
 
-void RaycastingThread::run() {
+void GameInterface::run() {
     while(keep_running){
         DrawingInfo new_info = this->latest_info;
         while(!this->queue.isEmpty()){
@@ -17,22 +16,24 @@ void RaycastingThread::run() {
     }
 }
 
-void RaycastingThread::stop() {
+void GameInterface::stop() {
     this->keep_running = false;
 }
 
-bool RaycastingThread::finished() {
+bool GameInterface::finished() {
     return !(this->keep_running);
 }
 
 // ------------------------- Metodos privados --------------------------------//
 // Refresca la pantalla gradualmente tras un movimiento de camara o del
 // jugador, de acuerdo a refresh_rate.
-void RaycastingThread::_updateScreen(DrawingInfo new_info) {
+void GameInterface::_updateScreen(DrawingInfo new_info) {
     DirectedPositionable old_pos = latest_info.getPlayerPos();
     DirectedPositionable new_pos = new_info.getPlayerPos();
     PlayerView old_view = latest_info.getCameraPlanes();
 
+    float old_x = old_pos.getX();
+    float old_y = old_pos.getY();
     float old_dir_x = old_pos.getDirX();
     float old_dir_y = old_pos.getDirY();
     float old_plane_x = old_view.getPlaneX();
@@ -48,19 +49,21 @@ void RaycastingThread::_updateScreen(DrawingInfo new_info) {
                           latest_info.getCameraPlanes().getPlaneY())/refresh_rate;
 
     for (int i=0; i<refresh_rate; i++){
-        window.clearScreen();
-
-        old_pos.moveX(step_pos_x);
-        old_pos.moveY(step_pos_y);
+        ui_handler.clearScreen();
+        ui_handler.loadBackground();
+        old_pos.setX(old_x + step_pos_x * i);
+        old_pos.setY(old_y + step_pos_y * i);
         old_pos.setDirX(old_dir_x + step_dir_x * i);
         old_pos.setDirY(old_dir_y + step_dir_y * i);
         old_view.movePlaneX(old_plane_x + step_plane_x * i);
         old_view.movePlaneY(old_plane_y + step_plane_y * i);
 
-        raycaster.draw(old_pos, old_view, new_info.getStaticObjects(),
+        ui_handler.raycast(old_pos, old_view, new_info.getStaticObjects(),
                        new_info.getDirectedObjects());
-        window.render();
+        ui_handler.loadPlayerInterface();
+        ui_handler.render();
     }
     this->latest_info = new_info;
 }
+
 
