@@ -4,8 +4,9 @@
 #include "Window.h"
 #include "Raycaster.h"
 #include "PlayerView.h"
+#include "UI_Handler.h"
 #include "EventHandler.h"
-#include "RaycastingThread.h"
+#include "GameInterface.h"
 #include "textures/TexturesContainer.h"
 #include "login/ClientLoginScreen.h"
 #include "../common_src/Configuration.h"
@@ -24,7 +25,7 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    log(); //  genera la nueva pestaña.
+//    log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -34,13 +35,15 @@ int main(int argc, char *argv[]) {
         Window window("Wolfenstein 3D", WINDOW_WIDTH, WINDOW_HEIGHT,
                       SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                       SDL_WINDOW_SHOWN);
-        TexturesContainer tex(window.getRenderer());
+        TexturesContainer tex(window.getRenderer(), window.getSurface());
 
         Map map(Configuration("../common_src/config.yaml"));
         Raycaster raycaster(map, WINDOW_WIDTH, WINDOW_HEIGHT, tex);
+        UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
+                              WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        //Client client("localhost", "5875", instructions, drawing_info);
-        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
+        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         EventHandler event_handler(instructions);
 
         DirectedPositionable player(2, 2, -1, 0, None);
@@ -51,7 +54,7 @@ int main(int argc, char *argv[]) {
         DrawingInfo initial_info(player,
                                  view, static_objects,
                                  directed_objects);
-        RaycastingThread raycasting_thread(drawing_info, raycaster, window, initial_info, REFRESH_RATE);
+        GameInterface game_interface(ui_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;
         Timer time_between_updates;
@@ -60,7 +63,7 @@ int main(int argc, char *argv[]) {
         std::thread send_thread(&Client::sendInstruction, &client);
         std::thread recv_thread(&Client::receiveInformation, &client);
 
-        raycasting_thread.start();
+        game_interface.start();
 
         while (!quit) {
             time_between_updates.start();
@@ -75,10 +78,10 @@ int main(int argc, char *argv[]) {
             }
         }
         client.shutdown();
-        raycasting_thread.stop();
+        game_interface.stop();
         send_thread.join();
         recv_thread.join();
-        raycasting_thread.join();
+        game_interface.join();
     } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
     } catch(...) {
