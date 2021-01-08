@@ -15,14 +15,11 @@ public:
     Window(std::string name, int width, int height, int pos_x, int pos_y,
            Uint32 flag);
 
-    // Renderiza el contenido de la ventana.
-    void render();
-
-    // Limpia el contenido de la ventana.
-    void clearScreen();
-
     // Retorna el renderer de la ventana.
     SDL_Renderer* getRenderer() const;
+
+    // Retorna la superficie de la ventana.
+    SDL_Surface* getSurface() const;
 
     // Libera los recursos utilizados por la ventana.
     ~Window();

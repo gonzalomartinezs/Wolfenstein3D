@@ -1,35 +1,27 @@
 #include "Window.h"
+#include <SDL2/SDL_image.h>
 
 Window::Window(std::string name, int width, int height, int pos_x, int pos_y,
                Uint32 flag) : width(width), height(height) {
-    int errCode = SDL_Init(SDL_INIT_VIDEO);
-    if (errCode) {
-        throw ; // exception
-    }
+    int err_code_sdl = SDL_Init(SDL_INIT_VIDEO);
+    if (err_code_sdl) throw ; // exception
+    IMG_Init(IMG_INIT_PNG);
+
     this->window = SDL_CreateWindow(name.c_str(), pos_x, pos_y, width,
                                     height, flag);
-    if (this->window == nullptr) {
-        throw ; // exception
-    }
+    if (this->window == nullptr) throw ; // exception
+
     this->renderer = SDL_CreateRenderer(this->window, -1,
                                         SDL_RENDERER_ACCELERATED);
-    if (this->renderer == nullptr) {
-        throw ; // exception
-    }
-}
-
-void Window::render() {
-    SDL_RenderPresent(this->renderer);
-}
-
-
-void Window::clearScreen() {
-    SDL_SetRenderDrawColor(this->renderer, 0, 0, 0, 255);
-    SDL_RenderClear(this->renderer);
+    if (this->renderer == nullptr) throw ; // exception
 }
 
 SDL_Renderer *Window::getRenderer() const {
     return this->renderer;
+}
+
+SDL_Surface *Window::getSurface() const {
+    return SDL_GetWindowSurface(this->window);
 }
 
 Window::~Window() {
@@ -43,3 +35,5 @@ Window::~Window() {
     }
     SDL_Quit();
 }
+
+
