@@ -13,6 +13,8 @@ enum TextureID{
     Guard_5,
     Guard_6,
     Guard_7,
+    Background,
+    MainInterface
 };
 
 #endif //TEXTUREID_H

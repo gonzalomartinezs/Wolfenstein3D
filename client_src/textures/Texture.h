@@ -10,7 +10,8 @@ private:
 
 public:
     // Crea una textura en base al path recibido.
-    Texture(std::string path, SDL_Renderer* renderer);
+    Texture(std::string path, SDL_Renderer* renderer,
+                                                SDL_Surface* surface=nullptr);
 
     // Toma el fragmento source de la textura y lo adapta a la forma de dest.
     void render(SDL_Rect* source, SDL_Rect* dest);
