@@ -9,10 +9,12 @@ class TexturesContainer {
 private:
     std::unordered_map<TextureID, Texture*> textures;
     SDL_Renderer* renderer;
+    SDL_Surface* window_surface;
 
 public:
     // Crea un contenedor de texturas con todas las texturas del juego cargadas
-    explicit TexturesContainer(SDL_Renderer* renderer);
+    explicit TexturesContainer(SDL_Renderer *renderer,
+                               SDL_Surface *window_surface);
 
     // Retorna un puntero a la textura solicitada.
     Texture* get(TextureID id);
