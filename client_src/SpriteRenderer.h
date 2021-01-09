@@ -27,12 +27,14 @@ private:
     TexturesContainer& textures;
     int width;
     int height;
+    int begin_x;
+    int begin_y;
 
 public:
     // Pre: renderer se encuentra inicializado.
     // Post: Crea un spriteRenderer listo para ser utilizado.
-    SpriteRenderer(TexturesContainer& textures, int width, int height):
-                            textures(textures), width(width), height(height){}
+    SpriteRenderer(TexturesContainer &textures, int begin_x, int begin_y,
+                   int width, int height) : textures(textures), width(width), height(height){}
 
     // Renderiza en la pantalla los sprites del juego
     void drawSprites(DirectedPositionable &player_pos, PlayerView view,

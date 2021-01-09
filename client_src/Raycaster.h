@@ -20,11 +20,14 @@ private:
     std::vector<float> wall_distances;
     int width;
     int height;
+    int begin_x;
+    int begin_y;
 
 public:
     // Pre: renderer se encuentra inicializado.
     // Post: crear un Raycaster listo para ser utilizado.
-    Raycaster(Map &map, int width, int height, TexturesContainer &textures);
+    Raycaster(Map &map, int begin_x, int begin_y, int width, int height,
+              TexturesContainer &textures);
 
     // Pre: el VERSOR (dir_x, dir_y) y el vector (plane_x, plane_y)
     //      son perpendiculares.

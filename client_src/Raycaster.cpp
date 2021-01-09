@@ -11,10 +11,13 @@
 #define SHADE 128
 
 
-Raycaster::Raycaster(Map &map, int width, int height,
-                     TexturesContainer &textures) : map(map), width(width),
+Raycaster::Raycaster(Map &map, int begin_x, int begin_y, int width, int height,
+                     TexturesContainer &textures) : map(map), begin_x(begin_x),
+                                                    begin_y(begin_y), width(width),
                                                     height(height), textures(textures),
-                                                    sprite_renderer(textures, width, height){}
+                                                    sprite_renderer(textures, 0,
+                                                                    0, width,
+                                                                    height) {}
 
 void Raycaster::draw(DirectedPositionable player_pos, PlayerView view,
                      std::vector<Positionable> objects,
@@ -132,7 +135,7 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
     }
 
     int band_width =  width/RAY_AMOUNT;
-    SDL_Rect stretched = {ray_number*band_width, draw_start, band_width,
+    SDL_Rect stretched = {ray_number*band_width, draw_start + begin_y, band_width,
                           draw_end-draw_start};
     if (hit_axis == 'y'){
         texture->changeColorModulation(SHADE);
