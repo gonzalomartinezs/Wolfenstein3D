@@ -1,10 +1,15 @@
 #include "Window.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 Window::Window(std::string name, int width, int height, int pos_x, int pos_y,
                Uint32 flag) : width(width), height(height) {
     int err_code_sdl = SDL_Init(SDL_INIT_VIDEO);
     if (err_code_sdl) throw ; // exception
+
+    err_code_sdl = TTF_Init();
+    if (err_code_sdl) throw ; // exception
+
     IMG_Init(IMG_INIT_PNG);
 
     this->window = SDL_CreateWindow(name.c_str(), pos_x, pos_y, width,
@@ -33,6 +38,8 @@ Window::~Window() {
         SDL_DestroyWindow(this->window);
         this->window = nullptr;
     }
+    if (TTF_WasInit()) TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
 }
 
