@@ -10,7 +10,7 @@ Window::Window(std::string name, int width, int height, int pos_x, int pos_y,
     err_code_sdl = TTF_Init();
     if (err_code_sdl) throw ; // exception
 
-    IMG_Init(IMG_INIT_PNG);
+    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) throw ; // exception
 
     this->window = SDL_CreateWindow(name.c_str(), pos_x, pos_y, width,
                                     height, flag);
