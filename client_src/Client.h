@@ -48,6 +48,7 @@ public:
     ~Client();
 
 private:
+    void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received);
     void
     _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                              std::vector<float> &coordinates,

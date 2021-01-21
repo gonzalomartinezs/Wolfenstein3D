@@ -5,8 +5,11 @@
 #include "Client.h"
 
 #define FLOAT_SIZE sizeof(float)
+#define UINT_ATTRIBUTES 4
+#define INT_ATTRIBUTES 2
+#define PLAYER_INFO 4 + 2 * sizeof(int) // lives, hp, key, weapon, ammo(int), score(int)
 #define PLAYER_ATTRIBUTES 6
-#define PLAYERS_ATTRIBUTES 5
+#define OTHER_PLAYERS_ATTRIBUTES 5
 #define MAX_MESSAGE_SIZE 256
 
 Client::Client(std::string host, std::string service,
@@ -31,20 +34,22 @@ void Client::sendInstruction() {
 ssize_t Client::receiveInformation() {
     while(is_connected){
         uint8_t bytes_to_receive;
-        uint8_t bytes_received[MAX_MESSAGE_SIZE];
+        uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
         memset(bytes_received, 0, MAX_MESSAGE_SIZE);
 
         this->peer.recv(&bytes_to_receive, 1);
         this->peer.recv(bytes_received, bytes_to_receive);
-        std::vector<float> coordinates;
         DirectedPositionable player(0, 0, 0, 0, None);
         PlayerView view;
+        std::vector<float> coordinates;
+        std::vector<int> player_info;
         std::vector<Positionable> objects;
         std::vector<DirectedPositionable> directed_objects;
+        _assignPlayerInfo(player_info, bytes_received);
         _assignPlayerCoordenates(player, view, coordinates,
                                  bytes_received);
         _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive, directed_objects, coordinates);
-        DrawingInfo new_info(player, view, objects, directed_objects);
+        DrawingInfo new_info(player, view, player_info,objects, directed_objects);
         this->drawing_info.push(new_info);
     }
     std::cout<<"fin recv\n";
@@ -64,6 +69,20 @@ Client::~Client() {
 
 
 //-------------------------- Metodos privados --------------------------------//
+// Asigna la informacion del jugador (vida, balas, arma, ...) a sus atributos
+void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) {
+    uint8_t received_uint8;
+    int received_int;
+    for(int i=0; i< UINT_ATTRIBUTES; i++){
+        memcpy(&received_uint8, bytes_received + i * sizeof(uint8_t), sizeof(uint8_t));
+        info.push_back(int(received_uint8));
+    }
+    for(int i=0; i< INT_ATTRIBUTES; i++){
+        memcpy(&received_int, bytes_received +
+                UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo
+        info.push_back(received_int);
+    }
+}
 
 // Asigna las coordenadas recibidas a los atributos del jugador
 void
@@ -72,7 +91,7 @@ Client::_assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                                  uint8_t *bytes_received) {
     float received;
     for (std::size_t i = 0; i < PLAYER_ATTRIBUTES; i++) {
-        memcpy(&received, bytes_received + FLOAT_SIZE * i, FLOAT_SIZE);
+        memcpy(&received, bytes_received + PLAYER_INFO + FLOAT_SIZE * i, FLOAT_SIZE);
         coordinates.push_back(received);
     }
     player.setX(coordinates[0]);
@@ -91,8 +110,8 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
 
     float received;
     uint8_t texture;
-    int user_size = PLAYER_ATTRIBUTES * FLOAT_SIZE;
-    int players_size = ((PLAYERS_ATTRIBUTES - 1) * FLOAT_SIZE + 1);
+    int user_size = PLAYER_ATTRIBUTES * FLOAT_SIZE + PLAYER_INFO;
+    int players_size = ((OTHER_PLAYERS_ATTRIBUTES - 1) * FLOAT_SIZE + 1);
     int players_amount = (bytes_to_receive - user_size) / players_size;
 
     for (int i = 0; i < players_amount; i++) {
@@ -108,7 +127,7 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
         coordinates.push_back((float)texture);
     }
 
-    for(std::size_t j=PLAYER_ATTRIBUTES; j < coordinates.size(); j+=PLAYERS_ATTRIBUTES){
+    for(std::size_t j=PLAYER_ATTRIBUTES; j < coordinates.size(); j+=OTHER_PLAYERS_ATTRIBUTES){
         DirectedPositionable other_player(coordinates[j],
                                           coordinates[j + 1],
                                           coordinates[j+2],
@@ -117,6 +136,7 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
         players.push_back(other_player);
     }
 }
+
 
 
 

@@ -12,19 +12,21 @@ class DrawingInfo {
 private:
     DirectedPositionable player_pos;
     PlayerView view;
+    std::vector<int> player_info;
     std::vector<Positionable> objects;
     std::vector<DirectedPositionable> directed_objects;
 
 public:
     // Crea un DrawingInfo listo para ser utilizado.
     DrawingInfo(DirectedPositionable player_pos, PlayerView view,
-                std::vector<Positionable> objects,
+                std::vector<int> player_info, std::vector<Positionable> objects,
                 std::vector<DirectedPositionable> directed_objects);
 
-    DirectedPositionable getPlayerPos();
-    std::vector<Positionable> getStaticObjects();
-    std::vector<DirectedPositionable> getDirectedObjects();
-    PlayerView getCameraPlanes();
+    std::vector<int> getPlayerInfo() const;
+    DirectedPositionable getPlayerPos() const;
+    std::vector<Positionable> getStaticObjects() const;
+    std::vector<DirectedPositionable> getDirectedObjects() const;
+    PlayerView getCameraPlanes() const;
 
     // Libera los recursos utilzados por el objecto.
     ~DrawingInfo(){}
