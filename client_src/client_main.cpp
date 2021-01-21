@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 640
-#define WINDOW_HEIGHT 480
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
         Map map(Configuration("../common_src/config.yaml"));
         Raycaster raycaster(map, 0, 0, WINDOW_WIDTH, (15*WINDOW_HEIGHT)/18, tex);
         UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
+                              "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
 
         Client client(log.getHost(), log.getPort(), instructions, drawing_info);
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
         std::vector<DirectedPositionable> directed_objects;
 
         DrawingInfo initial_info(player,
-                                 view, static_objects,
+                                 view, std::vector<int>(), static_objects,
                                  directed_objects);
         GameInterface game_interface(ui_handler, drawing_info, initial_info, REFRESH_RATE);
 

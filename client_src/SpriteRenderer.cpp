@@ -7,8 +7,7 @@
 #define PI 3.141592
 #define TEXTURES_AMOUNT 8
 
-void
-SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView view,
+void SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView view,
                             std::vector<DirectedPositionable> &directed_objects,
                             std::vector<Positionable> &objects,
                             const std::vector<float> &wall_dist) {
@@ -38,8 +37,8 @@ void SpriteRenderer::_selectDirectedSprite(DirectedPositionable player_pos,
     }
 }
 
-// Combina los vectores de sprites en sprites y los ordena descendentemente de
-// acuerdo a la distancia al jugador.
+// Combina los vectores de sprites en final_sprites y los ordena
+// descendentemente de acuerdo a la distancia al jugador.
 void
 SpriteRenderer::_combineAndSortSprites(const DirectedPositionable &player_pos,
                                        std::vector<Positionable> &static_sprites,

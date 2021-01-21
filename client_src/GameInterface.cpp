@@ -60,7 +60,7 @@ void GameInterface::_updateScreen(DrawingInfo new_info) {
 
         ui_handler.raycast(old_pos, old_view, new_info.getStaticObjects(),
                        new_info.getDirectedObjects());
-        ui_handler.loadPlayerInterface();
+        ui_handler.loadPlayerInterface(new_info.getPlayerInfo());
         ui_handler.render();
     }
     this->latest_info = new_info;
