@@ -51,6 +51,8 @@ public:
      * [ posX, posY, dirX, dirY, camPlaneX, camPlaneY ] */
     void getPositionDataWithPlane(uint8_t* msg);
 
+    void getHUDData(uint8_t* msg);
+
     /* Destructor */
     ~Player();
 

@@ -175,4 +175,8 @@ void Player::getPositionDataWithPlane(uint8_t *msg) {
     memcpy(msg + 5 * sizeof(float), &this->camPlaneY, sizeof(float));
 }
 
+void Player::getHUDData(uint8_t *msg) {
+    this->action.geHUDInfo(msg);
+}
+
 Player::~Player() {}
