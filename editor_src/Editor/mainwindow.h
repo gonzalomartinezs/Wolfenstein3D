@@ -16,6 +16,7 @@ public:
     ~MainWindow();
 
 private:
+    void initWidgets();
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
