@@ -3,10 +3,10 @@
 
 #include <QListWidget>
 
-class Itemlist : public QListWidget
+class ItemList : public QListWidget
 {
 public:
-    Itemlist();
+    ItemList();
 };
 
 #endif // ITEMLIST_H
