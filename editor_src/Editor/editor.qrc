@@ -1,2 +1,7 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/img">
+        <file>icons/barrel.jpg</file>
+        <file>icons/spawn.jpeg</file>
+        <file>icons/wall.jpg</file>
+    </qresource>
+</RCC>
