@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     itemlist.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    map.cpp
 
 HEADERS += \
     itemlist.h \
-    mainwindow.h
+    mainwindow.h \
+    map.h
 
 FORMS += \
     mainwindow.ui
