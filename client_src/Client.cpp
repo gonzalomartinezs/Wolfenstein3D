@@ -44,7 +44,7 @@ ssize_t Client::receiveInformation() {
         std::vector<float> coordinates;
         std::vector<int> player_info;
         std::vector<Positionable> objects;
-        std::vector<DirectedPositionable> directed_objects;
+        std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
         _assignPlayerInfo(player_info, bytes_received);
         _assignPlayerCoordenates(player, view, coordinates,
                                  bytes_received);

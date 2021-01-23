@@ -74,7 +74,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     int playersLoaded = 0;
     uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
 
-    this->players[clientNumber].getHUDData(msg);
+    this->players[clientNumber].getHUDData(msg+1);
 
     this->players[clientNumber].getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
     for (size_t i = 0; i < this->clients.size(); i++) {
@@ -84,7 +84,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
             playersLoaded++;
         }
     }
-    msg[0] = 24 + playersLoaded * 17;
+    msg[0] = 24 + playersLoaded * 17 + HUD_INFO_SIZE;
     return msg[0] + 1;
 }
 
