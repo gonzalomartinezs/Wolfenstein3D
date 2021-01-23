@@ -3,7 +3,6 @@
 #include "textures/TextureID.h"
 #include "PlayerView.h"
 
-#define RAY_AMOUNT 320
 #define VISUAL_PROPORTION 1.5
 #define TEX_HEIGHT 64
 #define TEX_WIDTH 64
@@ -38,9 +37,9 @@ void Raycaster::_drawMap(DirectedPositionable player_pos, float camera_plane_x,
 
     DirectedPositionable player = player_pos;
     RayDirection ray_dir;
-    for(int i = 0; i < RAY_AMOUNT; i++) {
+    for(int i = 0; i < this->width; i++) {
 
-        float alfa = (2*i) / (float)RAY_AMOUNT - 1;
+        float alfa = (2*i) / (float)width - 1;
         ray_dir.x = player.getDirX() + camera_plane_x * alfa;
         ray_dir.y = player.getDirY() + camera_plane_y * alfa;
         int map_x = int(player.getX());
@@ -134,9 +133,8 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
         tex_portion =  {tex_x, portion, 1, TEX_HEIGHT-2*portion};
     }
 
-    int band_width =  width/RAY_AMOUNT;
-    SDL_Rect stretched = {ray_number*band_width, draw_start + begin_y, band_width,
-                          draw_end-draw_start};
+    SDL_Rect stretched = {ray_number + begin_x, draw_start + begin_y,
+                          1,draw_end-draw_start};
     if (hit_axis == 'y'){
         texture->changeColorModulation(SHADE);
     }
@@ -156,7 +154,7 @@ int Raycaster::_calculateTextureXCoordinate(DirectedPositionable player,
         wall_x = player.getX() + wall_dist * ray_dir.x;
     wall_x -= int((wall_x));
 
-    int tex_x = int((wall_x+ray_number/RAY_AMOUNT) * TEX_WIDTH);
+    int tex_x = int((wall_x+ray_number/width) * TEX_WIDTH);
     if (hit_axis == 'x' && ray_dir.x > 0)
         tex_x = TEX_WIDTH - tex_x - 1;
     if (hit_axis == 'y' && ray_dir.y < 0)

@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 320
+#define WINDOW_HEIGHT 200
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -25,7 +25,7 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    log(); //  genera la nueva pestaña.
+//    log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -38,12 +38,13 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
 
         Map map(Configuration("../common_src/config.yaml"));
-        Raycaster raycaster(map, 0, 0, WINDOW_WIDTH, (15*WINDOW_HEIGHT)/18, tex);
+        Raycaster raycaster(map, WINDOW_WIDTH/32, (-WINDOW_HEIGHT)/18, (30*WINDOW_WIDTH)/32, (17*WINDOW_HEIGHT)/18, tex);
         UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
                               "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
         EventHandler event_handler(instructions);
 
         DirectedPositionable player(2, 2, -1, 0, None);
