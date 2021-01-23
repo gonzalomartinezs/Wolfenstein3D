@@ -74,20 +74,38 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     int playersLoaded = 0;
     uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
 
-    this->players[clientNumber].getPositionDataWithPlane(msg + 1);
+    this->players[clientNumber].getHUDData(msg+1);
+
+    this->players[clientNumber].getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
     for (size_t i = 0; i < this->clients.size(); i++) {
         if (i != clientNumber) {
-            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 17); // era *16 sin el hardcodeo del guard
-            memcpy(msg + 1 + 24 + playersLoaded * 17 + 16, &texture, 1); //harcodeado, despues hacerlo bien
+            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 17 + HUD_INFO_SIZE); // era *16 sin el hardcodeo del guard
+            memcpy(msg + 1 + 24 + playersLoaded * 17 + 16 + HUD_INFO_SIZE, &texture, 1); //harcodeado, despues hacerlo bien
             playersLoaded++;
         }
     }
-    msg[0] = 24 + playersLoaded * 17;
+    msg[0] = 24 + playersLoaded * 17 + HUD_INFO_SIZE;
     return msg[0] + 1;
 }
 
 void Game::stop() {
     this->isRunning = false;
+}
+
+void Game::sendMap() {
+    uint8_t aux;
+    for (long unsigned int k = 0; k < this->clients.size(); k++) {
+        aux = uint8_t(this->map.get_n_row());
+        this->clients[k]->push(&aux, 1);
+        aux = uint8_t(this->map.get_n_col());
+        this->clients[k]->push(&aux, 1);
+        for (int i = 0; i < this->map.get_n_row(); i++) {
+            for (int j = 0; j < this->map.get_n_col(); j++) {
+                aux = this->map.get(i, j);
+                this->clients[k]->push(&aux, 1);
+            }
+        }
+    }
 }
 
 Game::~Game() {}

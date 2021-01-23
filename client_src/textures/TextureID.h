@@ -26,8 +26,8 @@ enum TextureID{
     MachineGunInterface,
     ChainGunInterface,
     RPGInterface,
-    HasKey,
     HasNotKey,
+    HasKey,
     Background,
     MainInterface
 };

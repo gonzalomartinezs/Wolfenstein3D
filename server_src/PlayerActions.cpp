@@ -2,12 +2,14 @@
 #include "../common_src/HealthRecover.h"
 #include "../common_src/Treasure.h"
 #include "Weapons/Weapon.h"
+#include <cstring>
 
 #define KEY_INITIAL_HEALTH "initial_health"
 #define KEY_INITIAL_SCORE "initial_score"
 #define KEY_TOTAL_LIVES "total_lives"
 #define KEY_HAS_KEY "has_key"
 #define KEY_INITIAL_BULLETS "initial_bullets"
+#define KEY_INITIAL_WEAPON "initial_weapon"
 
 PlayerActions::PlayerActions(const Configuration& config) {
 	this->health = config.getInt(KEY_INITIAL_HEALTH);
@@ -15,6 +17,7 @@ PlayerActions::PlayerActions(const Configuration& config) {
     this->lives = config.getInt(KEY_TOTAL_LIVES);
     this->hasKey = config.getInt(KEY_HAS_KEY);
     this->bullets = config.getInt(KEY_INITIAL_BULLETS);
+    this->currentWeapon = config.getInt(KEY_INITIAL_WEAPON);
 }
 
 void PlayerActions::use(HealthRecover* recover) {
@@ -39,6 +42,16 @@ void PlayerActions::equip(Weapon* weapon) {
 
 bool PlayerActions::isDead() const {
 	return (this->health <= 0);
+}
+
+void PlayerActions::geHUDInfo(uint8_t* msg) {
+    memcpy(msg, &this->lives, sizeof(uint8_t));
+    memcpy(msg + sizeof(uint8_t), &this->health, sizeof(uint8_t));
+    memcpy(msg + 2 * sizeof(uint8_t), &this->currentWeapon, sizeof(uint8_t));
+    memcpy(msg + 3 * sizeof(uint8_t), &this->hasKey, sizeof(bool));
+    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &this->bullets, sizeof(int));
+    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool) + sizeof(int), &this->score, sizeof(int));
+
 }
 
 PlayerActions::~PlayerActions() {}

@@ -37,6 +37,8 @@ class Game {
     void sendUpdate();
 
     int createMsg(uint8_t* msg, size_t clientNumber);
+
+    void sendMap();
 };
 
 #endif  // WOLFENSTEIN3D_GAME_H
