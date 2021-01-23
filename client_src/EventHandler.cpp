@@ -1,11 +1,12 @@
 #include "EventHandler.h"
 
-#define DOING_NOTHING 0
+#define NOT_MOVING 0
 #define IS_MOVING_FORWARDS 1
 #define IS_MOVING_BACKWARDS 2
 #define IS_TURNING_LEFT 3
 #define IS_TURNING_RIGHT 4
 #define IS_FIRING 5
+#define NOT_FIRING 6
 
 void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
     SDL_Event event;
@@ -39,9 +40,13 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
                 this->instructions.push(IS_FIRING);
             }
         } else {
-            if (flag != DOING_NOTHING) {
-                flag = DOING_NOTHING;
-                this->instructions.push(DOING_NOTHING);
+            if (flag == IS_FIRING) {
+                flag = NOT_FIRING;
+                this->instructions.push(NOT_FIRING);
+            }
+            else if (flag != NOT_MOVING) {
+                flag = NOT_MOVING;
+                this->instructions.push(NOT_MOVING);
             }
         }
     }
