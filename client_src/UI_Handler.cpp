@@ -3,7 +3,7 @@
 #define TTF_TEXTURES 4
 #define BJ_FACES 8
 #define TOTAL_HP 100
-enum ttfTextures {Lives, HP, Weapon, Key, Score, Ammo};
+enum ttfTextures {Lives, HP, Weapon, Key, Ammo, Score};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, std::string font_path, int width,
@@ -47,7 +47,6 @@ void UI_Handler::loadPlayerInterface(std::vector<int> player_info) {
     tex.get(MainInterface)->render(nullptr, nullptr);
     tex.get(TextureID(int(KnifeInterface) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
     tex.get(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
-    std::cout << player_info[Key] << std::endl;
     tex.get(TextureID(int(HasNotKey)+player_info[Key]))->render(nullptr, &this->elements.key);
     font_textures[0].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr,
                                                  &this->elements.score);
