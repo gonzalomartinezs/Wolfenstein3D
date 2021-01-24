@@ -5,8 +5,12 @@
 
 class ItemList : public QListWidget
 {
+    Q_OBJECT
 public:
-    ItemList();
+    explicit ItemList(int pieceSize, QWidget *parent = nullptr);
+    virtual ~ItemList() {};
+private:
+    int itemSize;
 };
 
 #endif // ITEMLIST_H

@@ -21,7 +21,7 @@ void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
     this->map = new Map;
-    this->list = new ItemList;
+    this->list = new ItemList(400, this);
 
     frameLayout->addWidget(list);
     frameLayout->addWidget(map);
