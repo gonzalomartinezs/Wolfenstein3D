@@ -8,7 +8,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    initWidgets();
     ui->setupUi(this);
+    printf("se ejectuto el init de mainW");
 }
 
 MainWindow::~MainWindow()
