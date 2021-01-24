@@ -1,5 +1,8 @@
 #include "Player.h"
 #include "../common_src/Exceptions/ErrorMap.h"
+#include "Weapons/Pistol.h"
+#include "Weapons/ChainGun.h"
+#include "Weapons/MachineGun.h"
 #include <algorithm>
 #include <iostream> //Borrar
 #include <cmath>
@@ -16,6 +19,9 @@
 #define ISMOVINGBACKWARDS 2
 #define ISTURNINGLEFT 3
 #define ISTURNINGRIGHT 4
+#define STARTSHOOTING 5
+#define STOPSHOOTING 6
+
 /*
 Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
                 DirectedPositionable(posX, posY, -1, 0, None) {
@@ -26,10 +32,10 @@ Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
     this->state = ISNOTMOVING;
 }
 */
-Player::Player(const Configuration& config, const std::string& player_number)
+Player::Player(const Configuration& config, const std::string& player_number, const int playerNumber)
             : DirectedPositionable(config.getSubFloat(player_number, "pos_x"),
                             config.getSubFloat(player_number, "pos_y"),
-                            config.getSubInt(player_number, "dir_x"), 
+                            config.getSubInt(player_number, "dir_x"),
                             config.getSubInt(player_number, "dir_y"), None),
             action(config) {
     this->moveSpeed = config.getSubFloat(player_number, "move_speed");
@@ -37,6 +43,8 @@ Player::Player(const Configuration& config, const std::string& player_number)
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
+    this->playerNumber = playerNumber;
+    this->weapon = new ChainGun();
 }
 
 static void initialize_rays(float *x, float *y, float radius, int rays) {
@@ -74,7 +82,7 @@ void Player::look_for_item(Items& items) {
 	}
 }
 
-void Player::updatePlayer(const Map& map, Items& items) {
+void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& players) {
     float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {
@@ -89,6 +97,10 @@ void Player::updatePlayer(const Map& map, Items& items) {
         } else {
             throw GameException("Player has an invalid state!");
         }
+    }
+
+    if (this->weapon->isShooting()) {
+        this->weapon->fireTheGun(players, this->playerNumber, map);
     }
 
     try {
@@ -107,7 +119,13 @@ void Player::updatePlayer(const Map& map, Items& items) {
 }
 
 void Player::setState(uint8_t newState) {
-    this->state = newState;
+    if (newState == STARTSHOOTING) {
+        this->weapon->startShooting();
+    } else if (newState == STOPSHOOTING) {
+        this->weapon->stopShooting();
+    } else {
+        this->state = newState;
+    }
 }
 
 void Player::die() {
@@ -125,11 +143,8 @@ void Player::shoot() {
     //this->action.shoot();
 }
 
-void Player::receiveShot(int damage) {
- /*   this->health -= damage;
-    if (this->health <= 0) {
-        this->die();
-    } */
+void Player::receiveShot(uint8_t damage) {
+    this->action.receiveShot(damage);
 }
 
 void Player::_moveForwards() {

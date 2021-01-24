@@ -93,6 +93,7 @@ void Weapon::shoot(std::vector<Player>& players, int shootingPlayerNumber, const
                 shotHit = _runProbability(thisPlayerInfo, otherPlayerInfo);
                 if (shotHit) {
                     /* Bajar vida del jugador con el que impacto */
+                    players[i].receiveShot(5); // Cambiar
                     std::cout << "Tiro acerto" << std::endl;
 
                     break;
@@ -104,6 +105,10 @@ void Weapon::shoot(std::vector<Player>& players, int shootingPlayerNumber, const
 
 bool Weapon::isShooting() {
     return this->weaponIsShooting;
+}
+
+void Weapon::stopShooting() {
+    this->weaponIsShooting = false;
 }
 
 bool Weapon::operator==(int other_id) const {

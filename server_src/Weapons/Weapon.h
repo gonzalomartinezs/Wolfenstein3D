@@ -25,6 +25,9 @@ public:
     /* AKA started pulling the trigger */
     virtual void startShooting() = 0;
 
+    /* AKA stopped pulling the trigger */
+    void stopShooting();
+
     /* Return true if the player is pulling the trigger */
     bool isShooting();
 
