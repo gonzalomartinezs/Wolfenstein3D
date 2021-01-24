@@ -18,16 +18,11 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
-    puzzleWidget = new PuzzleWidget(400);
+    this->map = new Map;
+    this->list = new ItemList;
 
-    piecesList = new PiecesList(puzzleWidget->pieceSize(), this);
-
-
-    connect(puzzleWidget, &PuzzleWidget::puzzleCompleted,
-            this, &MainWindow::setCompleted, Qt::QueuedConnection);
-
-    frameLayout->addWidget(piecesList);
-    frameLayout->addWidget(puzzleWidget);
+    frameLayout->addWidget(list);
+    frameLayout->addWidget(map);
     setCentralWidget(frame);
 }
 
