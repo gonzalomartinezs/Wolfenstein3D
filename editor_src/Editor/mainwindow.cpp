@@ -9,9 +9,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    initWidgets();
     ui->setupUi(this);
-    printf("se ejectuto el init de mainW");
+    initWidgets();
 }
 
 MainWindow::~MainWindow()
@@ -48,7 +47,7 @@ void MainWindow::loadIcons(){
     loadImage(newImage, QStringLiteral(":/img/icons/wall.jpg"));
     list->add(newImage);
 
-    loadImage(newImage, QStringLiteral(":/img/icons/wall.jpg"));
+    loadImage(newImage, QStringLiteral(":/img/icons/spawn.jpeg"));
     list->add(newImage);
 }
 
