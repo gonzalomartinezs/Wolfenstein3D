@@ -3,6 +3,7 @@
 #include "Weapons/Pistol.h"
 #include "Weapons/ChainGun.h"
 #include "Weapons/MachineGun.h"
+#include "Weapons/Knife.h"
 #include <algorithm>
 #include <iostream> //Borrar
 #include <cmath>
@@ -22,16 +23,6 @@
 #define STARTSHOOTING 5
 #define STOPSHOOTING 6
 
-/*
-Player::Player(float moveSpeed, float rotSpeed, float posX, float posY) :
-                DirectedPositionable(posX, posY, -1, 0, None) {
-    this->moveSpeed = moveSpeed;
-    this->rotSpeed = rotSpeed;
-    this->camPlaneX = 0;  // Perpendicular to direction
-    this->camPlaneY = 1;  // Perpendicular to direction
-    this->state = ISNOTMOVING;
-}
-*/
 Player::Player(const Configuration& config, const std::string& player_number, const int playerNumber)
             : DirectedPositionable(config.getSubFloat(player_number, "pos_x"),
                             config.getSubFloat(player_number, "pos_y"),
