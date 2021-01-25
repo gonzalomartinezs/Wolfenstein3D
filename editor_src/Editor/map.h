@@ -10,7 +10,6 @@ public:
     explicit Map(QWidget *parent = nullptr);
 
 signals:
-
 };
 
 #endif // MAP_H

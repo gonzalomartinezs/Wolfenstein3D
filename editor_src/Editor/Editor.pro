@@ -12,12 +12,14 @@ SOURCES += \
     itemList.cpp \
     main.cpp \
     mainwindow.cpp \
-    map.cpp
+    map.cpp \
+    mapelement.cpp
 
 HEADERS += \
     itemList.h \
     mainwindow.h \
-    map.h
+    map.h \
+    mapelement.h
 
 FORMS += \
     mainwindow.ui
