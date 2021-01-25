@@ -49,5 +49,8 @@ void MainWindow::loadIcons(){
 
     loadImage(newImage, QStringLiteral(":/img/icons/spawn.jpeg"));
     list->add(newImage);
+
+    loadImage(newImage, QStringLiteral(":/img/icons/void.jpg"));
+    list->add(newImage);
 }
 

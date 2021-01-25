@@ -3,5 +3,6 @@
         <file>icons/barrel.jpg</file>
         <file>icons/spawn.jpeg</file>
         <file>icons/wall.jpg</file>
+        <file>icons/void.jpg</file>
     </qresource>
 </RCC>
