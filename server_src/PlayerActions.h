@@ -30,6 +30,8 @@ public:
 	void equip(Weapon* machine_gun);
 	bool isDead() const;
 
+    void receiveShot(uint8_t damage);
+
     /* Escribe los primeros 12 bytes del buffer con la informacion del HUD del
      * jugador de la siguiente manera (respetando el tamanio en bytes de cada variable):
      * [ lives, health, currentWeapon, hasKey, bullets, score ] */

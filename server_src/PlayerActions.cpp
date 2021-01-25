@@ -44,6 +44,14 @@ bool PlayerActions::isDead() const {
 	return (this->health <= 0);
 }
 
+void PlayerActions::receiveShot(uint8_t damage) {
+    this->health -= damage;
+    if (this->health <= 20) {
+        this->health = 100;
+        //this->die();
+    }
+}
+
 void PlayerActions::geHUDInfo(uint8_t* msg) {
     memcpy(msg, &this->lives, sizeof(uint8_t));
     memcpy(msg + sizeof(uint8_t), &this->health, sizeof(uint8_t));

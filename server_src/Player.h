@@ -15,6 +15,8 @@ class Player : public DirectedPositionable {
 private:
     PlayerActions action;
     float camPlaneX, camPlaneY;
+    int playerNumber;
+    Weapon* weapon;
 
     //Movement Speed
     float moveSpeed, rotSpeed;
@@ -25,9 +27,9 @@ private:
 public:
     /* Constructor */
 //    Player(float moveSpeed, float rotSpeed, float posX, float posY);
-    Player(const Configuration& config, const std::string& player_number);
+    Player(const Configuration& config, const std::string& player_number, const int playerNumber);
 
-    void updatePlayer(const Map& map, Items& items);
+    void updatePlayer(const Map& map, Items& items, std::vector<Player>& players);
 
     void setState(uint8_t newState);
 
@@ -39,7 +41,7 @@ public:
 
     void getHealth();
 
-    void receiveShot(int damage);
+    void receiveShot(uint8_t damage);
 
     /* Escribe los primeros 16 bytes del buffer con la informacion de
      * la posicion del jugador de la siguiente manera (floats):

@@ -12,7 +12,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config) :
     this->isRunning = true;
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
-        this->players.emplace_back(config, player_number);
+        this->players.emplace_back(config, player_number, static_cast<int>(i));
     }
 }
 
@@ -56,7 +56,7 @@ void Game::getInstructions() {
 
 void Game::update() {
     for (size_t i = 0; i < this->players.size(); i++) {
-        this->players[i].updatePlayer(this->map, this->items);
+        this->players[i].updatePlayer(this->map, this->items, this->players);
     }
 }
 
