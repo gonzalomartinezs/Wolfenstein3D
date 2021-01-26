@@ -17,6 +17,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
@@ -47,7 +48,7 @@ void MainWindow::loadIcons(){
     loadImage(newImage, QStringLiteral(":/img/icons/wall.jpg"));
     list->add(newImage);
 
-    loadImage(newImage, QStringLiteral(":/img/icons/spawn.jpeg"));
+    loadImage(newImage, QStringLiteral(":/img/icons/spawn.jpg"));
     list->add(newImage);
 
     loadImage(newImage, QStringLiteral(":/img/icons/void.jpg"));

@@ -8,7 +8,7 @@ class MapElement
 {
 public:
     MapElement();
-private:
+    int element;
     QPixmap pixmap;
     QRect rect;
     QPoint location;

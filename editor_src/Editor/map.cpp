@@ -6,6 +6,7 @@ Map::Map(QWidget *parent) : QWidget(parent)
     setAcceptDrops(true);
     //ver esto
     setMinimumSize(500, 500);
-    setMaximumSize(500, 500);
+    setMaximumSize(500, 500); //carguemos 5x5 de vacios.
+
 }
 
