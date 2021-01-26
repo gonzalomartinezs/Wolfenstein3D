@@ -43,7 +43,7 @@ void UI_Handler::loadBackground() {
 }
 
 void UI_Handler::loadPlayerInterface(std::vector<int> player_info) {
-    int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]))/TOTAL_HP);
+    int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
     tex.get(MainInterface)->render(nullptr, nullptr);
     tex.get(TextureID(int(KnifeInterface) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
     tex.get(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
