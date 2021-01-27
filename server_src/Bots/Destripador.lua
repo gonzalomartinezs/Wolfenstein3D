@@ -22,25 +22,22 @@ function getBotInstruction(map, positions, posX, posY, dirX, dirY)
     nearestPlayerY = BIG_DISTANCE
 
     numberOfPlayers = tableLength(positions)/2
-    print(numberOfPlayers)
 
+    --[ Obtengo la posicion del jugador visible mas cercano ]--
     for i = 0, numberOfPlayers - 1 do
             playerX = positions[2 * i]
             playerY = positions[2 * i + 1]
         if isInTheFieldOfView(posX, playerX, posY, playerY, map) == true then
-            if math.sqrt((posX - playerX)^2 + (posY - playerY)^2) < math.sqrt(nearestPlayerX^2 + nearestPlayerY^2) then
-               nearestPlayerX = playerX
-               nearestPlayerY = playerY
+            if math.sqrt((posX - playerX)^2 + (posY - playerY)^2) <
+            math.sqrt((posX - nearestPlayerX)^2 + (posY - nearestPlayerY)^2) then
+                nearestPlayerX = playerX
+                nearestPlayerY = playerY
             end
         end
     end
 
-    print(54);
-    print(posX)
-    print(posY)
-    print(dirX)
-    print(dirY)
-
+    print(nearestPlayerX)
+    print(nearestPlayerY)
 
     --print(map[0][0])
     --print(map[0][1])
@@ -49,29 +46,6 @@ function getBotInstruction(map, positions, posX, posY, dirX, dirY)
     --print(map[2][0])
     --print(map[3][4])
 
-    --print(positions[0])
-    --print(positions[1])
-    --print(positions[2])
-    --print(positions[3])
-    --print(positions[4])
-    --print(positions[5])
-    --print(positions[6])
-
-
-    --prueba
-    posx1 = 2
-    posy2 = 2
-
-    dirx = 1
-    diry = 0
-    --prueba
-
-    print(tableLength(positions))
-
-    x = isInTheFieldOfView(3, 3, 7, 3, map)
-    print(x)
-
-    print(angle(2, 1, 1, 0, 2, 1))
     print("-----Fin Lua-----")
 
     return MOVE_FORWARDS
