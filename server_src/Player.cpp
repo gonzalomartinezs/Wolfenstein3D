@@ -63,12 +63,12 @@ void Player::look_for_collision(const Map& map) {
 void Player::look_for_item(Items& items) {
 	for (size_t i = 0; i < items.size(); ++i) {
 //		if (items[i].collidesWith(player)) {
-            try {
+    /*        try {
                 items[i]->equipTo(this->action);
                 items.remove(i);
             } catch (const std::exception& e) {
                 std::cout << e.what() << std::endl;
-            }
+            } */
     //    }
 	}
 }

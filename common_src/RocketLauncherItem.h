@@ -5,7 +5,7 @@
 
 class RocketLauncherItem : public Item {
 public:
-	RocketLauncherItem(float _x, float _y, TextureID& _texture,
+	RocketLauncherItem(float _x, float _y, TextureID _texture,
 						int _value);
 	void equipTo(PlayerActions& action);
 	~RocketLauncherItem();

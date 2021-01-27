@@ -10,7 +10,7 @@ class Item : public Positionable {
 protected:
 	int value;
 public:
-	Item(float _x, float _y, TextureID& _texture, int _value);
+	Item(float _x, float _y, TextureID _texture, int _value);
 	virtual int operator+(int other_value) const = 0;
 	virtual void equipTo(PlayerActions& action) = 0;
 //	bool collidesWith(const Collider& other);

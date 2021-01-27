@@ -15,8 +15,8 @@ map:
 
 #(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
 player_1:
-  pos_x: 2
-  pos_y: 2
+  pos_x: 2.0
+  pos_y: 2.0
   dir_x: -1
   dir_y: 0
   move_speed: 0.02
@@ -49,13 +49,13 @@ player_2:
 items:
   cant_treasures: 2
   treasure_0:
-    pos_x: 2.0
+    pos_x: 4.0
     pos_y: 3.0
-    texture: 1
+    texture: 2
     value: 10
   treasure_1:
-    pos_x: 4.0
-    pos_y: 9.0
-    texture: 2
+    pos_x: 3.0
+    pos_y: 3.0
+    texture: 3
     value: 50
 

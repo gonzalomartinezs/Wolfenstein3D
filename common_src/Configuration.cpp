@@ -5,8 +5,18 @@ Configuration::Configuration(const char* filename) {
 	this->file = YAML::LoadFile(filename);
 }
 
+bool Configuration::keyExists(const YAML::Node& sub_file, 
+							const std::string& key, size_t i) const {
+	if (main_keys.size() == i) {
+		if (sub_file[key]) return true;
+		return false;
+	}
+
+	return Configuration::keyExists(sub_file[main_keys[i]], key, i+1);
+}
+
 void Configuration::addKey(const std::string& key) {
-	if (!this->file[key]) {
+	if (!Configuration::keyExists(this->file, key, 0)) {
 		throw ConfigurationException("Key '%s' does not exist.", key.c_str());
 	}
 

@@ -1,6 +1,6 @@
 #include "Treasure.h"
 
-Treasure::Treasure(float _x, float _y, TextureID& _texture, int _value) :
+Treasure::Treasure(float _x, float _y, TextureID _texture, int _value) :
 				Item(_x, _y, _texture, _value) {}
 
 void Treasure::equipTo(PlayerActions& action) {

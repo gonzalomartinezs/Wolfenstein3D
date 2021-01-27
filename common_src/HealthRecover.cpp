@@ -3,7 +3,7 @@
 
 #define MAX_HEALTH 50
 
-HealthRecover::HealthRecover(float _x, float _y, TextureID& _texture,
+HealthRecover::HealthRecover(float _x, float _y, TextureID _texture,
 							int _value) : Item(_x, _y, _texture, _value) {}
 
 void HealthRecover::equipTo(PlayerActions& action) {
