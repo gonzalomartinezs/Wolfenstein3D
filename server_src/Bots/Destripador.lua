@@ -1,6 +1,7 @@
 WALKABLE = 0
 DIVISIONS_AMOUNT = 10
 PI = 3.1415926
+BIG_DISTANCE = 10000
 
 NOT_MOVE = 0
 MOVE_FORWARDS = 1
@@ -16,6 +17,23 @@ function hola()
 end
 
 function getBotInstruction(map, positions, posX, posY, dirX, dirY)
+
+    nearestPlayerX = BIG_DISTANCE
+    nearestPlayerY = BIG_DISTANCE
+
+    numberOfPlayers = tableLength(positions)/2
+    print(numberOfPlayers)
+
+    for i = 0, numberOfPlayers - 1 do
+            playerX = positions[2 * i]
+            playerY = positions[2 * i + 1]
+        if isInTheFieldOfView(posX, playerX, posY, playerY, map) == true then
+            if math.sqrt((posX - playerX)^2 + (posY - playerY)^2) < math.sqrt(nearestPlayerX^2 + nearestPlayerY^2) then
+               nearestPlayerX = playerX
+               nearestPlayerY = playerY
+            end
+        end
+    end
 
     print(54);
     print(posX)
