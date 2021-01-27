@@ -24,13 +24,13 @@
 #define STOPSHOOTING 6
 
 Player::Player(const Configuration& config, const std::string& player_number, const int playerNumber)
-            : DirectedPositionable(config.getSubFloat(player_number, "pos_x"),
-                            config.getSubFloat(player_number, "pos_y"),
-                            config.getSubInt(player_number, "dir_x"),
-                            config.getSubInt(player_number, "dir_y"), None),
+            : DirectedPositionable(config.getFloat("pos_x"),
+                            config.getFloat("pos_y"),
+                            config.getInt("dir_x"),
+                            config.getInt("dir_y"), None),
             action(config) {
-    this->moveSpeed = config.getSubFloat(player_number, "move_speed");
-    this->rotSpeed = config.getSubFloat(player_number, "rot_speed");
+    this->moveSpeed = config.getFloat("move_speed");
+    this->rotSpeed = config.getFloat("rot_speed");
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;

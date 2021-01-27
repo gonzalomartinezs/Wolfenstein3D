@@ -3,6 +3,8 @@
 Items::Items(const Configuration& config) {
 //	initialize items
 /*	TODO:
+	config.addKey("items");
+
 	if (file["treasure"]) {
 		for (cant treasures) this->items.push_back(new Treasure(file["treasure"][i]));
 	}
@@ -15,6 +17,8 @@ Items::Items(const Configuration& config) {
 	.
 	.
 	.
+
+	config.removeLastKey();
 */
 }
 
