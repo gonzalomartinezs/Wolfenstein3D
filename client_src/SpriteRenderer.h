@@ -5,8 +5,6 @@
 #include "../common_src/DirectedPositionable.h"
 #include "PlayerView.h"
 
-#define RAY_AMOUNT 320
-
 struct SpriteInfo {
     // Porporciones de sprite en pantalla.
     int sprite_height;

@@ -91,8 +91,7 @@ void SpriteRenderer::_initializeSpriteInfo(SpriteInfo &info,
                                            double transform_x,
                                            double transform_y,
                                            const std::vector<float> &wall_distances) {
-
-    int pixels_per_ray = 1; //this->width/RAY_AMOUNT;
+    int pixels_per_ray = 1;
     info.sprite_screen_x = int((this->width / 2.0) *
                                (1 + transform_x / transform_y));
 
