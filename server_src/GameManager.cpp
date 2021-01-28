@@ -27,7 +27,7 @@ void GameManager::operator()() {
 
 void GameManager::stop() {
 	(*client_manager).stop();
-    this->game->stop();
+    if (this->game != NULL) this->game->stop();
 }
 
 GameManager::~GameManager() {
