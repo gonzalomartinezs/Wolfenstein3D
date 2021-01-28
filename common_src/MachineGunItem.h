@@ -5,7 +5,8 @@
 
 class MachineGunItem : public Item {
 public:
-	MachineGunItem(float _x, float _y, TextureID& _texture, int _value);
+	MachineGunItem(float _x, float _y, TextureID _texture, int _value
+					float radius);
 	void equipTo(PlayerActions& action) override;
 	~MachineGunItem();
 };

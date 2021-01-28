@@ -1,43 +1,121 @@
 port: 8080
-max_clients: 2
+max_clients: 1
 
+#Map
 length: 8
 width: 14
 map:
   - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   - [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
   - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+#Player stats
+player_global_move_speed: &player_global_move_speed 0.02
+player_global_rot_speed: &player_global_rot_speed 0.02
+player_global_initial_health: &player_global_initial_health 100
+player_global_initial_score: &player_global_initial_score 0
+player_global_total_lives: &player_global_total_lives 5
+player_global_initial_weapon: &player_global_initial_weapon 0 #1 = pistol
+player_global_has_key: &player_global_has_key 1 #0 = false, otro numero = true
+player_global_initial_bullets: &player_global_initial_bullets 10
+player_global_size: &player_global_size 0.2
 
 #(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
 player_1:
-  pos_x: 2
-  pos_y: 2
-  dir_x: -1
+  pos_x: 2.0
+  pos_y: 2.0
+  dir_x: 1
   dir_y: 0
-  move_speed: 0.02
-  rot_speed: 0.02
+  move_speed: *player_global_move_speed
+  rot_speed: *player_global_rot_speed
   cam_plane_x: 0
   cam_plane_y: 1
+  initial_health: *player_global_initial_health
+  initial_score: *player_global_initial_score
+  total_lives: *player_global_total_lives
+  initial_weapon: *player_global_initial_weapon
+  has_key: *player_global_has_key
+  initial_bullets: *player_global_initial_weapon
+  player_size: *player_global_size
 
 player_2:
   pos_x: 3.0
   pos_y: 3.0
   dir_x: 1
   dir_y: 0
-  move_speed: 0.02
-  rot_speed: 0.02
+  move_speed: *player_global_move_speed
+  rot_speed: *player_global_rot_speed
   cam_plane_x: 0
   cam_plane_y: 1
+  initial_health: *player_global_initial_health
+  initial_score: *player_global_initial_score
+  total_lives: *player_global_total_lives
+  initial_weapon: *player_global_initial_weapon
+  has_key: *player_global_has_key
+  initial_bullets: *player_global_initial_weapon
+  player_size: *player_global_size
 
-initial_health: 100
-initial_score: 0
-total_lives: 3
-initial_weapon: 1 #1 = pistol
-has_key: 0 #0 = false, otro numero = true
-initial_bullets: 10
+player_3:
+  pos_x: 5.0
+  pos_y: 5.0
+  dir_x: 1
+  dir_y: 0
+  move_speed: *player_global_move_speed
+  rot_speed: *player_global_rot_speed
+  cam_plane_x: 0
+  cam_plane_y: 1
+  initial_health: *player_global_initial_health
+  initial_score: *player_global_initial_score
+  total_lives: *player_global_total_lives
+  initial_weapon: *player_global_initial_weapon
+  has_key: *player_global_has_key
+  initial_bullets: *player_global_initial_weapon
+  player_size: *player_global_size
 
+#Item's radius
+treasure_radius: &treasure_radius 0.5
+food_radius: &food_radius 0.4
+medical_kit_radius: &medical_kit_radius 0.2
+blood_radius: &blood_radius 0.3
+
+#Items
+items:
+  #Treasures
+  cant_treasures: 1
+  treasure_0:
+    pos_x: 6.0
+    pos_y: 1.0
+    texture: 2
+    value: 10
+    radius: *treasure_radius
+  #Food
+  cant_food: 0
+  food_0:
+    pos_x: 2.0
+    pos_y: 3.5
+    texture: 2
+    value: 10
+    radius: *food_radius
+  #Medical kit
+  cant_medical_kit: 0
+  medical_kit_0:
+    pos_x: 7.0
+    pos_y: 13.0
+    texture: 2
+    value: 20
+    radius: *medical_kit_radius
+  #Blood
+  cant_blood: 1
+  blood_0:
+    pos_x: 1.0
+    pos_y: 13.0
+    texture: 2
+    value: 1
+    radius: *blood_radius
+  #Keys
+  #Bullets/Ammo

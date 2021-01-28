@@ -5,24 +5,26 @@ Configuration::Configuration(const char* filename) {
 	this->file = YAML::LoadFile(filename);
 }
 
-static float _getFloat(const YAML::Node& sub_file,
-							const std::string& key) {
-	if (sub_file[key]) {
-		return sub_file[key].as<float>();
+bool Configuration::keyExists(const YAML::Node& sub_file, 
+							const std::string& key, size_t i) const {
+	if (main_keys.size() == i) {
+		if (sub_file[key]) return true;
+		return false;
 	}
 
-	throw ConfigurationException("Key '%s' does not exist. Can't get float.",
-								key.c_str());
+	return Configuration::keyExists(sub_file[main_keys[i]], key, i+1);
 }
 
-static int _getInt(const YAML::Node& sub_file,
-						const std::string& key) {
-	if (sub_file[key]) {
-		return sub_file[key].as<int>();
+void Configuration::addKey(const std::string& key) {
+	if (!Configuration::keyExists(this->file, key, 0)) {
+		throw ConfigurationException("Key '%s' does not exist.", key.c_str());
 	}
 
-	throw ConfigurationException("Key '%s' does not exist. Can't get int.",
-								key.c_str());
+	this->main_keys.push_back(key);
+}
+
+void Configuration::removeLastKey() {
+	this->main_keys.pop_back();
 }
 
 std::string Configuration::getString(const std::string& key) const {
@@ -34,8 +36,40 @@ std::string Configuration::getString(const std::string& key) const {
 								key.c_str());
 }
 
+float Configuration::_getFloat(const YAML::Node& sub_file, 
+							const std::string& key, size_t i) const {
+	if (main_keys.size() == i) {
+		if (sub_file[key]) {
+			return sub_file[key].as<float>();
+		}
+
+		throw ConfigurationException("Key '%s' does not exist."
+		 							"Can't get float.", key.c_str());
+	}
+
+	return _getFloat(sub_file[main_keys[i]], key, i+1);
+}
+
+int Configuration::_getInt(const YAML::Node& sub_file, 
+							const std::string& key, size_t i) const {
+	if (main_keys.size() == i) {
+		if (sub_file[key]) {
+			return sub_file[key].as<int>();
+		}
+
+		throw ConfigurationException("Key '%s' does not exist."
+		 							"Can't get int.", key.c_str());
+	}
+
+	return _getInt(sub_file[main_keys[i]], key, i+1);
+}
+
+float Configuration::getFloat(const std::string& key) const {
+	return Configuration::_getFloat(this->file, key, 0);
+}
+
 int Configuration::getInt(const std::string& key) const {
-	return _getInt(this->file, key);
+	return Configuration::_getInt(this->file, key, 0);
 }
 
 void Configuration::initializeMatrix(const long int row,
@@ -51,26 +85,6 @@ void Configuration::initializeMatrix(const long int row,
 			map[i][j] = this->file[key][i][j].as<int>();
 		}
 	}
-}
-
-float Configuration::getSubFloat(const std::string& main_key,
-								const std::string& sub_key) const {
-	if (!this->file[main_key]){
-		throw ConfigurationException("Key '%s' does not exist.",
-									main_key.c_str());
-	}
-
-	return _getFloat(this->file[main_key], sub_key);
-}
-
-int Configuration::getSubInt(const std::string& main_key,
-							const std::string& sub_key) const {
-	if (!this->file[main_key]){
-		throw ConfigurationException("Key '%s' does not exist.",
-									main_key.c_str());
-	}
-
-	return _getInt(this->file[main_key], sub_key);
 }
 
 Configuration::~Configuration() {}

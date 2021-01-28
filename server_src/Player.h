@@ -24,6 +24,8 @@ private:
     //State Variable
     uint8_t state;
 
+    float player_size;
+
 public:
     /* Constructor */
 //    Player(float moveSpeed, float rotSpeed, float posX, float posY);
@@ -59,8 +61,8 @@ public:
     ~Player();
 
 private:
-    void look_for_item(Items& items);
-    void look_for_collision(const Map& map);
+    void lookForItem(Items& items, const Collider& collider);
+    void lookForWallCollision(const Map& map, const Collider& collider);
     void _moveForwards();
     void _moveBackwards();
     void _turnLeft();

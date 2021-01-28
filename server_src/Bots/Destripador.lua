@@ -1,6 +1,8 @@
 WALKABLE = 0
 DIVISIONS_AMOUNT = 10
 PI = 3.1415926
+BIG_DISTANCE = 10000
+KNIFE_RANGE = 0.5
 
 NOT_MOVE = 0
 MOVE_FORWARDS = 1
@@ -9,54 +11,39 @@ TURN_LEFT = 3
 TURN_RIGHT = 4
 ATTACK = 5
 
-function hola()
-
-    print(5)
-
-end
-
 function getBotInstruction(map, positions, posX, posY, dirX, dirY)
 
-    print(54);
-    print(posX)
-    print(posY)
-    print(dirX)
-    print(dirY)
+    nearestPlayerX = BIG_DISTANCE
+    nearestPlayerY = BIG_DISTANCE
 
+    numberOfPlayers = tableLength(positions)/2
 
-    --print(map[0][0])
-    --print(map[0][1])
-    --print(map[1][1])
-    --print(map[1][0])
-    --print(map[2][0])
-    --print(map[3][4])
+    --[ Obtengo la posicion del jugador visible mas cercano ]--
+    for i = 0, numberOfPlayers - 1 do
+            playerX = positions[2 * i]
+            playerY = positions[2 * i + 1]
+        if isInTheFieldOfView(posX, playerX, posY, playerY, map) == true then
+            if math.sqrt((posX - playerX)^2 + (posY - playerY)^2) <
+            math.sqrt((posX - nearestPlayerX)^2 + (posY - nearestPlayerY)^2) then
+                nearestPlayerX = playerX
+                nearestPlayerY = playerY
+            end
+        end
+    end
 
-    --print(positions[0])
-    --print(positions[1])
-    --print(positions[2])
-    --print(positions[3])
-    --print(positions[4])
-    --print(positions[5])
-    --print(positions[6])
+    print(nearestPlayerX)
+    print(nearestPlayerY)
 
+    if nearestPlayerX == BIG_DISTANCE and nearestPlayerY == BIG_DISTANCE then
+        return NOT_MOVE
+    elseif math.sqrt((nearestPlayerX - posX)^2 + (nearestPlayerY - posY)^2) < KNIFE_RANGE then
+        return ATTACK
+    elseif angle(posX, nearestPlayerX, dirX, dirY, posY, nearestPlayerY) <= (PI/12) then
+        return MOVE_FORWARDS
+    else
+        return TURN_RIGHT
+    end
 
-    --prueba
-    posx1 = 2
-    posy2 = 2
-
-    dirx = 1
-    diry = 0
-    --prueba
-
-    print(tableLength(positions))
-
-    x = isInTheFieldOfView(3, 3, 7, 3, map)
-    print(x)
-
-    print(angle(2, 1, 1, 0, 2, 1))
-    print("-----Fin Lua-----")
-
-    return MOVE_FORWARDS
 end
 
 function tableLength(T)
@@ -66,7 +53,6 @@ function tableLength(T)
     end
     return count
 end
-
 
 function isInTheFieldOfView(xP1, xP2, yP1, yP2, map)
     inTheFieldOfView = true
@@ -91,23 +77,6 @@ end
 function angle(xP1, xP2, dirXP1, dirYP1, yP1, yP2)
     diffX = xP2 - xP1
     diffY = yP2 - yP1
-    theta = math.acos((dirXP1 * diffX + dirYP1 * diffY) / math.sqrt(diffX * diffX + diffY * diffY))
+    theta = math.acos((dirXP1 * diffX + dirYP1 * diffY) / math.sqrt(diffX^2 + diffY^2))
     return theta
-end
-
-function getDirection(thetaDir, thetaPos)
-    if thetaDir > thetaPos then
-        if thetaDir - thetaPos > PI then
-            return TURN_LEFT
-        else
-            return TURN_RIGHT
-        end
-    end
-    if thetaDir <= thetaPos then
-        if thetaPos - thetaDir < PI then
-            return TURN_RIGHT
-        else
-            return TURN_LEFT
-        end
-    end
 end

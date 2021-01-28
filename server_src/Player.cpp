@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../common_src/Exceptions/ErrorMap.h"
+#include "../common_src/Collider.h"
 #include "Weapons/Pistol.h"
 #include "Weapons/ChainGun.h"
 #include "Weapons/MachineGun.h"
@@ -10,7 +11,7 @@
 #include <cstring>
 
 #define WALKABLE 0
-#define PLAYER_SIZE 0.1
+#define PLAYER_SIZE 10
 #define RAYS_AMOUNT 20
 #define PI 3.14159
 
@@ -24,52 +25,43 @@
 #define STOPSHOOTING 6
 
 Player::Player(const Configuration& config, const std::string& player_number, const int playerNumber)
-            : DirectedPositionable(config.getSubFloat(player_number, "pos_x"),
-                            config.getSubFloat(player_number, "pos_y"),
-                            config.getSubInt(player_number, "dir_x"),
-                            config.getSubInt(player_number, "dir_y"), None),
+            : DirectedPositionable(config.getFloat("pos_x"),
+                            config.getFloat("pos_y"),
+                            config.getInt("dir_x"),
+                            config.getInt("dir_y"), None),
             action(config) {
-    this->moveSpeed = config.getSubFloat(player_number, "move_speed");
-    this->rotSpeed = config.getSubFloat(player_number, "rot_speed");
+    this->moveSpeed = config.getFloat("move_speed");
+    this->rotSpeed = config.getFloat("rot_speed");
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
     this->playerNumber = playerNumber;
     this->weapon = new ChainGun();
+    this->player_size = config.getFloat("player_size");
 }
 
-static void initialize_rays(float *x, float *y, float radius, int rays) {
-    float two_pi = 2*PI;
-    float step = two_pi/rays;
-
-    for (int i = 0; i < rays; ++i){
-        x[i] = radius * cos (step*i);
-        y[i] = radius * sin (step*i);
+void Player::lookForWallCollision(const Map& map, const Collider& collider) {
+    for (int i = this->x-1; i <= this->x+1; ++i) {
+        for (int j = this->y-1; j <= this->y+1; ++j) {
+            if (map.get(i, j) != WALKABLE) {
+                if (collider.collidesWith(i, j)) {
+                    throw ErrorMap("Collision detected.");
+                }
+            }
+        }
     }
 }
 
-void Player::look_for_collision(const Map& map) {
-	float player_x_rays[RAYS_AMOUNT], player_y_rays[RAYS_AMOUNT];
-	initialize_rays(player_x_rays, player_y_rays, PLAYER_SIZE, RAYS_AMOUNT);
-	
-	for (int i = 0; i < RAYS_AMOUNT; i++) {
-        if (map.get(int(this->x + player_x_rays[i]),
-                    int(this->y + player_y_rays[i])) != WALKABLE) {
-            throw ErrorMap("Collision detected.");
-        }
-	}
-}
-
-void Player::look_for_item(Items& items) {
+void Player::lookForItem(Items& items, const Collider& collider) {
 	for (size_t i = 0; i < items.size(); ++i) {
-//		if (items[i].collidesWith(player)) {
+		if (items[i]->collidesWith(collider)) {
             try {
                 items[i]->equipTo(this->action);
                 items.remove(i);
             } catch (const std::exception& e) {
                 std::cout << e.what() << std::endl;
-            }
-    //    }
+            } 
+        }
 	}
 }
 
@@ -95,8 +87,9 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
     }
 
     try {
-        Player::look_for_collision(map);
-        Player::look_for_item(items);
+        Collider collider(this->x, this->y, this->player_size);
+        Player::lookForWallCollision(map, collider);
+        Player::lookForItem(items, collider);
     } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
         this->x = old_x;
