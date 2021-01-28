@@ -1,15 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mapelement.h"
 #include <QWidget>
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <string>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this ->loadIcons();
     initWidgets();
 }
 
@@ -40,18 +43,13 @@ void MainWindow::loadImage(QPixmap &pixmap, const QString &path){
 
 void MainWindow::loadIcons(){
     Q_INIT_RESOURCE(editor);
-    QPixmap newImage;
 
-    loadImage(newImage, QStringLiteral(":/img/icons/barrel.jpg") );
-    list->add(newImage);
-
-    loadImage(newImage, QStringLiteral(":/img/icons/wall.jpg"));
-    list->add(newImage);
-
-    loadImage(newImage, QStringLiteral(":/img/icons/spawn.jpg"));
-    list->add(newImage);
-
-    loadImage(newImage, QStringLiteral(":/img/icons/void.jpg"));
-    list->add(newImage);
+    int i = 0;
+    while(true){
+        QPixmap newImage;
+       if( !newImage.load( QString::number(i) ) ) break;
+       list->add(newImage);
+       i++;
+    }
 }
 
