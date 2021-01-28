@@ -24,9 +24,9 @@ void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
     this->map = new Map;
-    this->list = new ItemList(100, this);
     this->loadIcons();
-    frameLayout->addWidget(list);
+    this->itemlist = new ItemList(100, elements,this);
+    frameLayout->addWidget(itemlist);
     frameLayout->addWidget(map);
     setCentralWidget(frame);
 }
@@ -41,7 +41,7 @@ void MainWindow::loadIcons(){
        QPixmap newImage;
        printf("una iteracion");
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
-          list->add(newImage);
+          itemlist->add(newImage);
            i++;
        } else {
            done = true;

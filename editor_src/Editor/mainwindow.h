@@ -7,8 +7,6 @@
 #include <QMainWindow>
 #include <vector>
 
-#define MAX_ITEMS 4
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,9 +23,9 @@ private:
     void initWidgets();
     void loadIcons();
     Ui::MainWindow *ui;
-    ItemList* list;
+    ItemList* itemlist;
     Map* map;
-    MapElement elements [MAX_ITEMS];
+    std::vector<MapElement> elements;
 };
 
 #endif // MAINWINDOW_H
