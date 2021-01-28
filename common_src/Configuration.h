@@ -12,7 +12,6 @@ public:
 	Configuration(const char* filename);
 	void addKey(const std::string& key);
 	void removeLastKey();
-
 	std::string getString(const std::string& key) const;
 	int getInt(const std::string& key) const;
 	float getFloat(const std::string& key) const;
