@@ -24,7 +24,6 @@ public:
 private:
     void initWidgets();
     void loadIcons();
-    void loadImage(QPixmap &pixmap, const QString &path);
     Ui::MainWindow *ui;
     ItemList* list;
     Map* map;

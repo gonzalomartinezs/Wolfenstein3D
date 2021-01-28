@@ -32,21 +32,13 @@ void MainWindow::initWidgets(){
     setCentralWidget(frame);
 }
 
-void MainWindow::loadImage(QPixmap &pixmap, const QString &path){
-    if (!pixmap.load(path)) {
-        QMessageBox::warning(this, tr("Open Image"),
-                             tr("The image file could not be loaded."),
-                             QMessageBox::Close);
-        return;
-    }
-}
 
 void MainWindow::loadIcons(){
     Q_INIT_RESOURCE(editor);
 
     int i = 0;
     while(true){
-        QPixmap newImage;
+       QPixmap newImage;
        if( !newImage.load( QString::number(i) ) ) break;
        list->add(newImage);
        i++;
