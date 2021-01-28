@@ -3,7 +3,7 @@
 
 #include "itemList.h"
 #include "map.h"
-#include "mapelement.h"
+#include "item.h"
 #include <QMainWindow>
 #include <vector>
 
@@ -21,11 +21,11 @@ public:
 
 private:
     void initWidgets();
-    void loadIcons();
+    void loadElements();
     Ui::MainWindow *ui;
     ItemList* itemlist;
     Map* map;
-    std::vector<MapElement> elements;
+    std::vector<Item> items;
 };
 
 #endif // MAINWINDOW_H

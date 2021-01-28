@@ -3,17 +3,17 @@
 
 #include <QListWidget>
 #include <vector>
-#include "mapelement.h"
+#include "item.h"
 
 class ItemList : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit ItemList(int pieceSize,std::vector<MapElement>& elements, QWidget *parent = nullptr);
+    explicit ItemList(int pieceSize,std::vector<Item>& item, QWidget *parent = nullptr);
 private:
     void loadImages();
     int itemSize;
-    std::vector<MapElement>& elements;
+    std::vector<Item>& items;
 };
 
 #endif // ITEMLIST_H

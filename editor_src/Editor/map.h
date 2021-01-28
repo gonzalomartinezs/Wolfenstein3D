@@ -1,7 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "mapelement.h"
+#include "item.h"
 #include <QWidget>
 #include  <QVector>
 
@@ -14,8 +14,7 @@ public:
 
 signals:
 private:
-        QVector<MapElement> items;
-
+        QVector<Item> items;
 };
 
 #endif // MAP_H
