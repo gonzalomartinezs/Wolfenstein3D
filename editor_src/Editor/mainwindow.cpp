@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     initWidgets();
-    this ->loadIcons();
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +38,7 @@ void MainWindow::loadIcons(){
     int i = 0;
     bool done = false;
     while(!done){
-        QPixmap newImage;
+       QPixmap newImage;
        printf("una iteracion");
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
           list->add(newImage);
