@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this ->loadIcons();
     initWidgets();
+    this ->loadIcons();
 }
 
 MainWindow::~MainWindow()
@@ -37,11 +37,16 @@ void MainWindow::loadIcons(){
     Q_INIT_RESOURCE(editor);
 
     int i = 0;
-    while(true){
-       QPixmap newImage;
-       if( !newImage.load( QString::number(i) ) ) break;
-       list->add(newImage);
-       i++;
+    bool done = false;
+    while(!done){
+        QPixmap newImage;
+       printf("una iteracion");
+       if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
+          list->add(newImage);
+           i++;
+       } else {
+           done = true;
+       }
     }
 }
 
