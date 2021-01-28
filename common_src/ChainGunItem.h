@@ -5,7 +5,8 @@
 
 class ChainGunItem : public Item {
 public:
-	ChainGunItem(float _x, float _y, TextureID _texture, int _value);
+	ChainGunItem(float _x, float _y, TextureID _texture, int _value,
+				float radius);
 	void equipTo(PlayerActions& action);
 	~ChainGunItem();
 };
