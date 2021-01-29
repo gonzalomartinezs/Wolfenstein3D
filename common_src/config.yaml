@@ -1,5 +1,5 @@
 port: 8080
-max_clients: 2
+max_clients: 1
 
 #Map
 length: 8
@@ -33,8 +33,6 @@ player_1:
   dir_y: 0
   move_speed: *player_global_move_speed
   rot_speed: *player_global_rot_speed
-  cam_plane_x: 0
-  cam_plane_y: 1
   initial_health: *player_global_initial_health
   initial_score: *player_global_initial_score
   total_lives: *player_global_total_lives
@@ -50,8 +48,6 @@ player_2:
   dir_y: 0
   move_speed: *player_global_move_speed
   rot_speed: *player_global_rot_speed
-  cam_plane_x: 0
-  cam_plane_y: 1
   initial_health: *player_global_initial_health
   initial_score: *player_global_initial_score
   total_lives: *player_global_total_lives
@@ -67,8 +63,6 @@ player_3:
   dir_y: 0
   move_speed: *player_global_move_speed
   rot_speed: *player_global_rot_speed
-  cam_plane_x: 0
-  cam_plane_y: 1
   initial_health: *player_global_initial_health
   initial_score: *player_global_initial_score
   total_lives: *player_global_total_lives
