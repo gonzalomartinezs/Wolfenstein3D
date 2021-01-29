@@ -24,20 +24,29 @@
 #define STARTSHOOTING 5
 #define STOPSHOOTING 6
 
+//Keys
+#define KEY_POS_X "pos_x"
+#define KEY_POS_Y "pos_y"
+#define KEY_DIR_X "dir_x"
+#define KEY_DIR_Y "dir_y"
+#define KEY_MOVE_SPEED "move_speed"
+#define KEY_ROT_SPEED "rot_speed"
+#define KEY_SIZE "size"
+
 Player::Player(const Configuration& config, const std::string& player_number, const int playerNumber)
-            : DirectedPositionable(config.getFloat("pos_x"),
-                            config.getFloat("pos_y"),
-                            config.getInt("dir_x"),
-                            config.getInt("dir_y"), None),
+            : DirectedPositionable(config.getFloat(KEY_POS_X),
+                            config.getFloat(KEY_POS_Y),
+                            config.getInt(KEY_DIR_X),
+                            config.getInt(KEY_DIR_Y), None),
             action(config) {
-    this->moveSpeed = config.getFloat("move_speed");
-    this->rotSpeed = config.getFloat("rot_speed");
+    this->moveSpeed = config.getFloat(KEY_MOVE_SPEED);
+    this->rotSpeed = config.getFloat(KEY_ROT_SPEED);
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
     this->playerNumber = playerNumber;
     this->weapon = new ChainGun();
-    this->player_size = config.getFloat("player_size");
+    this->player_size = config.getFloat(KEY_SIZE);
 }
 
 void Player::lookForWallCollision(const Map& map, const Collider& collider) {
@@ -114,7 +123,11 @@ void Player::setState(uint8_t newState) {
 
 void Player::die() {
     //Reiniciar posicion
-    //this->action.respawn()
+    //this->x = this->initial_x;
+    //this->y = this->initial_y;
+    //this->dir_x = this->initial_dir_x;
+    //this->dir_y = this->initial_dir_y;
+    //this->action.respawn();
 }
 
 bool Player::isDead() {

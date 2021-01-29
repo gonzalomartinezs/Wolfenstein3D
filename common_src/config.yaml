@@ -39,7 +39,7 @@ player_1:
   initial_weapon: *player_global_initial_weapon
   has_key: *player_global_has_key
   initial_bullets: *player_global_initial_weapon
-  player_size: *player_global_size
+  size: *player_global_size
 
 player_2:
   pos_x: 3.0
@@ -54,7 +54,7 @@ player_2:
   initial_weapon: *player_global_initial_weapon
   has_key: *player_global_has_key
   initial_bullets: *player_global_initial_weapon
-  player_size: *player_global_size
+  size: *player_global_size
 
 player_3:
   pos_x: 5.0
@@ -69,7 +69,7 @@ player_3:
   initial_weapon: *player_global_initial_weapon
   has_key: *player_global_has_key
   initial_bullets: *player_global_initial_weapon
-  player_size: *player_global_size
+  size: *player_global_size
 
 #Item's radius
 treasure_radius: &treasure_radius 0.5
