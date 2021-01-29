@@ -5,9 +5,10 @@
 DrawingInfo::DrawingInfo(DirectedPositionable player_pos, PlayerView view,
                          std::vector<int> player_info,
                          std::vector<Positionable> objects,
-                         std::vector<DirectedPositionable> directed_objects) :
+                         std::vector<DirectedPositionable> directed_objects,
+                         std::vector<std::tuple<int,int,int>> doors_changes) :
             player_pos(player_pos), player_info(std::move(player_info)),
-            objects(std::move(objects)),
+            objects(std::move(objects)), doors_changes(doors_changes),
             directed_objects(std::move(directed_objects)), view(view){}
 
 
@@ -28,5 +29,9 @@ std::vector<DirectedPositionable> DrawingInfo::getDirectedObjects() const {
 
 PlayerView DrawingInfo::getCameraPlanes() const {
     return this->view;
+}
+
+std::vector<std::tuple<int, int, int>> DrawingInfo::getDoorsChanges() const {
+    return this->doors_changes;
 }
 
