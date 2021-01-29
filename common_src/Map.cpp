@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "Exceptions/ErrorMap.h"
+#include "GameConstants.h"
 
 #define KEY_MAP "map"
 #define KEY_ROW "length"
@@ -32,6 +33,20 @@ long Map::get_n_row() const{
 long Map::get_n_col() const{
     return this->n_col;
 }
+
+
+std::vector<Door> Map::getDoors() const {
+    std::vector<Door> doors;
+    for (int i=0; i<n_row; i++){
+        for (int j=0; j<n_col; j++){
+            if (map[i][j] == DOOR_CLOSED){
+                doors.emplace_back(i, j, MOVING_DOOR_TIME, TIME_BEFORE_CLOSING_DOOR, map[i][j]);
+            }
+        }
+    }
+    return doors;
+}
+
 
 Map::~Map() {
 	for (int i = 0; i < n_row; ++i) {
