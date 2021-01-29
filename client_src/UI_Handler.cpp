@@ -25,8 +25,9 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
 
 void UI_Handler::raycast(DirectedPositionable player_pos, PlayerView view,
                          std::vector<Positionable> objects,
-                         std::vector<DirectedPositionable> directed_objects) {
-    this->raycaster.draw(player_pos, view, objects, directed_objects);
+                         std::vector<DirectedPositionable> directed_objects,
+                         std::vector<std::tuple<int,int,int>> doors_changes) {
+    this->raycaster.draw(player_pos, view, objects, directed_objects, doors_changes);
 }
 
 void UI_Handler::render() {
@@ -45,9 +46,11 @@ void UI_Handler::loadBackground() {
 void UI_Handler::loadPlayerInterface(std::vector<int> player_info) {
     int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
     tex.get(MainInterface)->render(nullptr, nullptr);
-    tex.get(TextureID(int(KnifeInterface) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
+    tex.get(TextureID(int(KnifeInterface) + player_info[Weapon]))->render(
+            nullptr, &this->elements.weapon);
     tex.get(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
-    tex.get(TextureID(int(HasNotKey)+player_info[Key]))->render(nullptr, &this->elements.key);
+    tex.get(TextureID(int(HasNotKey) + player_info[Key]))->render(nullptr,
+                                                                  &this->elements.key);
     font_textures[0].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr,
                                                  &this->elements.score);
     font_textures[1].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr,
