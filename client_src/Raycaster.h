@@ -4,6 +4,7 @@
 #include "SpriteRenderer.h"
 #include "textures/TexturesContainer.h"
 #include "../common_src/DirectedPositionable.h"
+#include "../common_src/Door.h"
 #include "../common_src/Map.h"
 #include "PlayerView.h"
 
@@ -18,6 +19,7 @@ private:
     TexturesContainer& textures;
     SpriteRenderer sprite_renderer;
     std::vector<float> wall_distances;
+    std::unordered_map<std::string, class Door> doors;
     int width;
     int height;
     int begin_x;
@@ -34,7 +36,8 @@ public:
     // Post: dibuja en el renderer la imagen raycasting generada.
     void draw(DirectedPositionable player_pos, PlayerView view,
               std::vector<Positionable> objects,
-              std::vector<DirectedPositionable> directed_objects);
+              std::vector<DirectedPositionable> directed_objects,
+              std::vector<std::tuple<int,int,int>> doors_changes);
 
     // Libera los recursos utilizados por el RayCaster
     ~Raycaster(){}
@@ -52,14 +55,19 @@ private:
     float _calculatePerpWallDist(DirectedPositionable &player, RayDirection ray_dir,
                                  char &hit_axis, int &map_x, int &map_y);
 
-    void _calculateSideDist(float &side_dist, int &ray_dir_sign,
-                            float player_pos, float map_pos,
-                            float delta_dist, float ray_dir);
+    float _calculateSideDist(int &ray_dir_sign, float player_pos, float map_pos,
+                             float delta_dist, float ray_dir);
 
     int _calculateTextureXCoordinate(DirectedPositionable player,
                                      RayDirection ray_dir,
                                      float wall_dist, char hit_axis,
                                      int ray_number);
+    int _processDoor(int map_x, int map_y, DirectedPositionable player,
+                     RayDirection ray_dir, float delta_dist_x,
+                     float delta_dist_y, char hit_axis);
+    bool _rayHitsDoor(float ray_step_in, class Door& door);
+    void _processDoorTexture(int &tex_x, int &tex_id, int map_x, int map_y,
+                             RayDirection ray_dir, char hit_axis);
 
 };
 

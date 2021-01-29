@@ -14,7 +14,7 @@ public:
                                                 SDL_Surface* surface=nullptr);
 
     // Toma el fragmento source de la textura y lo adapta a la forma de dest.
-    void render(SDL_Rect* source, SDL_Rect* dest);
+    void render(SDL_Rect *source, SDL_Rect *dest);
 
     // Modula el color de la textura de acuerdo a mod.
     void changeColorModulation(Uint8 mod);
