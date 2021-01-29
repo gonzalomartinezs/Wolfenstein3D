@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this ->loadIcons();
     initWidgets();
 }
 
@@ -25,23 +24,31 @@ void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
     this->map = new Map;
-    this->list = new ItemList(100, this);
-    this->loadIcons();
-    frameLayout->addWidget(list);
+    this->loadElements();
+    this->itemlist = new ItemList(100, items,this);
+    frameLayout->addWidget(itemlist);
     frameLayout->addWidget(map);
     setCentralWidget(frame);
 }
 
 
-void MainWindow::loadIcons(){
+void MainWindow::loadElements(){
     Q_INIT_RESOURCE(editor);
 
     int i = 0;
-    while(true){
+    bool done = false;
+    while(!done){
        QPixmap newImage;
-       if( !newImage.load( QString::number(i) ) ) break;
-       list->add(newImage);
-       i++;
+       printf("una iteracion");
+       if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
+            Item x;
+            x.id = i;
+            x.pixmap = newImage;
+            items.push_back(x);
+           i++;
+       } else {
+           done = true;
+       }
     }
 }
 

@@ -2,14 +2,13 @@
 #define MAPELEMENT_H
 
 #include <QPoint>
-#include <QPixmap>
+#include "item.h"
 
 class MapElement
 {
 public:
-    MapElement();
-    int element;
-    QPixmap pixmap;
+    MapElement(Item& in);
+    Item& item;
     QRect rect;
     QPoint location;
 };

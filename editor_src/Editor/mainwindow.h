@@ -3,11 +3,9 @@
 
 #include "itemList.h"
 #include "map.h"
-#include "mapelement.h"
+#include "item.h"
 #include <QMainWindow>
 #include <vector>
-
-#define MAX_ITEMS 4
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,11 +21,11 @@ public:
 
 private:
     void initWidgets();
-    void loadIcons();
+    void loadElements();
     Ui::MainWindow *ui;
-    ItemList* list;
+    ItemList* itemlist;
     Map* map;
-    MapElement elements [MAX_ITEMS];
+    std::vector<Item> items;
 };
 
 #endif // MAINWINDOW_H

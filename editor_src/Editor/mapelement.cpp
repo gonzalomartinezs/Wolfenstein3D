@@ -1,6 +1,6 @@
 #include "mapelement.h"
 
-MapElement::MapElement()
+MapElement::MapElement(Item& in) : item(in)
 {
 
 }
