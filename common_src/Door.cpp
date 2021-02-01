@@ -1,9 +1,10 @@
 #include "Door.h"
 #include "GameConstants.h"
 
-Door::Door(int x, int y, int moving_time, int opened_limit, int initial_state):
-            state(initial_state), pos_x(x), pos_y(y), fraction_remaining(0.0),
-            door_moving_time(moving_time), door_opened_limit(opened_limit) {
+Door::Door(int x, int y, int moving_time, int opened_limit, int initial_state)
+            : state(initial_state), pos_x(x), pos_y(y),
+            door_moving_time(moving_time), door_opened_limit(opened_limit),
+            fraction_remaining(0.0) {
     timer.start();
 }
 
