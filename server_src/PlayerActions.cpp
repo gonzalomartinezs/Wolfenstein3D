@@ -59,6 +59,20 @@ void PlayerActions::stopShooting() {
     this->weapons[this->current_weapon]->stopShooting();
 }
 
+void PlayerActions::nextWeapon() {
+    ++(this->current_weapon);
+    if (this->current_weapon >= this->weapons.size()) {
+        this->current_weapon = 0;
+    }
+}
+
+void PlayerActions::prevWeapon() {
+    --(this->current_weapon);
+    if (this->current_weapon <= 0) {
+        this->current_weapon = this->weapons.size()-1;
+    }
+}
+
 bool PlayerActions::isShooting() const {
     return this->weapons[this->current_weapon]->isShooting();
 }

@@ -22,6 +22,8 @@
 #define ISTURNINGRIGHT 4
 #define STARTSHOOTING 5
 #define STOPSHOOTING 6
+#define NEXT_WEAPON 7
+#define PREV_WEAPON 8
 
 //Keys
 #define KEY_POS_X "pos_x"
@@ -87,7 +89,7 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
             throw GameException("Player has an invalid state!");
         }
     }
-    
+
     if (this->action.isShooting()) {
         this->action.fireTheGun(players, this->player_number, map);
     }
@@ -113,6 +115,12 @@ void Player::setState(uint8_t newState) {
         this->action.startShooting();
     } else if (newState == STOPSHOOTING) {
         this->action.stopShooting();
+    } else if (newState == NEXT_WEAPON) {
+        this->action.stopShooting();
+        this->action.nextWeapon();
+    } else if (newState == PREV_WEAPON) {
+        this->action.stopShooting();
+        this->action.prevWeapon();
     } else {
         this->state = newState;
     }

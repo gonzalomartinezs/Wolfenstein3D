@@ -33,6 +33,9 @@ public:
 	void startShooting();
 	void stopShooting();
 
+	void nextWeapon();
+	void prevWeapon();
+
 	bool isShooting() const;
 	void fireTheGun(std::vector<Player>& players, int shooting_player_number,
 					const Map& map);
