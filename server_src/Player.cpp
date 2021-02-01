@@ -87,11 +87,7 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
             throw GameException("Player has an invalid state!");
         }
     }
-/*
-    if (this->weapon->isShooting()) {
-        this->weapon->fireTheGun(players, this->playerNumber, map);
-    }
-*/
+    
     if (this->action.isShooting()) {
         this->action.fireTheGun(players, this->player_number, map);
     }
@@ -114,10 +110,8 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
 
 void Player::setState(uint8_t newState) {
     if (newState == STARTSHOOTING) {
-        //this->weapon->startShooting();
         this->action.startShooting();
     } else if (newState == STOPSHOOTING) {
-        //this->weapon->stopShooting();
         this->action.stopShooting();
     } else {
         this->state = newState;
