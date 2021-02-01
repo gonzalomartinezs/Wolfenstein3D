@@ -15,7 +15,7 @@ class Player : public DirectedPositionable {
 private:
     PlayerActions action;
     float camPlaneX, camPlaneY;
-    int playerNumber;
+    int player_number;
 //    Weapon* weapon;
 
     //Movement Speed
@@ -29,7 +29,7 @@ private:
 public:
     /* Constructor */
 //    Player(float moveSpeed, float rotSpeed, float posX, float posY);
-    Player(const Configuration& config, const int playerNumber);
+    Player(const Configuration& config, const int _player_number);
 
     void updatePlayer(const Map& map, Items& items, std::vector<Player>& players);
 

@@ -32,7 +32,7 @@
 #define KEY_ROT_SPEED "rot_speed"
 #define KEY_SIZE "size"
 
-Player::Player(const Configuration& config, const int playerNumber) :
+Player::Player(const Configuration& config, const int _player_number) :
                 DirectedPositionable(config.getFloat(KEY_POS_X),
                 config.getFloat(KEY_POS_Y), config.getInt(KEY_DIR_X),
                 config.getInt(KEY_DIR_Y), None), action(config) {
@@ -41,7 +41,7 @@ Player::Player(const Configuration& config, const int playerNumber) :
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
-    this->playerNumber = playerNumber;
+    this->player_number = _player_number;
 //    this->weapon = new ChainGun();
     this->player_size = config.getFloat(KEY_SIZE);
 }
@@ -93,7 +93,7 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
     }
 */
     if (this->action.isShooting()) {
-        this->action.fireTheGun(players, this->playerNumber, map);
+        this->action.fireTheGun(players, this->player_number, map);
     }
 
     try {
@@ -114,9 +114,11 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
 
 void Player::setState(uint8_t newState) {
     if (newState == STARTSHOOTING) {
-        this->weapon->startShooting();
+        //this->weapon->startShooting();
+        this->action.startShooting();
     } else if (newState == STOPSHOOTING) {
-        this->weapon->stopShooting();
+        //this->weapon->stopShooting();
+        this->action.stopShooting();
     } else {
         this->state = newState;
     }

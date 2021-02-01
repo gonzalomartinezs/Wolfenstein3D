@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include "../common_src/Configuration.h"
+#include "../common_src/Map.h"
 
 #define HUD_INFO_SIZE 12
 
@@ -12,13 +13,14 @@ class HealthRecover;
 class Treasure;
 class WeaponItem;
 class MachineGunItem;
+class Player;
 
 class PlayerActions {
 private:
 	uint8_t health, lives;
     int score;
     bool hasKey;
-    uint8_t currentWeapon;
+    uint8_t current_weapon;
     std::vector<Weapon*> weapons;
     int bullets;
 public:
@@ -30,9 +32,12 @@ public:
 	void equip(Weapon* machine_gun);
 	bool isDead() const;
 
-	bool isShooting() const;
+	void startShooting();
+	void stopShooting();
 
-	void fireTheGun(std::vector<Player>& players, playerNumber, map)
+	bool isShooting() const;
+	void fireTheGun(std::vector<Player>& players, int shooting_player_number,
+					const Map& map);
 
     void receiveShot(uint8_t damage);
 
