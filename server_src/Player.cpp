@@ -32,19 +32,17 @@
 #define KEY_ROT_SPEED "rot_speed"
 #define KEY_SIZE "size"
 
-Player::Player(const Configuration& config, const std::string& player_number, const int playerNumber)
-            : DirectedPositionable(config.getFloat(KEY_POS_X),
-                            config.getFloat(KEY_POS_Y),
-                            config.getInt(KEY_DIR_X),
-                            config.getInt(KEY_DIR_Y), None),
-            action(config) {
+Player::Player(const Configuration& config, const int playerNumber) :
+                DirectedPositionable(config.getFloat(KEY_POS_X),
+                config.getFloat(KEY_POS_Y), config.getInt(KEY_DIR_X),
+                config.getInt(KEY_DIR_Y), None), action(config) {
     this->moveSpeed = config.getFloat(KEY_MOVE_SPEED);
     this->rotSpeed = config.getFloat(KEY_ROT_SPEED);
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
     this->playerNumber = playerNumber;
-    this->weapon = new ChainGun();
+//    this->weapon = new ChainGun();
     this->player_size = config.getFloat(KEY_SIZE);
 }
 
@@ -89,9 +87,13 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
             throw GameException("Player has an invalid state!");
         }
     }
-
+/*
     if (this->weapon->isShooting()) {
         this->weapon->fireTheGun(players, this->playerNumber, map);
+    }
+*/
+    if (this->action.isShooting()) {
+        this->action.fireTheGun(players, this->playerNumber, map);
     }
 
     try {

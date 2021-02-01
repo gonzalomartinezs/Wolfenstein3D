@@ -13,7 +13,7 @@ Game::Game(std::vector<ThClient*>& _clients, Configuration& config) :
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         config.addKey(player_number);
-        this->players.emplace_back(config, player_number, static_cast<int>(i));
+        this->players.emplace_back(config, static_cast<int>(i));
         config.removeLastKey();
     }
 }

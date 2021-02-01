@@ -16,7 +16,7 @@ private:
     PlayerActions action;
     float camPlaneX, camPlaneY;
     int playerNumber;
-    Weapon* weapon;
+//    Weapon* weapon;
 
     //Movement Speed
     float moveSpeed, rotSpeed;
@@ -29,7 +29,7 @@ private:
 public:
     /* Constructor */
 //    Player(float moveSpeed, float rotSpeed, float posX, float posY);
-    Player(const Configuration& config, const std::string& player_number, const int playerNumber);
+    Player(const Configuration& config, const int playerNumber);
 
     void updatePlayer(const Map& map, Items& items, std::vector<Player>& players);
 

@@ -30,6 +30,10 @@ public:
 	void equip(Weapon* machine_gun);
 	bool isDead() const;
 
+	bool isShooting() const;
+
+	void fireTheGun(std::vector<Player>& players, playerNumber, map)
+
     void receiveShot(uint8_t damage);
 
     /* Escribe los primeros 12 bytes del buffer con la informacion del HUD del
