@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Client.h"
-
+#include "../common_src/GameConstants.h"
 #define FLOAT_SIZE sizeof(float)
 #define UINT_ATTRIBUTES 4
 #define INT_ATTRIBUTES 2
@@ -45,11 +45,12 @@ ssize_t Client::receiveInformation() {
         std::vector<int> player_info;
         std::vector<Positionable> objects;
         std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
+        std::vector<std::tuple<int,int,int>> doors_changes;
         _assignPlayerInfo(player_info, bytes_received);
         _assignPlayerCoordenates(player, view, coordinates,
                                  bytes_received);
         _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive, directed_objects, coordinates);
-        DrawingInfo new_info(player, view, player_info,objects, directed_objects);
+        DrawingInfo new_info(player, view, player_info,objects, directed_objects, doors_changes);
         this->drawing_info.push(new_info);
     }
     std::cout<<"fin recv\n";

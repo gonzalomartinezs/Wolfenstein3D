@@ -59,7 +59,7 @@ void GameInterface::_updateScreen(DrawingInfo new_info) {
         old_view.movePlaneY(old_plane_y + step_plane_y * i);
 
         ui_handler.raycast(old_pos, old_view, new_info.getStaticObjects(),
-                       new_info.getDirectedObjects());
+                       new_info.getDirectedObjects(), new_info.getDoorsChanges());
         ui_handler.loadPlayerInterface(new_info.getPlayerInfo());
         ui_handler.render();
     }

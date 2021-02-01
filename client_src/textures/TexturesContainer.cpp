@@ -2,6 +2,8 @@
 #include <SDL2/SDL_image.h>
 
 #define WALL_PATH "../client_src/textures/img/sprites/rocky.bmp"
+#define DOOR_PATH "../client_src/textures/img/sprites/door.bmp"
+#define INVERTED_DOOR_PATH "../client_src/textures/img/sprites/inv_door.bmp"
 #define BARREL_PATH "../client_src/textures/img/sprites/barrel.bmp"
 #define GUARD_0_PATH "../client_src/textures/img/sprites/guard_0.bmp"
 #define GUARD_1_PATH "../client_src/textures/img/sprites/guard_1.bmp"
@@ -32,9 +34,10 @@
 TexturesContainer::TexturesContainer(SDL_Renderer *renderer,
                                      SDL_Surface *window_surface)
         : renderer(renderer), window_surface(window_surface){
-    IMG_Init(IMG_INIT_PNG);
     textures.emplace(None, nullptr);
     textures.emplace(Wall, new Texture(WALL_PATH, this->renderer));
+    textures.emplace(Door, new Texture(DOOR_PATH, this->renderer));
+    textures.emplace(InvertedDoor, new Texture(INVERTED_DOOR_PATH, this->renderer));
     textures.emplace(Barrel, new Texture(BARREL_PATH, this->renderer));
     textures.emplace(Guard_0, new Texture(GUARD_0_PATH, this->renderer));
     textures.emplace(Guard_1, new Texture(GUARD_1_PATH, this->renderer));
@@ -74,5 +77,4 @@ TexturesContainer::~TexturesContainer() {
         delete tex.second;
         tex.second = nullptr;
     }
-    IMG_Quit();
 }

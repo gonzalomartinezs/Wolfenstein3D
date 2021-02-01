@@ -34,7 +34,8 @@ public:
     // pantalla)
     void raycast(DirectedPositionable player_pos, PlayerView view,
                  std::vector<Positionable> objects,
-                 std::vector<DirectedPositionable> directed_objects);
+                 std::vector<DirectedPositionable> directed_objects,
+                 std::vector<std::tuple<int,int,int>> doors_changes);
 
     // Limpia el contenido de la ventana.
     void clearScreen();

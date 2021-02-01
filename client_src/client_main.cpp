@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -38,7 +38,9 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
 
         Map map(Configuration("../common_src/config.yaml"));
-        Raycaster raycaster(map, WINDOW_WIDTH/32, (-WINDOW_HEIGHT)/18, (30*WINDOW_WIDTH)/32, (17*WINDOW_HEIGHT)/18, tex);
+        Raycaster raycaster(map, WINDOW_WIDTH / 32, (-WINDOW_HEIGHT) / 18,
+                            (30 * WINDOW_WIDTH) / 32, (17 * WINDOW_HEIGHT) / 18,
+                            tex);
         UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
                               "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -51,9 +53,10 @@ int main(int argc, char *argv[]) {
         PlayerView view(0,1);
         std::vector<Positionable> static_objects;
         std::vector<DirectedPositionable> directed_objects;
+        std::vector<std::tuple<int,int,int>> door_changes;
 
         DrawingInfo initial_info(player, view, std::vector<int>(6,0), static_objects,
-                                 directed_objects);
+                                 directed_objects, door_changes);
         GameInterface game_interface(ui_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;
