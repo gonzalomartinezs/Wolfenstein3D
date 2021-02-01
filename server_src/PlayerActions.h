@@ -11,8 +11,6 @@
 class Weapon;
 class HealthRecover;
 class Treasure;
-class WeaponItem;
-class MachineGunItem;
 class Player;
 
 class PlayerActions {
