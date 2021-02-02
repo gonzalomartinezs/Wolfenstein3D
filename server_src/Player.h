@@ -16,7 +16,6 @@ private:
     PlayerActions action;
     float camPlaneX, camPlaneY;
     int player_number;
-//    Weapon* weapon;
 
     //Movement Speed
     float moveSpeed, rotSpeed;

@@ -44,7 +44,6 @@ Player::Player(const Configuration& config, const int _player_number) :
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
     this->player_number = _player_number;
-//    this->weapon = new ChainGun();
     this->player_size = config.getFloat(KEY_SIZE);
 }
 

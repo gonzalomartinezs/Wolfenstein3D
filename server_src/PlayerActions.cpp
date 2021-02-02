@@ -103,6 +103,6 @@ void PlayerActions::geHUDInfo(uint8_t* msg) {
 
 PlayerActions::~PlayerActions() {
     for (size_t i = 0; i < this->weapons.size(); ++i) {
-        delete this->weapons[i];
+        delete (this->weapons[i]);
     }
 }
