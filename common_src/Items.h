@@ -11,9 +11,9 @@ private:
 	std::vector<Item*> items;
 public:
 	Items(Configuration& config);
-	Items(Item& other) = delete;
+	Items(Items& other) = delete;
 	Items& operator=(const Items& other) = delete;
-	Items(Item&& other) = delete;
+	Items(Items&& other) = delete;
 	Items&& operator=(Item&& other) = delete;
 	Item* operator[](std::size_t i);
 	size_t size() const;
