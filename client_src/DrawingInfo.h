@@ -4,25 +4,25 @@
 #include <mutex>
 #include <vector>
 #include "PlayerView.h"
-#include "../common_src/Door.h"
 #include "../common_src/Positionable.h"
+#include "../common_src/SlidingSurface.h"
 #include "../common_src/DirectedPositionable.h"
 
 class DrawingInfo {
 private:
     DirectedPositionable player_pos;
     PlayerView view;
-    std::vector<int> player_info;;
+    std::vector<int> player_info;
     std::vector<Positionable> objects;
     std::vector<DirectedPositionable> directed_objects;
-    std::vector<std::tuple<int,int,int>> doors_changes;
+    std::vector<std::pair<int,int>> sliders_changes;
 
 public:
     // Crea un DrawingInfo listo para ser utilizado.
     DrawingInfo(DirectedPositionable player_pos, PlayerView view,
                 std::vector<int> player_info, std::vector<Positionable> objects,
                 std::vector<DirectedPositionable> directed_objects,
-                std::vector<std::tuple<int,int,int>> doors_changes);
+                std::vector<std::pair<int,int>> sliders_changes);
 
     // Retorna un arreglo con los valores de vidas, hp, balas,... del jugador.
     std::vector<int> getPlayerInfo() const;
@@ -34,10 +34,10 @@ public:
     std::vector<DirectedPositionable> getDirectedObjects() const;
     // Retorna el plano camara del jugador.
     PlayerView getCameraPlanes() const;
-    // Retorna un arreglo con tuplas de los cambios en las puertas (x,y,nuevo_estado)
-    std::vector<std::tuple<int,int,int>> getDoorsChanges() const;
+    // Retorna un arreglo con pares de los cambios en las puertas y pasadizos
+    // (id, nuevo_estado)
+    std::vector<std::pair<int,int>> getSlidersChanges() const;
 
-    // Libera los recursos utilzados por el objecto.
     ~DrawingInfo(){}
 };
 

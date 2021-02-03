@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -53,10 +53,10 @@ int main(int argc, char *argv[]) {
         PlayerView view(0,1);
         std::vector<Positionable> static_objects;
         std::vector<DirectedPositionable> directed_objects;
-        std::vector<std::tuple<int,int,int>> door_changes;
+        std::vector<std::pair<int,int>> sliders_changes;
 
         DrawingInfo initial_info(player, view, std::vector<int>(6,0), static_objects,
-                                 directed_objects, door_changes);
+                                 directed_objects, sliders_changes);
         GameInterface game_interface(ui_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;
