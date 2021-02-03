@@ -4,7 +4,7 @@
 #include "SpriteRenderer.h"
 #include "textures/TexturesContainer.h"
 #include "../common_src/DirectedPositionable.h"
-#include "../common_src/Door.h"
+#include "../common_src/SlidingSurface.h"
 #include "../common_src/Map.h"
 #include "PlayerView.h"
 
@@ -19,7 +19,7 @@ private:
     TexturesContainer& textures;
     SpriteRenderer sprite_renderer;
     std::vector<float> wall_distances;
-    std::unordered_map<std::string, class Door> doors;
+    std::unordered_map<int, SlidingSurface> surfaces;
     int width;
     int height;
     int begin_x;
@@ -37,7 +37,7 @@ public:
     void draw(DirectedPositionable player_pos, PlayerView view,
               std::vector<Positionable> objects,
               std::vector<DirectedPositionable> directed_objects,
-              std::vector<std::tuple<int,int,int>> doors_changes);
+              std::vector<std::pair<int,int>> sliders_changes);
 
     // Libera los recursos utilizados por el RayCaster
     ~Raycaster(){}
@@ -58,16 +58,21 @@ private:
     float _calculateSideDist(int &ray_dir_sign, float player_pos, float map_pos,
                              float delta_dist, float ray_dir);
 
-    int _calculateTextureXCoordinate(DirectedPositionable player,
-                                     RayDirection ray_dir,
-                                     float wall_dist, char hit_axis,
-                                     int ray_number);
-    int _processDoor(int map_x, int map_y, DirectedPositionable player,
-                     RayDirection ray_dir, float delta_dist_x,
-                     float delta_dist_y, char hit_axis);
-    bool _rayHitsDoor(float ray_step_in, class Door& door);
-    void _processDoorTexture(int &tex_x, int &tex_id, int map_x, int map_y,
-                             RayDirection ray_dir, char hit_axis);
+    int _calculateTextureXCoordinate(DirectedPositionable player, RayDirection ray_dir,
+                                     float wall_dist, char hit_axis, int ray_number);
+
+    void _calculateHitPoint(float &hit_x, float &hit_y, int map_x, int map_y,
+                            char hit_axis, DirectedPositionable player,
+                            RayDirection ray_dir);
+
+    int _processSlidingPassage(float hit_x, float hit_y, int map_x, int map_y,
+                               RayDirection ray_dir, float delta_dist_x,
+                               float delta_dist_y, char hit_axis);
+
+    bool _rayHitsSurface(float ray_step_in, SlidingSurface surface);
+
+    void _processSurfaceTexture(int &tex_x, int &tex_id, int map_x, int map_y,
+                                RayDirection ray_dir, char hit_axis);
 
 };
 
