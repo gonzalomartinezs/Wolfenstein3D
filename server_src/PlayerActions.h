@@ -5,6 +5,7 @@
 #include <vector>
 #include "../common_src/Configuration.h"
 #include "../common_src/Map.h"
+#include "Weapons/Weapons.h"
 
 #define HUD_INFO_SIZE 12
 
@@ -19,7 +20,7 @@ private:
     int score;
     bool hasKey;
     uint8_t current_weapon;
-    std::vector<Weapon*> weapons;
+    Weapons weapons;
     int bullets;
 public:
     /* Constructor */
@@ -37,8 +38,8 @@ public:
 	void prevWeapon();
 
 	bool isShooting() const;
-	void fireTheGun(std::vector<Player>& players, int shooting_player_number,
-					const Map& map);
+	void fireTheGun(std::vector<Player>& players,
+					uint8_t shooting_player_number,	const Map& map);
 
     void receiveShot(uint8_t damage);
 

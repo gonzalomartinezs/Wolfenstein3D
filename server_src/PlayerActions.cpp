@@ -1,11 +1,11 @@
 #include "PlayerActions.h"
 #include "../common_src/HealthRecover.h"
 #include "../common_src/Treasure.h"
-#include "Weapons/Weapon.h"
+/*#include "Weapons/Weapon.h"
 #include "Weapons/Knife.h"
 #include "Weapons/Pistol.h"
 #include "Weapons/ChainGun.h"
-#include "Weapons/MachineGun.h"
+#include "Weapons/MachineGun.h"*/
 //#include "Weapons/RocketLauncher.h"
 #include <cstring>
 
@@ -23,8 +23,6 @@ PlayerActions::PlayerActions(const Configuration& config) {
     this->hasKey = config.getInt(KEY_HAS_KEY);
     this->bullets = config.getInt(KEY_INITIAL_BULLETS);
     this->current_weapon = config.getInt(KEY_INITIAL_WEAPON);
-    this->weapons.push_back(new Knife());
-    this->weapons.push_back(new Pistol());
 }
 
 void PlayerActions::use(HealthRecover* recover) {
@@ -36,15 +34,11 @@ void PlayerActions::use(Treasure* treasure) {
 }
 
 bool PlayerActions::hasWeapon(int id) const {
-	for (size_t i = 2; i < this->weapons.size(); ++i) {
-		if ((*weapons[i]) == id) return false;
-	}
-
-	return true;
+	return this->weapons.hasWeapon(id);
 }
 
 void PlayerActions::equip(Weapon* weapon) {
-	this->weapons.push_back(weapon);
+	this->weapons.equip(weapon);
 }
 
 bool PlayerActions::isDead() const {
@@ -52,34 +46,28 @@ bool PlayerActions::isDead() const {
 }
 
 void PlayerActions::startShooting() {
-    this->weapons[this->current_weapon]->startShooting();
+    this->weapons.startShooting();
 }
 
 void PlayerActions::stopShooting() {
-    this->weapons[this->current_weapon]->stopShooting();
+    this->weapons.stopShooting();
 }
 
 void PlayerActions::nextWeapon() {
-    ++(this->current_weapon);
-    if (this->current_weapon >= this->weapons.size()) {
-        this->current_weapon = 0;
-    }
+    this->weapons.nextWeapon();
 }
 
 void PlayerActions::prevWeapon() {
-    --(this->current_weapon);
-    if (this->current_weapon <= 0) {
-        this->current_weapon = this->weapons.size()-1;
-    }
+    this->weapons.prevWeapon();
 }
 
 bool PlayerActions::isShooting() const {
-    return this->weapons[this->current_weapon]->isShooting();
+    return this->weapons.isShooting();
 }
 
 void PlayerActions::fireTheGun(std::vector<Player>& players,
-                                int shooting_player_number, const Map& map) {
-    this->weapons[current_weapon]->fireTheGun(players, shooting_player_number,
+                            uint8_t shooting_player_number, const Map& map) {
+    this->weapons.fireTheGun(players, shooting_player_number,
                                             map);
 }
 
@@ -101,8 +89,4 @@ void PlayerActions::geHUDInfo(uint8_t* msg) {
 
 }
 
-PlayerActions::~PlayerActions() {
-    for (size_t i = 0; i < this->weapons.size(); ++i) {
-        delete (this->weapons[i]);
-    }
-}
+PlayerActions::~PlayerActions() {}

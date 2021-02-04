@@ -1,10 +1,10 @@
 #include "Player.h"
 #include "../common_src/Exceptions/ErrorMap.h"
 #include "../common_src/Collider.h"
-#include "Weapons/Pistol.h"
+/*#include "Weapons/Pistol.h"
 #include "Weapons/ChainGun.h"
 #include "Weapons/MachineGun.h"
-#include "Weapons/Knife.h"
+#include "Weapons/Knife.h"*/
 #include <algorithm>
 #include <iostream> //Borrar
 #include <cmath>
@@ -34,7 +34,7 @@
 #define KEY_ROT_SPEED "rot_speed"
 #define KEY_SIZE "size"
 
-Player::Player(const Configuration& config, const int _player_number) :
+Player::Player(const Configuration& config, const uint8_t _player_number) :
                 DirectedPositionable(config.getFloat(KEY_POS_X),
                 config.getFloat(KEY_POS_Y), config.getInt(KEY_DIR_X),
                 config.getInt(KEY_DIR_Y), None), action(config) {
@@ -103,10 +103,10 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
         this->y = old_y;
     }
     // Borrar
-    std::cout << "posX: " << this->x;
+/*    std::cout << "posX: " << this->x;
     std::cout << ", posY: " << this->y;
     std::cout << ", dir_x: " << this->dir_x;
-    std::cout << ", dir_y: " << this->dir_y << std::endl;
+    std::cout << ", dir_y: " << this->dir_y << std::endl; */
 }
 
 void Player::setState(uint8_t newState) {

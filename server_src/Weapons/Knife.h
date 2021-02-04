@@ -7,7 +7,7 @@
 class Knife : public Weapon {
 private:
     Timer stabTimer;
-    float firstStab;
+    bool firstStab;
 
 public:
     /* Constructor */

@@ -10,10 +10,11 @@ const double TICK_DURATION = 1/128.f; /* miliseconds que tarda en actualizarse e
 Game::Game(std::vector<ThClient*>& _clients, Configuration& config) :
             clients(_clients), map(config), items(config) {
     this->isRunning = true;
+    this->players.reserve(10);
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         config.addKey(player_number);
-        this->players.emplace_back(config, static_cast<int>(i));
+        this->players.emplace_back(config, i);
         config.removeLastKey();
     }
 }

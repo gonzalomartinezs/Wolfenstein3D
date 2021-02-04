@@ -1,5 +1,5 @@
 port: 8080
-max_clients: 2
+max_clients: 3
 
 #Map
 length: 8
@@ -20,7 +20,7 @@ player_global_rot_speed: &player_global_rot_speed 0.02
 player_global_initial_health: &player_global_initial_health 100
 player_global_initial_score: &player_global_initial_score 0
 player_global_total_lives: &player_global_total_lives 5
-player_global_initial_weapon: &player_global_initial_weapon 1 #1 = pistol
+player_global_initial_weapon: &player_global_initial_weapon 0 #1 = pistol
 player_global_has_key: &player_global_has_key 1 #0 = false, otro numero = true
 player_global_initial_bullets: &player_global_initial_bullets 10
 player_global_size: &player_global_size 0.2
@@ -38,7 +38,7 @@ player_1:
   total_lives: *player_global_total_lives
   initial_weapon: *player_global_initial_weapon
   has_key: *player_global_has_key
-  initial_bullets: *player_global_initial_weapon
+  initial_bullets: *player_global_initial_bullets
   size: *player_global_size
 
 player_2:
@@ -53,7 +53,7 @@ player_2:
   total_lives: *player_global_total_lives
   initial_weapon: *player_global_initial_weapon
   has_key: *player_global_has_key
-  initial_bullets: *player_global_initial_weapon
+  initial_bullets: *player_global_initial_bullets
   size: *player_global_size
 
 player_3:
@@ -68,7 +68,7 @@ player_3:
   total_lives: *player_global_total_lives
   initial_weapon: *player_global_initial_weapon
   has_key: *player_global_has_key
-  initial_bullets: *player_global_initial_weapon
+  initial_bullets: *player_global_initial_bullets
   size: *player_global_size
 
 #Item's radius
@@ -113,3 +113,6 @@ items:
     radius: *blood_radius
   #Keys
   #Bullets/Ammo
+
+archivos_niveles:
+  
