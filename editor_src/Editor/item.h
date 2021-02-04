@@ -9,6 +9,14 @@ public:
     Item();
     int id;
     QPixmap pixmap;
+    Item(Item &in){
+        id = in.id;
+        pixmap = in.pixmap;
+    }
+    Item(const Item &in){
+        id = in.id;
+        pixmap = in.pixmap;
+    }
 };
 
 #endif // ITEM_H

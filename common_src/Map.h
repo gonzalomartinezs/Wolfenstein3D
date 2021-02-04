@@ -2,9 +2,9 @@
 #define MAP_H
 
 #include <cstddef>
-#include "Configuration.h"
 #include <utility>
-#include "Door.h"
+#include "Configuration.h"
+#include "SlidingSurface.h"
 
 class Map {
 private:
@@ -15,8 +15,10 @@ public:
 	int get(int x, int y) const;
     long int get_n_row() const;
     long int get_n_col() const;
-    // Retorna las coordenadas (x,y) de las puertas en el mapa.
-    std::vector<class Door> getDoors() const;
+    // Modifica una celda del mapa;
+    void set(int x, int y, int value);
+    // Retorna las puertas y pasadizos en el mapa.
+    std::vector<SlidingSurface> getSlidingSurfaces() const;
 	~Map();
 private:
 	bool outOfRange(int x, int y) const;

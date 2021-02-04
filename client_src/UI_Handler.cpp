@@ -26,8 +26,8 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
 void UI_Handler::raycast(DirectedPositionable player_pos, PlayerView view,
                          std::vector<Positionable> objects,
                          std::vector<DirectedPositionable> directed_objects,
-                         std::vector<std::tuple<int,int,int>> doors_changes) {
-    this->raycaster.draw(player_pos, view, objects, directed_objects, doors_changes);
+                         std::vector<std::pair<int,int>> sliders_changes) {
+    this->raycaster.draw(player_pos, view, objects, directed_objects, sliders_changes);
 }
 
 void UI_Handler::render() {

@@ -2,6 +2,7 @@
 #include "Raycaster.h"
 #include "textures/TextureID.h"
 #include "PlayerView.h"
+#include "../common_src/GameConstants.h"
 
 #define VISUAL_PROPORTION 1.5
 #define TEX_HEIGHT 64
@@ -15,22 +16,22 @@ Raycaster::Raycaster(Map &map, int begin_x, int begin_y, int width, int height,
                      height(height), textures(textures),
                      sprite_renderer(textures, 0,0, width,height) {
 
-    for(class Door door : map.getDoors()){
-        std::string id = std::to_string(door.getX()) + "," + std::to_string(door.getY());
-        this->doors.emplace(id, door);
+    for(auto& surface : map.getSlidingSurfaces()){
+        this->surfaces.emplace(surface.getId(), surface);
     }
 }
 
 void Raycaster::draw(DirectedPositionable player_pos, PlayerView view,
                      std::vector<Positionable> objects,
                      std::vector<DirectedPositionable> directed_objects,
-                     std::vector<std::tuple<int,int,int>> doors_changes) {
+                     std::vector<std::pair<int,int>> sliders_changes) {
 
-    for (auto& door_change:doors_changes){
-        doors.at(std::to_string(std::get<0>(door_change)) + "," +
-                std::to_string(std::get<1>(door_change)))
-                .update(std::get<2>(door_change));
-    }
+    for (auto& slider: sliders_changes) // cambio estado de superficies modificadas
+        surfaces.at(slider.first).update(slider.second);
+
+    for (auto& surface: surfaces) // actualizo todas las superficies
+        surface.second.update(surface.second.getState());
+
     _drawMap(player_pos, view.getPlaneX(), view.getPlaneY());
     this->sprite_renderer.drawSprites(player_pos, view,directed_objects,
                                       objects, this->wall_distances);
@@ -91,9 +92,11 @@ Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray
             hit_axis = 'y';
         }
         int current_cell = map.get(map_x, map_y);
-        if(current_cell >= int(Door)){
-            current_cell = _processDoor(map_x, map_y, player, ray_dir,
-                                        delta_dist_x, delta_dist_y, hit_axis);
+        if (current_cell >= DOOR_CLOSED) {
+            float hit_x, hit_y;
+            _calculateHitPoint(hit_x, hit_y, map_x, map_y, hit_axis, player, ray_dir);
+            current_cell = _processSlidingPassage(hit_x, hit_y, map_x, map_y,ray_dir,
+                                               delta_dist_x, delta_dist_y,hit_axis);
         }
         hit = (current_cell != 0);
     }
@@ -104,7 +107,8 @@ Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray
     } else {
         perp_wall_distance = (map_y - player.getY() + (1 - ray_dir_y_sign)/2) / ray_dir.y;
     }
-    if (map.get(map_x, map_y) == 2) return perp_wall_distance*(1+0.5/perp_wall_distance);
+    if (map.get(map_x, map_y) == DOOR)
+        return perp_wall_distance * (1 + 0.5 / perp_wall_distance);
     return perp_wall_distance;
 }
 
@@ -125,12 +129,10 @@ float Raycaster::_calculateSideDist(int &ray_dir_sign, float player_pos,
     return side_dist;
 }
 
-
-// Procesa la interseccion de un rayo con una puerta y retorna el numero de
-// celda segun corresponda.
-int Raycaster::_processDoor(int map_x, int map_y, DirectedPositionable player,
-                            RayDirection ray_dir, float delta_dist_x,
-                            float delta_dist_y, char hit_axis) {
+// Calculas las coordenadas x e y de impacto del rayo en la celda
+void Raycaster::_calculateHitPoint(float &hit_x, float &hit_y, int map_x, int map_y,
+                              char hit_axis, DirectedPositionable player,
+                              RayDirection ray_dir) {
     int corrected_map_x = map_x;
     int corrected_map_y = map_y;
     if (player.getX() < map_x) corrected_map_x--;
@@ -142,44 +144,59 @@ int Raycaster::_processDoor(int map_x, int map_y, DirectedPositionable player,
     } else {
         ray_multiplicty = (corrected_map_y-player.getY())/ray_dir.y;
     }
-    float hit_point_x = player.getX()+ray_dir.x*ray_multiplicty; // x de impacto
-    float hit_point_y = player.getY()+ray_dir.y*ray_multiplicty; // y de impacto
+    hit_x = player.getX()+ray_dir.x*ray_multiplicty; // x de impacto
+    hit_y = player.getY()+ray_dir.y*ray_multiplicty; // y de impacto
+}
 
-    class Door door = doors.at(std::to_string(map_x) + "," + std::to_string(map_y));
 
+// Procesa la interseccion de un rayo con una superficie deslizante
+// y retorna el numero de celda segun corresponda.
+int Raycaster::_processSlidingPassage(float hit_x, float hit_y, int map_x, int map_y,
+                            RayDirection ray_dir, float delta_dist_x,
+                            float delta_dist_y, char hit_axis) {
+    int id;
+    for(auto& surface: surfaces){
+        if(surface.second.getX() == map_x && surface.second.getY() == map_y)
+            id = surface.first;
+    }
     int ray_dir_x_sign = copysign(1, ray_dir.x);
     int ray_dir_y_sign = copysign(1, ray_dir.y);
 
+    float fraction = 0;
+    if (surfaces.at(id).getSurfaceType() == DOOR) fraction = 0.5;
+
     if (hit_axis == 'x'){
         float true_y_step = std::sqrt(delta_dist_x*delta_dist_x-1);
-        float half_step_in_y = hit_point_y+(ray_dir_y_sign*true_y_step)/2;
+        float half_step_in_y = hit_y+(ray_dir_y_sign*true_y_step)*fraction;
         if (int(half_step_in_y)==map_y){
             float step_in = half_step_in_y-map_y;
-            if (_rayHitsDoor(step_in, door)) return int(Door);
+            if (_rayHitsSurface(step_in, surfaces.at(id))) return int(Door);
         }
     } else {
         float true_x_step = std::sqrt(delta_dist_y*delta_dist_y-1);
-        float half_step_in_x = hit_point_x+(ray_dir_x_sign*true_x_step)/2;
+        float half_step_in_x = hit_x+(ray_dir_x_sign*true_x_step)*fraction;
         if (int(half_step_in_x)==map_x){
             float step_in = half_step_in_x-map_x;
-            if (_rayHitsDoor(step_in, door)) return int(Door);
+            if (_rayHitsSurface(step_in, surfaces.at(id))) return int(Door);
         }
     }
     return 0;
 }
 
-// Retorna un booleano que indica si el rayo colisiona con la puerta o no
-bool Raycaster::_rayHitsDoor(float ray_step_in, class Door &door) {
-    return ((door.isClosed()) ||
-            (door.isClosing() && ray_step_in < door.getFractionRemaining()) ||
-            (door.isOpening() && ray_step_in < 1-door.getFractionRemaining()));
+// Retorna un booleano que indica si el rayo colisiona con la
+// superficie deslizante o no.
+bool Raycaster::_rayHitsSurface(float ray_step_in, SlidingSurface surface) {
+    return ((surface.isClosed()) ||
+            (surface.isClosing() && ray_step_in < surface.getElapsedFraction()) ||
+            (surface.isOpening() && ray_step_in < 1 - surface.getElapsedFraction()));
 }
+
+
 
 // Renderiza el rayo actual en 'renderer'.
 void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
                            DirectedPositionable player, RayDirection ray_dir,
                            int map_x, int map_y) {
-    bool flip = false;
     int line_height = (int)(height/(wall_dist * VISUAL_PROPORTION));
 
     int draw_start = (-line_height/2) + (height/2);
@@ -191,8 +208,8 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
 
     int tex_x = _calculateTextureXCoordinate(player, ray_dir, wall_dist,
                                              hit_axis, ray_number);
-    if(tex_id == int(Door))
-        _processDoorTexture(tex_x, tex_id, map_x, map_y, ray_dir, hit_axis);
+    if(tex_id == DOOR || tex_id == PASSAGE)
+        _processSurfaceTexture(tex_x, tex_id, map_x, map_y, ray_dir, hit_axis);
 
     Texture* texture = textures.get(TextureID(tex_id));
     SDL_Rect tex_portion;
@@ -236,24 +253,30 @@ int Raycaster::_calculateTextureXCoordinate(DirectedPositionable player,
 
 // Reposiciona el inicio de la textura de la puerta de acuerdo al estado de la misma.
 void
-Raycaster::_processDoorTexture(int &tex_x, int &tex_id, int map_x, int map_y,
-                               RayDirection ray_dir, char hit_axis) {
-    class Door door = doors.at(std::to_string(map_x) + "," + std::to_string(map_y));
+Raycaster::_processSurfaceTexture(int &tex_x, int &tex_id, int map_x, int map_y,
+                                  RayDirection ray_dir, char hit_axis) {
+    int id;
+    for(auto& surface: surfaces){
+        if(surface.second.getX() == map_x && surface.second.getY() == map_y)
+            id = surface.first;
+    }
+    SlidingSurface surface = surfaces.at(id);
+
     if ((hit_axis == 'x' && ray_dir.x>0) || (hit_axis == 'y' && ray_dir.y<0)){
-        if (door.isOpening()){
-            tex_x -= door.getFractionRemaining()*TEX_WIDTH;
-        } else if(door.isClosing()){
-            tex_x -= (1 - door.getFractionRemaining())*TEX_WIDTH;
+        if (surface.isOpening()){
+            tex_x -= surface.getElapsedFraction()*TEX_WIDTH;
+        } else if(surface.isClosing()){
+            tex_x -= (1 - surface.getElapsedFraction())*TEX_WIDTH;
         }
     } else {
-        if (door.isOpening()){
-            tex_x += door.getFractionRemaining()*TEX_WIDTH;
-        } else if(door.isClosing()){
-            tex_x += (1 - door.getFractionRemaining())*TEX_WIDTH;
+        if (surface.isOpening()){
+            tex_x += surface.getElapsedFraction()*TEX_WIDTH;
+        } else if(surface.isClosing()){
+            tex_x += (1 - surface.getElapsedFraction())*TEX_WIDTH;
         }
-        tex_id = int(InvertedDoor);
+        if(surface.getSurfaceType() == DOOR) tex_id = int(InvertedDoor);
     }
-
+    if(surface.getSurfaceType() == PASSAGE) tex_id = int(Wall);
 }
 
 

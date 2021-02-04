@@ -45,12 +45,13 @@ ssize_t Client::receiveInformation() {
         std::vector<int> player_info;
         std::vector<Positionable> objects;
         std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
-        std::vector<std::tuple<int,int,int>> doors_changes;
+        std::vector<std::pair<int,int>> sliders_changes;
+
+        //sliders_changes.emplace_back(0,3);
         _assignPlayerInfo(player_info, bytes_received);
-        _assignPlayerCoordenates(player, view, coordinates,
-                                 bytes_received);
+        _assignPlayerCoordenates(player, view, coordinates, bytes_received);
         _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive, directed_objects, coordinates);
-        DrawingInfo new_info(player, view, player_info,objects, directed_objects, doors_changes);
+        DrawingInfo new_info(player, view, player_info,objects, directed_objects, sliders_changes);
         this->drawing_info.push(new_info);
     }
     std::cout<<"fin recv\n";

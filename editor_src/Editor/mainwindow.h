@@ -7,6 +7,8 @@
 #include <QMainWindow>
 #include <vector>
 
+#define ITEMSIZE 100
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE

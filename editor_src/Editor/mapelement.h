@@ -7,10 +7,34 @@
 class MapElement
 {
 public:
-    MapElement(Item& in);
-    Item& item;
+    MapElement();
+    int id;
+    QPixmap pixmap;
     QRect rect;
-    QPoint location;
+    MapElement(MapElement &in){
+        rect = in.rect;
+        id = in.id;
+        pixmap = in.pixmap;
+    }
+
+    MapElement(MapElement &&in){
+        rect = in.rect;
+        id = in.id;
+        pixmap = in.pixmap;
+    }
+
+    MapElement(const MapElement &in){
+        rect = in.rect;
+        id = in.id;
+        pixmap = in.pixmap;
+    }
+    MapElement& operator=(const MapElement& in){
+        rect = in.rect;
+        id = in.id;
+        pixmap = in.pixmap;
+        return *this;
+    }
+
 };
 
 #endif // MAPELEMENT_H
