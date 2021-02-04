@@ -39,7 +39,6 @@ void MainWindow::loadElements(){
     bool done = false;
     while(!done){
        QPixmap newImage;
-       printf("una iteracion");
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
             Item x;
             x.id = i;
