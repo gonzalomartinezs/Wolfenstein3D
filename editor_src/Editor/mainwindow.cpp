@@ -42,7 +42,7 @@ void MainWindow::loadElements(){
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
             Item x;
             x.id = i;
-            x.pixmap = newImage;
+            x.pixmap = newImage.scaled(100,100);
             items.push_back(x);
            i++;
        } else {

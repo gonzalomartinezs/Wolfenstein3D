@@ -21,22 +21,22 @@ void ItemList::loadImages(){
     for (auto &i : items){
         QListWidgetItem *pieceItem = new QListWidgetItem(this);
         pieceItem->setIcon(QIcon(i.pixmap));
-        pieceItem->setData(Qt::UserRole, QVariant(i.id));
-        //pieceItem->setData(Qt::UserRole+1, location);
+        pieceItem->setData(Qt::UserRole, QVariant(i.pixmap));
+        pieceItem->setData(Qt::UserRole+1, i.id);
         pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
     }
 }
 
-void ItemList::startDrag(Qt::DropActions /*supportedActions*/)
+void ItemList::startDrag(Qt::DropActions )
 {
     QListWidgetItem *item = currentItem();
 
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
     QPixmap pixmap = qvariant_cast<QPixmap>(item->data(Qt::UserRole));
-    QPoint location = item->data(Qt::UserRole+1).toPoint();
+    int id = item->data(Qt::UserRole+1).toInt();
 
-    dataStream << pixmap << location;
+    dataStream << pixmap << id;
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(ItemList::editorMimeType(), itemData);
@@ -49,3 +49,4 @@ void ItemList::startDrag(Qt::DropActions /*supportedActions*/)
     if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
         delete takeItem(row(item));
 }
+
