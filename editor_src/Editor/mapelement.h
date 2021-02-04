@@ -10,7 +10,6 @@ public:
     MapElement(Item& in);
     Item& item;
     QRect rect;
-    QPoint location;
 };
 
 #endif // MAPELEMENT_H

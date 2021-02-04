@@ -1,11 +1,12 @@
 #include "map.h"
+#include "mainwindow.h"
 #include "itemList.h"
 #include <QDrag>
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QPainter>
 
-Map::Map(QWidget *parent) : QWidget(parent)
+Map::Map(std::vector<Item>& items, QWidget *parent) : QWidget(parent), items(items)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
@@ -37,6 +38,132 @@ void Map::dragEnterEvent(QDragEnterEvent *event)
     else
         event->ignore();
 }
+
+void Map::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    QRect updateRect = this->focused;
+    this->focused = QRect();
+    update(updateRect);
+    event->accept();
+}
+
+
+void Map::dragMoveEvent(QDragMoveEvent *event)
+{
+    QRect updateRect = focused.united(targetSquare(event->pos()));
+
+    if (event->mimeData()->hasFormat(ItemList::editorMimeType())
+        && findPiece(targetSquare(event->pos())) == -1) {
+
+        this->focused = targetSquare(event->pos());
+        event->setDropAction(Qt::MoveAction);
+        event->accept();
+    } else {
+        this->focused = QRect();
+        event->ignore();
+    }
+
+    update(updateRect);
+}
+
+void Map::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasFormat(ItemList::editorMimeType())
+        && findPiece(targetSquare(event->pos())) == -1) {
+
+        QByteArray pieceData = event->mimeData()->data(ItemList::editorMimeType());
+        QDataStream dataStream(&pieceData, QIODevice::ReadOnly);
+        Item item;
+        QRect rect;
+        rect = targetSquare(event->pos());
+        dataStream >> item.pixmap >> item.id;
+        // intentar hacerlo sin mandar el pixmap del otro lado.
+        MapElement element( this->findItem( item.id) );
+        element.rect = rect;
+
+        elements.append(element);
+
+        focused = QRect();
+        update(element.rect);
+
+        event->setDropAction(Qt::MoveAction);
+        event->accept();
+
+        /*if (piece.location == piece.rect.topLeft() / pieceSize()) {
+            inPlace++;
+            if (inPlace == 25)
+                emit puzzleCompleted();
+        }*/
+
+        } else {
+        focused = QRect();
+        event->ignore();
+        }
+
+}
+
+
+
+void Map::mousePressEvent(QMouseEvent *event)
+{
+    QRect square = targetSquare(event->pos());
+    const int found = findPiece(square);
+
+    if (found == -1)
+        return;
+
+    MapElement element = elements.takeAt(found);
+
+    update(square);
+
+    QByteArray itemData;
+    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+
+    dataStream << element.item.pixmap << element.item.id;
+
+    QMimeData *mimeData = new QMimeData;
+    mimeData->setData(ItemList::editorMimeType(), itemData);
+
+    QDrag *drag = new QDrag(this);
+    drag->setMimeData(mimeData);
+    drag->setHotSpot(event->pos() - square.topLeft());
+    drag->setPixmap(element.item.pixmap);
+
+    if (drag->exec(Qt::MoveAction) != Qt::MoveAction) {
+        elements.insert(found, element);
+        update(targetSquare(event->pos()));
+
+        /*if (piece.location == square.topLeft() / pieceSize())
+            inPlace++;*/
+    }
+}
+
+const QRect Map::targetSquare(const QPoint &position) const
+{
+    return QRect(position / ITEMSIZE * ITEMSIZE,
+                 QSize(ITEMSIZE, ITEMSIZE));
+}
+// CAMBIAR ESTO XD.
+int Map::findPiece(const QRect &pieceRect) const
+{
+    for (int i = 0, size = elements.size(); i < size; ++i) {
+        if (elements.at(i).rect == pieceRect)
+            return i;
+    }
+    return -1;
+}
+
+Item& Map::findItem(int i){
+    for(auto&j :items){
+        if(j.id == i ){
+            return j;
+        }
+    }
+    // ACA METER UNA EXCEP, HAY QUE CORTAR EXEC.
+}
+
+
+
 
 
 

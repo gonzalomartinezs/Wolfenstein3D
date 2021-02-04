@@ -10,7 +10,7 @@ class Map : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Map(QWidget *parent = nullptr);
+    explicit Map(std::vector<Item>&, QWidget *parent = nullptr);
 
 signals:
 
@@ -22,7 +22,13 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 private:
-        QVector<MapElement> elements;
+
+    int findPiece(const QRect &pieceRect) const;
+    Item& findItem(int i);
+    const QRect targetSquare(const QPoint &position) const;
+    QVector<MapElement> elements;
+    QRect focused;
+    std::vector<Item>& items;
 };
 
 #endif // MAP_H

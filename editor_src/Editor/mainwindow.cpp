@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <string>
 
+#define ITEMSIZE 100
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -25,7 +27,7 @@ void MainWindow::initWidgets(){
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
     this->map = new Map;
     this->loadElements();
-    this->itemlist = new ItemList(100, items,this);
+    this->itemlist = new ItemList(ITEMSIZE, items,this);
     frameLayout->addWidget(itemlist);
     frameLayout->addWidget(map);
     setCentralWidget(frame);
@@ -42,7 +44,7 @@ void MainWindow::loadElements(){
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
             Item x;
             x.id = i;
-            x.pixmap = newImage.scaled(100,100);
+            x.pixmap = newImage.scaled(ITEMSIZE, ITEMSIZE);
             items.push_back(x);
            i++;
        } else {
