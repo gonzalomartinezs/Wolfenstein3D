@@ -7,7 +7,7 @@
 #include <QMessageBox>
 #include <string>
 
-#define ITEMSIZE 100
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,9 +25,9 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
-    this->map = new Map;
     this->loadElements();
     this->itemlist = new ItemList(ITEMSIZE, items,this);
+    this->map = new Map(items);
     frameLayout->addWidget(itemlist);
     frameLayout->addWidget(map);
     setCentralWidget(frame);
