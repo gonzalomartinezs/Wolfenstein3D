@@ -1,6 +1,9 @@
 #include "map.h"
+#include "itemList.h"
+#include <QDrag>
+#include <QDragEnterEvent>
+#include <QMimeData>
 #include <QPainter>
-#include <QPaintEvent>
 
 Map::Map(QWidget *parent) : QWidget(parent)
 {
@@ -9,7 +12,6 @@ Map::Map(QWidget *parent) : QWidget(parent)
     //ver esto
     setMinimumSize(500, 500);
     setMaximumSize(500, 500); //carguemos 5x5 de vacios.
-
 }
 
 void Map::paintEvent(QPaintEvent *event)
@@ -27,6 +29,16 @@ void Map::paintEvent(QPaintEvent *event)
         painter.drawPixmap(i.rect, i.item.pixmap);
     }
 }
+
+void Map::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat(ItemList::editorMimeType()))
+        event->accept();
+    else
+        event->ignore();
+}
+
+
 
 
 
