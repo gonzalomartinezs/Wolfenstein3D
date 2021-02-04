@@ -19,15 +19,15 @@ void Map::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.fillRect(event->rect(), Qt::yellow);
-/*
-    if (highlightedRect.isValid()) {
+
+    if (focused.isValid()) {
         painter.setBrush(QColor("#ffcccc"));
         painter.setPen(Qt::NoPen);
-        painter.drawRect(highlightedRect.adjusted(0, 0, -1, -1));
+        painter.drawRect(focused.adjusted(0, 0, -1, -1));
     }
-*/
+
     for (const auto &i : elements){
-        painter.drawPixmap(i.rect, i.item.pixmap);
+        painter.drawPixmap(i.rect, i.pixmap);
     }
 }
 
@@ -73,13 +73,10 @@ void Map::dropEvent(QDropEvent *event)
 
         QByteArray pieceData = event->mimeData()->data(ItemList::editorMimeType());
         QDataStream dataStream(&pieceData, QIODevice::ReadOnly);
-        Item item;
-        QRect rect;
-        rect = targetSquare(event->pos());
-        dataStream >> item.pixmap >> item.id;
+        MapElement element;
+        element.rect = targetSquare(event->pos());
+        dataStream >> element.pixmap >> element.id;
         // intentar hacerlo sin mandar el pixmap del otro lado.
-        MapElement element( this->findItem( item.id) );
-        element.rect = rect;
 
         elements.append(element);
 
@@ -107,7 +104,7 @@ void Map::dropEvent(QDropEvent *event)
 void Map::mousePressEvent(QMouseEvent *event)
 {
     QRect square = targetSquare(event->pos());
-    const int found = findPiece(square);
+     int found = findPiece(square);
 
     if (found == -1)
         return;
@@ -119,7 +116,7 @@ void Map::mousePressEvent(QMouseEvent *event)
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    dataStream << element.item.pixmap << element.item.id;
+    dataStream << element.pixmap << element.id;
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(ItemList::editorMimeType(), itemData);
@@ -127,7 +124,7 @@ void Map::mousePressEvent(QMouseEvent *event)
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->setHotSpot(event->pos() - square.topLeft());
-    drag->setPixmap(element.item.pixmap);
+    drag->setPixmap(element.pixmap);
 
     if (drag->exec(Qt::MoveAction) != Qt::MoveAction) {
         elements.insert(found, element);
@@ -154,12 +151,7 @@ int Map::findPiece(const QRect &pieceRect) const
 }
 
 Item& Map::findItem(int i){
-    for(auto&j :items){
-        if(j.id == i ){
-            return j;
-        }
-    }
-    // ACA METER UNA EXCEP, HAY QUE CORTAR EXEC.
+    return items[i];
 }
 
 
