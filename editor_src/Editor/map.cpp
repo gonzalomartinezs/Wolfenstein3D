@@ -28,3 +28,5 @@ void Map::paintEvent(QPaintEvent *event)
     }
 }
 
+
+
