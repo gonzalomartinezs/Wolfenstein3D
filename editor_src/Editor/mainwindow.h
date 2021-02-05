@@ -6,8 +6,9 @@
 #include "item.h"
 #include <QMainWindow>
 #include <vector>
+#include <QScrollArea>
 
-#define ITEMSIZE 100
+#define ITEMSIZE 50
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,6 +28,7 @@ private:
     Ui::MainWindow *ui;
     ItemList* itemlist;
     Map* map;
+    QScrollArea *scrollArea;
     std::vector<Item> items;
 };
 

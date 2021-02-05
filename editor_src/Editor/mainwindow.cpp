@@ -25,11 +25,14 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets(){
     QFrame *frame = new QFrame;
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
+    this->scrollArea = new QScrollArea();
+    scrollArea->resize(250, 250);
     this->loadElements();
     this->itemlist = new ItemList(ITEMSIZE, items,this);
-    this->map = new Map(items);
+    this->map = new Map(items, scrollArea);
+    scrollArea->setWidget(map);
     frameLayout->addWidget(itemlist);
-    frameLayout->addWidget(map);
+    frameLayout->addWidget(scrollArea);
     setCentralWidget(frame);
 }
 
