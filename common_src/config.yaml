@@ -12,10 +12,16 @@ player:
   initial_health: 100
   initial_score: 0
   total_lives: 5
-  initial_weapon: 1 # 0 = kinfe, 1 = pistol
   has_key: 1 # 0 = false, otro numero = true
   initial_bullets: 10
-#  initial_weapons: *global_initial_weapons
+  #Initial weapons
+  weapons:
+    initial_weapon: 1 # 0 = knife, 1 = pistol
+    knife:
+      time_between_stabs: 1
+      range: 0.5
+
+max_health: &max_health_global 100
 
 #Items
 items:
@@ -35,14 +41,17 @@ items:
     texture: 2
     value: 10
     radius: 0.4
+    max_health: *max_health_global
   medical_kit:
     texture: 2
     value: 20
     radius: 0.2
+    max_health: *max_health_global
   blood:
     texture: 2
     value: 1
     radius: 0.3
+    max_health: 11
   #Otros
   #key:
 #    texture: 3
@@ -53,7 +62,6 @@ items:
 #    value: 5
 #    radius: 0.2
 
-#  weapons:
 #    chain_gun:
 #      texture: 4
 #      value: 3 #value = id

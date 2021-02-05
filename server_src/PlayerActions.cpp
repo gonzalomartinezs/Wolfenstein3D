@@ -8,14 +8,15 @@
 #define KEY_TOTAL_LIVES "total_lives"
 #define KEY_HAS_KEY "has_key"
 #define KEY_INITIAL_BULLETS "initial_bullets"
+#define KEY_WEAPONS "weapons"
 
-PlayerActions::PlayerActions(const Configuration& config) : weapons(config) {
+PlayerActions::PlayerActions(const Configuration& config) :
+                            weapons(Configuration(config, KEY_WEAPONS)) {
 	this->health = config.getInt(KEY_INITIAL_HEALTH);
     this->score = config.getInt(KEY_INITIAL_SCORE);
     this->lives = config.getInt(KEY_TOTAL_LIVES);
     this->hasKey = config.getInt(KEY_HAS_KEY);
     this->bullets = config.getInt(KEY_INITIAL_BULLETS);
-//    this->current_weapon = config.getInt(KEY_INITIAL_WEAPON);
 }
 
 void PlayerActions::use(HealthRecover* recover) {

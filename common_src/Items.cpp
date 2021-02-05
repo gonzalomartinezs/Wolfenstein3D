@@ -20,12 +20,6 @@
 #define KEY_ITEM_KEY "key"
 #define KEY_AMMO "ammo"
 
-#define KEY_POS_X "pos_x"
-#define KEY_POS_Y "pos_y"
-#define KEY_TEXTURE "texture"
-#define KEY_VALUE "value"
-#define KEY_RADIUS "radius"
-
 static const std::vector<std::string> keys = {KEY_CROSS, KEY_CUP, KEY_CHEST,
 											KEY_CROWN, KEY_FOOD,
 											KEY_MEDICAL_KIT, KEY_BLOOD,
@@ -38,23 +32,14 @@ static Item* initializeItem(const Configuration& config,
 
 	if (key == KEY_CROSS || key == KEY_CUP || key == KEY_CHEST ||
 		key == KEY_CROWN) {
-		item = new Treasure(config_map.getFloat(KEY_POS_X),
-						config_map.getFloat(KEY_POS_Y),
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
-						config.getFloat(KEY_RADIUS));
+		item = new Treasure(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
 	} else if (key == KEY_FOOD || key == KEY_MEDICAL_KIT) {
-		item = new HealthRecover(config_map.getFloat(KEY_POS_X),
-						config_map.getFloat(KEY_POS_Y),
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
-						config.getFloat(KEY_RADIUS));
+		item = new HealthRecover(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
 	} else if (key == KEY_BLOOD) {
-		item = new Blood(config_map.getFloat(KEY_POS_X),
-						config_map.getFloat(KEY_POS_Y),
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
-						config.getFloat(KEY_RADIUS));
+		item = new Blood(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
 	}/* else if (key == KEY_ITEM_KEY) {
 		item = new Key(config_map.getFloat(KEY_POS_X),
 						config_map.getFloat(KEY_POS_Y),

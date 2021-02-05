@@ -8,6 +8,7 @@ class Knife : public Weapon {
 private:
     Timer stabTimer;
     bool firstStab;
+//    const float TIME_BETWEEN_STABS, KNIFE_RANGE;
 
 public:
     /* Constructor */

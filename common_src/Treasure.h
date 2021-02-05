@@ -2,11 +2,11 @@
 #define TREASURE_H
 
 #include "Item.h"
+#include "Configuration.h"
 
 class Treasure : public Item {
 public:
-	Treasure(float _x, float _y, TextureID _texture, int _value,
-			float radius);
+	Treasure(const Configuration& config, float _x, float _y);
 	void equipTo(PlayerActions& action);
 	int operator+(int score) const override;
 	~Treasure();

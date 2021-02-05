@@ -2,10 +2,13 @@
 #define BLOOD_H
 
 #include "HealthRecover.h"
+#include "Configuration.h"
 
 class Blood : public HealthRecover {
+private:
+	const int MAX_HEALTH_BLOOD;
 public:
-	Blood(float _x, float _y, TextureID _texture, int _value, float radius);
+	Blood(const Configuration& config, float _x, float _y);
 	int operator+(int health) const override;
 	~Blood();
 };

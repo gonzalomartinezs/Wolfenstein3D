@@ -1,7 +1,10 @@
 #include "Treasure.h"
 
-Treasure::Treasure(float _x, float _y, TextureID _texture, int _value,
-					float radius) :	Item(_x, _y, _texture, _value, radius) {}
+Treasure::Treasure(const Configuration& config, float _x, float _y) :
+					Item(_x, _y,
+						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
+						config.getInt(KEY_VALUE),
+						config.getFloat(KEY_RADIUS)) {}
 
 void Treasure::equipTo(PlayerActions& action) {
 	action.use(this);

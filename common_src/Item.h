@@ -5,6 +5,12 @@
 #include "Collider.h"
 #include "../server_src/PlayerActions.h"
 
+#define KEY_POS_X "pos_x"
+#define KEY_POS_Y "pos_y"
+#define KEY_TEXTURE "texture"
+#define KEY_VALUE "value"
+#define KEY_RADIUS "radius"
+
 class Item : public Positionable {
 protected:
 	int value;
