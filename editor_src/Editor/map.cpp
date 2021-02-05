@@ -90,7 +90,6 @@ void Map::dropEvent(QDropEvent *event)
             if (inPlace == 25)
                 emit puzzleCompleted();
         }*/
-
         } else {
         focused = QRect();
         event->ignore();
