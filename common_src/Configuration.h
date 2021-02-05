@@ -15,6 +15,8 @@ public:
 	referencia a una key con mas keys dentro.*/
 	Configuration(const Configuration& config, const std::string& key);
 
+	bool hasKey(const std::string& key) const;
+
 	std::string getString(const std::string& key) const;
 	int getInt(const std::string& key) const;
 	float getFloat(const std::string& key) const;

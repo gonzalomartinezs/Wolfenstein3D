@@ -14,6 +14,10 @@ Configuration::Configuration(const Configuration& config,
 	this->filename = config.filename;
 }
 
+bool Configuration::hasKey(const std::string& key) const {
+	return this->file[key];
+}
+
 std::string Configuration::getString(const std::string& key) const {
 	if (this->file[key]) {
 		return std::move(this->file[key].as<std::string>());

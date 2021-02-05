@@ -3,20 +3,74 @@
 #include "HealthRecover.h"
 #include "Blood.h"
 
-#define KEY_TREASURE "treasure"
+#include "Exceptions/ItemsException.h"
+
+//Treasures
+#define KEY_CROSS "cross"
+#define KEY_CUP "cup"
+#define KEY_CHEST "chest"
+#define KEY_CROWN "crown"
+
+//Health recover
+#define KEY_FOOD "food"
+#define KEY_MEDICAL_KIT "medical_kit"
+#define KEY_BLOOD "blood"
+
+//Others
+#define KEY_ITEM_KEY "key"
+#define KEY_AMMO "ammo"
+
+#define KEY_POS_X "pos_x"
+#define KEY_POS_Y "pos_y"
+#define KEY_TEXTURE "texture"
+#define KEY_VALUE "value"
+#define KEY_RADIUS "radius"
+
+static const std::vector<std::string> keys = {KEY_CROSS, KEY_CUP, KEY_CHEST,
+											KEY_CROWN, KEY_FOOD,
+											KEY_MEDICAL_KIT, KEY_BLOOD,
+											KEY_ITEM_KEY, KEY_AMMO};
 
 static Item* initializeItem(const Configuration& config, 
-					const Configuration& config_map,
-					const std::string& key) {
+							const Configuration& config_map,
+							const std::string& key) {
 	Item* item;
-	if (key == KEY_TREASURE) {
-		item = new Treasure(config_map.getFloat("pos_x"),
-				config_map.getFloat("pos_y"),
-				static_cast<TextureID>(config.getInt("texture")),
-				config.getInt("value"),
-				config.getFloat("radius"));
-	} else {
-		throw -1; //Crear exception
+
+	if (key == KEY_CROSS || key == KEY_CUP || key == KEY_CHEST ||
+		key == KEY_CROWN) {
+		item = new Treasure(config_map.getFloat(KEY_POS_X),
+						config_map.getFloat(KEY_POS_Y),
+						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
+						config.getInt(KEY_VALUE),
+						config.getFloat(KEY_RADIUS));
+	} else if (key == KEY_FOOD || key == KEY_MEDICAL_KIT) {
+		item = new HealthRecover(config_map.getFloat(KEY_POS_X),
+						config_map.getFloat(KEY_POS_Y),
+						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
+						config.getInt(KEY_VALUE),
+						config.getFloat(KEY_RADIUS));
+	} else if (key == KEY_BLOOD) {
+		item = new Blood(config_map.getFloat(KEY_POS_X),
+						config_map.getFloat(KEY_POS_Y),
+						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
+						config.getInt(KEY_VALUE),
+						config.getFloat(KEY_RADIUS));
+	}/* else if (key == KEY_ITEM_KEY) {
+		item = new Key(config_map.getFloat(KEY_POS_X),
+						config_map.getFloat(KEY_POS_Y),
+						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
+						config.getInt(KEY_VALUE),
+						config.getFloat(KEY_RADIUS));
+	} else if (key == KEY_AMMO) {
+		item = new Ammo(config_map.getFloat(KEY_POS_X),
+						config_map.getFloat(KEY_POS_Y),
+						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
+						config.getInt(KEY_VALUE),
+						config.getFloat(KEY_RADIUS));
+	}*/
+	else {
+		throw ItemsException("Key '%s' is not a valid item key.",
+							key.c_str());
 	}
 
 	return item;
@@ -37,62 +91,14 @@ void Items::initialize(const Configuration& config,
 }
 
 Items::Items(const Configuration& config, const Configuration& config_map) {
-	Items::initialize(Configuration(config, KEY_TREASURE), config_map,
-						KEY_TREASURE);
+	for (size_t i = 0; i < keys.size(); ++i) {
+		if (config_map.hasKey(keys[i])) {
+			Configuration sub_config(config, keys[i]);
+			Configuration sub_config_map(config_map, keys[i]);
 
-/*
-	size_t cant_treasures = config.getInt("cant_treasures");
-
-	for (size_t i = 0; i < cant_treasures; ++i) {
-		std::string treasure_number = "treasure_" + std::to_string(i);
-		config.addKey(treasure_number);
-		this->items.push_back(new Treasure(config.getFloat("pos_x"),
-							config.getFloat("pos_y"),
-							static_cast<TextureID>(config.getInt("texture")),
-							config.getInt("value"),
-							config.getFloat("radius")));
-		config.removeLastKey();
+			Items::initialize(sub_config, sub_config_map, keys[i]);
+		}
 	}
-
-	size_t cant_food = config.getInt("cant_food");
-
-	for (size_t i = 0; i < cant_food; ++i) {
-		std::string food_number = "food_" + std::to_string(i);
-		config.addKey(food_number);
-		this->items.push_back(new HealthRecover(config.getFloat("pos_x"),
-							config.getFloat("pos_y"),
-							static_cast<TextureID>(config.getInt("texture")),
-							config.getInt("value"),
-							config.getFloat("radius")));
-		config.removeLastKey();
-	}
-
-	size_t cant_medical_kit = config.getInt("cant_medical_kit");
-
-	for (size_t i = 0; i < cant_medical_kit; ++i) {
-		std::string medical_kit_number = "medical_kit_" + std::to_string(i);
-		config.addKey(medical_kit_number);
-		this->items.push_back(new HealthRecover(config.getFloat("pos_x"),
-							config.getFloat("pos_y"),
-							static_cast<TextureID>(config.getInt("texture")),
-							config.getInt("value"),
-							config.getFloat("radius")));
-		config.removeLastKey();
-	}
-
-	size_t cant_blood = config.getInt("cant_blood");
-
-	for (size_t i = 0; i < cant_blood; ++i) {
-		std::string blood_number = "blood_" + std::to_string(i);
-		config.addKey(blood_number);
-		this->items.push_back(new Blood(config.getFloat("pos_x"),
-							config.getFloat("pos_y"),
-							static_cast<TextureID>(config.getInt("texture")),
-							config.getInt("value"),
-							config.getFloat("radius")));
-		config.removeLastKey();
-	}
-	*/
 }
 
 Item* Items::operator[](std::size_t i) {
