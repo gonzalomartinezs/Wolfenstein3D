@@ -34,7 +34,7 @@
 #define KEY_ROT_SPEED "rot_speed"
 #define KEY_SIZE "size"
 
-Player::Player(const Configuration& config, const uint8_t _player_number) :
+Player::Player(Configuration& config, const uint8_t _player_number) :
                 DirectedPositionable(config.getFloat(KEY_POS_X),
                 config.getFloat(KEY_POS_Y), config.getInt(KEY_DIR_X),
                 config.getInt(KEY_DIR_Y), None), action(config) {

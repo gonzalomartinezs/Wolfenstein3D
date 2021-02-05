@@ -10,6 +10,8 @@ private:
 	std::vector<std::string> main_keys;
 public:
 	Configuration(const char* filename);
+	Configuration(const Configuration& config, const std::string& key);
+
 	void addKey(const std::string& key);
 	void removeLastKey();
 	std::string getString(const std::string& key) const;

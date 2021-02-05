@@ -19,12 +19,11 @@ private:
 	uint8_t health, lives;
     int score;
     bool hasKey;
-    uint8_t current_weapon;
     Weapons weapons;
     int bullets;
 public:
     /* Constructor */
-	PlayerActions(const Configuration& config);
+	PlayerActions(Configuration& config);
 	void use(HealthRecover* recover);
 	void use(Treasure* treasure);
 	bool hasWeapon(int id) const;

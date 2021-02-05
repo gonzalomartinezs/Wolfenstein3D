@@ -2,23 +2,18 @@
 #include "Knife.h"
 #include "Pistol.h"
 #include "ChainGun.h"
+#include "MachineGun.h"
 
-Weapons::Weapons() : current_weapon(2) {
+#define KEY_INITIAL_WEAPON "initial_weapon"
+
+Weapons::Weapons(Configuration& config) :
+				current_weapon(config.getInt(KEY_INITIAL_WEAPON)) {
 	this->weapons.push_back(new Knife());
 	this->weapons.push_back(new Pistol());
 	this->weapons.push_back(new ChainGun());
-}
-/*
-Weapons::Weapons(Weapons&& other) {
-	this->weapons.swap(other.weapons);
-	this->current_weapon = other.current_weapon;
+	this->weapons.push_back(new MachineGun());
 }
 
-Weapons&& Weapons::operator=(Weapons&& other) {
-	this->weapons.swap(other.weapons);
-	this->current_weapon = other.current_weapon;	
-}
-*/
 bool Weapons::hasWeapon(int id) const {
 	for (size_t i = 2; i < this->weapons.size(); ++i) {
 		if ((*weapons[i]) == id) return false;
@@ -62,6 +57,10 @@ void Weapons::fireTheGun(std::vector<Player>& players,
     this->weapons[this->current_weapon]->fireTheGun(players,
     											shooting_player_number,
                                             	map);
+}
+
+uint8_t Weapons::getCurrentWeapon() const {
+	return this->current_weapon;
 }
 
 Weapons::~Weapons() {

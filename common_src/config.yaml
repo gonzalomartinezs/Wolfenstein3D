@@ -1,5 +1,5 @@
 port: 8080
-max_clients: 3
+max_clients: 2
 
 #Map
 length: 8
@@ -20,10 +20,17 @@ player_global_rot_speed: &player_global_rot_speed 0.02
 player_global_initial_health: &player_global_initial_health 100
 player_global_initial_score: &player_global_initial_score 0
 player_global_total_lives: &player_global_total_lives 5
-player_global_initial_weapon: &player_global_initial_weapon 0 #1 = pistol
+player_global_initial_weapon: &player_global_initial_weapon 2 #1 = pistol
 player_global_has_key: &player_global_has_key 1 #0 = false, otro numero = true
 player_global_initial_bullets: &player_global_initial_bullets 10
 player_global_size: &player_global_size 0.2
+
+global_initial_weapons: &global_initial_weapons
+  knife: true
+  pistol: true
+  chain_gun: true
+  machine_gun: true
+  rocket_launcher: false
 
 #(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
 player_1:
@@ -40,6 +47,7 @@ player_1:
   has_key: *player_global_has_key
   initial_bullets: *player_global_initial_bullets
   size: *player_global_size
+  initial_weapons: *global_initial_weapons
 
 player_2:
   pos_x: 3.0
@@ -55,6 +63,7 @@ player_2:
   has_key: *player_global_has_key
   initial_bullets: *player_global_initial_bullets
   size: *player_global_size
+  initial_weapons: *global_initial_weapons
 
 player_3:
   pos_x: 5.0
@@ -70,6 +79,7 @@ player_3:
   has_key: *player_global_has_key
   initial_bullets: *player_global_initial_bullets
   size: *player_global_size
+  initial_weapons: *global_initial_weapons
 
 #Item's radius
 treasure_radius: &treasure_radius 0.5
@@ -113,6 +123,3 @@ items:
     radius: *blood_radius
   #Keys
   #Bullets/Ammo
-
-archivos_niveles:
-  

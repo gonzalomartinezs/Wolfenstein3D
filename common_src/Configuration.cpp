@@ -5,6 +5,11 @@ Configuration::Configuration(const char* filename) {
 	this->file = YAML::LoadFile(filename);
 }
 
+Configuration::Configuration(const Configuration& config, 
+								const std::string& key) {
+	this->file = config.file[key];
+}
+
 bool Configuration::keyExists(const YAML::Node& sub_file, 
 							const std::string& key, size_t i) const {
 	if (main_keys.size() == i) {
