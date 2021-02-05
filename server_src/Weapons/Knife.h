@@ -3,16 +3,17 @@
 
 #include "Weapon.h"
 #include "../../common_src/Timer.h"
+#include "../../common_src/Configuration.h"
 
 class Knife : public Weapon {
 private:
     Timer stabTimer;
     bool firstStab;
-//    const float TIME_BETWEEN_STABS, KNIFE_RANGE;
+    const float TIME_BETWEEN_STABS, KNIFE_RANGE;
 
 public:
     /* Constructor */
-    Knife();
+    Knife(const Configuration& config);
 
     void startShooting() override;
 

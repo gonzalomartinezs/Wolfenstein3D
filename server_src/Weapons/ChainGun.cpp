@@ -1,8 +1,11 @@
 #include "ChainGun.h"
 
-#define TIME_BETWEEN_SHOTS 0.1
+//#define TIME_BETWEEN_SHOTS 0.1
+//#define KEY_SHOTS "time_between_shots"
 
-ChainGun::ChainGun() : Weapon(CHAIN_GUN) {}
+ChainGun::ChainGun(const float time_between_shots) : Weapon(CHAIN_GUN),
+                    lastShotDelay(-1),
+                    TIME_BETWEEN_SHOTS(time_between_shots) {}
 
 void ChainGun::startShooting() {
     this->weaponIsShooting = true;

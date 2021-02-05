@@ -8,10 +8,11 @@ class ChainGun : public Weapon {
 private:
     Timer fireTimer;
     float lastShotDelay;
+   	const float TIME_BETWEEN_SHOTS;
 
 public:
     /* Constructor */
-    ChainGun();
+    ChainGun(const float time_between_shots);
 
     void startShooting() override;
 

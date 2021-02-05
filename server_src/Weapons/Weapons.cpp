@@ -5,13 +5,29 @@
 #include "MachineGun.h"
 
 #define KEY_INITIAL_WEAPON "initial_weapon"
+#define KEY_KNIFE "knife"
+#define KEY_CHAIN_GUN "chain_gun"
+#define KEY_MACHINE_GUN "machine_gun"
+
+#define KEY_SHOTS "time_between_shots"
+#define KEY_BURSTS "time_between_bursts"
+#define KEY_BULLETS "bullets_per_burst"
 
 Weapons::Weapons(const Configuration& config) :
 				current_weapon(config.getInt(KEY_INITIAL_WEAPON)) {
-	this->weapons.push_back(new Knife());
+	this->weapons.push_back(new Knife(Configuration(config, KEY_KNIFE)));
 	this->weapons.push_back(new Pistol());
-	this->weapons.push_back(new ChainGun());
-	this->weapons.push_back(new MachineGun());
+    
+    //Solo para test
+    Configuration config_chain_gun(config,KEY_CHAIN_GUN);
+	this->weapons.push_back(
+                    new ChainGun(config_chain_gun.getFloat(KEY_SHOTS)));
+
+    Configuration config_machine_gun(config, KEY_MACHINE_GUN);
+	this->weapons.push_back(new MachineGun(
+                                    config_machine_gun.getFloat(KEY_SHOTS),
+                                    config_machine_gun.getFloat(KEY_BURSTS),
+                                    config_machine_gun.getInt(KEY_BULLETS)));
 }
 
 bool Weapons::hasWeapon(int id) const {

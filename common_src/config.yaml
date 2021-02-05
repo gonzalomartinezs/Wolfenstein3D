@@ -20,6 +20,13 @@ player:
     knife:
       time_between_stabs: 1
       range: 0.5
+    chain_gun:
+      time_between_shots: 0.1
+    machine_gun:
+      time_between_shots: 0.1
+      time_between_bursts: 0.3
+      bullets_per_burst: 5
+
 
 max_health: &max_health_global 100
 

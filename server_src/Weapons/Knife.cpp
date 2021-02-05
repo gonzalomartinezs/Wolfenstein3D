@@ -1,12 +1,15 @@
 #include "Knife.h"
 #include <cstring>
 
-#define TIME_BETWEEN_STABS 1
 #define POSITION_DATA_SIZE 16
 #define FLOAT_SIZE sizeof(float)
-#define KNIFE_RANGE 0.5
 
-Knife::Knife() : Weapon(KNIFE) {
+#define KEY_STABS "time_between_stabs"
+#define KEY_RANGE "range"
+
+Knife::Knife(const Configuration& config) : Weapon(KNIFE),
+            TIME_BETWEEN_STABS(config.getFloat(KEY_STABS)),
+            KNIFE_RANGE(config.getFloat(KEY_RANGE)) {
     this->firstStab = true;
 }
 
@@ -35,7 +38,7 @@ void Knife::fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, c
         this->firstStab = false;
         this->stabTimer.start();
 
-    } else if ((this->stabTimer.getTime()/1000 > TIME_BETWEEN_STABS)) {
+    } else if ((this->stabTimer.getTime()/1000 > this->TIME_BETWEEN_STABS)) {
         this->_stab(players, shootingPlayerNumber, map);
         this->stabTimer.start();
     }
@@ -56,7 +59,7 @@ bool Knife::_isInTheKnifeRange(uint8_t *thisPlayerInfo, uint8_t *otherPlayerInfo
 
     distance = std::sqrt(dirX * dirX + dirY * dirY);
 
-    return (distance <= KNIFE_RANGE);
+    return (distance <= this->KNIFE_RANGE);
 }
 
 Knife::~Knife() {}

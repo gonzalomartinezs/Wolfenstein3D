@@ -12,10 +12,14 @@ private:
     int burstBulletCounter;
     bool isInBurstRecover;
     bool isFirstBulletOfTheBurst;
+    const float TIME_BETWEEN_SHOTS, TIME_BETWEEN_BURSTS;
+    const int BULLETS_PER_BURST;
 
 public:
     /* Constructor */
-    MachineGun();
+    MachineGun(const float time_between_shots,
+                const float time_between_bursts,
+                const int bullets_per_burst);
 
     void startShooting() override;
 

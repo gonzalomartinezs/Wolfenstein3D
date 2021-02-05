@@ -15,9 +15,9 @@ void HealthRecover::equipTo(PlayerActions& action) {
 }
 
 int HealthRecover::operator+(int health) const {
-	if (health > this->MAX_HEALTH) throw HealthRecoverException("Can't recover"
-														"health, max health"
-														"reached.");
+	if (health >= this->MAX_HEALTH) 
+		throw HealthRecoverException("Can't recover health, max health"
+									" reached.");
 
 	int new_health = this->value + health;
 
