@@ -15,13 +15,13 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
             Configuration(config_map, KEY_ITEMS)) {
     this->isRunning = true;
 
-    Configuration config_stats_player(config, KEY_PLAYER);
+    Configuration config_stats(config, KEY_PLAYER);
 
     this->players.reserve(10);
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         Configuration config_player(config_map, player_number);
-        this->players.emplace_back(config_stats_player, config_player, i);
+        this->players.emplace_back(config_stats, config_player, i);
     }
 }
 
