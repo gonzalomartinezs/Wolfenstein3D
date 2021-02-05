@@ -4,18 +4,24 @@
 #include <cstring> //borrar
 
 #define MAX_MSG_SIZE 256
+#define KEY_ITEMS "items"
+#define KEY_PLAYER "player"
 
 const double TICK_DURATION = 1/128.f; /* miliseconds que tarda en actualizarse el juego */
 
-Game::Game(std::vector<ThClient*>& _clients, Configuration& config) :
-            clients(_clients), map(config), items(config) {
+Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
+            const Configuration& config_map) : clients(_clients),
+            map(config_map), items(Configuration(config, KEY_ITEMS),
+            Configuration(config_map, KEY_ITEMS)) {
     this->isRunning = true;
+
+    Configuration config_stats_player(config, KEY_PLAYER);
+
     this->players.reserve(10);
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
-        config.addKey(player_number);
-        this->players.emplace_back(config, i);
-        config.removeLastKey();
+        Configuration config_player(config_map, player_number);
+        this->players.emplace_back(config_stats_player, config_player, i);
     }
 }
 

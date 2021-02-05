@@ -10,7 +10,7 @@ class Items {
 private:
 	std::vector<Item*> items;
 public:
-	Items(Configuration& config);
+	Items(const Configuration& config, const Configuration& config_map);
 	Items(Items& other) = delete;
 	Items& operator=(const Items& other) = delete;
 	Items(Items&& other) = delete;
@@ -19,6 +19,9 @@ public:
 	size_t size() const;
 	void remove(size_t i);
 	~Items();
+private:
+	void initialize(const Configuration& config,
+					const Configuration& config_map, const std::string& key);
 };
 
 #endif

@@ -13,7 +13,7 @@ private:
 	std::vector<Weapon*> weapons;
 	uint8_t current_weapon;
 public:
-	Weapons(Configuration& config);
+	Weapons(const Configuration& config);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* weapon);
 	void nextWeapon();

@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
                       SDL_WINDOW_SHOWN);
         TexturesContainer tex(window.getRenderer(), window.getSurface());
 
-        Map map(Configuration("../common_src/config.yaml"));
+        Map map(Configuration("../common_src/map_1.yaml"));
         Raycaster raycaster(map, WINDOW_WIDTH / 32, (-WINDOW_HEIGHT) / 18,
                             (30 * WINDOW_WIDTH) / 32, (17 * WINDOW_HEIGHT) / 18,
                             tex);

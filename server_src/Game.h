@@ -20,7 +20,8 @@ class Game {
     Items items;
  public:
     /* Constructor */
-    Game(std::vector<ThClient*>& _clients, Configuration& config);
+    Game(std::vector<ThClient*>& _clients, const Configuration& config,
+        const Configuration& config_map);
 
     void execute();
 

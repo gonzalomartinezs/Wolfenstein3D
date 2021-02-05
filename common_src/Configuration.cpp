@@ -1,35 +1,17 @@
 #include "Configuration.h"
 #include "Exceptions/ConfigurationException.h"
 
-Configuration::Configuration(const char* filename) {
-	this->file = YAML::LoadFile(filename);
+#define EXCEPTION_MSG "Key '%s' does not exist. Can't get %s from file %s."
+
+Configuration::Configuration(const char* _filename) {
+	this->file = YAML::LoadFile(_filename);
+	this->filename = _filename;
 }
 
 Configuration::Configuration(const Configuration& config, 
-								const std::string& key) {
+							const std::string& key) {
 	this->file = config.file[key];
-}
-
-bool Configuration::keyExists(const YAML::Node& sub_file, 
-							const std::string& key, size_t i) const {
-	if (main_keys.size() == i) {
-		if (sub_file[key]) return true;
-		return false;
-	}
-
-	return Configuration::keyExists(sub_file[main_keys[i]], key, i+1);
-}
-
-void Configuration::addKey(const std::string& key) {
-	if (!Configuration::keyExists(this->file, key, 0)) {
-		throw ConfigurationException("Key '%s' does not exist.", key.c_str());
-	}
-
-	this->main_keys.push_back(key);
-}
-
-void Configuration::removeLastKey() {
-	this->main_keys.pop_back();
+	this->filename = config.filename;
 }
 
 std::string Configuration::getString(const std::string& key) const {
@@ -37,44 +19,26 @@ std::string Configuration::getString(const std::string& key) const {
 		return std::move(this->file[key].as<std::string>());
 	}
 
-	throw ConfigurationException("Key '%s' does not exist. Can't get string.",
-								key.c_str());
-}
-
-float Configuration::_getFloat(const YAML::Node& sub_file, 
-							const std::string& key, size_t i) const {
-	if (main_keys.size() == i) {
-		if (sub_file[key]) {
-			return sub_file[key].as<float>();
-		}
-
-		throw ConfigurationException("Key '%s' does not exist."
-		 							"Can't get float.", key.c_str());
-	}
-
-	return _getFloat(sub_file[main_keys[i]], key, i+1);
-}
-
-int Configuration::_getInt(const YAML::Node& sub_file, 
-							const std::string& key, size_t i) const {
-	if (main_keys.size() == i) {
-		if (sub_file[key]) {
-			return sub_file[key].as<int>();
-		}
-
-		throw ConfigurationException("Key '%s' does not exist."
-		 							"Can't get int.", key.c_str());
-	}
-
-	return _getInt(sub_file[main_keys[i]], key, i+1);
+	throw ConfigurationException(EXCEPTION_MSG,	key.c_str(), "string",
+								this->filename.c_str());
 }
 
 float Configuration::getFloat(const std::string& key) const {
-	return Configuration::_getFloat(this->file, key, 0);
+	if (this->file[key]) {
+		return this->file[key].as<float>();
+	}
+
+	throw ConfigurationException(EXCEPTION_MSG, key.c_str(), "float",
+								this->filename.c_str());
 }
 
 int Configuration::getInt(const std::string& key) const {
-	return Configuration::_getInt(this->file, key, 0);
+	if (this->file[key]) {
+		return this->file[key].as<int>();
+	}
+
+	throw ConfigurationException(EXCEPTION_MSG, key.c_str(), "int",
+								this->filename.c_str());
 }
 
 void Configuration::initializeMatrix(const long int row,
@@ -82,8 +46,8 @@ void Configuration::initializeMatrix(const long int row,
 									int** map,
 									const std::string& key) const {
 	if (!this->file[key]){
-		throw ConfigurationException("Key '%s' does not exist."
-									" Can't initialize matrix.", key.c_str());
+		throw ConfigurationException(EXCEPTION_MSG, key.c_str(), "matrix",
+									this->filename.c_str());
 	}
 	for (int i = 0; i < row; ++i) {
 		for (int j = 0; j < col; ++j) {

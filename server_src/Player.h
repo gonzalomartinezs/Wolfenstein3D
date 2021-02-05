@@ -27,10 +27,11 @@ private:
 
 public:
     /* Constructor */
-//    Player(float moveSpeed, float rotSpeed, float posX, float posY);
-    Player(Configuration& config, const uint8_t _player_number);
+    Player(const Configuration& config_stats,
+            const Configuration& config_map, const uint8_t _player_number);
 
-    void updatePlayer(const Map& map, Items& items, std::vector<Player>& players);
+    void updatePlayer(const Map& map, Items& items,
+                        std::vector<Player>& players);
 
     void setState(uint8_t newState);
 

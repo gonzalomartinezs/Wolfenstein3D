@@ -23,7 +23,7 @@ private:
     int bullets;
 public:
     /* Constructor */
-	PlayerActions(Configuration& config);
+	PlayerActions(const Configuration& config);
 	void use(HealthRecover* recover);
 	void use(Treasure* treasure);
 	bool hasWeapon(int id) const;

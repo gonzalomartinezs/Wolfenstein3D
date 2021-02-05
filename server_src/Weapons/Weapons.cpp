@@ -6,7 +6,7 @@
 
 #define KEY_INITIAL_WEAPON "initial_weapon"
 
-Weapons::Weapons(Configuration& config) :
+Weapons::Weapons(const Configuration& config) :
 				current_weapon(config.getInt(KEY_INITIAL_WEAPON)) {
 	this->weapons.push_back(new Knife());
 	this->weapons.push_back(new Pistol());

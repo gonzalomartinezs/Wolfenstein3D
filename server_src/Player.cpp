@@ -1,10 +1,6 @@
 #include "Player.h"
 #include "../common_src/Exceptions/ErrorMap.h"
 #include "../common_src/Collider.h"
-/*#include "Weapons/Pistol.h"
-#include "Weapons/ChainGun.h"
-#include "Weapons/MachineGun.h"
-#include "Weapons/Knife.h"*/
 #include <algorithm>
 #include <iostream> //Borrar
 #include <cmath>
@@ -34,17 +30,19 @@
 #define KEY_ROT_SPEED "rot_speed"
 #define KEY_SIZE "size"
 
-Player::Player(Configuration& config, const uint8_t _player_number) :
-                DirectedPositionable(config.getFloat(KEY_POS_X),
-                config.getFloat(KEY_POS_Y), config.getInt(KEY_DIR_X),
-                config.getInt(KEY_DIR_Y), None), action(config) {
-    this->moveSpeed = config.getFloat(KEY_MOVE_SPEED);
-    this->rotSpeed = config.getFloat(KEY_ROT_SPEED);
+Player::Player(const Configuration& config_stats,
+            const Configuration& config_map,
+            const uint8_t _player_number) :
+            DirectedPositionable(config_map.getFloat(KEY_POS_X),
+            config_map.getFloat(KEY_POS_Y), config_map.getInt(KEY_DIR_X),
+            config_map.getInt(KEY_DIR_Y), None), action(config_stats) {
+    this->moveSpeed = config_stats.getFloat(KEY_MOVE_SPEED);
+    this->rotSpeed = config_stats.getFloat(KEY_ROT_SPEED);
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
     this->player_number = _player_number;
-    this->player_size = config.getFloat(KEY_SIZE);
+    this->player_size = config_stats.getFloat(KEY_SIZE);
 }
 
 void Player::lookForWallCollision(const Map& map, const Collider& collider) {

@@ -1,0 +1,59 @@
+#map_name: "nombre"
+
+#Map
+length: 8
+width: 14
+map:
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+#Players
+#(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
+player_1:
+  pos_x: 2.0
+  pos_y: 2.0
+  dir_x: 1
+  dir_y: 0
+
+player_2:
+  pos_x: 3.0
+  pos_y: 3.0
+  dir_x: 1
+  dir_y: 0
+
+player_3:
+  pos_x: 5.0
+  pos_y: 5.0
+  dir_x: 1
+  dir_y: 0
+
+#Items
+items:
+  #Treasures
+  cant_treasure: 1
+  treasure_0:
+    pos_x: 6.0
+    pos_y: 1.0
+  #Food
+  cant_food: 0
+  food_0:
+    pos_x: 2.0
+    pos_y: 3.5
+  #Medical kit
+  cant_medical_kit: 0
+  medical_kit_0:
+    pos_x: 7.0
+    pos_y: 13.0
+  #Blood
+  cant_blood: 1
+  blood_0:
+    pos_x: 1.0
+    pos_y: 13.0
+  #Keys
+  #Bullets/Ammo

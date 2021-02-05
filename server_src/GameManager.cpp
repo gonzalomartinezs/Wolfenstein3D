@@ -13,8 +13,9 @@ void GameManager::operator()() {
 	std::vector<ThClient*> clients;
 	try {
 		(*client_manager)(clients);
+		Configuration config_map("../common_src/map_1.yaml");
 
-        this->game = new Game(clients, this->config);
+        this->game = new Game(clients, this->config, config_map);
 
         this->game->execute();
 

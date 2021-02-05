@@ -9,7 +9,7 @@
 #define KEY_HAS_KEY "has_key"
 #define KEY_INITIAL_BULLETS "initial_bullets"
 
-PlayerActions::PlayerActions(Configuration& config) : weapons(config) {
+PlayerActions::PlayerActions(const Configuration& config) : weapons(config) {
 	this->health = config.getInt(KEY_INITIAL_HEALTH);
     this->score = config.getInt(KEY_INITIAL_SCORE);
     this->lives = config.getInt(KEY_TOTAL_LIVES);
