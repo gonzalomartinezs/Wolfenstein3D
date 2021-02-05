@@ -85,7 +85,6 @@ void Map::dropEvent(QDropEvent *event)
 
         event->setDropAction(Qt::MoveAction);
         event->accept();
-
         /*if (piece.location == piece.rect.topLeft() / pieceSize()) {
             inPlace++;
             if (inPlace == 25)
@@ -96,7 +95,6 @@ void Map::dropEvent(QDropEvent *event)
         focused = QRect();
         event->ignore();
         }
-
 }
 
 

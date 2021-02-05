@@ -45,8 +45,10 @@ void ItemList::startDrag(Qt::DropActions )
     drag->setMimeData(mimeData);
     drag->setHotSpot(QPoint(pixmap.width()/2, pixmap.height()/2));
     drag->setPixmap(pixmap);
+    drag->exec(Qt::MoveAction);
 
-    if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
+    /*if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
         delete takeItem(row(item));
+    */
 }
 
