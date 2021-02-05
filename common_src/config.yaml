@@ -19,10 +19,18 @@ player:
 
 #Items
 items:
-  treasure:
+  #Treasure
+  cross:
     texture: 2
     value: 10
     radius: 0.5
+  cup:
+    texture: 3
+    value: 15
+    radius: 0.5
+# chest:
+# crown:
+  #Health recover
   food:
     texture: 2
     value: 10
@@ -35,6 +43,7 @@ items:
     texture: 2
     value: 1
     radius: 0.3
+  #Otros
   #key:
 #    texture: 3
 #    value: 1
@@ -44,4 +53,9 @@ items:
 #    value: 5
 #    radius: 0.2
 
-#weapons:
+#  weapons:
+#    chain_gun:
+#      texture: 4
+#      value: 3 #value = id
+#      radius: 0.3
+
