@@ -8,7 +8,7 @@ RocketLauncherItem::RocketLauncherItem(float _x, float _y,
 										radius) {}
 
 void RocketLauncherItem::equipTo(PlayerActions& action) {
-	if(!action.hasWeapon(this->value)) throw "Can't equip weapon";
+	if(action.hasWeapon(this->value)) throw "Can't equip weapon.";
 
 //	action.equip(new RocketLauncher());
 }

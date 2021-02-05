@@ -16,10 +16,10 @@ Weapons::Weapons(const Configuration& config) :
 
 bool Weapons::hasWeapon(int id) const {
 	for (size_t i = 2; i < this->weapons.size(); ++i) {
-		if ((*weapons[i]) == id) return false;
+		if ((*weapons[i]) == id) return true;
 	}
 
-	return true;
+	return false;
 }
 
 void Weapons::equip(Weapon* weapon) {
