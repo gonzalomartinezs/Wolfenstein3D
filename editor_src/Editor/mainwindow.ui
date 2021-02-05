@@ -30,7 +30,7 @@
       <x>210</x>
       <y>50</y>
       <width>241</width>
-      <height>271</height>
+      <height>281</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -42,7 +42,7 @@
        <x>0</x>
        <y>0</y>
        <width>239</width>
-       <height>269</height>
+       <height>279</height>
       </rect>
      </property>
     </widget>
@@ -51,9 +51,9 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>300</y>
-      <width>101</width>
-      <height>20</height>
+      <y>290</y>
+      <width>121</width>
+      <height>41</height>
      </rect>
     </property>
    </widget>
@@ -67,13 +67,6 @@
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
-     <item row="2" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Altura</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
@@ -84,8 +77,12 @@
      <item row="1" column="1">
       <widget class="QSpinBox" name="spinBox"/>
      </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox_3"/>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Altura</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_3">
@@ -97,6 +94,9 @@
      <item row="3" column="1">
       <widget class="QSpinBox" name="spinBox_2"/>
      </item>
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="spinBox_3"/>
+     </item>
     </layout>
    </widget>
    <widget class="QPushButton" name="pushButton">
@@ -105,11 +105,11 @@
       <x>90</x>
       <y>260</y>
       <width>121</width>
-      <height>61</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Aplicar</string>
     </property>
    </widget>
   </widget>
