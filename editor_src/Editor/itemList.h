@@ -15,9 +15,6 @@ public:
     static QString editorMimeType() { return QStringLiteral("item"); }
 
 protected:
-    //void dragEnterEvent(QDragEnterEvent *event) override;
-    //void dragMoveEvent(QDragMoveEvent *event) override;
-    //void dropEvent(QDropEvent *event) override;
     void startDrag(Qt::DropActions supportedActions) override;
 
 private:

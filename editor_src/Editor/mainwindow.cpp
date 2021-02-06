@@ -43,7 +43,7 @@ void MainWindow::initWidgets(){
 }
 
 void MainWindow::connectEvents(){
-    QObject::connect(q)
+   // QObject::connect()
 }
 
 

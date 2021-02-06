@@ -38,7 +38,7 @@ public:
     QFormLayout *formLayout;
     QSpinBox *spinX;
     QLabel *label_2;
-    QPushButton *pushButton;
+    QPushButton *button;
     QSpinBox *spinY;
     QLabel *label;
     QFrame *trashFrame;
@@ -81,10 +81,10 @@ public:
 
         formLayout->setWidget(2, QFormLayout::LabelRole, label_2);
 
-        pushButton = new QPushButton(horizontalLayoutWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        button = new QPushButton(horizontalLayoutWidget);
+        button->setObjectName(QString::fromUtf8("button"));
 
-        formLayout->setWidget(3, QFormLayout::FieldRole, pushButton);
+        formLayout->setWidget(3, QFormLayout::FieldRole, button);
 
         spinY = new QSpinBox(horizontalLayoutWidget);
         spinY->setObjectName(QString::fromUtf8("spinY"));
@@ -122,7 +122,7 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Ancho", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Aplicar", nullptr));
+        button->setText(QCoreApplication::translate("MainWindow", "Aplicar", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Altura", nullptr));
     } // retranslateUi
 
