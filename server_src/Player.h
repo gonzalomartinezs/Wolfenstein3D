@@ -44,6 +44,9 @@ public:
     void getHealth();
 
     void receiveShot(uint8_t damage);
+    void increaseBulletCounter(uint8_t bulletsAmount);
+    void useBullets(uint8_t bulletsAmount);
+    bool hasBullets();
 
     /* Escribe los primeros 16 bytes del buffer con la informacion de
      * la posicion del jugador de la siguiente manera (floats):
