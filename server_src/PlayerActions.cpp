@@ -67,8 +67,9 @@ void PlayerActions::fireTheGun(std::vector<Player*>& players,
 
 void PlayerActions::receiveShot(uint8_t damage) {
     this->health -= damage;
-    if (this->health <= 20) {
-        this->health = 100;
+    /* uint8_t no admite valores negativos */
+    if (this->health > 100) {
+        this->health = 0;
         //this->die();
     }
 }
