@@ -6,13 +6,13 @@
 #include <QMimeData>
 #include <QPainter>
 
-Map::Map(std::vector<Item>& items, QWidget *parent) : QWidget(parent), items(items)
+Map::Map( QWidget *parent) : QWidget(parent)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
     //ver esto
     setMinimumSize(500, 500);
-    setMaximumSize(500, 500); //carguemos 5x5 de vacios.
+    setMaximumSize(500, 500); //carguemos 10x10 de vacios.
 }
 
 void Map::paintEvent(QPaintEvent *event)
@@ -147,9 +147,6 @@ int Map::findPiece(const QRect &pieceRect) const
     return -1;
 }
 
-Item& Map::findItem(int i){
-    return items[i];
-}
 
 
 

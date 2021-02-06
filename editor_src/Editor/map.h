@@ -10,7 +10,7 @@ class Map : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Map(std::vector<Item>&, QWidget *parent = nullptr);
+    explicit Map( QWidget *parent = nullptr);
 
 signals:
 
@@ -24,11 +24,9 @@ protected:
 private:
 
     int findPiece(const QRect &pieceRect) const;
-    Item& findItem(int i);
     const QRect targetSquare(const QPoint &position) const;
     QVector<MapElement> elements;
     QRect focused;
-    std::vector<Item>& items;
 };
 
 #endif // MAP_H

@@ -9,7 +9,7 @@ class ItemList : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit ItemList(int pieceSize,std::vector<Item>& item, QWidget *parent = nullptr);
+    explicit ItemList(QWidget *parent = nullptr);
 
 
     static QString editorMimeType() { return QStringLiteral("item"); }
@@ -22,8 +22,9 @@ protected:
 
 private:
     void loadImages();
+    void loadList();
     int itemSize;
-    std::vector<Item>& items;
+    std::vector<Item> items;
 };
 
 #endif // ITEMLIST_H

@@ -25,11 +25,13 @@ public:
 private:
     void initWidgets();
     void loadElements();
+    void linkToUI();
     Ui::MainWindow *ui;
+
+    QScrollArea* mapScrollArea;
+
     ItemList* itemlist;
     Map* map;
-    QScrollArea *scrollArea;
-    std::vector<Item> items;
 };
 
 #endif // MAINWINDOW_H

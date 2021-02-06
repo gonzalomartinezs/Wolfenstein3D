@@ -14,14 +14,16 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     map.cpp \
-    mapelement.cpp
+    mapelement.cpp \
+    trashbin.cpp
 
 HEADERS += \
     item.h \
     itemList.h \
     mainwindow.h \
     map.h \
-    mapelement.h
+    mapelement.h \
+    trashbin.h
 
 FORMS += \
     mainwindow.ui
