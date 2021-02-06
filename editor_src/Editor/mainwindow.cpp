@@ -43,6 +43,10 @@ void MainWindow::initWidgets(){
     this->trashBin = new TrashBin(this->trashFrame);
 }
 
+void MainWindow::initBar(){
+
+}
+
 void MainWindow::connectEvents(){
    QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
 }

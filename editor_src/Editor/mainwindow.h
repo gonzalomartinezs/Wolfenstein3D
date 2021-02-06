@@ -30,6 +30,7 @@ private slots:
 
 private:
     void initWidgets();
+    void initBar();
     void loadElements();
     void linkToUI();
     void connectEvents();
