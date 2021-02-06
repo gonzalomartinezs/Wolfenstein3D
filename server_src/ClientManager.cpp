@@ -51,15 +51,15 @@ ThClient* ClientManager::_createClient(Peer& peer) const {
 }
 
 void ClientManager::_talkWithClient(ThClient* client, std::vector<Lobby*>& games) {
-    uint8_t action, gameID, mapID; //, msg[MAX_MSG_LEN];
-    //int msgLen;
+    uint8_t action, gameID, mapID, msg[MAX_MSG_LEN];
+    int msgLen;
 
     action = _blockingRecv(client);
 
     if (action == NEW_GAME) {
         /* Enviar mapas disponibles */
-        //msgLen = _loadNewGameMsg(msg, games);
-        //client->push(msg, msgLen);
+        msgLen = _loadNewGameMsg(msg, games);
+        client->push(msg, msgLen);
         /* - - - */
         mapID = _blockingRecv(client);
         games.push_back(new Lobby(client, this->config, mapID));
@@ -67,8 +67,8 @@ void ClientManager::_talkWithClient(ThClient* client, std::vector<Lobby*>& games
 
     } else if (action == JOIN_GAME) {
         /* Enviar partidas disponibles */
-        //msgLen = _loadJoinGameMsg(msg, games);
-        //client->push(msg, msgLen);
+        msgLen = _loadJoinGameMsg(msg, games);
+        client->push(msg, msgLen);
         /* - - - */
         gameID = _blockingRecv(client);
         if (static_cast<unsigned int>(gameID) >= games.size()) {
