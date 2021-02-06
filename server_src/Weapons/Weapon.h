@@ -20,7 +20,7 @@ public:
     /* Constructor */
     Weapon(int _id);
 
-    virtual void fireTheGun(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) = 0;
+    virtual void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) = 0;
 
     /* AKA started pulling the trigger */
     virtual void startShooting() = 0;
@@ -38,7 +38,7 @@ public:
 
 protected:
     /* Logica de disparar una sola bala */
-    void shoot(std::vector<Player>& players, int shootingPlayerNumber, const Map& map);
+    void shoot(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map);
 
 private:
     /* Devuelve true si no hay paredes entre los jugadores, en otro caso false */

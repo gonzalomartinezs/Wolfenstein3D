@@ -59,7 +59,7 @@ bool PlayerActions::isShooting() const {
     return this->weapons.isShooting();
 }
 
-void PlayerActions::fireTheGun(std::vector<Player>& players,
+void PlayerActions::fireTheGun(std::vector<Player*>& players,
                             uint8_t shooting_player_number, const Map& map) {
     this->weapons.fireTheGun(players, shooting_player_number,
                                             map);

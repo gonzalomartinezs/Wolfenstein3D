@@ -70,7 +70,7 @@ void Player::lookForItem(Items& items, const Collider& collider) {
 	}
 }
 
-void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& players) {
+void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& players) {
     float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {

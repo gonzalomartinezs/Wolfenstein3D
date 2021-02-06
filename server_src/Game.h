@@ -13,7 +13,7 @@
 
 class Game {
  private:
-    std::vector<Player> players;
+    std::vector<Player*> players;
     std::vector<ThClient*>& clients;
     std::atomic<bool> isRunning;
     Map map;

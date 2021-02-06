@@ -31,7 +31,7 @@ public:
             const Configuration& config_map, const uint8_t _player_number);
 
     void updatePlayer(const Map& map, Items& items,
-                        std::vector<Player>& players);
+                        std::vector<Player*>& players);
 
     void setState(uint8_t newState);
 

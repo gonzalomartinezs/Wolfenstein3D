@@ -80,20 +80,20 @@ bool Weapon::_isInTheFieldOfView(uint8_t* thisPlayerInfo, uint8_t* otherPlayerIn
     return isInTheFieldOfView;
 }
 
-void Weapon::shoot(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) {
+void Weapon::shoot(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) {
     bool shotHit = false;
     uint8_t thisPlayerInfo[POSITION_DATA_SIZE], otherPlayerInfo[POSITION_DATA_SIZE];
-    players[shootingPlayerNumber].getPositionData(thisPlayerInfo);
+    players[shootingPlayerNumber]->getPositionData(thisPlayerInfo);
 
     for (size_t i = 0; i < players.size(); i++) {
         if (static_cast<int>(i) != shootingPlayerNumber) {
-            players[i].getPositionData(otherPlayerInfo);
+            players[i]->getPositionData(otherPlayerInfo);
             if (_isInTheFieldOfView(thisPlayerInfo, otherPlayerInfo, map)) {
                 std::cout << "Camino abierto" << std::endl;
                 shotHit = _runProbability(thisPlayerInfo, otherPlayerInfo);
                 if (shotHit) {
                     /* Bajar vida del jugador con el que impacto */
-                    players[i].receiveShot(5); // Cambiar
+                    players[i]->receiveShot(5); // Cambiar
                     std::cout << "Tiro acerto" << std::endl;
 
                     break;

@@ -23,7 +23,7 @@ void MachineGun::startShooting() {
     this->fireTimer.start();
 }
 
-void MachineGun::fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) {
+void MachineGun::fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) {
     if (this->lastShotDelay == -1) {
         this->shoot(players, shootingPlayerNumber, map);  /* First shot */
         this->burstBulletCounter++;

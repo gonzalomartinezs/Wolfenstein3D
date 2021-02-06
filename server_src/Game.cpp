@@ -21,7 +21,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         Configuration config_player(config_map, player_number);
-        this->players.emplace_back(config_stats, config_player, i);
+        this->players.push_back(new Player(config_stats, config_player, i));
     }
 }
 
@@ -58,14 +58,14 @@ void Game::getInstructions() {
     for (size_t i = 0; i < this->clients.size(); i++) {
         if (!this->clients[i]->isEmpty()) {
             stateRecv = this->clients[i]->pop();
-            this->players[i].setState(stateRecv);
+            this->players[i]->setState(stateRecv);
         }
     }
 }
 
 void Game::update() {
     for (size_t i = 0; i < this->players.size(); i++) {
-        this->players[i].updatePlayer(this->map, this->items, this->players);
+        this->players[i]->updatePlayer(this->map, this->items, this->players);
     }
 }
 
@@ -83,12 +83,12 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     int playersLoaded = 0;
     uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
 
-    this->players[clientNumber].getHUDData(msg+1);
+    this->players[clientNumber]->getHUDData(msg+1);
 
-    this->players[clientNumber].getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
+    this->players[clientNumber]->getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
     for (size_t i = 0; i < this->clients.size(); i++) {
         if (i != clientNumber) {
-            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 17 + HUD_INFO_SIZE); // era *16 sin el hardcodeo del guard
+            this->players[i]->getPositionData(msg + 1 + 24 + playersLoaded * 17 + HUD_INFO_SIZE); // era *16 sin el hardcodeo del guard
             memcpy(msg + 1 + 24 + playersLoaded * 17 + 16 + HUD_INFO_SIZE, &texture, 1); //harcodeado, despues hacerlo bien
             playersLoaded++;
         }
@@ -117,4 +117,8 @@ void Game::sendMap() {
     }
 }
 
-Game::~Game() {}
+Game::~Game() {
+    for (unsigned long int i = 0; i < players.size(); i++) {
+        delete players[i];
+    }
+}

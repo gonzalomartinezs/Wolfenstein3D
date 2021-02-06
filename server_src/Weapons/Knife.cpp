@@ -17,22 +17,22 @@ void Knife::startShooting() {
     this->weaponIsShooting = true;
 }
 
-void Knife::_stab(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) {
+void Knife::_stab(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) {
     uint8_t thisPlayerInfo[POSITION_DATA_SIZE], otherPlayerInfo[POSITION_DATA_SIZE];
-    players[shootingPlayerNumber].getPositionData(thisPlayerInfo);
+    players[shootingPlayerNumber]->getPositionData(thisPlayerInfo);
 
     for (size_t i = 0; i < players.size(); i++) {
         if (static_cast<int>(i) != shootingPlayerNumber) {
-            players[i].getPositionData(otherPlayerInfo);
+            players[i]->getPositionData(otherPlayerInfo);
             if (_isInTheKnifeRange(thisPlayerInfo, otherPlayerInfo)) {
-                players[i].receiveShot(5); // Cambiar
+                players[i]->receiveShot(5); // Cambiar
                 break;
             }
         }
     }
 }
 
-void Knife::fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) {
+void Knife::fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) {
     if (this->firstStab == true) {
         this->_stab(players, shootingPlayerNumber, map);  /* First stab */
         this->firstStab = false;
