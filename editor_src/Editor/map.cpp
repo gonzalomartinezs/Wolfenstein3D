@@ -6,13 +6,13 @@
 #include <QMimeData>
 #include <QPainter>
 
-Map::Map( QWidget *parent) : QWidget(parent)
+Map::Map ( unsigned x ,unsigned y ,QWidget *parent) : QWidget(parent)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
-    //ver esto
-    setMinimumSize(500, 500);
-    setMaximumSize(500, 500); //carguemos 10x10 de vacios.
+
+    setMinimumSize(x*ITEMSIZE, y*ITEMSIZE);
+    setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
 }
 
 void Map::paintEvent(QPaintEvent *event)

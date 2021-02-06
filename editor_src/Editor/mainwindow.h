@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <vector>
 #include <QScrollArea>
+#include <QSpinBox>
 
 #define ITEMSIZE 50
 
@@ -32,6 +33,8 @@ private:
 
     QScrollArea* mapScrollArea;
     QFrame* trashFrame;
+    QSpinBox* spinX;
+    QSpinBox* spinY;
 
     TrashBin* trashBin;
     ItemList* itemlist;

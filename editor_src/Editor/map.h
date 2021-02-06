@@ -10,7 +10,7 @@ class Map : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Map( QWidget *parent = nullptr);
+    explicit Map(unsigned x = 5, unsigned y= 5, QWidget *parent = nullptr);
 
 signals:
 

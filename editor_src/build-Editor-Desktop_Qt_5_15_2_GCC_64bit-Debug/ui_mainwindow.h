@@ -36,10 +36,10 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QFormLayout *formLayout;
-    QSpinBox *spinBox;
+    QSpinBox *spinX;
     QLabel *label_2;
     QPushButton *pushButton;
-    QSpinBox *spinBox_3;
+    QSpinBox *spinY;
     QLabel *label;
     QFrame *trashFrame;
     QMenuBar *menubar;
@@ -71,10 +71,10 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         formLayout = new QFormLayout();
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        spinBox = new QSpinBox(horizontalLayoutWidget);
-        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        spinX = new QSpinBox(horizontalLayoutWidget);
+        spinX->setObjectName(QString::fromUtf8("spinX"));
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, spinBox);
+        formLayout->setWidget(2, QFormLayout::FieldRole, spinX);
 
         label_2 = new QLabel(horizontalLayoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
@@ -86,10 +86,10 @@ public:
 
         formLayout->setWidget(3, QFormLayout::FieldRole, pushButton);
 
-        spinBox_3 = new QSpinBox(horizontalLayoutWidget);
-        spinBox_3->setObjectName(QString::fromUtf8("spinBox_3"));
+        spinY = new QSpinBox(horizontalLayoutWidget);
+        spinY->setObjectName(QString::fromUtf8("spinY"));
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, spinBox_3);
+        formLayout->setWidget(1, QFormLayout::FieldRole, spinY);
 
         label = new QLabel(horizontalLayoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
