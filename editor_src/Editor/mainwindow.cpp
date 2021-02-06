@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Editor de niveles");
-    initWidgets();
+    this->initWidgets();
+    this->connectEvents();
 }
 
 void MainWindow::linkToUI(){
@@ -43,7 +44,14 @@ void MainWindow::initWidgets(){
 }
 
 void MainWindow::connectEvents(){
-   // QObject::connect()
+   QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
+}
+
+void MainWindow::resizeMap(){
+    if(this->map == nullptr) return;
+    delete map;
+    map =  new Map(spinX->value(), spinY->value(), this);
+    mapScrollArea->setWidget(map);
 }
 
 
