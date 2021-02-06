@@ -18,7 +18,7 @@ Map::Map ( unsigned x ,unsigned y ,QWidget *parent) : QWidget(parent)
 void Map::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(event->rect(), Qt::yellow);
+    painter.fillRect(event->rect(), Qt::gray);
 
     if (focused.isValid()) {
         painter.setBrush(QColor("#ffcccc"));
