@@ -7,6 +7,7 @@
 #define DIVISIONS_AMOUNT 10
 #define WALKABLE 0
 #define FLOAT_SIZE sizeof(float)
+#define BULLETS_PER_SHOT 1
 
 const float MAX_SHOOTING_ANGLE = PI/6.f;
 const float MAX_SHOOTING_DISTANCE = 10;
@@ -85,18 +86,21 @@ void Weapon::shoot(std::vector<Player*>& players, int shootingPlayerNumber, cons
     uint8_t thisPlayerInfo[POSITION_DATA_SIZE], otherPlayerInfo[POSITION_DATA_SIZE];
     players[shootingPlayerNumber]->getPositionData(thisPlayerInfo);
 
-    for (size_t i = 0; i < players.size(); i++) {
-        if (static_cast<int>(i) != shootingPlayerNumber) {
-            players[i]->getPositionData(otherPlayerInfo);
-            if (_isInTheFieldOfView(thisPlayerInfo, otherPlayerInfo, map)) {
-                std::cout << "Camino abierto" << std::endl;
-                shotHit = _runProbability(thisPlayerInfo, otherPlayerInfo);
-                if (shotHit) {
-                    /* Bajar vida del jugador con el que impacto */
-                    players[i]->receiveShot(5); // Cambiar
-                    std::cout << "Tiro acerto" << std::endl;
+    if (players[shootingPlayerNumber]->hasBullets()) {
+        players[shootingPlayerNumber]->increaseBulletCounter(BULLETS_PER_SHOT);
+        players[shootingPlayerNumber]->useBullets(BULLETS_PER_SHOT);
 
-                    break;
+        for (size_t i = 0; i < players.size(); i++) {
+            if (static_cast<int>(i) != shootingPlayerNumber) {
+                players[i]->getPositionData(otherPlayerInfo);
+                if (_isInTheFieldOfView(thisPlayerInfo, otherPlayerInfo, map)) {
+                    shotHit = _runProbability(thisPlayerInfo, otherPlayerInfo);
+                    if (shotHit) {
+                        /* Bajar vida del jugador con el que impacto */
+                        players[i]->receiveShot(static_cast<uint8_t>
+                        (this->_randomNumberGenerator() * 10) + 1);  // Rango [1, 10]
+                        break;
+                    }
                 }
             }
         }
