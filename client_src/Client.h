@@ -31,6 +31,9 @@ public:
     Client(const Client&) = delete;
     Client operator=(const Client&) = delete;
 
+    // Lleva a cabo la interaccion de seleccion de partida con el servidor.
+    void lobbyInteraction();
+
     // Envia al servidor la proxima instruccion contenida en 'instructions',
     // hasta que surja un error o se corte la conexion.
     void sendInstruction();
@@ -48,6 +51,8 @@ public:
     ~Client();
 
 private:
+    void _createGame();
+    void _joinGame();
     void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received);
     void
     _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
