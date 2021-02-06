@@ -9,14 +9,24 @@
 
 TrashBin::TrashBin(QWidget *parent) : QWidget(parent)
 {
-
+     setAcceptDrops(true);
+     QPalette pal = palette();
+     this->resize(500,500);
+     pal.setColor(QPalette::Background, Qt::red);
+     this->setAutoFillBackground(true);
+     this->setPalette(pal);
 }
 
 
 void TrashBin::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat(ItemList::editorMimeType()))
-        event->accept();
-    else
-        event->ignore();
+    event->accept();
+}
+
+void TrashBin::dropEvent(QDropEvent *event)
+{
+
+    event->setDropAction(Qt::MoveAction);
+    event->accept();
+    printf("aca llega xD");
 }

@@ -4,6 +4,8 @@
 #include "itemList.h"
 #include "map.h"
 #include "item.h"
+#include "trashbin.h"
+
 #include <QMainWindow>
 #include <vector>
 #include <QScrollArea>
@@ -29,7 +31,9 @@ private:
     Ui::MainWindow *ui;
 
     QScrollArea* mapScrollArea;
+    QFrame* trashFrame;
 
+    TrashBin* trashBin;
     ItemList* itemlist;
     Map* map;
 };

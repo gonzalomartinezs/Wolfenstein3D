@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::linkToUI(){
     this->itemlist = findChild<ItemList*>("itemList");
     this->mapScrollArea = findChild<QScrollArea*>("mapArea");
+    this->trashFrame = findChild<QFrame*>("trashFrame");
 }
 
 
@@ -32,7 +33,8 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets(){
     this->linkToUI();
     this->map = new Map();
-    mapScrollArea->setWidget(map); //ver si esto sirve?
+    mapScrollArea->setWidget(map);
+    this->trashBin = new TrashBin(this->trashFrame);
 }
 
 
