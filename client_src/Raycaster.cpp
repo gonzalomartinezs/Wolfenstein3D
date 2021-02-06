@@ -14,7 +14,7 @@ Raycaster::Raycaster(Map &map, int begin_x, int begin_y, int width, int height,
                      TexturesContainer &textures)
                      : map(map), begin_x(begin_x), begin_y(begin_y), width(width),
                      height(height), textures(textures),
-                     sprite_renderer(textures, 0,0, width,height) {
+                     sprite_renderer(textures, begin_x, begin_y, width,height) {
 
     for(auto& surface : map.getSlidingSurfaces()){
         this->surfaces.emplace(surface.getId(), surface);
@@ -96,11 +96,10 @@ Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray
             float hit_x, hit_y;
             _calculateHitPoint(hit_x, hit_y, map_x, map_y, hit_axis, player, ray_dir);
             current_cell = _processSlidingPassage(hit_x, hit_y, map_x, map_y,ray_dir,
-                                               delta_dist_x, delta_dist_y,hit_axis);
+                                                  delta_dist_x, delta_dist_y,hit_axis);
         }
         hit = (current_cell != 0);
     }
-
     float perp_wall_distance;
     if (hit_axis == 'x') {
         perp_wall_distance = (map_x - player.getX() + (1 - ray_dir_x_sign)/2) / ray_dir.x;
@@ -152,8 +151,8 @@ void Raycaster::_calculateHitPoint(float &hit_x, float &hit_y, int map_x, int ma
 // Procesa la interseccion de un rayo con una superficie deslizante
 // y retorna el numero de celda segun corresponda.
 int Raycaster::_processSlidingPassage(float hit_x, float hit_y, int map_x, int map_y,
-                            RayDirection ray_dir, float delta_dist_x,
-                            float delta_dist_y, char hit_axis) {
+                                      RayDirection ray_dir, float delta_dist_x,
+                                      float delta_dist_y, char hit_axis) {
     int id;
     for(auto& surface: surfaces){
         if(surface.second.getX() == map_x && surface.second.getY() == map_y)
