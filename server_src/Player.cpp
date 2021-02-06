@@ -101,10 +101,10 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& pl
         this->y = old_y;
     }
     // Borrar
-/*    std::cout << "posX: " << this->x;
+    std::cout << "posX: " << this->x;
     std::cout << ", posY: " << this->y;
     std::cout << ", dir_x: " << this->dir_x;
-    std::cout << ", dir_y: " << this->dir_y << std::endl; */
+    std::cout << ", dir_y: " << this->dir_y << std::endl;
 }
 
 void Player::setState(uint8_t newState) {
@@ -134,12 +134,6 @@ void Player::die() {
 
 bool Player::isDead() {
     return this->action.isDead();
-}
-
-void Player::shoot() {
-//    this->ammo--;
-    /* Logica del disparo */
-    //this->action.shoot();
 }
 
 void Player::receiveShot(uint8_t damage) {

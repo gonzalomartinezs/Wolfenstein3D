@@ -12,7 +12,7 @@
 #include "../common_src/Configuration.h"
 
 class Player : public DirectedPositionable {
-private:
+protected:
     PlayerActions action;
     float camPlaneX, camPlaneY;
     uint8_t player_number;
@@ -35,11 +35,11 @@ public:
 
     void setState(uint8_t newState);
 
+    virtual void getState(std::vector<Player*> &players, int botNumber, const Map &map) {};
+
     void die();
 
     bool isDead();
-
-    void shoot();
 
     void getHealth();
 
@@ -58,7 +58,7 @@ public:
     void getHUDData(uint8_t* msg);
 
     /* Destructor */
-    ~Player();
+    virtual ~Player();
 
 private:
     void lookForItem(Items& items, const Collider& collider);
