@@ -26,9 +26,9 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
     }
 
     for (size_t i = 0; i < BOTS_AMOUNT; ++i) {
-        std::string player_number = "player_" + std::to_string(this->clients.size() + i + 1);
+        std::string player_number = "player_" + std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
-        this->players.push_back(new Bot(config_stats, config_player, i));
+        this->players.push_back(new Bot(config_stats, config_player, this->clients.size() + i));
     }
 }
 
