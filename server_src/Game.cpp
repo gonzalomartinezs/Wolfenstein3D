@@ -6,6 +6,7 @@
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
+#define BOTS_AMOUNT 1
 
 const double TICK_DURATION = 1/128.f; /* miliseconds que tarda en actualizarse el juego */
 
@@ -22,6 +23,12 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         std::string player_number = "player_" + std::to_string(i + 1);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Player(config_stats, config_player, i));
+    }
+
+    for (size_t i = 0; i < BOTS_AMOUNT; ++i) {
+        std::string player_number = "player_" + std::to_string(this->clients.size() + i + 1);
+        Configuration config_player(config_map, player_number);
+        this->players.push_back(new Bot(config_stats, config_player, i));
     }
 }
 
@@ -61,6 +68,10 @@ void Game::getInstructions() {
             this->players[i]->setState(stateRecv);
         }
     }
+
+    for (size_t i = this->clients.size(); i < this->clients.size() + BOTS_AMOUNT; i++) {
+        this->players[i]->getState(this->players, i, this->map);
+    }
 }
 
 void Game::update() {
@@ -86,7 +97,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     this->players[clientNumber]->getHUDData(msg+1);
 
     this->players[clientNumber]->getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
-    for (size_t i = 0; i < this->clients.size(); i++) {
+    for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
             this->players[i]->getPositionData(msg + 1 + 24 + playersLoaded * 17 + HUD_INFO_SIZE); // era *16 sin el hardcodeo del guard
             memcpy(msg + 1 + 24 + playersLoaded * 17 + 16 + HUD_INFO_SIZE, &texture, 1); //harcodeado, despues hacerlo bien
