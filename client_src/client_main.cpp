@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 1080
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
 
         //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         Client client("localhost", "8080", instructions, drawing_info);
+        client.lobbyInteraction();
         EventHandler event_handler(instructions);
 
         DirectedPositionable player(2, 2, -1, 0, None);
