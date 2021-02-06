@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -40,6 +41,7 @@ public:
     QPushButton *pushButton;
     QSpinBox *spinBox_3;
     QLabel *label;
+    QFrame *trashFrame;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -47,7 +49,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(552, 399);
+        MainWindow->resize(565, 399);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         mapArea = new QScrollArea(centralwidget);
@@ -97,10 +99,15 @@ public:
 
         horizontalLayout->addLayout(formLayout);
 
+        trashFrame = new QFrame(centralwidget);
+        trashFrame->setObjectName(QString::fromUtf8("trashFrame"));
+        trashFrame->setGeometry(QRect(0, 310, 221, 41));
+        trashFrame->setFrameShape(QFrame::StyledPanel);
+        trashFrame->setFrameShadow(QFrame::Raised);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 552, 23));
+        menubar->setGeometry(QRect(0, 0, 565, 23));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
