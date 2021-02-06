@@ -10,6 +10,7 @@
 #include <vector>
 #include <QScrollArea>
 #include <QSpinBox>
+#include <QPushButton>
 
 #define ITEMSIZE 50
 
@@ -29,12 +30,14 @@ private:
     void initWidgets();
     void loadElements();
     void linkToUI();
+    void connectEvents();
     Ui::MainWindow *ui;
 
     QScrollArea* mapScrollArea;
     QFrame* trashFrame;
     QSpinBox* spinX;
     QSpinBox* spinY;
+    QPushButton* button;
 
     TrashBin* trashBin;
     ItemList* itemlist;

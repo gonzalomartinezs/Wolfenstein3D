@@ -24,6 +24,7 @@ void MainWindow::linkToUI(){
     this->trashFrame = findChild<QFrame*>("trashFrame");
     this->spinX = findChild<QSpinBox*>("spinX");
     this->spinY = findChild<QSpinBox*>("spinY");
+    this->button = findChild<QPushButton*>("button");
 }
 
 
@@ -39,6 +40,10 @@ void MainWindow::initWidgets(){
     this->spinY->setValue(TAM_MAP_DEF);
     mapScrollArea->setWidget(map);
     this->trashBin = new TrashBin(this->trashFrame);
+}
+
+void MainWindow::connectEvents(){
+    QObject::connect(q)
 }
 
 
