@@ -16,3 +16,7 @@ unsigned Coordinate::getY(){
 bool Coordinate::operator==(const Coordinate& r){
     return (x == r.x && y ==r.y);
 }
+
+std::string Coordinate::to_string(){
+    return (std::to_string(x)+","+std::to_string(y));
+}
