@@ -13,6 +13,9 @@ public:
     void remove(const Coordinate& coor);
     bool inRange(const Coordinate& coor)const;
     bool isEmpty(const Coordinate& coor)const;
+    unsigned getX() const;
+    unsigned getY() const;
+    MapElement& get(const Coordinate& coor)const;
 private:
     const unsigned x;
     const unsigned y;
