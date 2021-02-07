@@ -10,8 +10,4 @@ void Treasure::equipTo(PlayerActions& action) {
 	action.use(this);
 }
 
-int Treasure::operator+(int score) const {
-	return (score + this->value);
-}
-
 Treasure::~Treasure() {}

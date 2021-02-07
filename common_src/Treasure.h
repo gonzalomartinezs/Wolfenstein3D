@@ -8,7 +8,6 @@ class Treasure : public Item {
 public:
 	Treasure(const Configuration& config, float _x, float _y);
 	void equipTo(PlayerActions& action);
-	int operator+(int score) const override;
 	~Treasure();
 };
 

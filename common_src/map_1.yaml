@@ -74,6 +74,7 @@ items:
       pos_y: 13.0
   #Keys
   #Bullets/Ammo
+  #Weapons
   chain_gun:
     cant_chain_gun: 1
     chain_gun_0:

@@ -2,6 +2,9 @@
 #include "Treasure.h"
 #include "HealthRecover.h"
 #include "Blood.h"
+#include "MachineGunItem.h"
+#include "ChainGunItem.h"
+//#include "RocketLauncherItem.h"
 
 #include "Exceptions/ItemsException.h"
 
@@ -20,10 +23,17 @@
 #define KEY_ITEM_KEY "key"
 #define KEY_AMMO "ammo"
 
+//Weapons
+#define KEY_MACHINE_GUN "machine_gun"
+#define KEY_CHAIN_GUN "chain_gun"
+#define KEY_ROCKET_LAUNCHER "rocket_launcher"
+
 static const std::vector<std::string> keys = {KEY_CROSS, KEY_CUP, KEY_CHEST,
 											KEY_CROWN, KEY_FOOD,
 											KEY_MEDICAL_KIT, KEY_BLOOD,
-											KEY_ITEM_KEY, KEY_AMMO};
+											KEY_ITEM_KEY, KEY_AMMO,
+											KEY_MACHINE_GUN, KEY_CHAIN_GUN,
+											KEY_ROCKET_LAUNCHER};
 
 static Item* initializeItem(const Configuration& config, 
 							const Configuration& config_map,
@@ -52,6 +62,16 @@ static Item* initializeItem(const Configuration& config,
 						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
 						config.getInt(KEY_VALUE),
 						config.getFloat(KEY_RADIUS));
+	}*/
+	else if (key == KEY_MACHINE_GUN) {
+		item = new MachineGunItem(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
+	} else if (key == KEY_CHAIN_GUN) {
+		item = new ChainGunItem(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
+	}/* else if (key == KEY_ROCKET_LAUNCHER) {
+		item = new RocketLauncherItem(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
 	}*/
 	else {
 		throw ItemsException("Key '%s' is not a valid item key.",
