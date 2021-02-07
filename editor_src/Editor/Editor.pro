@@ -13,6 +13,7 @@ SOURCES += \
     itemList.cpp \
     main.cpp \
     mainwindow.cpp \
+    map.cpp \
     mapelement.cpp \
     maphandler.cpp \
     trashbin.cpp
@@ -21,6 +22,7 @@ HEADERS += \
     item.h \
     itemList.h \
     mainwindow.h \
+    map.h \
     mapelement.h \
     maphandler.h \
     trashbin.h
