@@ -8,9 +8,15 @@
 class Map
 {
 public:
-    Map();
+    Map(const unsigned& x, const unsigned& y);
+    void add(const Coordinate& coor, const MapElement& map);
+    void remove(const Coordinate& coor);
+    bool inRange(const Coordinate& coor)const;
+    bool isEmpty(const Coordinate& coor)const;
 private:
-    std::unordered_map <Coordinate, MapElement> matrix;
+    const unsigned x;
+    const unsigned y;
+    std::unordered_map <std::string, MapElement> matrix;
 };
 
 #endif // MAP_H

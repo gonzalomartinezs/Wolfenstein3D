@@ -2,6 +2,7 @@
 #define COORDINATE_H
 
 #include <string>
+#include "map.h"
 
 class Coordinate
 {
@@ -10,10 +11,11 @@ class Coordinate
     const unsigned y;
  public:
     Coordinate(unsigned x, unsigned y);
-    unsigned getX();
-    unsigned getY();
-    std::string to_string();
+    unsigned getX()const;
+    unsigned getY()const;
+    std::string toString()const;
     bool operator==(const Coordinate& r);
+    bool inRange(const Map& map)const;
 };
 
 #endif // COORDINATE_H
