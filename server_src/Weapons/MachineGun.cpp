@@ -1,11 +1,5 @@
 #include "MachineGun.h"
 
-/*
-#define TIME_BETWEEN_SHOTS 0.1
-#define TIME_BETWEEN_BURSTS 0.3
-#define BULLETS_PER_BURST 5
-*/
-
 MachineGun::MachineGun(const float time_between_shots,
                     const float time_between_bursts,
                     const int bullets_per_burst) : Weapon(MACHINE_GUN),
