@@ -18,6 +18,9 @@ PlayerActions::PlayerActions(const Configuration& config) :
     this->hasKey = config.getInt(KEY_HAS_KEY);
     this->bullets = config.getInt(KEY_INITIAL_BULLETS);
     this->bulletsCounter = 0;
+
+    this->initialHealth = config.getInt(KEY_INITIAL_HEALTH);
+    this->initialBullets = config.getInt(KEY_INITIAL_BULLETS);
 }
 
 void PlayerActions::use(HealthRecover* recover) {
@@ -34,6 +37,12 @@ bool PlayerActions::hasWeapon(int id) const {
 
 void PlayerActions::equip(Weapon* weapon) {
 	this->weapons.equip(weapon);
+}
+
+void PlayerActions::die() {
+    this->health = this->initialHealth;
+    this->bullets = this->initialBullets;
+    this->lives--;
 }
 
 bool PlayerActions::isDead() const {

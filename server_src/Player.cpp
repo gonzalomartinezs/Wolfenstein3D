@@ -38,6 +38,8 @@ Player::Player(const Configuration& config_stats,
             config_map.getInt(KEY_DIR_Y), None), action(config_stats) {
     this->moveSpeed = config_stats.getFloat(KEY_MOVE_SPEED);
     this->rotSpeed = config_stats.getFloat(KEY_ROT_SPEED);
+    this->initialPosX = config_map.getFloat(KEY_POS_X);
+    this->initialPosY = config_map.getFloat(KEY_POS_Y);
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
@@ -100,6 +102,13 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& pl
         this->x = old_x;
         this->y = old_y;
     }
+
+    if (this->action.isDead()) {
+        this->x = this->initialPosX;
+        this->y = this->initialPosY;
+        this->action.die();
+    }
+
     // Borrar
     std::cout << "posX: " << this->x;
     std::cout << ", posY: " << this->y;
@@ -125,8 +134,6 @@ void Player::setState(uint8_t newState) {
 
 void Player::die() {
     //Reiniciar posicion
-    //this->x = this->initial_x;
-    //this->y = this->initial_y;
     //this->dir_x = this->initial_dir_x;
     //this->dir_y = this->initial_dir_y;
     //this->action.respawn();

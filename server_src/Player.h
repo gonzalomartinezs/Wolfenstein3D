@@ -18,6 +18,7 @@ class Player : public DirectedPositionable {
 protected:
     PlayerActions action;
     float camPlaneX, camPlaneY;
+    float initialPosX, initialPosY;
     uint8_t player_number;
 
     //Movement Speed

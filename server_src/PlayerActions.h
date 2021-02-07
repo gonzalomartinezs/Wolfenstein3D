@@ -16,6 +16,9 @@ class Player;
 
 class PlayerActions {
 private:
+    uint8_t initialHealth;
+    int initialBullets;
+
 	uint8_t health, lives;
     int score;
     bool hasKey;
@@ -30,6 +33,8 @@ public:
 	void use(Treasure* treasure);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
+
+	void die();
 	bool isDead() const;
 
 	void startShooting();
