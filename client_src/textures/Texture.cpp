@@ -6,7 +6,7 @@
 #define G 0
 #define B 136
 
-Texture::Texture(std::string path, SDL_Renderer* renderer,SDL_Surface* surface):
+Texture::Texture(std::string path, SDL_Renderer* renderer, SDL_Surface* surface):
                                                             renderer(renderer){
     SDL_Surface* loaded_surface;
     if (path.substr(path.length()-3) == "bmp"){
