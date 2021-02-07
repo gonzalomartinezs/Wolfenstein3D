@@ -1,4 +1,4 @@
-#include "map.h"
+#include "maphandler.h"
 #include "mainwindow.h"
 #include "itemList.h"
 #include <QDrag>
@@ -6,7 +6,7 @@
 #include <QMimeData>
 #include <QPainter>
 
-Map::Map ( unsigned x ,unsigned y ,QWidget *parent) : QWidget(parent)
+MapHandler::MapHandler ( unsigned x ,unsigned y ,QWidget *parent) : QWidget(parent)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
@@ -15,7 +15,7 @@ Map::Map ( unsigned x ,unsigned y ,QWidget *parent) : QWidget(parent)
     setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
 }
 
-void Map::paintEvent(QPaintEvent *event)
+void MapHandler::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.fillRect(event->rect(), Qt::gray);
@@ -31,7 +31,7 @@ void Map::paintEvent(QPaintEvent *event)
     }
 }
 
-void Map::dragEnterEvent(QDragEnterEvent *event)
+void MapHandler::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat(ItemList::editorMimeType()))
         event->accept();
@@ -39,7 +39,7 @@ void Map::dragEnterEvent(QDragEnterEvent *event)
         event->ignore();
 }
 
-void Map::dragLeaveEvent(QDragLeaveEvent *event)
+void MapHandler::dragLeaveEvent(QDragLeaveEvent *event)
 {
     QRect updateRect = this->focused;
     this->focused = QRect();
@@ -48,7 +48,7 @@ void Map::dragLeaveEvent(QDragLeaveEvent *event)
 }
 
 
-void Map::dragMoveEvent(QDragMoveEvent *event)
+void MapHandler::dragMoveEvent(QDragMoveEvent *event)
 {
     QRect updateRect = focused.united(targetSquare(event->pos()));
 
@@ -66,7 +66,7 @@ void Map::dragMoveEvent(QDragMoveEvent *event)
     update(updateRect);
 }
 
-void Map::dropEvent(QDropEvent *event)
+void MapHandler::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat(ItemList::editorMimeType())
         && findPiece(targetSquare(event->pos())) == -1) {
@@ -98,7 +98,7 @@ void Map::dropEvent(QDropEvent *event)
 
 
 
-void Map::mousePressEvent(QMouseEvent *event)
+void MapHandler::mousePressEvent(QMouseEvent *event)
 {
     QRect square = targetSquare(event->pos());
      int found = findPiece(square);
@@ -132,13 +132,13 @@ void Map::mousePressEvent(QMouseEvent *event)
     }
 }
 
-const QRect Map::targetSquare(const QPoint &position) const
+const QRect MapHandler::targetSquare(const QPoint &position) const
 {
     return QRect(position / ITEMSIZE * ITEMSIZE,
                  QSize(ITEMSIZE, ITEMSIZE));
 }
 // CAMBIAR ESTO XD.
-int Map::findPiece(const QRect &pieceRect) const
+int MapHandler::findPiece(const QRect &pieceRect) const
 {
     for (int i = 0, size = elements.size(); i < size; ++i) {
         if (elements.at(i).rect == pieceRect)

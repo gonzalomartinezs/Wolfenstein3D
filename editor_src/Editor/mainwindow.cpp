@@ -38,7 +38,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWidgets(){
     this->linkToUI();
-    this->map = new Map(TAM_MAP_DEF ,TAM_MAP_DEF ,this);
+    this->map = new MapHandler(TAM_MAP_DEF ,TAM_MAP_DEF ,this);
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
     mapScrollArea->setWidget(map);
@@ -66,7 +66,7 @@ void MainWindow::connectEvents(){
 void MainWindow::resizeMap(){
     if(this->map == nullptr) return;
     delete map;
-    map =  new Map(spinX->value(), spinY->value(), this);
+    map = new MapHandler(spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(map);
 }
 
@@ -79,5 +79,7 @@ void MainWindow::openFile(){
 void MainWindow::loadFile(QString& path){
 
 }
+
+
 
 

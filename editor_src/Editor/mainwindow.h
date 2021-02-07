@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "itemList.h"
-#include "map.h"
+#include "maphandler.h"
 #include "item.h"
 #include "trashbin.h"
 
@@ -46,7 +46,7 @@ private:
 
     TrashBin* trashBin;
     ItemList* itemlist;
-    Map* map;
+    MapHandler* map;
 };
 
 #endif // MAINWINDOW_H

@@ -1,16 +1,16 @@
-#ifndef MAP_H
-#define MAP_H
+#ifndef MAPHANDLER_H
+#define MAPHANDLER_H
 
 #include "mapelement.h"
 #include <QWidget>
 #include  <QVector>
 
 
-class Map : public QWidget
+class MapHandler : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Map(unsigned x = 5, unsigned y= 5, QWidget *parent = nullptr);
+    explicit MapHandler(unsigned x = 5, unsigned y= 5, QWidget *parent = nullptr);
 
 signals:
 
@@ -29,4 +29,4 @@ private:
     QRect focused;
 };
 
-#endif // MAP_H
+#endif // MAPHANDLER_H
