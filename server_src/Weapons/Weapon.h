@@ -40,6 +40,9 @@ protected:
     /* Logica de disparar una sola bala */
     void shoot(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map);
 
+    /* Este metodo es equivalente a una distribucion uniforme [0,1] */
+    float _randomNumberGenerator();
+
 private:
     /* Devuelve true si no hay paredes entre los jugadores, en otro caso false */
     bool _isInTheFieldOfView(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, const Map& map);
@@ -52,9 +55,6 @@ private:
 
     /* Genera una probabilidad de impacto segun el angulo y la distancia */
     bool _runProbability(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo);
-
-    /* Este metodo es equivalente a una distribucion uniforme [0,1] */
-    float _randomNumberGenerator();
 };
 
 #endif  // WOLFENSTEIN3D_WEAPON_H

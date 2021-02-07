@@ -140,6 +140,18 @@ void Player::receiveShot(uint8_t damage) {
     this->action.receiveShot(damage);
 }
 
+void Player::increaseBulletCounter(uint8_t bulletsAmount) {
+    this->action.increaseBulletCounter(bulletsAmount);
+}
+
+void Player::useBullets(uint8_t bulletsAmount) {
+    this->action.useBullets(bulletsAmount);
+}
+
+bool Player::hasBullets() {
+    return this->action.hasBullets();
+}
+
 void Player::_moveForwards() {
     this->x += this->dir_x * this->moveSpeed;
     this->y += this->dir_y * this->moveSpeed;

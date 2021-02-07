@@ -17,6 +17,7 @@ PlayerActions::PlayerActions(const Configuration& config) :
     this->lives = config.getInt(KEY_TOTAL_LIVES);
     this->hasKey = config.getInt(KEY_HAS_KEY);
     this->bullets = config.getInt(KEY_INITIAL_BULLETS);
+    this->bulletsCounter = 0;
 }
 
 void PlayerActions::use(HealthRecover* recover) {
@@ -72,6 +73,18 @@ void PlayerActions::receiveShot(uint8_t damage) {
         this->health = 0;
         //this->die();
     }
+}
+
+void PlayerActions::increaseBulletCounter(uint8_t bulletsAmount) {
+    this->bulletsCounter += bulletsAmount;
+}
+
+void PlayerActions::useBullets(uint8_t bulletsAmount) {
+    this->bullets -= bulletsAmount;
+}
+
+bool PlayerActions::hasBullets() {
+    return (this->bullets > 0);
 }
 
 void PlayerActions::geHUDInfo(uint8_t* msg) {

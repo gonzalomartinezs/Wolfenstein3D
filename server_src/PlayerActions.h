@@ -21,6 +21,8 @@ private:
     bool hasKey;
     Weapons weapons;
     int bullets;
+    int bulletsCounter;
+
 public:
     /* Constructor */
 	PlayerActions(const Configuration& config);
@@ -41,6 +43,9 @@ public:
 					uint8_t shooting_player_number,	const Map& map);
 
     void receiveShot(uint8_t damage);
+    void increaseBulletCounter(uint8_t bulletsAmount);
+    void useBullets(uint8_t bulletsAmount);
+    bool hasBullets();
 
     /* Escribe los primeros 12 bytes del buffer con la informacion del HUD del
      * jugador de la siguiente manera (respetando el tamanio en bytes de cada variable):
