@@ -9,7 +9,6 @@ class MapElement
 public:
     MapElement();
     int id;
-    QPixmap pixmap;
     QRect rect;
     MapElement(MapElement &in){
         rect = in.rect;
