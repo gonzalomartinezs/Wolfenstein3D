@@ -145,7 +145,7 @@ void SpriteRenderer::_showSprite(const SpriteInfo &info,
         SDL_Rect stretched = {info.sprite_begin + begin_x, info.draw_start_y + begin_y,
                               info.sprite_end-info.sprite_begin,
                               info.draw_end_y-info.draw_start_y};
-        Texture* texture = textures.get(sprite.getTexture());
+        Texture* texture = textures.getStatic(sprite.getTexture());
         texture->render(&tex_portion, &stretched);
     }
 }

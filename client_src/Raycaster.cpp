@@ -210,7 +210,7 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
     if(tex_id == DOOR || tex_id == PASSAGE)
         _processSurfaceTexture(tex_x, tex_id, map_x, map_y, ray_dir, hit_axis);
 
-    Texture* texture = textures.get(TextureID(tex_id));
+    Texture* texture = textures.getStatic(TextureID(tex_id));
     SDL_Rect tex_portion;
 
     if (line_height <= height){
