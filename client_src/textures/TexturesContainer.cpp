@@ -21,7 +21,7 @@
 #define BJ_5_PATH "../client_src/textures/img/miscellaneous/bj_5.bmp"
 #define BJ_6_PATH "../client_src/textures/img/miscellaneous/bj_6.bmp"
 #define BJ_7_PATH "../client_src/textures/img/miscellaneous/bj_7.bmp"
-#define KNIFE_HUD "../client_src/textures/img/miscellaneous/knife_interface.bmp"
+#define KNIFE_HUD "../client_src/textures/img/miscellaneous/knife_HUD.bmp"
 #define PISTOL_HUD "../client_src/textures/img/miscellaneous/pistol_HUD.bmp"
 #define MACHINE_HUD "../client_src/textures/img/miscellaneous/machinegun_HUD.bmp"
 #define CHAIN_HUD "../client_src/textures/img/miscellaneous/chaingun_HUD.bmp"
@@ -54,8 +54,12 @@ TexturesContainer::TexturesContainer(SDL_Renderer *renderer,
     _loadDynamicTextures();
 }
 
-Texture* TexturesContainer::get(TextureID id) {
+Texture* TexturesContainer::getStatic(TextureID id) {
     return static_textures[id];
+}
+
+DynamicTexture *TexturesContainer::getDynamic(TextureID id) {
+    return dynamic_textures[id];
 }
 
 TexturesContainer::~TexturesContainer() {
@@ -105,10 +109,8 @@ void TexturesContainer::_loadStaticTextures() {
 
 void TexturesContainer::_loadDynamicTextures() {
     dynamic_textures.emplace(Pistol_Pl,new DynamicTexture(
-            std::vector<std::string>{PISTOL_PL, PISTOL_PL_1, PISTOL_PL_2,
-                                     PISTOL_PL_3, PISTOL_PL_4, PISTOL_PL_5,
-                                     PISTOL_PL_6, PISTOL_PL_7, PISTOL_PL_8,
-                                     PISTOL_PL_9, PISTOL_PL_10, PISTOL_PL_11,
-                                     PISTOL_PL_12, PISTOL_PL_13, PISTOL_PL_14},
-                                     this->renderer, this->window_surface, 2000));
+            std::vector<std::string>{PISTOL_PL, PISTOL_PL_1, PISTOL_PL_2, PISTOL_PL_3, PISTOL_PL_4,
+                                     PISTOL_PL_5, PISTOL_PL_6, PISTOL_PL_7, PISTOL_PL_8, PISTOL_PL_9,
+                                     PISTOL_PL_10, PISTOL_PL_11, PISTOL_PL_12, PISTOL_PL_13, PISTOL_PL_14},
+                                     this->renderer, this->window_surface, 1000));
 }
