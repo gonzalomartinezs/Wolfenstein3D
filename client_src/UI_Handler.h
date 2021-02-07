@@ -6,7 +6,7 @@
 #include "textures/TexturesContainer.h"
 #include "textures/FontTexture.h"
 
-struct InterfaceElements{
+struct HUDElements{
     SDL_Rect score;
     SDL_Rect lives;
     SDL_Rect hp;
@@ -14,6 +14,7 @@ struct InterfaceElements{
     SDL_Rect weapon;
     SDL_Rect ammo;
     SDL_Rect bj_face;
+    SDL_Rect weapon_animation;
 };
 
 class UI_Handler {
@@ -21,7 +22,7 @@ private:
     SDL_Renderer* renderer;
     Raycaster& raycaster;
     TexturesContainer& tex;
-    InterfaceElements elements;
+    HUDElements elements;
     std::vector<FontTexture> font_textures;
 
 public:
@@ -44,7 +45,7 @@ public:
     void loadBackground();
 
     // Carga la interfaz informativa de los datos del jugador(vidas, salud, ...)
-    void loadPlayerInterface(std::vector<int> player_info);
+    void loadPlayerHUD(std::vector<int> player_info);
 
     // Renderiza el contenido de la ventana.
     void render();

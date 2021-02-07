@@ -18,8 +18,11 @@ public:
     explicit TexturesContainer(SDL_Renderer *renderer,
                                SDL_Surface *window_surface);
 
-    // Retorna un puntero a la textura solicitada.
-    Texture* get(TextureID id);
+    // Retorna un puntero a la textura estatica solicitada.
+    Texture* getStatic(TextureID id);
+
+    // Retorna un puntero a la textura dinamica solicitada.
+    DynamicTexture* getDynamic(TextureID id);
 
     // Libera los recursos utilizados por el contenedor.
     ~TexturesContainer();
