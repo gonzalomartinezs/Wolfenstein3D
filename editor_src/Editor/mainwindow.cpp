@@ -5,6 +5,7 @@
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <string>
 
 #define TAM_MAP_DEF 5
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Editor de niveles");
     this->initWidgets();
+    this->initBar();
     this->connectEvents();
 }
 
@@ -44,7 +46,17 @@ void MainWindow::initWidgets(){
 }
 
 void MainWindow::initBar(){
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
+    QAction *openAction = fileMenu->addAction(tr("&Open..."), this, &MainWindow::openFile);
+    openAction->setShortcuts(QKeySequence::Open);
+    QAction *exitAction = fileMenu->addAction(tr("E&xit"), qApp, &QCoreApplication::quit);
+    exitAction->setShortcuts(QKeySequence::Quit);
+
+    QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
+
+    //gameMenu->addAction(tr("&Restart"), this, &MainWindow::setupPuzzle);
+    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
 }
 
 void MainWindow::connectEvents(){
@@ -56,6 +68,16 @@ void MainWindow::resizeMap(){
     delete map;
     map =  new Map(spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(map);
+}
+
+void MainWindow::openFile(){
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+        loadFile(path);
+}
+
+void MainWindow::loadFile(QString& path){
+
 }
 
 

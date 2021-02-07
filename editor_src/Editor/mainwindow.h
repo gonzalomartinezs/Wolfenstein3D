@@ -27,6 +27,7 @@ public:
     ~MainWindow();
 private slots:
     void resizeMap();
+    void openFile();
 
 private:
     void initWidgets();
@@ -34,6 +35,7 @@ private:
     void loadElements();
     void linkToUI();
     void connectEvents();
+    void loadFile(QString& path);
     Ui::MainWindow *ui;
 
     QScrollArea* mapScrollArea;
