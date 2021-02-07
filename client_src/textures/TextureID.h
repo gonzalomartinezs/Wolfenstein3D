@@ -23,15 +23,20 @@ enum TextureID{
     BJ_5,
     BJ_6,
     BJ_7,
-    KnifeInterface,
-    PistolInterface,
-    MachineGunInterface,
-    ChainGunInterface,
-    RPGInterface,
+    Knife_HUD,
+    Pistol_HUD,
+    MachineGun_HUD,
+    ChainGun_HUD,
+    RPG_HUD,
+    Knife_Pl,
+    Pistol_Pl,
+    MachineGun_Pl,
+    ChainGun_Pl,
+    RPG_Pl,
     HasNotKey,
     HasKey,
     Background,
-    MainInterface
+    HUD
 };
 
 #endif //TEXTUREID_H
