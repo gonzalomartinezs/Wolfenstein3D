@@ -1,6 +1,14 @@
 port: 8080
 max_clients: 2
 
+weapons:
+  chain_gun:
+    time_between_shots: &chain_gun_shots 0.1
+  machine_gun:
+    time_between_shots: &machine_gun_shots 0.1
+    time_between_bursts: &machine_gun_bursts 0.3
+    bullets_per_burst: &machine_gun_bullets 5
+
 #Player stats
 player:
   #Speed
@@ -21,12 +29,11 @@ player:
       time_between_stabs: 1
       range: 0.5
     chain_gun:
-      time_between_shots: 0.1
+      time_between_shots: *chain_gun_shots
     machine_gun:
-      time_between_shots: 0.1
-      time_between_bursts: 0.3
-      bullets_per_burst: 5
-
+      time_between_shots: *machine_gun_shots
+      time_between_bursts: *machine_gun_bursts
+      bullets_per_burst: *machine_gun_bullets
 
 max_health: &max_health_global 100
 
@@ -34,15 +41,21 @@ max_health: &max_health_global 100
 items:
   #Treasure
   cross:
-    texture: 2
+    texture: 3
     value: 10
     radius: 0.5
   cup:
-    texture: 3
-    value: 15
+    texture: 4
+    value: 50
     radius: 0.5
-# chest:
-# crown:
+  chest:
+    texture: 5
+    value: 100
+    radius: 0.5
+  crown:
+    texture: 6
+    value: 200
+    radius: 0.5
   #Health recover
   food:
     texture: 2
@@ -60,17 +73,24 @@ items:
     radius: 0.3
     max_health: 11
   #Otros
-  #key:
-#    texture: 3
-#    value: 1
-#    radius: 0.2
-  #bullets/ammo:
+  key:
+    texture: 3
+    value: 1 #value = door?
+    radius: 0.2
+#  bullets/ammo:
 #    texture: 4
 #    value: 5
 #    radius: 0.2
-
-#    chain_gun:
-#      texture: 4
-#      value: 3 #value = id
-#      radius: 0.3
-
+  #Weapons
+  chain_gun:
+    texture: 2
+    value: 3 #value = id
+    radius: 0.3
+    time_between_shots: *chain_gun_shots
+  machine_gun:
+    texture: 2
+    value: 4 #value = id
+    radius: 0.3
+    time_between_shots: *machine_gun_shots
+    time_between_bursts: *machine_gun_bursts
+    bullets_per_burst: *machine_gun_bullets

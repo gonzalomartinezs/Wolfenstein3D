@@ -50,9 +50,10 @@ void Weapons::nextWeapon() {
 }
 
 void Weapons::prevWeapon() {
-    --(this->current_weapon);
-    if (this->current_weapon <= 0) {
+    if (this->current_weapon == 0) {
         this->current_weapon = this->weapons.size()-1;
+    } else {
+        --(this->current_weapon);
     }
 }
 
