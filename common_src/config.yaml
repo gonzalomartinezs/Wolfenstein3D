@@ -9,6 +9,8 @@ weapons:
     time_between_bursts: &machine_gun_bursts 0.3
     bullets_per_burst: &machine_gun_bullets 5
 
+max_health: &max_health_global 100
+
 #Player stats
 player:
   #Speed
@@ -17,7 +19,8 @@ player:
   #Collider
   size: 0.2
   #Initial stats
-  initial_health: 100
+  #Cambiar por numero en caso de ser necesario/para tests.
+  initial_health: *max_health_global
   initial_score: 0
   total_lives: 5
   has_key: 1 # 0 = false, otro numero = true
@@ -34,8 +37,6 @@ player:
       time_between_shots: *machine_gun_shots
       time_between_bursts: *machine_gun_bursts
       bullets_per_burst: *machine_gun_bullets
-
-max_health: &max_health_global 100
 
 #Items
 items:
