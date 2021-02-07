@@ -11,6 +11,9 @@
 #include "../common_src/Item.h"
 #include "../common_src/Configuration.h"
 
+#define POS_DATA_PLANE_SIZE 24
+#define POS_DATA_SIZE 16
+
 class Player : public DirectedPositionable {
 protected:
     PlayerActions action;

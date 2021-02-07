@@ -91,21 +91,26 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
-    int playersLoaded = 0;
     uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
+    uint8_t currentByte = 1;
 
-    this->players[clientNumber]->getHUDData(msg+1);
+    this->players[clientNumber]->getHUDData(msg + currentByte);
+    currentByte += HUD_INFO_SIZE;
 
-    this->players[clientNumber]->getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
+    this->players[clientNumber]->getPositionDataWithPlane(msg + currentByte);
+    currentByte += POS_DATA_PLANE_SIZE;
+
     for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
-            this->players[i]->getPositionData(msg + 1 + 24 + playersLoaded * 17 + HUD_INFO_SIZE); // era *16 sin el hardcodeo del guard
-            memcpy(msg + 1 + 24 + playersLoaded * 17 + 16 + HUD_INFO_SIZE, &texture, 1); //harcodeado, despues hacerlo bien
-            playersLoaded++;
+            this->players[i]->getPositionData(msg + currentByte);
+            currentByte += POS_DATA_SIZE;
+
+            memcpy(msg + currentByte, &texture, sizeof(uint8_t));
+            currentByte += sizeof(uint8_t);
         }
     }
-    msg[0] = 24 + playersLoaded * 17 + HUD_INFO_SIZE;
-    return msg[0] + 1;
+    msg[0] = currentByte - 1;
+    return currentByte;
 }
 
 void Game::stop() {
