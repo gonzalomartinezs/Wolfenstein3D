@@ -41,12 +41,6 @@ public:
 
     virtual void getState(std::vector<Player*> &players, int botNumber, const Map &map) {};
 
-    void die();
-
-    bool isDead();
-
-    void getHealth();
-
     void receiveShot(uint8_t damage);
     void increaseBulletCounter(uint8_t bulletsAmount);
     void useBullets(uint8_t bulletsAmount);

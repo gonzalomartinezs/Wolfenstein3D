@@ -132,17 +132,6 @@ void Player::setState(uint8_t newState) {
     }
 }
 
-void Player::die() {
-    //Reiniciar posicion
-    //this->dir_x = this->initial_dir_x;
-    //this->dir_y = this->initial_dir_y;
-    //this->action.respawn();
-}
-
-bool Player::isDead() {
-    return this->action.isDead();
-}
-
 void Player::receiveShot(uint8_t damage) {
     this->action.receiveShot(damage);
 }
