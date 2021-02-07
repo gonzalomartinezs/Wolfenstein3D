@@ -6,6 +6,7 @@
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
+#define BOTS_AMOUNT 1
 
 const double TICK_DURATION = 1/128.f; /* miliseconds que tarda en actualizarse el juego */
 
@@ -21,7 +22,13 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         Configuration config_player(config_map, player_number);
-        this->players.emplace_back(config_stats, config_player, i);
+        this->players.push_back(new Player(config_stats, config_player, i));
+    }
+
+    for (size_t i = 0; i < BOTS_AMOUNT; ++i) {
+        std::string player_number = "player_" + std::to_string(this->clients.size() + i);
+        Configuration config_player(config_map, player_number);
+        this->players.push_back(new Bot(config_stats, config_player, this->clients.size() + i));
     }
 }
 
@@ -58,14 +65,18 @@ void Game::getInstructions() {
     for (size_t i = 0; i < this->clients.size(); i++) {
         if (!this->clients[i]->isEmpty()) {
             stateRecv = this->clients[i]->pop();
-            this->players[i].setState(stateRecv);
+            this->players[i]->setState(stateRecv);
         }
+    }
+
+    for (size_t i = this->clients.size(); i < this->clients.size() + BOTS_AMOUNT; i++) {
+        this->players[i]->getState(this->players, i, this->map);
     }
 }
 
 void Game::update() {
     for (size_t i = 0; i < this->players.size(); i++) {
-        this->players[i].updatePlayer(this->map, this->items, this->players);
+        this->players[i]->updatePlayer(this->map, this->items, this->players);
     }
 }
 
@@ -80,21 +91,26 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
-    int playersLoaded = 0;
     uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
+    uint8_t currentByte = 1;
 
-    this->players[clientNumber].getHUDData(msg+1);
+    this->players[clientNumber]->getHUDData(msg + currentByte);
+    currentByte += HUD_INFO_SIZE;
 
-    this->players[clientNumber].getPositionDataWithPlane(msg + 1 + HUD_INFO_SIZE);
-    for (size_t i = 0; i < this->clients.size(); i++) {
+    this->players[clientNumber]->getPositionDataWithPlane(msg + currentByte);
+    currentByte += POS_DATA_PLANE_SIZE;
+
+    for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
-            this->players[i].getPositionData(msg + 1 + 24 + playersLoaded * 17 + HUD_INFO_SIZE); // era *16 sin el hardcodeo del guard
-            memcpy(msg + 1 + 24 + playersLoaded * 17 + 16 + HUD_INFO_SIZE, &texture, 1); //harcodeado, despues hacerlo bien
-            playersLoaded++;
+            this->players[i]->getPositionData(msg + currentByte);
+            currentByte += POS_DATA_SIZE;
+
+            memcpy(msg + currentByte, &texture, sizeof(uint8_t));
+            currentByte += sizeof(uint8_t);
         }
     }
-    msg[0] = 24 + playersLoaded * 17 + HUD_INFO_SIZE;
-    return msg[0] + 1;
+    msg[0] = currentByte - 1;
+    return currentByte;
 }
 
 void Game::stop() {
@@ -117,4 +133,8 @@ void Game::sendMap() {
     }
 }
 
-Game::~Game() {}
+Game::~Game() {
+    for (unsigned long int i = 0; i < players.size(); i++) {
+        delete players[i];
+    }
+}

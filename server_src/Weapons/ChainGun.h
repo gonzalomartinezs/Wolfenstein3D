@@ -16,7 +16,7 @@ public:
 
     void startShooting() override;
 
-    void fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) override;
+    void fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) override;
 
     /* Destructor */
     ~ChainGun();

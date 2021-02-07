@@ -1,34 +1,16 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <unordered_map>
 #include "mapelement.h"
-#include <QWidget>
-#include  <QVector>
+#include "coordinate.h"
 
-
-class Map : public QWidget
+class Map
 {
-    Q_OBJECT
 public:
-    explicit Map(std::vector<Item>&, QWidget *parent = nullptr);
-
-signals:
-
-protected:
-    void dragEnterEvent(QDragEnterEvent *event) override;
-    void dragLeaveEvent(QDragLeaveEvent *event) override;
-    void dragMoveEvent(QDragMoveEvent *event) override;
-    void dropEvent(QDropEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void paintEvent(QPaintEvent *event) override;
+    Map();
 private:
-
-    int findPiece(const QRect &pieceRect) const;
-    Item& findItem(int i);
-    const QRect targetSquare(const QPoint &position) const;
-    QVector<MapElement> elements;
-    QRect focused;
-    std::vector<Item>& items;
+    std::unordered_map <Coordinate, MapElement> matrix;
 };
 
 #endif // MAP_H

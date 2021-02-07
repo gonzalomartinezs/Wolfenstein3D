@@ -1,12 +1,12 @@
 #include "Texture.h"
 #include <SDL2/SDL_image.h>
-#include <iostream>
+#include "../../common_src/Exceptions/TextureLoadingException.h"
 
 #define R 152
 #define G 0
 #define B 136
 
-Texture::Texture(std::string path, SDL_Renderer* renderer,SDL_Surface* surface):
+Texture::Texture(std::string path, SDL_Renderer* renderer, SDL_Surface* surface):
                                                             renderer(renderer){
     SDL_Surface* loaded_surface;
     if (path.substr(path.length()-3) == "bmp"){
@@ -17,20 +17,20 @@ Texture::Texture(std::string path, SDL_Renderer* renderer,SDL_Surface* surface):
         }
     } else if (path.substr(path.length()-3) == "png" && surface){
         SDL_Surface* aux_surface = IMG_Load(path.c_str());
-        if (aux_surface == nullptr) throw ; // exception
+        if (aux_surface == nullptr) throw TextureLoadingException("Unable to load PNG image.");
         loaded_surface = SDL_ConvertSurface(aux_surface, surface->format, 0);
         SDL_FreeSurface(aux_surface);
-    } else throw ; // exception mandaste cualquier parametro bro
+    } else throw TextureLoadingException("Unsupported image format.");
 
     if (loaded_surface == nullptr){
-        throw ; //exception
+        throw TextureLoadingException("Failed to create surface.");
     } else {
         SDL_SetColorKey(loaded_surface, SDL_TRUE,
                         SDL_MapRGB(loaded_surface->format, R, G, B));
         texture = SDL_CreateTextureFromSurface(this->renderer, loaded_surface);
         SDL_FreeSurface(loaded_surface);
         if (texture == nullptr){
-            throw ; //exception
+            throw TextureLoadingException("Failed to generate texture.");
         }
     }
 }

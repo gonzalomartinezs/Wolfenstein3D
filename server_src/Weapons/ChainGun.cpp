@@ -10,7 +10,7 @@ void ChainGun::startShooting() {
     this->fireTimer.start();
 }
 
-void ChainGun::fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) {
+void ChainGun::fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) {
     if (this->lastShotDelay == -1) {
         this->shoot(players, shootingPlayerNumber, map);  /* First shot */
         this->lastShotDelay = 0;

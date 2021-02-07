@@ -1,8 +1,10 @@
 #include "Bot.h"
 #include <iostream> //borrar
 
-Bot::Bot(float moveSpeed, float rotSpeed, float posX, float posY) :
-        DirectedPositionable(posX, posY, -1, 0, None) {
+Bot::Bot(const Configuration& config_stats,
+         const Configuration& config_map,
+         const uint8_t _player_number) :
+         Player(config_stats, config_map, _player_number) {
     const char filePath[] = "../server_src/Bots/Destripador.lua";
     this->L = luaL_newstate();
     luaL_openlibs(this->L);
@@ -10,16 +12,15 @@ Bot::Bot(float moveSpeed, float rotSpeed, float posX, float posY) :
     lua_pcall(this->L, 0, LUA_MULTRET, 0);
 }
 
-void Bot::update(std::vector<Player> &players, int botNumber, const Map &map) {
+void Bot::getState(std::vector<Player*> &players, int botNumber, const Map &map) {
     uint8_t newState;
-    std::cout << "-----Inicio Lua------" << std::endl;
     this->_pushMap(map);
     this->_pushPlayersPositions(players, botNumber);
     this->_pushBotInfo();
     lua_pcall(this->L, 6, 1, 0);
     newState = static_cast<uint8_t>(lua_tonumber(this->L, -1));
     lua_pop(this->L, 1);
-    std::cout << "-----" << lua_gettop(this->L) << "-----" << int(newState) << std::endl;
+    this->setState(newState);
 }
 
 void Bot::_pushMap(const Map& map){
@@ -44,17 +45,17 @@ void Bot::_pushMap(const Map& map){
     }
 }
 
-void Bot::_pushPlayersPositions(std::vector<Player> &players, int botNumber) {
+void Bot::_pushPlayersPositions(std::vector<Player*> &players, int botNumber) {
     int j = 0;
     lua_newtable(this->L);
     for (unsigned long int i = 0; i < players.size(); i++) {
         if (i != static_cast<unsigned long int>(botNumber)) {
             lua_pushnumber(this->L, j);
-            lua_pushnumber(this->L, players[i].getX());
+            lua_pushnumber(this->L, players[i]->getX());
             lua_settable(this->L, -3);
             j++;
             lua_pushnumber(this->L, j);
-            lua_pushnumber(this->L, players[i].getY());
+            lua_pushnumber(this->L, players[i]->getY());
             lua_settable(this->L, -3);
             j++;
         }

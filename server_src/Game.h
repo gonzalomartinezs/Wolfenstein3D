@@ -5,6 +5,7 @@
 
 #include "yaml-cpp/yaml.h"
 #include "Player.h"
+#include "Bots/Bot.h"
 #include "ThClient.h"
 #include "../common_src/Timer.h"
 #include "../common_src/Map.h"
@@ -13,7 +14,7 @@
 
 class Game {
  private:
-    std::vector<Player> players;
+    std::vector<Player*> players;
     std::vector<ThClient*>& clients;
     std::atomic<bool> isRunning;
     Map map;

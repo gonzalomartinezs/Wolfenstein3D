@@ -1,4 +1,5 @@
 #include "FontTexture.h"
+#include "../../common_src/Exceptions/FontLoadingException.h"
 
 FontTexture::FontTexture(FontTexture&& other) noexcept{
     this->texture = other.texture;
@@ -16,17 +17,17 @@ FontTexture::FontTexture(std::string font_path, int font_size, SDL_Color font_co
                          latest_value(value), renderer(renderer), color(font_color){
     this->font = TTF_OpenFont(font_path.c_str(), font_size);
     if (this->font == nullptr){
-        throw ; // exception
+        throw FontLoadingException("Unable to load font from path.");
     }
 
     SDL_Surface* loaded_surface = TTF_RenderText_Solid(this->font, value.c_str(), font_color);
     if (loaded_surface == nullptr){
-        throw ; //exception
+        throw FontLoadingException("Failed to create surface.");
     } else {
         this->texture = SDL_CreateTextureFromSurface(this->renderer, loaded_surface);
         SDL_FreeSurface(loaded_surface);
         if (this->texture == nullptr){
-            throw ; //exception
+            throw FontLoadingException("Unable to create font texture.");
         }
     }
 }
@@ -40,13 +41,13 @@ void FontTexture::renderHorizontallyCentered(std::string new_value,
                                                            latest_value.c_str(),
                                                            this->color);
         if (loaded_surface == nullptr){
-            throw ; //exception
+            throw FontLoadingException("Failed to create surface.");
         } else {
             SDL_DestroyTexture(this->texture);
             this->texture = SDL_CreateTextureFromSurface(this->renderer, loaded_surface);
             SDL_FreeSurface(loaded_surface);
             if (this->texture == nullptr){
-                throw ; //exception
+                throw FontLoadingException("Unable to create font texture.");
             }
         }
     }

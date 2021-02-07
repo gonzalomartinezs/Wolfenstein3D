@@ -21,7 +21,7 @@ public:
 	void startShooting();
 	void stopShooting();
 	bool isShooting() const;
-	void fireTheGun(std::vector<Player>& players,
+	void fireTheGun(std::vector<Player*>& players,
                     int shooting_player_number, const Map& map);
 
 	uint8_t getCurrentWeapon() const;

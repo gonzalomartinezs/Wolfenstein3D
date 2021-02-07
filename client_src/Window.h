@@ -7,6 +7,8 @@ class Window {
 private:
     int width;
     int height;
+    bool sdl_initiated;
+    bool img_initiated;
     SDL_Window* window;
     SDL_Renderer* renderer;
 

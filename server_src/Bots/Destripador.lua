@@ -31,9 +31,6 @@ function getBotInstruction(map, positions, posX, posY, dirX, dirY)
         end
     end
 
-    print(nearestPlayerX)
-    print(nearestPlayerY)
-
     if nearestPlayerX == BIG_DISTANCE and nearestPlayerY == BIG_DISTANCE then
         return NOT_MOVE
     elseif math.sqrt((nearestPlayerX - posX)^2 + (nearestPlayerY - posY)^2) < KNIFE_RANGE then

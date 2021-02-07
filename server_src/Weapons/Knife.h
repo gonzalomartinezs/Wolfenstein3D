@@ -17,7 +17,7 @@ public:
 
     void startShooting() override;
 
-    void fireTheGun(std::vector<Player> &players, int shootingPlayerNumber, const Map &map) override;
+    void fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) override;
 
     /* Destructor */
     ~Knife();
@@ -25,7 +25,7 @@ public:
 private:
     bool _isInTheKnifeRange(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo);
 
-    void _stab(std::vector<Player> &players, int shootingPlayerNumber, const Map &map);
+    void _stab(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map);
 };
 
 #endif //WOLFENSTEIN3D_KNIFE_H

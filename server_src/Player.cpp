@@ -38,6 +38,8 @@ Player::Player(const Configuration& config_stats,
             config_map.getInt(KEY_DIR_Y), None), action(config_stats) {
     this->moveSpeed = config_stats.getFloat(KEY_MOVE_SPEED);
     this->rotSpeed = config_stats.getFloat(KEY_ROT_SPEED);
+    this->initialPosX = config_map.getFloat(KEY_POS_X);
+    this->initialPosY = config_map.getFloat(KEY_POS_Y);
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
@@ -70,7 +72,7 @@ void Player::lookForItem(Items& items, const Collider& collider) {
 	}
 }
 
-void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& players) {
+void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& players) {
     float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {
@@ -100,11 +102,18 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player>& pla
         this->x = old_x;
         this->y = old_y;
     }
+
+    if (this->action.isDead()) {
+        this->x = this->initialPosX;
+        this->y = this->initialPosY;
+        this->action.die();
+    }
+
     // Borrar
-/*    std::cout << "posX: " << this->x;
+    std::cout << "posX: " << this->x;
     std::cout << ", posY: " << this->y;
     std::cout << ", dir_x: " << this->dir_x;
-    std::cout << ", dir_y: " << this->dir_y << std::endl; */
+    std::cout << ", dir_y: " << this->dir_y << std::endl;
 }
 
 void Player::setState(uint8_t newState) {
@@ -123,27 +132,20 @@ void Player::setState(uint8_t newState) {
     }
 }
 
-void Player::die() {
-    //Reiniciar posicion
-    //this->x = this->initial_x;
-    //this->y = this->initial_y;
-    //this->dir_x = this->initial_dir_x;
-    //this->dir_y = this->initial_dir_y;
-    //this->action.respawn();
-}
-
-bool Player::isDead() {
-    return this->action.isDead();
-}
-
-void Player::shoot() {
-//    this->ammo--;
-    /* Logica del disparo */
-    //this->action.shoot();
-}
-
 void Player::receiveShot(uint8_t damage) {
     this->action.receiveShot(damage);
+}
+
+void Player::increaseBulletCounter(uint8_t bulletsAmount) {
+    this->action.increaseBulletCounter(bulletsAmount);
+}
+
+void Player::useBullets(uint8_t bulletsAmount) {
+    this->action.useBullets(bulletsAmount);
+}
+
+bool Player::hasBullets() {
+    return this->action.hasBullets();
 }
 
 void Player::_moveForwards() {

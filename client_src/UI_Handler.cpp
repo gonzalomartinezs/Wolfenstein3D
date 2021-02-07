@@ -3,7 +3,7 @@
 #define TTF_TEXTURES 4
 #define BJ_FACES 8
 #define TOTAL_HP 100
-enum ttfTextures {Lives, HP, Weapon, Key, Ammo, Score};
+enum ttfTextures {Lives, HP, Weapon, Key, Ammo, Score, Firing};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, std::string font_path, int width,
@@ -17,6 +17,7 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
     this->elements.key = {(22*width)/32, cell_y_pos, (3*width)/32, cell_height};
     this->elements.weapon = {(25*width)/32, cell_y_pos, (6*width)/32, cell_height};
     this->elements.ammo = {(28*width)/32, (9*height)/10, (3*width)/32, cell_height};
+    this->elements.weapon_animation = {(10*width)/32, (7*height)/18, (12*width)/32, (7*height)/18};
     SDL_Color color = {240, 250, 252};
     int font_size = width/16;
     for(int i=0; i < TTF_TEXTURES; i++)
@@ -40,17 +41,20 @@ void UI_Handler::clearScreen() {
 }
 
 void UI_Handler::loadBackground() {
-    tex.get(Background)->render(nullptr, nullptr);
+    tex.getStatic(Background)->render(nullptr, nullptr);
 }
 
-void UI_Handler::loadPlayerInterface(std::vector<int> player_info) {
+void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
     int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
-    tex.get(MainInterface)->render(nullptr, nullptr);
-    tex.get(TextureID(int(KnifeInterface) + player_info[Weapon]))->render(
+    DynamicTexture* dynamic = tex.getDynamic(TextureID(int(Knife_Pl)+player_info[Weapon]));
+    if(dynamic) {
+        dynamic->getTexture(player_info[Firing]).render(nullptr, &this->elements.weapon_animation);
+    }
+    tex.getStatic(HUD)->render(nullptr, nullptr);
+    tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(
             nullptr, &this->elements.weapon);
-    tex.get(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
-    tex.get(TextureID(int(HasNotKey) + player_info[Key]))->render(nullptr,
-                                                                  &this->elements.key);
+    tex.getStatic(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
+    tex.getStatic(TextureID(int(HasNotKey) + player_info[Key]))->render(nullptr, &this->elements.key);
     font_textures[0].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr,
                                                  &this->elements.score);
     font_textures[1].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr,

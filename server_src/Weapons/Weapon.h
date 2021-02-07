@@ -20,7 +20,7 @@ public:
     /* Constructor */
     Weapon(int _id);
 
-    virtual void fireTheGun(std::vector<Player>& players, int shootingPlayerNumber, const Map& map) = 0;
+    virtual void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) = 0;
 
     /* AKA started pulling the trigger */
     virtual void startShooting() = 0;
@@ -38,7 +38,10 @@ public:
 
 protected:
     /* Logica de disparar una sola bala */
-    void shoot(std::vector<Player>& players, int shootingPlayerNumber, const Map& map);
+    void shoot(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map);
+
+    /* Este metodo es equivalente a una distribucion uniforme [0,1] */
+    float _randomNumberGenerator();
 
 private:
     /* Devuelve true si no hay paredes entre los jugadores, en otro caso false */
@@ -52,9 +55,6 @@ private:
 
     /* Genera una probabilidad de impacto segun el angulo y la distancia */
     bool _runProbability(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo);
-
-    /* Este metodo es equivalente a una distribucion uniforme [0,1] */
-    float _randomNumberGenerator();
 };
 
 #endif  // WOLFENSTEIN3D_WEAPON_H
