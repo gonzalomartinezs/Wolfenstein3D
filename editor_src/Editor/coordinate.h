@@ -4,8 +4,13 @@
 
 class Coordinate
 {
-public:
-    Coordinate();
+ private:
+    const unsigned x;
+    const unsigned y;
+ public:
+    Coordinate(unsigned x, unsigned y);
+    unsigned getX();
+    unsigned getY();
 };
 
 #endif // COORDINATE_H
