@@ -1,6 +1,18 @@
 #include "coordinate.h"
 
-Coordinate::Coordinate()
-{
+Coordinate::Coordinate(unsigned x, unsigned y):x(x), y(y) {
 
+}
+
+
+unsigned Coordinate::getX(){
+    return x;
+}
+
+unsigned Coordinate::getY(){
+    return y;
+}
+
+bool Coordinate::operator==(const Coordinate& r){
+    return (x == r.x && y ==r.y);
 }

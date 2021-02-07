@@ -11,6 +11,7 @@ class Coordinate
     Coordinate(unsigned x, unsigned y);
     unsigned getX();
     unsigned getY();
+    bool operator==(const Coordinate& r);
 };
 
 #endif // COORDINATE_H
