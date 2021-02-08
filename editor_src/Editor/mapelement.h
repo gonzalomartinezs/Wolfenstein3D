@@ -2,7 +2,6 @@
 #define MAPELEMENT_H
 
 #include <QRect>
-#include "maphandler.h"
 
 class MapElement {
 public:
