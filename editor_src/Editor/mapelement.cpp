@@ -1,4 +1,8 @@
 #include "mapelement.h"
+#include "mainwindow.h"
+
+#define ITEMSIZE 50
+
 
 MapElement::MapElement()
 {
@@ -33,4 +37,11 @@ int MapElement::getId() const{
 
 const QRect& MapElement::getRect() const{
     return rect;
+}
+
+Coordinate MapElement::calculateCoordenate() const{
+    unsigned x,y;
+    QPoint point;= (rect.top() / ITEMSIZE);
+    x = (rect.left() / ITEMSIZE);
+    return Coordinate(x, y);
 }

@@ -1,8 +1,9 @@
 #ifndef MAPELEMENT_H
 #define MAPELEMENT_H
 
-#include <QPoint>
-#include "item.h"
+#include <QRect>
+#include "coordinate.h"
+#include "maphandler.h"
 
 class MapElement
 {
@@ -19,6 +20,7 @@ public:
     MapElement& operator=(const MapElement& in);
     int getId()const;
     const QRect& getRect() const;
+    Coordinate calculateCoordenate() const;
 };
 
 #endif // MAPELEMENT_H

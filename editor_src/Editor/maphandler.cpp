@@ -27,8 +27,10 @@ void MapHandler::paintEvent(QPaintEvent *event)
         painter.drawRect(focused.adjusted(0, 0, -1, -1));
     }
 
-    for (const auto &i : elements){
-        painter.drawPixmap(i.rect, i.pixmap);
+    std::list <const MapElement&> filled = this->map.getElements();
+
+    for (const auto &i : filled){
+        painter.drawPixmap(i.getRect() , i.pixmap);
     }
 }
 
