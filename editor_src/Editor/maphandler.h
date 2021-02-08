@@ -22,10 +22,10 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 private:
 
+    Map map;
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
     QRect focused;
-    Map map;
 };
 
 #endif // MAPHANDLER_H

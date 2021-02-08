@@ -38,8 +38,8 @@ bool Map::inRange(const Coordinate& coor){
     return coor.inRange(this);
 }
 
-MapElement& Map::get(const Coordinate& coor)const{
-   return this->matrix.at(coor.toString()) ;
+const MapElement& Map::get(const Coordinate& coor)const{
+   this->matrix.at( coor.toString() );
 }
 
 std::list<const MapElement&> Map::getElements() const{

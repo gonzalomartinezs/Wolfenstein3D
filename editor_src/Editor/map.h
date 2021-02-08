@@ -17,7 +17,7 @@ public:
     bool isEmpty(const Coordinate& coor)const;
     unsigned getX() const;
     unsigned getY() const;
-    MapElement& get(const Coordinate& coor)const;
+    const MapElement& get(const Coordinate& coor)const;
     std::list<const MapElement&> getElements() const;
 private:
     const unsigned x;
