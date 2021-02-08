@@ -160,6 +160,22 @@ bool Player::hasBullets() {
     return this->action.hasBullets();
 }
 
+std::string Player::getName() {
+    return this->name;
+}
+
+int Player::getKills() {
+    return this->action.getKills();
+}
+
+int Player::getScore() {
+    return this->action.getScore();
+}
+
+int Player::getBulletsFired() {
+    return this->action.getBulletsFired();
+}
+
 void Player::_moveForwards() {
     this->x += this->dir_x * this->moveSpeed;
     this->y += this->dir_y * this->moveSpeed;

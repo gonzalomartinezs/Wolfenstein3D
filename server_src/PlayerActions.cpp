@@ -49,6 +49,18 @@ bool PlayerActions::isDead() const {
 	return (this->health <= 0);
 }
 
+int PlayerActions::getKills() {
+    return this->killsCounter;
+}
+
+int PlayerActions::getScore() {
+    return this->score;
+}
+
+int PlayerActions::getBulletsFired() {
+    return this->bulletsCounter;
+}
+
 void PlayerActions::startShooting() {
     this->weapons.startShooting();
 }

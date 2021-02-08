@@ -24,6 +24,39 @@ Client::Client(std::string host, std::string service,
         drawing_info(drawing_info), is_connected(true) {}
 
 
+std::vector<std::vector<int>> Client::receiveMap() {
+    uint8_t n_row, n_col;
+    uint8_t bytes_received[MAX_MESSAGE_SIZE];
+    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
+
+    this->peer.recv(&n_row, 1);
+    this->peer.recv(&n_col, 1);
+    std::vector<std::vector<int>> received_map(n_row, std::vector<int>(n_col));
+    std::vector<uint8_t> received_uints;
+
+    uint8_t bytes_to_receive = n_col*n_row;
+    uint8_t received = 0;
+
+    while (received < bytes_to_receive){
+        if (bytes_to_receive - received < MAX_MESSAGE_SIZE) {
+            int difference = bytes_to_receive - received;
+            this->peer.recv(bytes_received, difference);
+            received_uints.insert(received_uints.end(), &bytes_received[0], &bytes_received[difference]);
+            received += difference;
+        } else {
+            this->peer.recv(bytes_received, MAX_MESSAGE_SIZE);
+            received_uints.insert(received_uints.end(), &bytes_received[0], &bytes_received[MAX_MESSAGE_SIZE]);
+            received += MAX_MESSAGE_SIZE;
+        }
+        memset(bytes_received, 0, MAX_MESSAGE_SIZE);
+    }
+
+    for(int i=0; i<received_uints.size(); i++){
+        received_map[i/n_col][i%n_col] = received_uints[i];
+    }
+    return received_map;
+}
+
 void Client::sendInstruction() {
     ssize_t sent = 0;
     try{
@@ -205,6 +238,7 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) 
                 UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo
         info.push_back(received_int);
     }
+    info.push_back(1);
 }
 
 // Asigna las coordenadas recibidas a los atributos del jugador
@@ -259,8 +293,5 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
         players.push_back(other_player);
     }
 }
-
-
-
 
 

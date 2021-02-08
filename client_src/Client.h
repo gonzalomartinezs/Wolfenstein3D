@@ -7,6 +7,7 @@
 #include <atomic>
 #include "PlayerView.h"
 #include "DrawingInfo.h"
+#include "../common_src/Map.h"
 #include "../common_src/Peer.h"
 #include "../common_src/Socket.h"
 #include "../common_src/BlockingQueue.h"
@@ -30,6 +31,8 @@ public:
     // Se borran el constructor por copia y el operador =.
     Client(const Client&) = delete;
     Client operator=(const Client&) = delete;
+
+    std::vector<std::vector<int>> receiveMap();
 
     // Lleva a cabo la interaccion de seleccion de partida con el servidor.
     void lobbyInteraction();

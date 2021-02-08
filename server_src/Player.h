@@ -51,6 +51,11 @@ public:
     void useBullets(uint8_t bulletsAmount);
     bool hasBullets();
 
+    std::string getName();
+    int getKills();
+    int getScore();
+    int getBulletsFired();
+
     /* Escribe los primeros 16 bytes del buffer con la informacion de
      * la posicion del jugador de la siguiente manera (floats):
      * [ posX, posY, dirX, dirY ] */
