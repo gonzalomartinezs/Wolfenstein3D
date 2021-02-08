@@ -39,13 +39,13 @@ bool Map::inRange(const Coordinate& coor){
 }
 
 const MapElement& Map::get(const Coordinate& coor)const{
-   this->matrix.at( coor.toString() );
+   return (this->matrix.at( coor.toString() ) );
 }
 
-std::list<const MapElement&> Map::getElements() const{
-    std::list<const MapElement&> elementList;
-    for(auto kv : this->matrix){
-        elementList.push_back(kv.second);
+std::list<MapElement> Map::getElements() const{
+    std::list< MapElement> elementList;
+    for(auto &kv : this->matrix){
+        elementList.push_back( (kv.second) ) ;
     }
     return elementList;
 }

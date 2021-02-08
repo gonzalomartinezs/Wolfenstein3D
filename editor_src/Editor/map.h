@@ -18,7 +18,7 @@ public:
     unsigned getX() const;
     unsigned getY() const;
     const MapElement& get(const Coordinate& coor)const;
-    std::list<const MapElement&> getElements() const;
+    std::list<MapElement> getElements() const;
 private:
     const unsigned x;
     const unsigned y;
