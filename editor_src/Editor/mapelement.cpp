@@ -39,9 +39,10 @@ const QRect& MapElement::getRect() const{
     return rect;
 }
 
-Coordinate MapElement::calculateCoordenate() const{
-    unsigned x,y;
-    QPoint point;= (rect.top() / ITEMSIZE);
-    x = (rect.left() / ITEMSIZE);
-    return Coordinate(x, y);
+int MapElement::calculateX() const{
+    return (rect.left() / ITEMSIZE);
+}
+
+int MapElement::calculateY() const{
+    return (rect.top() / ITEMSIZE);
 }

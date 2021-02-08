@@ -1,4 +1,5 @@
 #include "map.h"
+#include "coordinate.h"
 
 Map::Map(const unsigned& x, const unsigned& y): x(x), y(y)
 {
@@ -32,7 +33,7 @@ unsigned Map::getY() const {
     return this->y;
 }
 
-bool Map::inRange(const Coordinate& coor)const{
+bool Map::inRange(const Coordinate& coor){
     coor.inRange(this);
 }
 

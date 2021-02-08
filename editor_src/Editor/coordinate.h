@@ -15,7 +15,7 @@ class Coordinate
     unsigned getY()const;
     std::string toString()const;
     bool operator==(const Coordinate& r);
-    bool inRange(const Map& map)const;
+    bool inRange(Map* map)const;
 };
 
 #endif // COORDINATE_H

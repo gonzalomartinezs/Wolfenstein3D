@@ -7,7 +7,7 @@
 #include <QPainter>
 
 MapHandler::MapHandler ( unsigned x ,unsigned y ,QWidget *parent) :
-    QWidget(parent),map(x,y)
+    map(x,y), QWidget(parent)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
@@ -65,7 +65,6 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event)
         this->focused = QRect();
         event->ignore();
     }
-
     update(updateRect);
 }
 
@@ -98,7 +97,6 @@ void MapHandler::dropEvent(QDropEvent *event)
         event->ignore();
         }
 }
-
 
 
 void MapHandler::mousePressEvent(QMouseEvent *event)

@@ -2,11 +2,9 @@
 #define MAPELEMENT_H
 
 #include <QRect>
-#include "coordinate.h"
 #include "maphandler.h"
 
-class MapElement
-{
+class MapElement {
 public:
     MapElement();
     int id;
@@ -20,7 +18,8 @@ public:
     MapElement& operator=(const MapElement& in);
     int getId()const;
     const QRect& getRect() const;
-    Coordinate calculateCoordenate() const;
+    int calculateX() const;
+    int calculateY() const;
 };
 
 #endif // MAPELEMENT_H
