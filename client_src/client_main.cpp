@@ -37,7 +37,13 @@ int main(int argc, char *argv[]) {
                       SDL_WINDOW_SHOWN);
         TexturesContainer tex(window.getRenderer(), window.getSurface());
 
-        Map map(Configuration("../common_src/map_1.yaml"));
+        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
+        client.lobbyInteraction();
+        Map map(client.receiveMap());
+        //Map map(Configuration("../common_src/map_1.yaml"));
+
+        EventHandler event_handler(instructions);
         Raycaster raycaster(map, WINDOW_WIDTH / 32, (-WINDOW_HEIGHT) / 18,
                             (30 * WINDOW_WIDTH) / 32, (17 * WINDOW_HEIGHT) / 18,
                             tex);
@@ -45,18 +51,13 @@ int main(int argc, char *argv[]) {
                               "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        Client client("localhost", "8080", instructions, drawing_info);
-        client.lobbyInteraction();
-        EventHandler event_handler(instructions);
-
         DirectedPositionable player(2, 2, -1, 0, None);
         PlayerView view(0,1);
         std::vector<Positionable> static_objects;
         std::vector<DirectedPositionable> directed_objects;
         std::vector<std::pair<int,int>> sliders_changes;
 
-        DrawingInfo initial_info(player, view, std::vector<int>(6,0), static_objects,
+        DrawingInfo initial_info(player, view, std::vector<int>(7,0), static_objects,
                                  directed_objects, sliders_changes);
         GameInterface game_interface(ui_handler, drawing_info, initial_info, REFRESH_RATE);
 
