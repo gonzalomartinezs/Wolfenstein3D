@@ -17,6 +17,8 @@ public:
     MapElement(const MapElement &in);
 
     MapElement& operator=(const MapElement& in);
+    int getId()const;
+    const QRect& getRect() const;
 };
 
 #endif // MAPELEMENT_H

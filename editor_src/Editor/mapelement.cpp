@@ -26,3 +26,11 @@ MapElement& MapElement::operator=(const MapElement& in){
     id = in.id;
     return *this;
 }
+
+int MapElement::getId() const{
+    return id;
+}
+
+const QRect& MapElement::getRect() const{
+    return rect;
+}
