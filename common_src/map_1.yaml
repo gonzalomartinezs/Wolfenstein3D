@@ -1,4 +1,5 @@
-#map_name: "nombre"
+map_name: "Soy el mapa, soy el mapa..."
+max_players: 5
 
 #Map
 length: 17

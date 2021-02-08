@@ -4,12 +4,15 @@
 #define MAIN_CLIENT 0
 #define SLEEP_TIME_MILLIS 5
 
+#define KEY_NAME "map_name"
+#define KEY_MAX_PLAYERS "max_players"
+
 Lobby::Lobby(ThClient* mainClient, Configuration &config, uint8_t mapID) : config(config){
     this->clients.push_back(mainClient);
     this->gameInProgress = false;
     this->gameIsOver = false;
-    this->mapName = "Soy el mapa, soy el mapa...";
-    this->maxPlayers = 5;  // Hardcodeado, despues leer del yaml
+    this->mapName = config.getString(KEY_NAME);
+    this->maxPlayers = config.getInt(KEY_MAX_PLAYERS);
 }
 
 void Lobby::run() {
@@ -55,7 +58,7 @@ uint8_t Lobby::getPlayersAmountInLobby() {
 }
 
 uint8_t Lobby::getMaxPlayers() {
-    return 5; //cambiar
+    return this->maxPlayers;
 }
 
 std::string Lobby::getMapName() {
