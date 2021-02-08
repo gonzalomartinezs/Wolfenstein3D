@@ -33,7 +33,6 @@ void Lobby::_startGame() {
     this->gameInProgress = true;
 
     try {
-//        Configuration config_map("../common_src/map_1.yaml");
         this->game = new Game(this->clients, this->config, this->config_map);
         this->game->execute();
 

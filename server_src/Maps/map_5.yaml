@@ -1,0 +1,84 @@
+map_name: "Bigger better"
+max_players: 1
+
+#Map
+length: 18
+width: 15
+map:
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]
+
+#Players
+#(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
+player_1:
+  pos_x: 2.0
+  pos_y: 2.0
+  dir_x: 1
+  dir_y: 0
+
+player_2:
+  pos_x: 3.0
+  pos_y: 3.0
+  dir_x: 1
+  dir_y: 0
+
+player_3:
+  pos_x: 5.0
+  pos_y: 5.0
+  dir_x: 1
+  dir_y: 0
+
+#Items
+items:
+  #Treasures
+  cross:
+    cant_cross: 2
+    cross_0:
+      pos_x: 6.0
+      pos_y: 1.0
+    cross_1:
+      pos_x: 2.0
+      pos_y: 3.5
+  cup:
+    cant_cup: 1
+    cup_0:
+      pos_x: 15
+      pos_y: 1
+  #Food
+  food:
+    cant_food: 1
+    food_0:
+      pos_x: 5
+      pos_y: 5
+  #Medical kit
+#  medical_kit:
+  #Blood
+  blood:
+    cant_blood: 1
+    blood_0:
+      pos_x: 1.0
+      pos_y: 13.0
+  #Keys
+  #Bullets/Ammo
+  #Weapons
+  chain_gun:
+    cant_chain_gun: 1
+    chain_gun_0:
+      pos_x: 6
+      pos_y: 6

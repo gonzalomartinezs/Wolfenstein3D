@@ -2,8 +2,8 @@ map_name: "Solo train"
 max_players: 1
 
 #Map
-length: 17 #Arriba a abajo
-width: 14 #Izquierda a derecha
+length: 17
+width: 14
 map:
   - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
