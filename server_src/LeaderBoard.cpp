@@ -4,7 +4,7 @@
 LeaderBoard::LeaderBoard() {}
 
 int LeaderBoard::loadLeaderBoard(uint8_t* msg, std::vector<Player*>& players) {
-    uint8_t bytes = 0;
+    int bytes = 0;
     bytes += _loadKills(msg, players);
     bytes += _loadScore(msg + bytes, players);
     bytes += _loadBullets(msg + bytes, players);
@@ -12,10 +12,10 @@ int LeaderBoard::loadLeaderBoard(uint8_t* msg, std::vector<Player*>& players) {
 }
 
 int LeaderBoard::_loadKills(uint8_t* msg, std::vector<Player*>& players) {
-    std::string str, empty = "Empty";
-    int aux, emptyValue = 0;
+    std::string str;
+    int aux;
     Player* swap;
-    uint8_t currentByte = 0;
+    int currentByte = 0;
 
     for (size_t i = 0; i < players.size(); i++) {
         for (size_t j = 0; j < players.size(); j++) {
@@ -43,25 +43,16 @@ int LeaderBoard::_loadKills(uint8_t* msg, std::vector<Player*>& players) {
         currentByte += sizeof(int);
     }
 
-    for (; i < MAX_LEADERBOARD; i++) {
-        msg[currentByte] = static_cast<uint8_t>(empty.size());
-        currentByte++;
-
-        memcpy(msg + currentByte, empty.c_str(), empty.size());
-        currentByte += empty.size();
-
-        memcpy(msg + currentByte, &emptyValue, sizeof(int));
-        currentByte += sizeof(int);
-    }
+    this->_fillEmptyPlayers(i, msg, currentByte);
 
     return currentByte;
 }
 
 int LeaderBoard::_loadScore(uint8_t* msg, std::vector<Player*>& players) {
-    std::string str, empty = "Empty";
-    int aux, emptyValue = 0;
+    std::string str;
+    int aux;
     Player* swap;
-    uint8_t currentByte = 0;
+    int currentByte = 0;
 
     for (size_t i = 0; i < players.size(); i++) {
         for (size_t j = 0; j < players.size(); j++) {
@@ -89,25 +80,16 @@ int LeaderBoard::_loadScore(uint8_t* msg, std::vector<Player*>& players) {
         currentByte += sizeof(int);
     }
 
-    for (; i < MAX_LEADERBOARD; i++) {
-        msg[currentByte] = static_cast<uint8_t>(empty.size());
-        currentByte++;
-
-        memcpy(msg + currentByte, empty.c_str(), empty.size());
-        currentByte += empty.size();
-
-        memcpy(msg + currentByte, &emptyValue, sizeof(int));
-        currentByte += sizeof(int);
-    }
+    this->_fillEmptyPlayers(i, msg, currentByte);
 
     return currentByte;
 }
 
 int LeaderBoard::_loadBullets(uint8_t* msg, std::vector<Player*>& players) {
-    std::string str, empty = "Empty";
-    int aux, emptyValue = 0;
+    std::string str;
+    int aux;
     Player* swap;
-    uint8_t currentByte = 0;
+    int currentByte = 0;
 
     for (size_t i = 0; i < players.size(); i++) {
         for (size_t j = 0; j < players.size(); j++) {
@@ -135,6 +117,15 @@ int LeaderBoard::_loadBullets(uint8_t* msg, std::vector<Player*>& players) {
         currentByte += sizeof(int);
     }
 
+    this->_fillEmptyPlayers(i, msg, currentByte);
+
+    return currentByte;
+}
+
+void LeaderBoard::_fillEmptyPlayers(size_t i, uint8_t *msg, int& currentByte) {
+    std::string empty = "Empty";
+    int emptyValue = 0;
+
     for (; i < MAX_LEADERBOARD; i++) {
         msg[currentByte] = static_cast<uint8_t>(empty.size());
         currentByte++;
@@ -145,8 +136,6 @@ int LeaderBoard::_loadBullets(uint8_t* msg, std::vector<Player*>& players) {
         memcpy(msg + currentByte, &emptyValue, sizeof(int));
         currentByte += sizeof(int);
     }
-
-    return currentByte;
 }
 
 LeaderBoard::~LeaderBoard() {}
