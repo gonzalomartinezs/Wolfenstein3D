@@ -132,6 +132,14 @@ void Player::setState(uint8_t newState) {
     }
 }
 
+void Player::setName(std::string newName) {
+    this->name = newName;
+}
+
+bool Player::isDead() {
+    return this->action.isDead();
+}
+
 void Player::receiveShot(uint8_t damage) {
     this->action.receiveShot(damage);
 }
@@ -140,12 +148,32 @@ void Player::increaseBulletCounter(uint8_t bulletsAmount) {
     this->action.increaseBulletCounter(bulletsAmount);
 }
 
+void Player::increaseKillCounter() {
+    this->action.increaseKillCounter();
+}
+
 void Player::useBullets(uint8_t bulletsAmount) {
     this->action.useBullets(bulletsAmount);
 }
 
 bool Player::hasBullets() {
     return this->action.hasBullets();
+}
+
+std::string Player::getName() {
+    return this->name;
+}
+
+int Player::getKills() {
+    return this->action.getKills();
+}
+
+int Player::getScore() {
+    return this->action.getScore();
+}
+
+int Player::getBulletsFired() {
+    return this->action.getBulletsFired();
 }
 
 void Player::_moveForwards() {

@@ -26,6 +26,9 @@ void Knife::_stab(std::vector<Player*> &players, int shootingPlayerNumber, const
             players[i]->getPositionData(otherPlayerInfo);
             if (_isInTheKnifeRange(thisPlayerInfo, otherPlayerInfo)) {
                 players[i]->receiveShot(static_cast<uint8_t>(this->_randomNumberGenerator() * 10) + 1);  // Rango [1, 10]
+                if (players[i]->isDead()) {
+                    players[shootingPlayerNumber]->increaseKillCounter();
+                }
                 break;
             }
         }

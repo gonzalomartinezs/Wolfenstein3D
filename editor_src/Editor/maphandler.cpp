@@ -6,7 +6,8 @@
 #include <QMimeData>
 #include <QPainter>
 
-MapHandler::MapHandler ( unsigned x ,unsigned y ,QWidget *parent) : QWidget(parent)
+MapHandler::MapHandler ( unsigned x ,unsigned y ,QWidget *parent) :
+     QWidget(parent), map(x,y)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
@@ -26,8 +27,10 @@ void MapHandler::paintEvent(QPaintEvent *event)
         painter.drawRect(focused.adjusted(0, 0, -1, -1));
     }
 
-    for (const auto &i : elements){
-        painter.drawPixmap(i.rect, i.pixmap);
+    std::list <const MapElement&> filled = this->map.getElements();
+
+    for (const auto &i : filled){
+        painter.drawPixmap(i.getRect() , i.pixmap);
     }
 }
 
@@ -62,7 +65,6 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event)
         this->focused = QRect();
         event->ignore();
     }
-
     update(updateRect);
 }
 
@@ -95,7 +97,6 @@ void MapHandler::dropEvent(QDropEvent *event)
         event->ignore();
         }
 }
-
 
 
 void MapHandler::mousePressEvent(QMouseEvent *event)

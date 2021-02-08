@@ -12,6 +12,7 @@ private:
 	int** map;
 public:
 	Map(const Configuration& config);
+    Map(const std::vector<std::vector<int>>& initial_map);
 	int get(int x, int y) const;
     long int get_n_row() const;
     long int get_n_col() const;

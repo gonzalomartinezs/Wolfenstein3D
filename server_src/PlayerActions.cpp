@@ -17,10 +17,10 @@ PlayerActions::PlayerActions(const Configuration& config) :
     this->lives = config.getInt(KEY_TOTAL_LIVES);
     this->hasKey = config.getInt(KEY_HAS_KEY);
     this->bullets = config.getInt(KEY_INITIAL_BULLETS);
-    this->bulletsCounter = 0;
-
     this->initialHealth = config.getInt(KEY_INITIAL_HEALTH);
     this->initialBullets = config.getInt(KEY_INITIAL_BULLETS);
+    this->bulletsCounter = 0;
+    this->killsCounter = 0;
 }
 
 void PlayerActions::use(HealthRecover* recover) {
@@ -47,6 +47,18 @@ void PlayerActions::die() {
 
 bool PlayerActions::isDead() const {
 	return (this->health <= 0);
+}
+
+int PlayerActions::getKills() {
+    return this->killsCounter;
+}
+
+int PlayerActions::getScore() {
+    return this->score;
+}
+
+int PlayerActions::getBulletsFired() {
+    return this->bulletsCounter;
 }
 
 void PlayerActions::startShooting() {
@@ -80,12 +92,15 @@ void PlayerActions::receiveShot(uint8_t damage) {
     /* uint8_t no admite valores negativos */
     if (this->health > 100) {
         this->health = 0;
-        //this->die();
     }
 }
 
 void PlayerActions::increaseBulletCounter(uint8_t bulletsAmount) {
     this->bulletsCounter += bulletsAmount;
+}
+
+void PlayerActions::increaseKillCounter() {
+    this->killsCounter++;
 }
 
 void PlayerActions::useBullets(uint8_t bulletsAmount) {

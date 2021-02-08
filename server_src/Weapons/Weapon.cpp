@@ -99,6 +99,9 @@ void Weapon::shoot(std::vector<Player*>& players, int shootingPlayerNumber, cons
                         /* Bajar vida del jugador con el que impacto */
                         players[i]->receiveShot(static_cast<uint8_t>
                         (this->_randomNumberGenerator() * 10) + 1);  // Rango [1, 10]
+                        if (players[i]->isDead()) {
+                            players[shootingPlayerNumber]->increaseKillCounter();
+                        }
                         break;
                     }
                 }

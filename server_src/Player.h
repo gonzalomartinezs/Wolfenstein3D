@@ -20,6 +20,7 @@ protected:
     float camPlaneX, camPlaneY;
     float initialPosX, initialPosY;
     uint8_t player_number;
+    std::string name;
 
     //Movement Speed
     float moveSpeed, rotSpeed;
@@ -39,12 +40,21 @@ public:
 
     void setState(uint8_t newState);
 
+    void setName(std::string newName);
+
     virtual void getState(std::vector<Player*> &players, int botNumber, const Map &map) {};
 
+    bool isDead();
     void receiveShot(uint8_t damage);
     void increaseBulletCounter(uint8_t bulletsAmount);
+    void increaseKillCounter();
     void useBullets(uint8_t bulletsAmount);
     bool hasBullets();
+
+    std::string getName();
+    int getKills();
+    int getScore();
+    int getBulletsFired();
 
     /* Escribe los primeros 16 bytes del buffer con la informacion de
      * la posicion del jugador de la siguiente manera (floats):

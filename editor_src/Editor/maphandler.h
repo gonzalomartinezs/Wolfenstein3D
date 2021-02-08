@@ -1,10 +1,9 @@
 #ifndef MAPHANDLER_H
 #define MAPHANDLER_H
 
-#include "mapelement.h"
 #include <QWidget>
 #include  <QVector>
-
+#include "map.h"
 
 class MapHandler : public QWidget
 {
@@ -23,9 +22,9 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 private:
 
+    Map map;
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
-    QVector<MapElement> elements;
     QRect focused;
 };
 

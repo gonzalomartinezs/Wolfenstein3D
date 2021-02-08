@@ -1,40 +1,24 @@
 #ifndef MAPELEMENT_H
 #define MAPELEMENT_H
 
-#include <QPoint>
-#include "item.h"
+#include <QRect>
 
-class MapElement
-{
+class MapElement {
 public:
     MapElement();
     int id;
-    QPixmap pixmap;
     QRect rect;
-    MapElement(MapElement &in){
-        rect = in.rect;
-        id = in.id;
-        pixmap = in.pixmap;
-    }
+    MapElement(MapElement &in);
 
-    MapElement(MapElement &&in){
-        rect = in.rect;
-        id = in.id;
-        pixmap = in.pixmap;
-    }
+    MapElement(MapElement &&in);
 
-    MapElement(const MapElement &in){
-        rect = in.rect;
-        id = in.id;
-        pixmap = in.pixmap;
-    }
-    MapElement& operator=(const MapElement& in){
-        rect = in.rect;
-        id = in.id;
-        pixmap = in.pixmap;
-        return *this;
-    }
+    MapElement(const MapElement &in);
 
+    MapElement& operator=(const MapElement& in);
+    int getId()const;
+    const QRect& getRect() const;
+    int calculateX() const;
+    int calculateY() const;
 };
 
 #endif // MAPELEMENT_H

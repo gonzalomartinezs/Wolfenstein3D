@@ -37,6 +37,8 @@ void Game::execute() {
     Timer timeBetweenUpdates;
     double lastTickTime = 0;
 
+    this->sendMap();
+
     try {
         while (this->isRunning) { //Cambiar, ahora es un while true (Esperar caracter para o esperar a que finalice la partida)
             timeBetweenUpdates.start();
@@ -111,6 +113,10 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     }
     msg[0] = currentByte - 1;
     return currentByte;
+}
+
+void Game::createLeaderBoard(uint8_t *msg) {
+
 }
 
 void Game::stop() {

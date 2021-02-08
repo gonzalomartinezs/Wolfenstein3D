@@ -46,7 +46,7 @@ private:
 
     TrashBin* trashBin;
     ItemList* itemlist;
-    MapHandler* map;
+    MapHandler* mapHandler;
 };
 
 #endif // MAINWINDOW_H

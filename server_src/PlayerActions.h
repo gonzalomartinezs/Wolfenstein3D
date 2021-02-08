@@ -25,6 +25,7 @@ private:
     Weapons weapons;
     int bullets;
     int bulletsCounter;
+    int killsCounter;
 
 public:
     /* Constructor */
@@ -36,6 +37,10 @@ public:
 
 	void die();
 	bool isDead() const;
+
+    int getKills();
+    int getScore();
+    int getBulletsFired();
 
 	void startShooting();
 	void stopShooting();
@@ -49,6 +54,7 @@ public:
 
     void receiveShot(uint8_t damage);
     void increaseBulletCounter(uint8_t bulletsAmount);
+    void increaseKillCounter();
     void useBullets(uint8_t bulletsAmount);
     bool hasBullets();
 
