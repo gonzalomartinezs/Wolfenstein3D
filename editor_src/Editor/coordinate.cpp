@@ -22,5 +22,5 @@ std::string Coordinate::toString()const{
 }
 
 bool Coordinate::inRange(Map* map)const{ //Contamos desde cero.
-    return (this->x < map.getX() && this->y < map.getY() );
+    return ( this->x < map->getX() && this->y < map->getY() );
 }

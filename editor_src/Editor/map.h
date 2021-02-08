@@ -1,9 +1,10 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <list>
 #include <unordered_map>
-
 #include "mapelement.h"
+
 
 class Coordinate; // una foward declaration para safar.
 

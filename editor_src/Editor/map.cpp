@@ -1,5 +1,6 @@
-#include "map.h"
 #include "coordinate.h"
+#include "map.h"
+
 
 Map::Map(const unsigned& x, const unsigned& y): x(x), y(y)
 {
@@ -34,11 +35,11 @@ unsigned Map::getY() const {
 }
 
 bool Map::inRange(const Coordinate& coor){
-    coor.inRange(this);
+    return coor.inRange(this);
 }
 
 MapElement& Map::get(const Coordinate& coor)const{
-    this->matrix.at(coor.toString());
+   return this->matrix.at(coor.toString()) ;
 }
 
 std::list<const MapElement&> Map::getElements() const{
