@@ -167,6 +167,7 @@ void Client::_joinGame() {
     }
 
     std::cout << "ID: Mapa -> Jugadores conectados/Jugadores maximos" << std::endl;
+    std::cout << "--------------------------------------------------" << std::endl;
     for (int i=0; i<games; i++) {
         std::cout << ids[i] << ": " << map_names[i] << " -> " << connected_players[i]
                   << "/" << max_players[i] << std::endl;

@@ -10,7 +10,10 @@
 #define KEY_TEXTURE "texture"
 #define KEY_VALUE "value"
 #define KEY_RADIUS "radius"
-
+/*
+enum ITEM_ID = {CROSS = 0, CUP, CHEST, CROWN, FOOD, MEDICAL_KIT,
+				BLOOD, KEY, BULLET, CHAIN_GUN, MACHINE_GUN, ROCKET_LAUNCHER};
+*/
 class Item : public Positionable {
 protected:
 	int value;
