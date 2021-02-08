@@ -1,0 +1,29 @@
+map_name: "1v1 a cuchi"
+max_players: 2
+
+#Map
+length: 5
+width: 14
+map:
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+#Players
+#(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
+player_1:
+  pos_x: 1.0
+  pos_y: 2.0
+  dir_x: 1
+  dir_y: 0
+
+player_2:
+  pos_x: 13.0
+  pos_y: 2.0
+  dir_x: 1
+  dir_y: 0
+
+#Items
+items:
