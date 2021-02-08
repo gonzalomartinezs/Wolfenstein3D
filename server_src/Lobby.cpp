@@ -7,12 +7,14 @@
 #define KEY_NAME "map_name"
 #define KEY_MAX_PLAYERS "max_players"
 
-Lobby::Lobby(ThClient* mainClient, Configuration &config, uint8_t mapID) : config(config){
+Lobby::Lobby(ThClient* mainClient, Configuration &config,
+            const std::string& map_file_name) : config(config),
+            config_map(map_file_name.c_str()) {
     this->clients.push_back(mainClient);
     this->gameInProgress = false;
     this->gameIsOver = false;
-    this->mapName = config.getString(KEY_NAME);
-    this->maxPlayers = config.getInt(KEY_MAX_PLAYERS);
+    this->mapName = config_map.getString(KEY_NAME);
+    this->maxPlayers = config_map.getInt(KEY_MAX_PLAYERS);
 }
 
 void Lobby::run() {
@@ -31,8 +33,8 @@ void Lobby::_startGame() {
     this->gameInProgress = true;
 
     try {
-        Configuration config_map("../common_src/map_1.yaml");
-        this->game = new Game(this->clients, this->config, config_map);
+//        Configuration config_map("../common_src/map_1.yaml");
+        this->game = new Game(this->clients, this->config, this->config_map);
         this->game->execute();
 
     } catch (std::exception& e) {

@@ -20,6 +20,9 @@ public:
 	std::string getString(const std::string& key) const;
 	int getInt(const std::string& key) const;
 	float getFloat(const std::string& key) const;
+
+	std::string getFileName() const;
+
 	void initializeMatrix(const long int row, const long int col, int** map,
 						const std::string& key) const;
 	~Configuration();

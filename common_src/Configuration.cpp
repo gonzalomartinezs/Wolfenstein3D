@@ -45,6 +45,10 @@ int Configuration::getInt(const std::string& key) const {
 								this->filename.c_str());
 }
 
+std::string Configuration::getFileName() const {
+	return this->filename;
+}
+
 void Configuration::initializeMatrix(const long int row,
 									const long int col,
 									int** map,

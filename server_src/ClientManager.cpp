@@ -57,12 +57,13 @@ void ClientManager::_talkWithClient(ThClient* client, std::vector<Lobby*>& games
     action = _blockingRecv(client);
 
     if (action == NEW_GAME) {
+        MapsReader maps_reader(MAPS_FOLDER_PATH);
         /* Enviar mapas disponibles */
-        msgLen = _loadNewGameMsg(msg, games);
+        msgLen = _loadNewGameMsg(msg, maps_reader);
         client->push(msg, msgLen);
         /* - - - */
         mapID = _blockingRecv(client);
-        games.push_back(new Lobby(client, this->config, mapID));
+        games.push_back(new Lobby(client, this->config, maps_reader.getFileName(mapID)));
         games.back()->start();
 
     } else if (action == JOIN_GAME) {
@@ -88,11 +89,11 @@ void ClientManager::_talkWithClient(ThClient* client, std::vector<Lobby*>& games
     }
 }
 
-int ClientManager::_loadNewGameMsg(uint8_t* msg, std::vector<Lobby*>& games) {
-    uint8_t mapsAmount = 1; //Leer todos los mapas
+int ClientManager::_loadNewGameMsg(uint8_t* msg, const MapsReader& maps_reader) {
+/*    uint8_t mapsAmount = 1; //Leer todos los mapas
     std::string mapName = "Mapita";
     uint8_t maxPlayers = 5;
-    int currentByte = 1;
+    
 
     msg[0] = mapsAmount;
     msg[currentByte] = static_cast<uint8_t>(mapName.size());
@@ -103,6 +104,21 @@ int ClientManager::_loadNewGameMsg(uint8_t* msg, std::vector<Lobby*>& games) {
 
     msg[currentByte] = maxPlayers;
     currentByte++;
+*/
+    msg[0] = static_cast<uint8_t>(maps_reader.size());
+    int currentByte = 1;
+
+    for (size_t i = 0; i < maps_reader.size(); ++i) {
+        std::string map_name = maps_reader.getName(i);
+        msg[currentByte] = static_cast<uint8_t>(map_name.size());
+        currentByte++;
+
+        memcpy(msg + currentByte, map_name.c_str(), map_name.size());
+        currentByte += map_name.size();
+
+        msg[currentByte] = maps_reader.getMaxPlayers(i);
+        currentByte++;
+    }
 
     return currentByte;
 }

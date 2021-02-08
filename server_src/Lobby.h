@@ -12,6 +12,7 @@ private:
     std::vector<ThClient*> clients;
     Game* game;
     Configuration& config;
+    Configuration config_map;
 
     std::string mapName;
     std::atomic<int> maxPlayers;
@@ -20,7 +21,8 @@ private:
 
 public:
     /* Constructor */
-    Lobby(ThClient* mainClient, Configuration& config, uint8_t mapID);
+    Lobby(ThClient* mainClient, Configuration& config,
+        const std::string& map_file_name);
 
     void pushClient(ThClient* newPlayer);
 

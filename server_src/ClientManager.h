@@ -8,6 +8,7 @@
 #include "Lobby.h"
 #include "../common_src/Socket.h"
 #include "../common_src/Configuration.h"
+#include "MapsReader.h"
 
 class ClientManager {
 private:
@@ -31,7 +32,7 @@ private:
     void _talkWithClient(ThClient* client, std::vector<Lobby*>& games);
     void _deleteFinishedGames(std::vector<Lobby*>& games);
     void _deleteFailedClient(ThClient* client);
-    int _loadNewGameMsg(uint8_t* msg, std::vector<Lobby*>& games);
+    int _loadNewGameMsg(uint8_t* msg, const MapsReader& maps_reader);
     int _loadJoinGameMsg(uint8_t* msg, std::vector<Lobby*>& games);
 };
 
