@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include <SDL2/SDL_image.h>
+#include <algorithm>
 #include "../../common_src/Exceptions/TextureLoadingException.h"
 
 #define R 152
@@ -9,13 +10,15 @@
 Texture::Texture(std::string path, SDL_Renderer* renderer, SDL_Surface* surface):
                                                             renderer(renderer){
     SDL_Surface* loaded_surface;
-    if (path.substr(path.length()-3) == "bmp"){
+    std::string extension = path.substr(path.length()-3);
+    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+    if (extension == "bmp"){
         loaded_surface = SDL_LoadBMP(path.c_str());
         if(loaded_surface){
             loaded_surface->format->Amask = 0xFF000000;
             loaded_surface->format->Ashift = 24;
         }
-    } else if (path.substr(path.length()-3) == "png" && surface){
+    } else if (extension == "png" && surface){
         SDL_Surface* aux_surface = IMG_Load(path.c_str());
         if (aux_surface == nullptr) throw TextureLoadingException("Unable to load PNG image.");
         loaded_surface = SDL_ConvertSurface(aux_surface, surface->format, 0);
