@@ -2,6 +2,7 @@
 #define MAPHANDLER_H
 
 #include "mapelement.h"
+#include "map.h"
 #include <QWidget>
 #include  <QVector>
 
@@ -25,8 +26,8 @@ private:
 
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
-    QVector<MapElement> elements;
     QRect focused;
+    Map map;
 };
 
 #endif // MAPHANDLER_H

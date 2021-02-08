@@ -17,7 +17,6 @@ public:
     MapElement(const MapElement &in);
 
     MapElement& operator=(const MapElement& in);
-
 };
 
 #endif // MAPELEMENT_H
