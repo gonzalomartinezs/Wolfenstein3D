@@ -1,5 +1,4 @@
 #include "mapelement.h"
-#include "mainwindow.h"
 
 #define ITEMSIZE 50
 

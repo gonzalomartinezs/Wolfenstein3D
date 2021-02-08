@@ -1,11 +1,9 @@
 #ifndef MAPHANDLER_H
 #define MAPHANDLER_H
 
-#include "mapelement.h"
-#include "map.h"
 #include <QWidget>
 #include  <QVector>
-
+#include "map.h"
 
 class MapHandler : public QWidget
 {
