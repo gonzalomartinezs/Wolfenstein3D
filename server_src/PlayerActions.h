@@ -38,6 +38,10 @@ public:
 	void die();
 	bool isDead() const;
 
+    int getKills();
+    int getScore();
+    int getBulletsFired();
+
 	void startShooting();
 	void stopShooting();
 
