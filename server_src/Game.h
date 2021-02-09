@@ -40,7 +40,7 @@ class Game {
 
     int createMsg(uint8_t* msg, size_t clientNumber);
 
-    void createLeaderBoard(uint8_t* msg);
+    void createLeaderBoard();
 
     void sendMap();
 

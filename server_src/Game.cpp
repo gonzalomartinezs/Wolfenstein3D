@@ -1,8 +1,10 @@
 #include "Game.h"
+#include "LeaderBoard.h"
 #include <iostream>
 #include <unistd.h>
 #include <cstring> //borrar
 
+#define END_GAME_CHAR 0
 #define NAME_TIME_TOLERANCE 500
 #define SLEEP_TIME_MILLIS 50
 #define MAX_MSG_SIZE 256
@@ -40,6 +42,7 @@ void Game::execute() {
     double lastTickTime = 0;
 
     this->sendMap();
+    //this->recvNames();
 
     try {
         while (this->isRunning) { //Cambiar, ahora es un while true (Esperar caracter para o esperar a que finalice la partida)
@@ -61,6 +64,8 @@ void Game::execute() {
     } catch (...) {
         std::cerr << "Unknown error in Game Loop :(" << std::endl;
     }
+
+    //this->createLeaderBoard();
 }
 
 void Game::getInstructions() {
@@ -117,8 +122,19 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     return currentByte;
 }
 
-void Game::createLeaderBoard(uint8_t *msg) {
+void Game::createLeaderBoard() {
+    uint8_t endGameChar = END_GAME_CHAR;
+    uint8_t msg[MAX_MSG_SIZE];
+    uint8_t msgLen;
+    LeaderBoard leaderBoard;
 
+    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
+
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        this->clients[i]->push(&endGameChar, 1);
+        this->clients[i]->push(&msgLen, 1);
+        this->clients[i]->push(msg, msgLen);
+    }
 }
 
 void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& players) {
