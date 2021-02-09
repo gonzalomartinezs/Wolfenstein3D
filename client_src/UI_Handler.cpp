@@ -3,7 +3,7 @@
 #define TTF_TEXTURES 4
 #define BJ_FACES 8
 #define TOTAL_HP 100
-enum ttfTextures {Lives, HP, Weapon, Key, Ammo, Score, Firing};
+enum ttfTextures {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, std::string font_path, int width,
@@ -46,23 +46,21 @@ void UI_Handler::loadBackground() {
 
 void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
     int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
+
     DynamicTexture* dynamic = tex.getDynamic(TextureID(int(Knife_Pl)+player_info[Weapon]));
     if(dynamic) {
         dynamic->getTexture(player_info[Firing]).render(nullptr, &this->elements.weapon_animation);
     }
+
     tex.getStatic(HUD)->render(nullptr, nullptr);
-    tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(
-            nullptr, &this->elements.weapon);
+    tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
     tex.getStatic(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
     tex.getStatic(TextureID(int(HasNotKey) + player_info[Key]))->render(nullptr, &this->elements.key);
-    font_textures[0].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr,
-                                                 &this->elements.score);
-    font_textures[1].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr,
-                                                &this->elements.lives);
-    font_textures[2].renderHorizontallyCentered(std::to_string(player_info[HP]), nullptr,
-                                                 &this->elements.hp);
-    font_textures[3].renderHorizontallyCentered(std::to_string(player_info[Ammo]), nullptr,
-                                                 &this->elements.ammo);
+
+    font_textures[0].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr, &this->elements.score);
+    font_textures[1].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr, &this->elements.lives);
+    font_textures[2].renderHorizontallyCentered(std::to_string(player_info[HP]), nullptr, &this->elements.hp);
+    font_textures[3].renderHorizontallyCentered(std::to_string(player_info[Ammo]), nullptr, &this->elements.ammo);
     // arreglar hardcodeo
 }
 

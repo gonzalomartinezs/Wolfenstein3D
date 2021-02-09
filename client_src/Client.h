@@ -35,7 +35,7 @@ public:
     std::vector<std::vector<int>> receiveMap();
 
     // Lleva a cabo la interaccion de seleccion de partida con el servidor.
-    void lobbyInteraction();
+    void lobbyInteraction(std::string username);
 
     // Envia al servidor la proxima instruccion contenida en 'instructions',
     // hasta que surja un error o se corte la conexion.

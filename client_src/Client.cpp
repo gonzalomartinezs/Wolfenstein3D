@@ -9,8 +9,8 @@
 #define NEW_GAME 0
 #define JOIN_GAME 1
 #define FLOAT_SIZE sizeof(float)
-#define UINT_ATTRIBUTES 4
-#define INT_ATTRIBUTES 2
+#define UINT_ATTRIBUTES 5 // lives, hp, weapon, has_key, is_shooting
+#define INT_ATTRIBUTES 2  // ammo, score
 #define PLAYER_INFO 4 + 2 * sizeof(int) // lives, hp, key, weapon, ammo(int), score(int)
 #define PLAYER_ATTRIBUTES 6
 #define OTHER_PLAYERS_ATTRIBUTES 5
@@ -68,9 +68,12 @@ void Client::sendInstruction() {
     std::cout<<"fin send\n";
 }
 
-void Client::lobbyInteraction() {
+void Client::lobbyInteraction(std::string username) {
     int choice;
-    uint8_t uint_choice;
+    uint8_t uint_choice, name_len;
+    uint8_t bytes_sent[MAX_MESSAGE_SIZE];
+    memset(bytes_sent, 0, MAX_MESSAGE_SIZE);
+
     std::cout << "Ingrese 0 si desea crear una nueva partida o 1 si "
                  "desea unirse a una existente." << std::endl;
 
@@ -84,6 +87,11 @@ void Client::lobbyInteraction() {
 
     if (choice == NEW_GAME) _createGame();
     else _joinGame();
+
+//    name_len = username.size();
+//    this->peer.send(&name_len, 1);
+//    memcpy(bytes_sent, username.c_str(), name_len);
+//    this->peer.send(bytes_sent, name_len);
 }
 
 
@@ -239,7 +247,6 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) 
                 UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo
         info.push_back(received_int);
     }
-    info.push_back(1);
 }
 
 // Asigna las coordenadas recibidas a los atributos del jugador
