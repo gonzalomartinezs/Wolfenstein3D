@@ -297,7 +297,7 @@
 #define PISTOL_ITEM "../client_src/textures/img/sprites/pistol_item.bmp"
 #define MACHINEGUN_ITEM "../client_src/textures/img/sprites/machinegun_item.bmp"
 #define CHAINGUN_ITEM "../client_src/textures/img/sprites/chaingun_item.bmp"
-#define RPG_ITEM "../client_src/textures/img/sprites/rog_item.bmp"
+#define RPG_ITEM "../client_src/textures/img/sprites/rpg_item.bmp"
 #define BULLETS_ITEM "../client_src/textures/img/sprites/bullets.bmp"
 #define BLOOD_ITEM_0 "../client_src/textures/img/sprites/blood_0.bmp"
 #define BLOOD_ITEM_1 "../client_src/textures/img/sprites/blood_1.bmp"
@@ -418,7 +418,7 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Blood_1, new Texture(BLOOD_ITEM_1, this->renderer));
     static_textures.emplace(Food_0, new Texture(FOOD_ITEM_0, this->renderer));
     static_textures.emplace(Food_1, new Texture(FOOD_ITEM_1, this->renderer));
-    static_textures.emplace(Key, new Texture(KEY_ITEM, this->renderer));
+    static_textures.emplace(KeyItem, new Texture(KEY_ITEM, this->renderer));
     static_textures.emplace(Cup, new Texture(CUP_ITEM, this->renderer));
     static_textures.emplace(Crown, new Texture(CROWN_ITEM, this->renderer));
     static_textures.emplace(Cross, new Texture(CROSS_ITEM, this->renderer));

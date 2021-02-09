@@ -24,23 +24,10 @@ Texture &DynamicTexture::getTexture(int new_state) {
         int index = int(fraction * textures.size()) % textures.size();
         return textures[index];
     } else if (new_state == MOVING){
-        std::cout << fraction << std::endl;
         timer.start();
     }
     state = new_state;
     return textures[0];
-
-//    if(state == new_state && state == MOVING){
-//        state = new_state;
-//        float fraction = timer.getTime()/(float)period;
-//        int index = int(fraction * textures.size()) % textures.size();
-//        if (fraction > 1 && single_event) state = STILL;
-//        return textures[index];
-//    } else if (new_state == MOVING){
-//        timer.start();
-//    }
-//    state = new_state;
-//    return textures[0];
 }
 
 DynamicTexture::~DynamicTexture() {}

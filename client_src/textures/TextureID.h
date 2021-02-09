@@ -39,7 +39,7 @@ enum TextureID{
     Jewelry,
     Bullets,
     HealthKit,
-    Key,
+    KeyItem,
     Dog_0, // de acá para abajo son sprites dinamicos
     Dog_1,
     Dog_2,
