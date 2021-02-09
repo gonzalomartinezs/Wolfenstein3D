@@ -29,8 +29,8 @@ void MapHandler::paintEvent(QPaintEvent *event)
 
     std::list <const MapElement&> filled = this->map.getElements();
 
-    for (const auto &i : filled){
-        painter.drawPixmap(i.getRect() , i.pixmap);
+    for (const MapElement &i : filled){
+        painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
 }
 
