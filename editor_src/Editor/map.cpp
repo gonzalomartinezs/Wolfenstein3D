@@ -1,6 +1,6 @@
 #include "coordinate.h"
 #include "map.h"
-
+#include "mainwindow.h"
 
 Map::Map(const unsigned& x, const unsigned& y): x(x), y(y)
 {
@@ -48,6 +48,13 @@ std::list<MapElement> Map::getElements() const{
         elementList.push_back( (kv.second) ) ;
     }
     return elementList;
+}
+
+const MapElement& Map::get(const QPoint& point) const{
+    QRect rect(point / ITEMSIZE * ITEMSIZE,
+               QSize(ITEMSIZE, ITEMSIZE));
+     Coordinate coor( (rect.left() / ITEMSIZE), (rect.top() /ITEMSIZE ) );
+    return ( this->matrix.at( coor.toString() ) );
 }
 
 
