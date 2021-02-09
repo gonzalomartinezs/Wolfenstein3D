@@ -293,6 +293,22 @@
 #define RPG_PL_2 "../client_src/textures/img/sprites/rpg_2.bmp"
 #define RPG_PL_3 "../client_src/textures/img/sprites/rpg_3.bmp"
 
+#define KNIFE_ITEM "../client_src/textures/img/sprites/knife_item.bmp"
+#define PISTOL_ITEM "../client_src/textures/img/sprites/pistol_item.bmp"
+#define MACHINEGUN_ITEM "../client_src/textures/img/sprites/machinegun_item.bmp"
+#define CHAINGUN_ITEM "../client_src/textures/img/sprites/chaingun_item.bmp"
+#define RPG_ITEM "../client_src/textures/img/sprites/rog_item.bmp"
+#define BULLETS_ITEM "../client_src/textures/img/sprites/bullets.bmp"
+#define BLOOD_ITEM_0 "../client_src/textures/img/sprites/blood_0.bmp"
+#define BLOOD_ITEM_1 "../client_src/textures/img/sprites/blood_1.bmp"
+#define CROSS_ITEM "../client_src/textures/img/sprites/cross.bmp"
+#define CROWN_ITEM "../client_src/textures/img/sprites/crown.bmp"
+#define CUP_ITEM "../client_src/textures/img/sprites/cup.bmp"
+#define JEWELRY_ITEM "../client_src/textures/img/sprites/jewelry.bmp"
+#define FOOD_ITEM_0 "../client_src/textures/img/sprites/food_0.bmp"
+#define FOOD_ITEM_1 "../client_src/textures/img/sprites/food_1.bmp"
+#define HEALTH_KIT_ITEM "../client_src/textures/img/sprites/health_kit.bmp"
+#define KEY_ITEM "../client_src/textures/img/sprites/key.bmp"
 
 TexturesContainer::TexturesContainer(SDL_Renderer *renderer,
                                      SDL_Surface *window_surface)
@@ -391,6 +407,24 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Mutant_5, new Texture(MUTANT_5_0, this->renderer));
     static_textures.emplace(Mutant_6, new Texture(MUTANT_6_0, this->renderer));
     static_textures.emplace(Mutant_7, new Texture(MUTANT_7_0, this->renderer));
+
+    static_textures.emplace(KnifeItem, new Texture(KNIFE_ITEM, this->renderer));
+    static_textures.emplace(PistolItem, new Texture(PISTOL_ITEM, this->renderer));
+    static_textures.emplace(MachineGunItem, new Texture(MACHINEGUN_ITEM, this->renderer));
+    static_textures.emplace(ChainGunItem, new Texture(CHAINGUN_ITEM, this->renderer));
+    static_textures.emplace(RPGItem, new Texture(RPG_ITEM, this->renderer));
+    static_textures.emplace(Bullets, new Texture(BULLETS_ITEM, this->renderer));
+    static_textures.emplace(Blood_0, new Texture(BLOOD_ITEM_0, this->renderer));
+    static_textures.emplace(Blood_1, new Texture(BLOOD_ITEM_1, this->renderer));
+    static_textures.emplace(Food_0, new Texture(FOOD_ITEM_0, this->renderer));
+    static_textures.emplace(Food_1, new Texture(FOOD_ITEM_1, this->renderer));
+    static_textures.emplace(Key, new Texture(KEY_ITEM, this->renderer));
+    static_textures.emplace(Cup, new Texture(CUP_ITEM, this->renderer));
+    static_textures.emplace(Crown, new Texture(CROWN_ITEM, this->renderer));
+    static_textures.emplace(Cross, new Texture(CROSS_ITEM, this->renderer));
+    static_textures.emplace(Jewelry, new Texture(JEWELRY_ITEM, this->renderer));
+    static_textures.emplace(HealthKit, new Texture(HEALTH_KIT_ITEM, this->renderer));
+
 }
 
 void TexturesContainer::_loadDynamicTextures() {
