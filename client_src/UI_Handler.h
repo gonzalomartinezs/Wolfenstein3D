@@ -24,6 +24,7 @@ private:
     TexturesContainer& tex;
     HUDElements elements;
     std::vector<FontTexture> font_textures;
+    int last_ammo;
 
 public:
     // Crea un UI_Handler listo para ser utilizado.

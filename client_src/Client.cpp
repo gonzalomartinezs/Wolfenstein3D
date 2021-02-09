@@ -11,7 +11,7 @@
 #define FLOAT_SIZE sizeof(float)
 #define UINT_ATTRIBUTES 5 // lives, hp, weapon, has_key, is_shooting
 #define INT_ATTRIBUTES 2  // ammo, score
-#define PLAYER_INFO 4 + 2 * sizeof(int) // lives, hp, key, weapon, ammo(int), score(int)
+#define PLAYER_INFO 5 + 2 * sizeof(int) // lives, hp, key, weapon, ammo(int), score(int)
 #define PLAYER_ATTRIBUTES 6
 #define OTHER_PLAYERS_ATTRIBUTES 5
 #define MAX_MESSAGE_SIZE 256
@@ -41,11 +41,13 @@ std::vector<std::vector<int>> Client::receiveMap() {
         if (bytes_to_receive - received < MAX_MESSAGE_SIZE) {
             int difference = bytes_to_receive - received;
             this->peer.recv(bytes_received, difference);
-            received_uints.insert(received_uints.end(), &bytes_received[0], &bytes_received[difference]);
+            received_uints.insert(received_uints.end(), &bytes_received[0],
+                                  &bytes_received[difference]);
             received += difference;
         } else {
             this->peer.recv(bytes_received, MAX_MESSAGE_SIZE);
-            received_uints.insert(received_uints.end(), &bytes_received[0], &bytes_received[MAX_MESSAGE_SIZE]);
+            received_uints.insert(received_uints.end(), &bytes_received[0],
+                                  &bytes_received[MAX_MESSAGE_SIZE]);
             received += MAX_MESSAGE_SIZE;
         }
         memset(bytes_received, 0, MAX_MESSAGE_SIZE);
@@ -94,6 +96,46 @@ void Client::lobbyInteraction(std::string username) {
 //    this->peer.send(bytes_sent, name_len);
 }
 
+ssize_t Client::receiveInformation() {
+    while(is_connected){
+        uint8_t bytes_to_receive;
+        uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
+        memset(bytes_received, 0, MAX_MESSAGE_SIZE);
+
+        this->peer.recv(&bytes_to_receive, 1);
+        this->peer.recv(bytes_received, bytes_to_receive);
+        DirectedPositionable player(0, 0, 0, 0, None);
+        PlayerView view;
+        std::vector<float> coordinates;
+        std::vector<int> player_info;
+        std::vector<Positionable> objects;
+        std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
+        std::vector<std::pair<int,int>> sliders_changes;
+
+        sliders_changes.emplace_back(0,3);
+        _assignPlayerInfo(player_info, bytes_received);
+        _assignPlayerCoordenates(player, view, coordinates, bytes_received);
+        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive, directed_objects, coordinates);
+        DrawingInfo new_info(player, view, player_info,objects, directed_objects, sliders_changes);
+        this->drawing_info.push(new_info);
+    }
+    std::cout<<"fin recv\n";
+    return 0;
+}
+
+
+void Client::shutdown() {
+    this->is_connected = false;
+    this->socket.stop();
+    this->instructions.doneAdding();
+}
+
+Client::~Client() {
+    if (is_connected) shutdown();
+}
+
+
+//-------------------------- Metodos privados --------------------------------//
 
 void Client::_createGame() {
     int choice;
@@ -194,46 +236,7 @@ void Client::_joinGame() {
     this->peer.send(&uint_choice, sizeof(uint8_t));
 }
 
-ssize_t Client::receiveInformation() {
-    while(is_connected){
-        uint8_t bytes_to_receive;
-        uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
-        memset(bytes_received, 0, MAX_MESSAGE_SIZE);
 
-        this->peer.recv(&bytes_to_receive, 1);
-        this->peer.recv(bytes_received, bytes_to_receive);
-        DirectedPositionable player(0, 0, 0, 0, None);
-        PlayerView view;
-        std::vector<float> coordinates;
-        std::vector<int> player_info;
-        std::vector<Positionable> objects;
-        std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
-        std::vector<std::pair<int,int>> sliders_changes;
-
-        sliders_changes.emplace_back(0,3);
-        _assignPlayerInfo(player_info, bytes_received);
-        _assignPlayerCoordenates(player, view, coordinates, bytes_received);
-        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive, directed_objects, coordinates);
-        DrawingInfo new_info(player, view, player_info,objects, directed_objects, sliders_changes);
-        this->drawing_info.push(new_info);
-    }
-    std::cout<<"fin recv\n";
-    return 0;
-}
-
-
-void Client::shutdown() {
-    this->is_connected = false;
-    this->socket.stop();
-    this->instructions.doneAdding();
-}
-
-Client::~Client() {
-    if (is_connected) shutdown();
-}
-
-
-//-------------------------- Metodos privados --------------------------------//
 // Asigna la informacion del jugador (vida, balas, arma, ...) a sus atributos
 void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) {
     uint8_t received_uint8;
