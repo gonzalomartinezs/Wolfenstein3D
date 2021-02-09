@@ -4,8 +4,7 @@
 #include <string>
 #include "map.h"
 
-class Coordinate
-{
+class Coordinate {
  private:
     const unsigned x;
     const unsigned y;
@@ -16,6 +15,7 @@ class Coordinate
     std::string toString()const;
     bool operator==(const Coordinate& r);
     bool inRange(Map* map)const;
+
 };
 
 #endif // COORDINATE_H

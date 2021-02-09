@@ -16,8 +16,7 @@ MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y,
     setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
 }
 
-void MapHandler::paintEvent(QPaintEvent *event)
-{
+void MapHandler::paintEvent (QPaintEvent *event) {
     QPainter painter(this);
     painter.fillRect(event->rect(), Qt::gray);
 
@@ -29,21 +28,20 @@ void MapHandler::paintEvent(QPaintEvent *event)
 
     std::list <const MapElement&> filled = this->map.getElements();
 
-    for (const MapElement &i : filled){
+    for (const MapElement &i : filled) {
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
+
 }
 
-void MapHandler::dragEnterEvent(QDragEnterEvent *event)
-{
-    if (event->mimeData()->hasFormat(ItemList::editorMimeType()))
+void MapHandler::dragEnterEvent(QDragEnterEvent *event) {
+    if ( event->mimeData()->hasFormat( ItemList::editorMimeType() ) )
         event->accept();
     else
         event->ignore();
 }
 
-void MapHandler::dragLeaveEvent(QDragLeaveEvent *event)
-{
+void MapHandler::dragLeaveEvent(QDragLeaveEvent *event) {
     QRect updateRect = this->focused;
     this->focused = QRect();
     update(updateRect);
@@ -51,8 +49,7 @@ void MapHandler::dragLeaveEvent(QDragLeaveEvent *event)
 }
 
 
-void MapHandler::dragMoveEvent(QDragMoveEvent *event)
-{
+void MapHandler::dragMoveEvent(QDragMoveEvent *event) {
     QRect updateRect = focused.united(targetSquare(event->pos()));
 
     if (event->mimeData()->hasFormat(ItemList::editorMimeType())
@@ -133,19 +130,27 @@ void MapHandler::mousePressEvent(QMouseEvent *event)
     }
 }
 
-const QRect MapHandler::targetSquare(const QPoint &position) const
-{
+ // cambiar a coordenadas !
+const QRect MapHandler::targetSquare(const QPoint &position) const {
     return QRect(position / ITEMSIZE * ITEMSIZE,
                  QSize(ITEMSIZE, ITEMSIZE));
 }
-// CAMBIAR ESTO XD.
-int MapHandler::findPiece(const QRect &pieceRect) const
-{
+
+const Coordinate MapHandler::targetCoordinate(const QPoint& position) const{
+    QRect rect(position / ITEMSIZE * ITEMSIZE,
+               QSize(ITEMSIZE, ITEMSIZE));
+    return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
+}
+
+// Borrar ESTO XD.
+int MapHandler::findPiece(const QRect &pieceRect) const {
+/*
     for (int i = 0, size = elements.size(); i < size; ++i) {
         if (elements.at(i).rect == pieceRect)
             return i;
     }
     return -1;
+    */
 }
 
 

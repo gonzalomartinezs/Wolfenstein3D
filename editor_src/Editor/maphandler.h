@@ -6,6 +6,7 @@
 
 #include "map.h"
 #include "iconscontainer.h"
+#include "coordinate.h"
 
 class MapHandler : public QWidget
 {
@@ -27,6 +28,7 @@ private:
     Map map;
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
+    const Coordinate targetCoordinate(const QPoint& position) const;
     QRect focused;
     const IconsContainer& icons;
 };
