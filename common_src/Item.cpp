@@ -11,9 +11,5 @@ int Item::operator+(int other_value) const {
 bool Item::collidesWith(const Collider& other) const {
 	return this->collider.collidesWith(other);
 }
-/*
-int Item::getID() const {
-	return this->id;
-}
-*/
+
 Item::~Item() {}
