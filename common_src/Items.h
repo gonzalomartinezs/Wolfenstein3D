@@ -17,6 +17,7 @@ public:
 	Items&& operator=(Item&& other) = delete;
 	Item* operator[](std::size_t i);
 	size_t size() const;
+	void loadItemsInfo(uint8_t* msg, uint8_t& currentByte);
 	void remove(size_t i);
 	~Items();
 private:

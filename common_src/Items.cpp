@@ -5,6 +5,7 @@
 #include "MachineGunItem.h"
 #include "ChainGunItem.h"
 //#include "RocketLauncherItem.h"
+#include <cstring>
 
 #include "Exceptions/ItemsException.h"
 
@@ -118,6 +119,30 @@ void Items::remove(size_t i) {
 //	if (Items::size() < i || Items::size() == 0) throw "Element out of range";
 	delete this->items[i];
 	this->items.erase(this->items.begin() + i);
+}
+
+
+void Items::loadItemsInfo(uint8_t* msg, uint8_t &currentByte) {
+    float aux;
+    uint8_t id, size;
+
+    size = static_cast<uint8_t>(this->items.size());
+    memcpy(msg + currentByte, &size, sizeof(uint8_t));
+    currentByte += sizeof(uint8_t);
+
+    for (size_t i = 0; i < this->items.size(); i++) {
+        aux = this->items[i]->getX();
+        memcpy(msg + currentByte, &aux, sizeof(float));
+        currentByte += sizeof(float);
+
+        aux = this->items[i]->getY();
+        memcpy(msg + currentByte, &aux, sizeof(float));
+        currentByte += sizeof(float);
+
+        id = this->items[i]->getTexture();
+        memcpy(msg + currentByte, &id, sizeof(uint8_t));
+        currentByte += sizeof(uint8_t);
+    }
 }
 
 Items::~Items() {
