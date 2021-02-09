@@ -17,14 +17,14 @@ IconsContainer::IconsContainer(unsigned in_size) {
     }
 }
 
-const QPixmap& IconsContainer::getIcon(int id) {
+const QPixmap& IconsContainer::getIcon(int id)const {
     return this->icons.at(id);
 }
 
-unsigned IconsContainer::getSize() {
+unsigned IconsContainer::getSize()const {
     return this->size;
 }
 
-const std::vector<QPixmap>& IconsContainer::getIcons() {
+const std::vector<QPixmap>& IconsContainer::getIcons()const {
     return icons;
 }

@@ -10,9 +10,9 @@ class IconsContainer {
 
 public:
     IconsContainer(unsigned size);
-    const QPixmap& getIcon(int id);
-    unsigned getSize();
-    const std::vector<Qpixmap>& getIcons();
+    const QPixmap& getIcon(int id)const;
+    unsigned getSize()const;
+    const std::vector<QPixmap>& getIcons()const;
 private:
     std::vector<QPixmap> icons;
     unsigned size;
