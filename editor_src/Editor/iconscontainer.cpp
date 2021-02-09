@@ -10,13 +10,21 @@ IconsContainer::IconsContainer(unsigned in_size) {
     while( !done ) {
        QPixmap newImage;
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
-            this->icons.insert({i, newImage.scaled(this->size, this->size)});
+            this->icons.push_back(newImage.scaled(this->size, this->size));
        } else {
            done = true;
        }
     }
 }
 
-const QPixmap& IconsContainer::getIcon(int id){
+const QPixmap& IconsContainer::getIcon(int id) {
     return this->icons.at(id);
+}
+
+unsigned IconsContainer::getSize() {
+    return this->size;
+}
+
+const std::vector<QPixmap>& IconsContainer::getIcons() {
+    return icons;
 }

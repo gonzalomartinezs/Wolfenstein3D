@@ -3,25 +3,22 @@
 
 #include <QListWidget>
 #include <vector>
-#include "item.h"
+#include "iconscontainer.h"
 
 class ItemList : public QListWidget
 {
     Q_OBJECT
 public:
     explicit ItemList(QWidget *parent = nullptr);
-
-
     static QString editorMimeType() { return QStringLiteral("item"); }
+    void loadList(const IconsContainer& list);
 
 protected:
     void startDrag(Qt::DropActions supportedActions) override;
 
 private:
-    void loadImages();
-    void loadList();
-    int itemSize;
-    std::vector<Item> items;
+    // void loadImages();
+    // std::vector<Item> items;
 };
 
 #endif // ITEMLIST_H

@@ -16,7 +16,7 @@ ItemList::ItemList(QWidget *parent)
     setDropIndicatorShown(true);
     this->loadList();
 }
-
+/*
 void ItemList::loadImages(){
 
     Q_INIT_RESOURCE(editor);
@@ -36,7 +36,7 @@ void ItemList::loadImages(){
        }
     }
 }
-
+*/
 void ItemList::loadList(){
     loadImages();
     for (auto &i : items){
