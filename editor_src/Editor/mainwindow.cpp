@@ -55,8 +55,7 @@ void MainWindow::initBar(){
     exitAction->setShortcuts(QKeySequence::Quit);
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
-
-    //gameMenu->addAction(tr("&Restart"), this, &MainWindow::setupPuzzle);
+    toolsMenu->addAction(tr("&Restart"), this, &MainWindow::resizeMap);
     QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
 }
 
