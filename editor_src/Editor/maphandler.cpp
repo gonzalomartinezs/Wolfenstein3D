@@ -6,8 +6,8 @@
 #include <QMimeData>
 #include <QPainter>
 
-MapHandler::MapHandler ( unsigned x ,unsigned y ,QWidget *parent) :
-     QWidget(parent), map(x,y)
+MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y, QWidget *parent) :
+     QWidget(parent), map(x,y),icons(container)
 {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);

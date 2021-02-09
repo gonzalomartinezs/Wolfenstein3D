@@ -3,13 +3,15 @@
 
 #include <QWidget>
 #include  <QVector>
+
 #include "map.h"
+#include "iconscontainer.h"
 
 class MapHandler : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MapHandler(unsigned x = 5, unsigned y= 5, QWidget *parent = nullptr);
+    explicit MapHandler(const IconsContainer& container, unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
 
 signals:
 
@@ -20,12 +22,13 @@ protected:
     void dropEvent(QDropEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
-private:
 
+private:
     Map map;
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
     QRect focused;
+    const IconsContainer& icons;
 };
 
 #endif // MAPHANDLER_H
