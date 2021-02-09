@@ -1,5 +1,5 @@
-#ifndef TP3_TALLER_CLIENT_H
-#define TP3_TALLER_CLIENT_H
+#ifndef CLIENT_H
+#define CLIENT_H
 #include <fstream>
 #include <string>
 #include <utility>
@@ -57,17 +57,19 @@ private:
     void _createGame();
     void _joinGame();
     void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received);
-    void
-    _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
-                             std::vector<float> &coordinates,
-                             uint8_t *bytes_received);
-    void
-    _assignOtherPlayersCoordenates(uint8_t *bytes_received,
-                                   uint8_t bytes_to_receive,
-                                   std::vector<DirectedPositionable> &players,
-                                   std::vector<float> &coordinates);
+    void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
+                             std::vector<float> &coordinates, uint8_t *bytes_received);
+    void _assignOtherPlayersCoordenates(uint8_t *bytes_received,
+                                        uint8_t bytes_to_receive,
+                                        std::vector<DirectedPositionable> &players,
+                                        std::vector<float> &coordinates,
+                                        int objects_parsed);
+    void _assignObjectsCoordenates(uint8_t *bytes_received,
+                                   std::vector<Positionable> &objects,
+                                   std::vector<float> &coordinates,
+                                   int &objects_parsed);
 
 };
 
 
-#endif //TP3_TALLER_CLIENT_H
+#endif //CLIENT_H
