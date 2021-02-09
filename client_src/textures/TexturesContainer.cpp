@@ -410,8 +410,8 @@ void TexturesContainer::_loadStaticTextures() {
 
     static_textures.emplace(KnifeItem, new Texture(KNIFE_ITEM, this->renderer));
     static_textures.emplace(PistolItem, new Texture(PISTOL_ITEM, this->renderer));
-    static_textures.emplace(MachineGunItem, new Texture(MACHINEGUN_ITEM, this->renderer));
-    static_textures.emplace(ChainGunItem, new Texture(CHAINGUN_ITEM, this->renderer));
+    static_textures.emplace(MachinegunItem, new Texture(MACHINEGUN_ITEM, this->renderer));
+    static_textures.emplace(ChaingunItem, new Texture(CHAINGUN_ITEM, this->renderer));
     static_textures.emplace(RPGItem, new Texture(RPG_ITEM, this->renderer));
     static_textures.emplace(Bullets, new Texture(BULLETS_ITEM, this->renderer));
     static_textures.emplace(Blood_0, new Texture(BLOOD_ITEM_0, this->renderer));
