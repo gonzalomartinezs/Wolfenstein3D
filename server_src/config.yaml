@@ -1,7 +1,7 @@
 port: 8080
 max_clients: 2
 
-weapons:
+weapons_general:
   chain_gun:
     time_between_shots: &chain_gun_shots 0.1
   machine_gun:
@@ -24,10 +24,10 @@ player:
   initial_score: 0
   total_lives: 5
   has_key: 1 # 0 = false, otro numero = true
-  initial_bullets: 10
   #Initial weapons
   weapons:
     initial_weapon: 1 # 0 = knife, 1 = pistol
+    initial_bullets: 10
     knife:
       time_between_stabs: 1
       range: 0.5
@@ -79,10 +79,11 @@ items:
     texture: 37
     value: 1 #value = door?
     radius: 0.2
-#  bullets/ammo:
-#    texture: 4
-#    value: 5
-#    radius: 0.2
+  bullet:
+    texture: 35
+    value: 5
+    radius: 0.2
+    max_bullets: 10
   #Weapons
   chain_gun:
     texture: 25

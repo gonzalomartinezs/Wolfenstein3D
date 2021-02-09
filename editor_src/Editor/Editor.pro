@@ -17,6 +17,7 @@ SOURCES += \
     map.cpp \
     mapelement.cpp \
     maphandler.cpp \
+    mapparser.cpp \
     trashbin.cpp
 
 HEADERS += \
@@ -27,6 +28,7 @@ HEADERS += \
     map.h \
     mapelement.h \
     maphandler.h \
+    mapparser.h \
     trashbin.h
 
 FORMS += \

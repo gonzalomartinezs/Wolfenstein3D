@@ -146,12 +146,6 @@ const Coordinate MapHandler::targetCoordinate(const QPoint& position) const{
     return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
 }
 
-
-
-
-
-
-
-
-
-
+const Map& MapHandler::getMap() {
+    return map;
+}

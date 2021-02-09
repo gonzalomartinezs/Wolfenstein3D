@@ -1,6 +1,7 @@
 #include "PlayerActions.h"
 #include "../common_src/HealthRecover.h"
 #include "../common_src/Treasure.h"
+#include "../common_src/BulletItem.h"
 #include <cstring>
 
 #define KEY_INITIAL_HEALTH "initial_health"
@@ -16,9 +17,9 @@ PlayerActions::PlayerActions(const Configuration& config) :
     this->score = config.getInt(KEY_INITIAL_SCORE);
     this->lives = config.getInt(KEY_TOTAL_LIVES);
     this->hasKey = config.getInt(KEY_HAS_KEY);
-    this->bullets = config.getInt(KEY_INITIAL_BULLETS);
+//    this->bullets = config.getInt(KEY_INITIAL_BULLETS);
     this->initialHealth = config.getInt(KEY_INITIAL_HEALTH);
-    this->initialBullets = config.getInt(KEY_INITIAL_BULLETS);
+//    this->initialBullets = config.getInt(KEY_INITIAL_BULLETS);
     this->bulletsCounter = 0;
     this->killsCounter = 0;
 }
@@ -29,6 +30,10 @@ void PlayerActions::use(HealthRecover* recover) {
 
 void PlayerActions::use(Treasure* treasure) {
 	this->score = (*treasure) + this->score;
+}
+
+void PlayerActions::use(BulletItem* bullet) {
+    this->weapons.equip(bullet);
 }
 
 bool PlayerActions::hasWeapon(int id) const {
@@ -45,7 +50,7 @@ uint8_t PlayerActions::getCurrentWeapon() {
 
 void PlayerActions::die() {
     this->health = this->initialHealth;
-    this->bullets = this->initialBullets;
+//    this->bullets = this->initialBullets;
     this->lives--;
 }
 
@@ -108,11 +113,11 @@ void PlayerActions::increaseKillCounter() {
 }
 
 void PlayerActions::useBullets(uint8_t bulletsAmount) {
-    this->bullets -= bulletsAmount;
+    this->weapons.useBullets(bulletsAmount);
 }
 
 bool PlayerActions::hasBullets() {
-    return (this->bullets > 0);
+    return this->weapons.hasBullets();
 }
 
 void PlayerActions::geHUDInfo(uint8_t* msg) {
@@ -126,7 +131,8 @@ void PlayerActions::geHUDInfo(uint8_t* msg) {
     memcpy(msg + 3 * sizeof(uint8_t), &this->hasKey, sizeof(bool));
     memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting, sizeof(bool));
 
-    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &this->bullets, sizeof(int));
+    int bullets = this->weapons.getBullets();
+    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &bullets, sizeof(int));
     memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool) + sizeof(int), &this->score, sizeof(int));
 
 }

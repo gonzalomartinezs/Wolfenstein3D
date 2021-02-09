@@ -74,7 +74,12 @@ items:
       pos_x: 1.0
       pos_y: 13.0
   #Keys
-  #Bullets/Ammo
+  #Bullets
+  bullet:
+    cant_bullet: 1
+    bullet_0:
+      pos_x: 2
+      pos_y: 12
   #Weapons
   chain_gun:
     cant_chain_gun: 1
