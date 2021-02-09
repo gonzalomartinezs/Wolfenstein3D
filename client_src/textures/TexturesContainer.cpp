@@ -24,45 +24,45 @@
 #define BACKGROUND "../client_src/textures/img/miscellaneous/back.png"
 #define PL_HUD "../client_src/textures/img/miscellaneous/HUD_1.png"
 
-#define DOG_0_0 "../client_src/textures/img/sprites/Dog/dog_0_0.BMP"
-#define DOG_0_1 "../client_src/textures/img/sprites/Dog/dog_0_1.BMP"
-#define DOG_0_2 "../client_src/textures/img/sprites/Dog/dog_0_2.BMP"
-#define DOG_0_3 "../client_src/textures/img/sprites/Dog/dog_0_3.BMP"
-#define DOG_1_0 "../client_src/textures/img/sprites/Dog/dog_1_0.BMP"
-#define DOG_1_1 "../client_src/textures/img/sprites/Dog/dog_1_1.BMP"
-#define DOG_1_2 "../client_src/textures/img/sprites/Dog/dog_1_2.BMP"
-#define DOG_1_3 "../client_src/textures/img/sprites/Dog/dog_1_3.BMP"
-#define DOG_2_0 "../client_src/textures/img/sprites/Dog/dog_2_0.BMP"
-#define DOG_2_1 "../client_src/textures/img/sprites/Dog/dog_2_1.BMP"
-#define DOG_2_2 "../client_src/textures/img/sprites/Dog/dog_2_2.BMP"
-#define DOG_2_3 "../client_src/textures/img/sprites/Dog/dog_2_3.BMP"
-#define DOG_3_0 "../client_src/textures/img/sprites/Dog/dog_3_0.BMP"
-#define DOG_3_1 "../client_src/textures/img/sprites/Dog/dog_3_1.BMP"
-#define DOG_3_2 "../client_src/textures/img/sprites/Dog/dog_3_2.BMP"
-#define DOG_3_3 "../client_src/textures/img/sprites/Dog/dog_3_3.BMP"
-#define DOG_4_0 "../client_src/textures/img/sprites/Dog/dog_4_0.BMP"
-#define DOG_4_1 "../client_src/textures/img/sprites/Dog/dog_4_1.BMP"
-#define DOG_4_2 "../client_src/textures/img/sprites/Dog/dog_4_2.BMP"
-#define DOG_4_3 "../client_src/textures/img/sprites/Dog/dog_4_3.BMP"
-#define DOG_5_0 "../client_src/textures/img/sprites/Dog/dog_5_0.BMP"
-#define DOG_5_1 "../client_src/textures/img/sprites/Dog/dog_5_1.BMP"
-#define DOG_5_2 "../client_src/textures/img/sprites/Dog/dog_5_2.BMP"
-#define DOG_5_3 "../client_src/textures/img/sprites/Dog/dog_5_3.BMP"
-#define DOG_6_0 "../client_src/textures/img/sprites/Dog/dog_6_0.BMP"
-#define DOG_6_1 "../client_src/textures/img/sprites/Dog/dog_6_1.BMP"
-#define DOG_6_2 "../client_src/textures/img/sprites/Dog/dog_6_2.BMP"
-#define DOG_6_3 "../client_src/textures/img/sprites/Dog/dog_6_3.BMP"
-#define DOG_7_0 "../client_src/textures/img/sprites/Dog/dog_7_0.BMP"
-#define DOG_7_1 "../client_src/textures/img/sprites/Dog/dog_7_1.BMP"
-#define DOG_7_2 "../client_src/textures/img/sprites/Dog/dog_7_2.BMP"
-#define DOG_7_3 "../client_src/textures/img/sprites/Dog/dog_7_3.BMP"
-#define DOG_KILL_0 "../client_src/textures/img/sprites/Dog/dog_kill_0.BMP"
-#define DOG_KILL_1 "../client_src/textures/img/sprites/Dog/dog_kill_1.BMP"
-#define DOG_KILL_2 "../client_src/textures/img/sprites/Dog/dog_kill_2.BMP"
-#define DOG_KILL_3 "../client_src/textures/img/sprites/Dog/dog_kill_3.BMP"
-#define DOG_ATT_0 "../client_src/textures/img/sprites/Dog/dog_attack_0.BMP"
-#define DOG_ATT_1 "../client_src/textures/img/sprites/Dog/dog_attack_1.BMP"
-#define DOG_ATT_2 "../client_src/textures/img/sprites/Dog/dog_attack_2.BMP"
+#define DOG_0_0 "../client_src/textures/img/sprites/Dog/dog_0_0.bmp"
+#define DOG_0_1 "../client_src/textures/img/sprites/Dog/dog_0_1.bmp"
+#define DOG_0_2 "../client_src/textures/img/sprites/Dog/dog_0_2.bmp"
+#define DOG_0_3 "../client_src/textures/img/sprites/Dog/dog_0_3.bmp"
+#define DOG_1_0 "../client_src/textures/img/sprites/Dog/dog_1_0.bmp"
+#define DOG_1_1 "../client_src/textures/img/sprites/Dog/dog_1_1.bmp"
+#define DOG_1_2 "../client_src/textures/img/sprites/Dog/dog_1_2.bmp"
+#define DOG_1_3 "../client_src/textures/img/sprites/Dog/dog_1_3.bmp"
+#define DOG_2_0 "../client_src/textures/img/sprites/Dog/dog_2_0.bmp"
+#define DOG_2_1 "../client_src/textures/img/sprites/Dog/dog_2_1.bmp"
+#define DOG_2_2 "../client_src/textures/img/sprites/Dog/dog_2_2.bmp"
+#define DOG_2_3 "../client_src/textures/img/sprites/Dog/dog_2_3.bmp"
+#define DOG_3_0 "../client_src/textures/img/sprites/Dog/dog_3_0.bmp"
+#define DOG_3_1 "../client_src/textures/img/sprites/Dog/dog_3_1.bmp"
+#define DOG_3_2 "../client_src/textures/img/sprites/Dog/dog_3_2.bmp"
+#define DOG_3_3 "../client_src/textures/img/sprites/Dog/dog_3_3.bmp"
+#define DOG_4_0 "../client_src/textures/img/sprites/Dog/dog_4_0.bmp"
+#define DOG_4_1 "../client_src/textures/img/sprites/Dog/dog_4_1.bmp"
+#define DOG_4_2 "../client_src/textures/img/sprites/Dog/dog_4_2.bmp"
+#define DOG_4_3 "../client_src/textures/img/sprites/Dog/dog_4_3.bmp"
+#define DOG_5_0 "../client_src/textures/img/sprites/Dog/dog_5_0.bmp"
+#define DOG_5_1 "../client_src/textures/img/sprites/Dog/dog_5_1.bmp"
+#define DOG_5_2 "../client_src/textures/img/sprites/Dog/dog_5_2.bmp"
+#define DOG_5_3 "../client_src/textures/img/sprites/Dog/dog_5_3.bmp"
+#define DOG_6_0 "../client_src/textures/img/sprites/Dog/dog_6_0.bmp"
+#define DOG_6_1 "../client_src/textures/img/sprites/Dog/dog_6_1.bmp"
+#define DOG_6_2 "../client_src/textures/img/sprites/Dog/dog_6_2.bmp"
+#define DOG_6_3 "../client_src/textures/img/sprites/Dog/dog_6_3.bmp"
+#define DOG_7_0 "../client_src/textures/img/sprites/Dog/dog_7_0.bmp"
+#define DOG_7_1 "../client_src/textures/img/sprites/Dog/dog_7_1.bmp"
+#define DOG_7_2 "../client_src/textures/img/sprites/Dog/dog_7_2.bmp"
+#define DOG_7_3 "../client_src/textures/img/sprites/Dog/dog_7_3.bmp"
+#define DOG_KILL_0 "../client_src/textures/img/sprites/Dog/dog_kill_0.bmp"
+#define DOG_KILL_1 "../client_src/textures/img/sprites/Dog/dog_kill_1.bmp"
+#define DOG_KILL_2 "../client_src/textures/img/sprites/Dog/dog_kill_2.bmp"
+#define DOG_KILL_3 "../client_src/textures/img/sprites/Dog/dog_kill_3.bmp"
+#define DOG_ATT_0 "../client_src/textures/img/sprites/Dog/dog_attack_0.bmp"
+#define DOG_ATT_1 "../client_src/textures/img/sprites/Dog/dog_attack_1.bmp"
+#define DOG_ATT_2 "../client_src/textures/img/sprites/Dog/dog_attack_2.bmp"
 
 #define GUARD_0_0 "../client_src/textures/img/sprites/Guard/guard_0_0.BMP"
 #define GUARD_0_1 "../client_src/textures/img/sprites/Guard/guard_0_1.BMP"
@@ -325,7 +325,8 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Wall, new Texture(WALL_PATH, this->renderer));
     static_textures.emplace(Door, new Texture(DOOR_PATH, this->renderer));
     static_textures.emplace(InvertedDoor, new Texture(INVERTED_DOOR_PATH, this->renderer));
-    static_textures.emplace(Barrel, new Texture(BARREL_PATH, this->renderer));
+    static_textures.emplace(Barrel, new Texture(BARREL_PATH, this->renderer))
+    ;
     static_textures.emplace(BJ_0, new Texture(BJ_0_PATH, this->renderer));
     static_textures.emplace(BJ_1, new Texture(BJ_1_PATH, this->renderer));
     static_textures.emplace(BJ_2, new Texture(BJ_2_PATH, this->renderer));
@@ -334,15 +335,62 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(BJ_5, new Texture(BJ_5_PATH, this->renderer));
     static_textures.emplace(BJ_6, new Texture(BJ_6_PATH, this->renderer));
     static_textures.emplace(BJ_7, new Texture(BJ_7_PATH, this->renderer));
+
     static_textures.emplace(Knife_HUD, new Texture(KNIFE_HUD, this->renderer));
     static_textures.emplace(Pistol_HUD, new Texture(PISTOL_HUD, this->renderer));
     static_textures.emplace(MachineGun_HUD, new Texture(MACHINE_HUD, this->renderer));
     static_textures.emplace(ChainGun_HUD, new Texture(CHAIN_HUD, this->renderer));
     static_textures.emplace(RPG_HUD, new Texture(RPGHUD, this->renderer));
+
     static_textures.emplace(HasKey, new Texture(KEY_PATH, this->renderer));
     static_textures.emplace(HasNotKey, new Texture(NOT_KEY_PATH, this->renderer));
     static_textures.emplace(Background,new Texture(BACKGROUND, this->renderer, this->window_surface));
     static_textures.emplace(HUD, new Texture(PL_HUD, this->renderer, this->window_surface));
+
+    static_textures.emplace(Dog_0, new Texture(DOG_0_0, this->renderer));
+    static_textures.emplace(Dog_1, new Texture(DOG_1_0, this->renderer));
+    static_textures.emplace(Dog_2, new Texture(DOG_2_0, this->renderer));
+    static_textures.emplace(Dog_3, new Texture(DOG_3_0, this->renderer));
+    static_textures.emplace(Dog_4, new Texture(DOG_4_0, this->renderer));
+    static_textures.emplace(Dog_5, new Texture(DOG_5_0, this->renderer));
+    static_textures.emplace(Dog_6, new Texture(DOG_6_0, this->renderer));
+    static_textures.emplace(Dog_7, new Texture(DOG_7_0, this->renderer));
+
+    static_textures.emplace(Guard_0, new Texture(GUARD_0_0, this->renderer));
+    static_textures.emplace(Guard_1, new Texture(GUARD_1_0, this->renderer));
+    static_textures.emplace(Guard_2, new Texture(GUARD_2_0, this->renderer));
+    static_textures.emplace(Guard_3, new Texture(GUARD_3_0, this->renderer));
+    static_textures.emplace(Guard_4, new Texture(GUARD_4_0, this->renderer));
+    static_textures.emplace(Guard_5, new Texture(GUARD_5_0, this->renderer));
+    static_textures.emplace(Guard_6, new Texture(GUARD_6_0, this->renderer));
+    static_textures.emplace(Guard_7, new Texture(GUARD_7_0, this->renderer));
+
+    static_textures.emplace(SS_0, new Texture(SS_0_0, this->renderer));
+    static_textures.emplace(SS_1, new Texture(SS_1_0, this->renderer));
+    static_textures.emplace(SS_2, new Texture(SS_2_0, this->renderer));
+    static_textures.emplace(SS_3, new Texture(SS_3_0, this->renderer));
+    static_textures.emplace(SS_4, new Texture(SS_4_0, this->renderer));
+    static_textures.emplace(SS_5, new Texture(SS_5_0, this->renderer));
+    static_textures.emplace(SS_6, new Texture(SS_6_0, this->renderer));
+    static_textures.emplace(SS_7, new Texture(SS_7_0, this->renderer));
+
+    static_textures.emplace(Officer_0, new Texture(OFFICER_0_0, this->renderer));
+    static_textures.emplace(Officer_1, new Texture(OFFICER_1_0, this->renderer));
+    static_textures.emplace(Officer_2, new Texture(OFFICER_2_0, this->renderer));
+    static_textures.emplace(Officer_3, new Texture(OFFICER_3_0, this->renderer));
+    static_textures.emplace(Officer_4, new Texture(OFFICER_4_0, this->renderer));
+    static_textures.emplace(Officer_5, new Texture(OFFICER_5_0, this->renderer));
+    static_textures.emplace(Officer_6, new Texture(OFFICER_6_0, this->renderer));
+    static_textures.emplace(Officer_7, new Texture(OFFICER_7_0, this->renderer));
+
+    static_textures.emplace(Mutant_0, new Texture(MUTANT_0_0, this->renderer));
+    static_textures.emplace(Mutant_1, new Texture(MUTANT_1_0, this->renderer));
+    static_textures.emplace(Mutant_2, new Texture(MUTANT_2_0, this->renderer));
+    static_textures.emplace(Mutant_3, new Texture(MUTANT_3_0, this->renderer));
+    static_textures.emplace(Mutant_4, new Texture(MUTANT_4_0, this->renderer));
+    static_textures.emplace(Mutant_5, new Texture(MUTANT_5_0, this->renderer));
+    static_textures.emplace(Mutant_6, new Texture(MUTANT_6_0, this->renderer));
+    static_textures.emplace(Mutant_7, new Texture(MUTANT_7_0, this->renderer));
 }
 
 void TexturesContainer::_loadDynamicTextures() {
@@ -350,6 +398,7 @@ void TexturesContainer::_loadDynamicTextures() {
             std::vector<std::string>{KNIFE_PL, KNIFE_PL_1, KNIFE_PL_2,
                                      KNIFE_PL_3},
             this->renderer, this->window_surface, 400, false));
+
     dynamic_textures.emplace(Pistol_Pl, new DynamicTexture(
             std::vector<std::string>{PISTOL_PL, PISTOL_PL_1, PISTOL_PL_2,
                                      PISTOL_PL_3, PISTOL_PL_4,
@@ -358,13 +407,16 @@ void TexturesContainer::_loadDynamicTextures() {
                                      PISTOL_PL_10, PISTOL_PL_11, PISTOL_PL_12,
                                      PISTOL_PL_13, PISTOL_PL_14},
             this->renderer, this->window_surface, 500, false));
+
     dynamic_textures.emplace(MachineGun_Pl, new DynamicTexture(
             std::vector<std::string>{MACHINEGUN_PL, MACHINEGUN_PL_1,
                                      MACHINEGUN_PL_2},
             this->renderer, this->window_surface, 100, false));
+
     dynamic_textures.emplace(ChainGun_Pl, new DynamicTexture(
             std::vector<std::string>{CHAINGUN_PL, CHAINGUN_PL_1, CHAINGUN_PL_2},
             this->renderer, this->window_surface, 250, false));
+
     dynamic_textures.emplace(RPG_Pl, new DynamicTexture(
             std::vector<std::string>{RPG_PL, RPG_PL_1, RPG_PL_2, RPG_PL_3},
             this->renderer, this->window_surface, 250, false));
