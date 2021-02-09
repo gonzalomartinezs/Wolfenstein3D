@@ -5,13 +5,14 @@ MapParser::MapParser() {
 
 }
 
-void exportMap(const Map& exported, std::string path = "map.yml") {
+void MapParser::exportMap(const Map& exported, std::string path) {
     std::list<MapElement> list = exported.getElements();
     for(auto& i : list) {
         printf("%i /", i.id);
     }
 }
 
-Map loadMap(std::string path = "map.yml"){
+Map MapParser::loadMap(std::string path){
     printf("hola jorge");
+    return Map(0 ,0);
 }

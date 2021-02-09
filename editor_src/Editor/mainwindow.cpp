@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <string>
+#include "mapparser.h"
+
 
 #define TAM_MAP_DEF 5
 
@@ -51,12 +53,16 @@ void MainWindow::initBar(){
 
     QAction *openAction = fileMenu->addAction(tr("&Open..."), this, &MainWindow::openFile);
     openAction->setShortcuts(QKeySequence::Open);
+
+    QAction *saveAsAction = fileMenu->addAction(tr("&Save as..."), this, &MainWindow::saveFile);
+    saveAsAction->setShortcuts(QKeySequence::SaveAs);
+
     QAction *exitAction = fileMenu->addAction(tr("E&xit"), qApp, &QCoreApplication::quit);
     exitAction->setShortcuts(QKeySequence::Quit);
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     toolsMenu->addAction(tr("&Restart"), this, &MainWindow::resizeMap);
-    QMenu* helpMenu = menuBar()->addMenu(tr("3&Help"));
+    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
 }
 
 void MainWindow::connectEvents(){
@@ -76,10 +82,14 @@ void MainWindow::openFile(){
         loadFile(path);
 }
 
-void MainWindow::loadFile(QString& path){
+void MainWindow::loadFile(QString& path) {
 
+    parser.loadMap( );
 }
 
+void MainWindow::saveFile(){
+    parser.exportMap(mapHandler->getMap() );
+}
 
 
 
