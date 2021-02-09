@@ -3,8 +3,8 @@
 
 #include "itemList.h"
 #include "maphandler.h"
-#include "item.h"
 #include "trashbin.h"
+#include "iconscontainer.h"
 
 #include <QMainWindow>
 #include <vector>
@@ -47,6 +47,7 @@ private:
     TrashBin* trashBin;
     ItemList* itemlist;
     MapHandler* mapHandler;
+    IconsContainer container;
 };
 
 #endif // MAINWINDOW_H

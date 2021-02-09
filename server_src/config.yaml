@@ -42,40 +42,41 @@ player:
 items:
   #Treasure
   cross:
-    texture: 3
+    texture: 31
     value: 10
     radius: 0.5
+  crown:
+    texture: 32
+    value: 200
+    radius: 0.5
   cup:
-    texture: 4
+    texture: 33
     value: 50
     radius: 0.5
   chest:
-    texture: 5
+    texture: 34
     value: 100
     radius: 0.5
-  crown:
-    texture: 6
-    value: 200
-    radius: 0.5
+
   #Health recover
   food:
-    texture: 2
+    texture: 29
     value: 10
     radius: 0.4
     max_health: *max_health_global
   medical_kit:
-    texture: 2
+    texture: 36
     value: 20
     radius: 0.2
     max_health: *max_health_global
   blood:
-    texture: 2
+    texture: 27
     value: 1
     radius: 0.3
     max_health: 11
   #Otros
   key:
-    texture: 3
+    texture: 37
     value: 1 #value = door?
     radius: 0.2
 #  bullets/ammo:
@@ -84,12 +85,12 @@ items:
 #    radius: 0.2
   #Weapons
   chain_gun:
-    texture: 2
+    texture: 25
     value: 3 #value = id
     radius: 0.3
     time_between_shots: *chain_gun_shots
   machine_gun:
-    texture: 2
+    texture: 24
     value: 4 #value = id
     radius: 0.3
     time_between_shots: *machine_gun_shots

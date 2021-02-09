@@ -7,7 +7,7 @@
 #include "../common_src/Map.h"
 #include "Weapons/Weapons.h"
 
-#define HUD_INFO_SIZE 12
+#define HUD_INFO_SIZE 13
 
 class Weapon;
 class HealthRecover;
@@ -34,6 +34,7 @@ public:
 	void use(Treasure* treasure);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
+	uint8_t getCurrentWeapon();
 
 	void die();
 	bool isDead() const;

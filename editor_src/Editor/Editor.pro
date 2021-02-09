@@ -10,7 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     coordinate.cpp \
-    item.cpp \
+    iconscontainer.cpp \
     itemList.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -21,7 +21,7 @@ SOURCES += \
 
 HEADERS += \
     coordinate.h \
-    item.h \
+    iconscontainer.h \
     itemList.h \
     mainwindow.h \
     map.h \

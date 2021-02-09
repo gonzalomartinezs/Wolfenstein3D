@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 640
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -39,9 +39,8 @@ int main(int argc, char *argv[]) {
 
         //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         Client client("localhost", "8080", instructions, drawing_info);
-        client.lobbyInteraction();
+        client.lobbyInteraction("ElJugoDeCulo");
         Map map(client.receiveMap());
-        //Map map(Configuration("../common_src/map_1.yaml"));
 
         EventHandler event_handler(instructions);
         Raycaster raycaster(map, WINDOW_WIDTH / 32, (-WINDOW_HEIGHT) / 18,

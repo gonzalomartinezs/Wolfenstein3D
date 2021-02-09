@@ -1,8 +1,12 @@
 #include "Game.h"
+#include "LeaderBoard.h"
 #include <iostream>
 #include <unistd.h>
 #include <cstring> //borrar
 
+#define END_GAME_CHAR 0
+#define NAME_TIME_TOLERANCE 500
+#define SLEEP_TIME_MILLIS 50
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
@@ -38,6 +42,7 @@ void Game::execute() {
     double lastTickTime = 0;
 
     this->sendMap();
+    //this->recvNames();
 
     try {
         while (this->isRunning) { //Cambiar, ahora es un while true (Esperar caracter para o esperar a que finalice la partida)
@@ -45,8 +50,8 @@ void Game::execute() {
 
             std::cout << "Nuevo Tick" << std::endl;
             this->getInstructions();
-            this->update();  // Fixed Step-Time
             this->sendUpdate();
+            this->update();  // Fixed Step-Time
 
             timeBetweenUpdates.getTime();
 
@@ -59,6 +64,8 @@ void Game::execute() {
     } catch (...) {
         std::cerr << "Unknown error in Game Loop :(" << std::endl;
     }
+
+    //this->createLeaderBoard();
 }
 
 void Game::getInstructions() {
@@ -102,6 +109,8 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     this->players[clientNumber]->getPositionDataWithPlane(msg + currentByte);
     currentByte += POS_DATA_PLANE_SIZE;
 
+    this->items.loadItemsInfo(msg, currentByte);
+
     for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
             this->players[i]->getPositionData(msg + currentByte);
@@ -115,8 +124,64 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     return currentByte;
 }
 
-void Game::createLeaderBoard(uint8_t *msg) {
+void Game::createLeaderBoard() {
+    uint8_t endGameChar = END_GAME_CHAR;
+    uint8_t msg[MAX_MSG_SIZE];
+    uint8_t msgLen;
+    LeaderBoard leaderBoard;
 
+    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
+
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        this->clients[i]->push(&endGameChar, 1);
+        this->clients[i]->push(&msgLen, 1);
+        this->clients[i]->push(msg, msgLen);
+    }
+}
+
+void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& players) {
+    uint8_t size;
+    std::string name;
+    Timer timer;
+
+    timer.start();
+
+    while (clients[i]->isEmpty() && timer.getTime() < NAME_TIME_TOLERANCE) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+
+    if (!clients[i]->isEmpty()) {
+        size = clients[i]->pop();
+        for (int j = 0; j < size; j++) {
+            if (!clients[i]->isEmpty()) {
+                name.push_back(clients[i]->pop());
+            }
+        }
+        if (name.size() > 0) {
+            players[i]->setName(name);
+        }
+    }
+
+    while (!clients[i]->isEmpty()) {
+        clients[i]->pop();
+    }
+}
+
+void Game::recvNames() {
+
+    std::vector<std::thread*> nameReceivers;
+
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        nameReceivers.push_back(new std::thread
+        (_recvName, i, std::ref(this->clients), std::ref(this->players)));
+    }
+
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        nameReceivers[i]->join();
+        delete nameReceivers[i];
+    }
 }
 
 void Game::stop() {

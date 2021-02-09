@@ -7,16 +7,14 @@
 
 ItemList::ItemList(QWidget *parent)
     : QListWidget(parent){
-    this->itemSize = ITEMSIZE; // default
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
-    setIconSize(QSize(itemSize, itemSize));
+    setIconSize(QSize(ITEMSIZE, ITEMSIZE));
     setSpacing(10);
     setAcceptDrops(true);
     setDropIndicatorShown(true);
-    this->loadList();
 }
-
+/*
 void ItemList::loadImages(){
 
     Q_INIT_RESOURCE(editor);
@@ -36,14 +34,15 @@ void ItemList::loadImages(){
        }
     }
 }
+*/
+void ItemList::loadList(const IconsContainer& list){
+    const std::vector<QPixmap>& items = list.getIcons();
 
-void ItemList::loadList(){
-    loadImages();
-    for (auto &i : items){
+    for(unsigned i = 0; i < items.size(); i++) {
         QListWidgetItem *pieceItem = new QListWidgetItem(this);
-        pieceItem->setIcon(QIcon(i.pixmap));
-        pieceItem->setData(Qt::UserRole, QVariant(i.pixmap));
-        pieceItem->setData(Qt::UserRole+1, i.id);
+        pieceItem->setIcon(QIcon(items[i]));
+        pieceItem->setData(Qt::UserRole, QVariant(items[i]));
+        pieceItem->setData(Qt::UserRole+1, i);
         pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
     }
 }

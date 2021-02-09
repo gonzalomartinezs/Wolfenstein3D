@@ -39,6 +39,10 @@ void PlayerActions::equip(Weapon* weapon) {
 	this->weapons.equip(weapon);
 }
 
+uint8_t PlayerActions::getCurrentWeapon() {
+    return this->weapons.getCurrentWeapon();
+}
+
 void PlayerActions::die() {
     this->health = this->initialHealth;
     this->bullets = this->initialBullets;
@@ -116,10 +120,14 @@ void PlayerActions::geHUDInfo(uint8_t* msg) {
     memcpy(msg + sizeof(uint8_t), &this->health, sizeof(uint8_t));
 
     uint8_t current_weapon = this->weapons.getCurrentWeapon();
+    uint8_t weapon_is_shooting = this->weapons.isShooting();
+
     memcpy(msg + 2 * sizeof(uint8_t), &current_weapon, sizeof(uint8_t));
     memcpy(msg + 3 * sizeof(uint8_t), &this->hasKey, sizeof(bool));
-    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &this->bullets, sizeof(int));
-    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool) + sizeof(int), &this->score, sizeof(int));
+    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting, sizeof(bool));
+
+    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &this->bullets, sizeof(int));
+    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool) + sizeof(int), &this->score, sizeof(int));
 
 }
 
