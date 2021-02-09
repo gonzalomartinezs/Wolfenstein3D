@@ -38,6 +38,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWidgets(){
     this->linkToUI();
+    this->itemlist->loadList(this->container);
     this->mapHandler = new MapHandler(TAM_MAP_DEF ,TAM_MAP_DEF ,this);
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
