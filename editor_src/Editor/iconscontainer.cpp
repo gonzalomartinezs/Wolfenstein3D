@@ -11,6 +11,7 @@ IconsContainer::IconsContainer(unsigned in_size) {
        QPixmap newImage;
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
             this->icons.push_back(newImage.scaled(this->size, this->size));
+           i++;
        } else {
            done = true;
        }
