@@ -26,7 +26,6 @@ protected:
 
 private:
     Map map;
-    int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
     const Coordinate targetCoordinate(const QPoint& position) const;
     QRect focused;

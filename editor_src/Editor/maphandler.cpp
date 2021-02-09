@@ -26,7 +26,7 @@ void MapHandler::paintEvent (QPaintEvent *event) {
         painter.drawRect(focused.adjusted(0, 0, -1, -1));
     }
 
-    std::list <const MapElement&> filled = this->map.getElements();
+    std::list < MapElement> filled = this->map.getElements();
 
     for (const MapElement &i : filled) {
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
@@ -53,7 +53,7 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event) {
     QRect updateRect = focused.united(targetSquare(event->pos()));
 
     if (event->mimeData()->hasFormat(ItemList::editorMimeType())
-        && findPiece(targetSquare(event->pos())) == -1) {
+        && map.isEmpty(targetCoordinate( event->pos() ) ) ) {
 
         this->focused = targetSquare(event->pos());
         event->setDropAction(Qt::MoveAction);
@@ -65,19 +65,21 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event) {
     update(updateRect);
 }
 
-void MapHandler::dropEvent(QDropEvent *event)
-{
-    if (event->mimeData()->hasFormat(ItemList::editorMimeType())
-        && findPiece(targetSquare(event->pos())) == -1) {
+void MapHandler::dropEvent(QDropEvent *event) {
+
+
+    if ( event->mimeData()->hasFormat(ItemList::editorMimeType())
+        && map.isEmpty(targetCoordinate( event->pos() ) ) ) {
 
         QByteArray pieceData = event->mimeData()->data(ItemList::editorMimeType());
         QDataStream dataStream(&pieceData, QIODevice::ReadOnly);
         MapElement element;
         element.rect = targetSquare(event->pos());
-        dataStream >> element.pixmap >> element.id;
+        QPixmap aux;
+        dataStream >> aux >> element.id;
         // intentar hacerlo sin mandar el pixmap del otro lado.
 
-        elements.append(element);
+        map.add(targetCoordinate(event->pos() ) ,element);
 
         focused = QRect();
         update(element.rect);
@@ -96,22 +98,23 @@ void MapHandler::dropEvent(QDropEvent *event)
 }
 
 
-void MapHandler::mousePressEvent(QMouseEvent *event)
-{
+void MapHandler::mousePressEvent(QMouseEvent *event) {
+    Coordinate coor = targetCoordinate(event->pos());
     QRect square = targetSquare(event->pos());
-     int found = findPiece(square);
 
-    if (found == -1)
-        return;
+    if (map.isEmpty(targetCoordinate(event->pos()))) return;
 
-    MapElement element = elements.takeAt(found);
+
+    MapElement element = map.get(coor);
+    map.remove(coor);
 
     update(square);
 
+    QPixmap aux = icons.getIcon(element.id);
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    dataStream << element.pixmap << element.id;
+    dataStream << aux << element.id;
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(ItemList::editorMimeType(), itemData);
@@ -119,10 +122,11 @@ void MapHandler::mousePressEvent(QMouseEvent *event)
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->setHotSpot(event->pos() - square.topLeft());
-    drag->setPixmap(element.pixmap);
+    drag->setPixmap(aux);
 
     if (drag->exec(Qt::MoveAction) != Qt::MoveAction) {
-        elements.insert(found, element);
+        map.add(coor,element);
+        //elements.insert(found, element);
         update(targetSquare(event->pos()));
 
         /*if (piece.location == square.topLeft() / pieceSize())
@@ -142,16 +146,6 @@ const Coordinate MapHandler::targetCoordinate(const QPoint& position) const{
     return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
 }
 
-// Borrar ESTO XD.
-int MapHandler::findPiece(const QRect &pieceRect) const {
-/*
-    for (int i = 0, size = elements.size(); i < size; ++i) {
-        if (elements.at(i).rect == pieceRect)
-            return i;
-    }
-    return -1;
-    */
-}
 
 
 

@@ -39,7 +39,7 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets(){
     this->linkToUI();
     this->itemlist->loadList(this->container);
-    this->mapHandler = new MapHandler(TAM_MAP_DEF ,TAM_MAP_DEF ,this);
+    this->mapHandler = new MapHandler(this->container,TAM_MAP_DEF ,TAM_MAP_DEF ,this);
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
     mapScrollArea->setWidget(mapHandler);
@@ -67,7 +67,7 @@ void MainWindow::connectEvents(){
 void MainWindow::resizeMap(){
     if(this->mapHandler == nullptr) return;
     delete mapHandler;
-    mapHandler = new MapHandler(spinX->value(), spinY->value(), this);
+    mapHandler = new MapHandler(container,spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(mapHandler);
 }
 

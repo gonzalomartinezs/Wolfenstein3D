@@ -3,7 +3,6 @@
 
 #include "itemList.h"
 #include "maphandler.h"
-#include "item.h"
 #include "trashbin.h"
 #include "iconscontainer.h"
 
