@@ -49,16 +49,16 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(565, 399);
+        MainWindow->resize(896, 520);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         mapArea = new QScrollArea(centralwidget);
         mapArea->setObjectName(QString::fromUtf8("mapArea"));
-        mapArea->setGeometry(QRect(220, 0, 331, 351));
+        mapArea->setGeometry(QRect(230, 10, 631, 471));
         mapArea->setWidgetResizable(true);
         nada = new QWidget();
         nada->setObjectName(QString::fromUtf8("nada"));
-        nada->setGeometry(QRect(0, 0, 329, 349));
+        nada->setGeometry(QRect(0, 0, 629, 469));
         mapArea->setWidget(nada);
         itemList = new ItemList(centralwidget);
         itemList->setObjectName(QString::fromUtf8("itemList"));
@@ -73,6 +73,7 @@ public:
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         spinX = new QSpinBox(horizontalLayoutWidget);
         spinX->setObjectName(QString::fromUtf8("spinX"));
+        spinX->setMaximum(1000);
 
         formLayout->setWidget(2, QFormLayout::FieldRole, spinX);
 
@@ -88,6 +89,7 @@ public:
 
         spinY = new QSpinBox(horizontalLayoutWidget);
         spinY->setObjectName(QString::fromUtf8("spinY"));
+        spinY->setMaximum(1000);
 
         formLayout->setWidget(1, QFormLayout::FieldRole, spinY);
 
@@ -101,13 +103,13 @@ public:
 
         trashFrame = new QFrame(centralwidget);
         trashFrame->setObjectName(QString::fromUtf8("trashFrame"));
-        trashFrame->setGeometry(QRect(0, 310, 221, 41));
+        trashFrame->setGeometry(QRect(0, 310, 221, 131));
         trashFrame->setFrameShape(QFrame::StyledPanel);
         trashFrame->setFrameShadow(QFrame::Raised);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 565, 23));
+        menubar->setGeometry(QRect(0, 0, 896, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
