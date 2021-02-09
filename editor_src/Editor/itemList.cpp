@@ -37,15 +37,17 @@ void ItemList::loadImages(){
     }
 }
 */
-void ItemList::loadList(){
-    loadImages();
-    for (auto &i : items){
+void ItemList::loadList(const IconsContainer& list){
+    std::vector<QPixmap>& items = list.getIcons();
+
+    for(unsigned i = 0; i < items.size(); i++) {
         QListWidgetItem *pieceItem = new QListWidgetItem(this);
-        pieceItem->setIcon(QIcon(i.pixmap));
-        pieceItem->setData(Qt::UserRole, QVariant(i.pixmap));
-        pieceItem->setData(Qt::UserRole+1, i.id);
+        pieceItem->setIcon(QIcon(items[i]));
+        pieceItem->setData(Qt::UserRole, QVariant(items[i]));
+        pieceItem->setData(Qt::UserRole+1, i);
         pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
     }
+
 }
 
 void ItemList::startDrag(Qt::DropActions )
