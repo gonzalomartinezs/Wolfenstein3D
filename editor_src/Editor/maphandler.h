@@ -8,8 +8,7 @@
 #include "iconscontainer.h"
 #include "coordinate.h"
 
-class MapHandler : public QWidget
-{
+class MapHandler : public QWidget {
     Q_OBJECT
 public:
     explicit MapHandler(const IconsContainer& container, unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
@@ -23,11 +22,12 @@ protected:
     void dropEvent(QDropEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
+    const Map& getMap();
 
 private:
-    Map map;
     const QRect targetSquare(const QPoint &position) const;
     const Coordinate targetCoordinate(const QPoint& position) const;
+    Map map;
     QRect focused;
     const IconsContainer& icons;
 };
