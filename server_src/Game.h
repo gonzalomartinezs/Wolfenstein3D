@@ -43,6 +43,8 @@ class Game {
     void createLeaderBoard(uint8_t* msg);
 
     void sendMap();
+
+    void recvNames();
 };
 
 #endif  // WOLFENSTEIN3D_GAME_H
