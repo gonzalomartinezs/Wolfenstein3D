@@ -5,6 +5,7 @@
 #include "MachineGunItem.h"
 #include "ChainGunItem.h"
 #include "RocketLauncherItem.h"
+#include "BulletItem.h"
 #include <cstring>
 
 #include "Exceptions/ItemsException.h"
@@ -22,7 +23,7 @@
 
 //Others
 #define KEY_ITEM_KEY "key"
-#define KEY_AMMO "ammo"
+#define KEY_BULLETS "bullet"
 
 //Weapons
 #define KEY_MACHINE_GUN "machine_gun"
@@ -32,7 +33,7 @@
 static const std::vector<std::string> keys = {KEY_CROSS, KEY_CUP, KEY_CHEST,
 											KEY_CROWN, KEY_FOOD,
 											KEY_MEDICAL_KIT, KEY_BLOOD,
-											KEY_ITEM_KEY, KEY_AMMO,
+											KEY_ITEM_KEY, KEY_BULLETS,
 											KEY_MACHINE_GUN, KEY_CHAIN_GUN,
 											KEY_ROCKET_LAUNCHER};
 
@@ -57,14 +58,10 @@ static Item* initializeItem(const Configuration& config,
 						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
 						config.getInt(KEY_VALUE),
 						config.getFloat(KEY_RADIUS));
-	} else if (key == KEY_AMMO) {
-		item = new Ammo(config_map.getFloat(KEY_POS_X),
-						config_map.getFloat(KEY_POS_Y),
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
-						config.getFloat(KEY_RADIUS));
-	}*/
-	else if (key == KEY_MACHINE_GUN) {
+	}*/ else if (key == KEY_BULLETS) {
+		item = new BulletItem(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
+	} else if (key == KEY_MACHINE_GUN) {
 		item = new MachineGunItem(config, config_map.getFloat(KEY_POS_X),
 							config_map.getFloat(KEY_POS_Y));
 	} else if (key == KEY_CHAIN_GUN) {

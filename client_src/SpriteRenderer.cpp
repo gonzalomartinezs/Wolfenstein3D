@@ -125,21 +125,27 @@ void SpriteRenderer::_initializeSpriteInfo(SpriteInfo &info,
 void SpriteRenderer::_showSprite(const SpriteInfo &info,
                                  Positionable &sprite) {
     if (info.sprite_begin != -1 && info.sprite_end != -1) {
-        int tex_x = int(TEX_WIDTH * (info.sprite_begin -
+        int sprite_height = TEX_HEIGHT;
+        int sprite_width = TEX_WIDTH;
+        if (sprite.getTexture() >= KnifeItem && sprite.getTexture() <= RPGItem){
+            sprite_height*=2; // fix hasta conseguir texturas de igual tamaño
+            sprite_width*=2;
+        }
+        int tex_x = int(sprite_width * (info.sprite_begin -
                             (-info.sprite_width / 2 + info.sprite_screen_x))
                             /info.sprite_width);
-        int tex_width = ((info.sprite_end-info.sprite_begin)*TEX_WIDTH)
+        int tex_width = ((info.sprite_end-info.sprite_begin)*sprite_width)
                                                             /info.sprite_width;
 
         SDL_Rect tex_portion;
         // Renderizo sprite en eje y entero
         if (info.sprite_height <= height){
-            tex_portion =  {tex_x, 0, tex_width, TEX_HEIGHT};
+            tex_portion =  {tex_x, 0, tex_width, sprite_height};
         } else {
             // Renderizo solo la porcion del eje y que entra en pantalla
-            int portion = ((info.sprite_height-height)*TEX_HEIGHT)/
+            int portion = ((info.sprite_height-height)*sprite_height)/
                                                         (2*info.sprite_height);
-            tex_portion =  {tex_x, portion, tex_width, TEX_HEIGHT-2*portion};
+            tex_portion =  {tex_x, portion, tex_width, sprite_height-2*portion};
         }
 
         SDL_Rect stretched = {info.sprite_begin + begin_x, info.draw_start_y + begin_y,
