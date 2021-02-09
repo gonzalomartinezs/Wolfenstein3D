@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <cstring> //borrar
 
+#define NAME_TIME_TOLERANCE 500
+#define SLEEP_TIME_MILLIS 50
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
@@ -117,6 +119,51 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
 
 void Game::createLeaderBoard(uint8_t *msg) {
 
+}
+
+void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& players) {
+    uint8_t size;
+    std::string name;
+    Timer timer;
+
+    timer.start();
+
+    while (clients[i]->isEmpty() && timer.getTime() < NAME_TIME_TOLERANCE) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+
+    if (!clients[i]->isEmpty()) {
+        size = clients[i]->pop();
+        for (int j = 0; j < size; j++) {
+            if (!clients[i]->isEmpty()) {
+                name.push_back(clients[i]->pop());
+            }
+        }
+        if (name.size() > 0) {
+            players[i]->setName(name);
+        }
+    }
+
+    while (!clients[i]->isEmpty()) {
+        clients[i]->pop();
+    }
+}
+
+void Game::recvNames() {
+
+    std::vector<std::thread*> nameReceivers;
+
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        nameReceivers.push_back(new std::thread
+        (_recvName, i, std::ref(this->clients), std::ref(this->players)));
+    }
+
+    for (size_t i = 0; i < this->clients.size(); i++) {
+        nameReceivers[i]->join();
+        delete nameReceivers[i];
+    }
 }
 
 void Game::stop() {
