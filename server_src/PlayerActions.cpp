@@ -39,6 +39,10 @@ void PlayerActions::equip(Weapon* weapon) {
 	this->weapons.equip(weapon);
 }
 
+uint8_t PlayerActions::getCurrentWeapon() {
+    return this->weapons.getCurrentWeapon();
+}
+
 void PlayerActions::die() {
     this->health = this->initialHealth;
     this->bullets = this->initialBullets;

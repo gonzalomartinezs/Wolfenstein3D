@@ -34,6 +34,7 @@ public:
 	void use(Treasure* treasure);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
+	uint8_t getCurrentWeapon();
 
 	void die();
 	bool isDead() const;
