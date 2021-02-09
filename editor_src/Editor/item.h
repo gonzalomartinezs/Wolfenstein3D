@@ -2,7 +2,6 @@
 #define ITEM_H
 
 #include <QPixmap>
-
 class Item
 {
 public:
