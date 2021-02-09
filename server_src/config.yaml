@@ -86,12 +86,12 @@ items:
   #Weapons
   chain_gun:
     texture: 25
-    value: 3 #value = id
+    value: 2 #value = id
     radius: 0.3
     time_between_shots: *chain_gun_shots
   machine_gun:
     texture: 24
-    value: 4 #value = id
+    value: 3 #value = id
     radius: 0.3
     time_between_shots: *machine_gun_shots
     time_between_bursts: *machine_gun_bursts

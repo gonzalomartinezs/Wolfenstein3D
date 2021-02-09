@@ -4,7 +4,7 @@
 #include "Blood.h"
 #include "MachineGunItem.h"
 #include "ChainGunItem.h"
-//#include "RocketLauncherItem.h"
+#include "RocketLauncherItem.h"
 #include <cstring>
 
 #include "Exceptions/ItemsException.h"
@@ -70,11 +70,10 @@ static Item* initializeItem(const Configuration& config,
 	} else if (key == KEY_CHAIN_GUN) {
 		item = new ChainGunItem(config, config_map.getFloat(KEY_POS_X),
 							config_map.getFloat(KEY_POS_Y));
-	}/* else if (key == KEY_ROCKET_LAUNCHER) {
+	} else if (key == KEY_ROCKET_LAUNCHER) {
 		item = new RocketLauncherItem(config, config_map.getFloat(KEY_POS_X),
 							config_map.getFloat(KEY_POS_Y));
-	}*/
-	else {
+	} else {
 		throw ItemsException("Key '%s' is not a valid item key.",
 							key.c_str());
 	}
@@ -120,7 +119,6 @@ void Items::remove(size_t i) {
 	delete this->items[i];
 	this->items.erase(this->items.begin() + i);
 }
-
 
 void Items::loadItemsInfo(uint8_t* msg, uint8_t &currentByte) {
     float aux;
