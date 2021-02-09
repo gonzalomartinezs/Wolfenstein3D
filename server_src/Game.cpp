@@ -47,8 +47,8 @@ void Game::execute() {
 
             std::cout << "Nuevo Tick" << std::endl;
             this->getInstructions();
-            this->update();  // Fixed Step-Time
             this->sendUpdate();
+            this->update();  // Fixed Step-Time
 
             timeBetweenUpdates.getTime();
 
