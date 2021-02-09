@@ -7,6 +7,8 @@
 #define IS_TURNING_RIGHT 4
 #define IS_FIRING 5
 #define NOT_FIRING 6
+#define NEXT_GUN 7
+#define PREV_GUN 8
 
 void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
     SDL_Event event;
@@ -38,6 +40,16 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
             if (flag != IS_FIRING) {
                 flag = IS_FIRING;
                 this->instructions.push(IS_FIRING);
+            }
+        } else if (keys[SDL_SCANCODE_E]) {
+            if (flag != NEXT_GUN) {
+                flag = NEXT_GUN;
+                this->instructions.push(NEXT_GUN);
+            }
+        } else if (keys[SDL_SCANCODE_Q]) {
+            if (flag != PREV_GUN) {
+                flag = PREV_GUN;
+                this->instructions.push(PREV_GUN);
             }
         } else {
             if (flag == IS_FIRING) {
