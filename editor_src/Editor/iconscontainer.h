@@ -4,15 +4,17 @@
 #include <unordered_map>
 #include <QPixmap>
 
-#define MAX_ITEMS 11
+#define MAX_ITEMS 12
 
 class IconsContainer {
 
 public:
-    IconsContainer();
+    IconsContainer(unsigned size);
     const QPixmap& getIcon(int id);
+    unsigned getSize();
 private:
     std::unordered_map<int,QPixmap> icons;
+    unsigned size;
 };
 
 #endif // ICONSCONTAINER_H
