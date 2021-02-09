@@ -12,18 +12,16 @@
 class Weapon;
 class HealthRecover;
 class Treasure;
+class BulletItem;
 class Player;
 
 class PlayerActions {
 private:
     uint8_t initialHealth;
-    int initialBullets;
-
 	uint8_t health, lives;
     int score;
     bool hasKey;
     Weapons weapons;
-    int bullets;
     int bulletsCounter;
     int killsCounter;
 
@@ -32,6 +30,7 @@ public:
 	PlayerActions(const Configuration& config);
 	void use(HealthRecover* recover);
 	void use(Treasure* treasure);
+    void use(BulletItem* bullet);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
 	uint8_t getCurrentWeapon();
