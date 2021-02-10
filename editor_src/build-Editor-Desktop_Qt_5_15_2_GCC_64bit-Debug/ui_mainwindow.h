@@ -43,7 +43,7 @@ public:
     QLabel *label_2;
     QSpinBox *spinX;
     QLabel *label_3;
-    QLineEdit *lineLabel;
+    QLineEdit *nameLabel;
     QFrame *trashFrame;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -106,10 +106,10 @@ public:
 
         formLayout->setWidget(2, QFormLayout::LabelRole, label_3);
 
-        lineLabel = new QLineEdit(horizontalLayoutWidget);
-        lineLabel->setObjectName(QString::fromUtf8("lineLabel"));
+        nameLabel = new QLineEdit(horizontalLayoutWidget);
+        nameLabel->setObjectName(QString::fromUtf8("nameLabel"));
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, lineLabel);
+        formLayout->setWidget(2, QFormLayout::FieldRole, nameLabel);
 
 
         horizontalLayout->addLayout(formLayout);

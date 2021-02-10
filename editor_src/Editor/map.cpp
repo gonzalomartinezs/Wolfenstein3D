@@ -55,10 +55,10 @@ const MapElement& Map::get(const QPoint& point) const {
     return ( this->matrix.at( coor.toString() ) );
 }
 
-const std::string& Map::getMap() {
+const std::string& Map::getName() const {
     return name;
 }
 
-void Map::setMap (const std::string& inName) {
+void Map::setName (const std::string& inName) {
     name = inName;
 }

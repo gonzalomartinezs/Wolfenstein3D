@@ -7,11 +7,12 @@
 #include <QPainter>
 #include <QPen>
 
-MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y, QWidget *parent) :
+MapHandler::MapHandler ( const IconsContainer& container,const std::string& name ,
+                         unsigned x ,unsigned y, QWidget *parent) :
      QWidget(parent), map(x,y),icons(container) {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
-
+    map.setName(name);
     setMinimumSize(x*ITEMSIZE, y*ITEMSIZE);
     setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
 }
