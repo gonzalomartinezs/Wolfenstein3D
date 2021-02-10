@@ -5,6 +5,7 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QPainter>
+#include <QPen>
 
 MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y, QWidget *parent) :
      QWidget(parent), map(x,y),icons(container) {
@@ -18,6 +19,17 @@ MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y,
 void MapHandler::paintEvent (QPaintEvent *event) {
     QPainter painter(this);
     painter.fillRect(event->rect(), Qt::darkCyan);
+
+    painter.setPen( QPen(Qt::gray, 1, Qt::DashDotLine, Qt::RoundCap) ) ;
+
+    for (int i = ITEMSIZE; i < this->width(); i+=ITEMSIZE ) {
+        painter.drawLine(QPoint( i, 0), QPoint(i, this->height() ) );
+    }
+
+    for (int i = ITEMSIZE; i < this->height(); i+=ITEMSIZE ) {
+        painter.drawLine(QPoint( 0, i), QPoint(this->width(), i ) );
+    }
+
 
 
     if ( focused.isValid() ) {
