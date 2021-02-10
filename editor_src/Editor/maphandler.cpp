@@ -30,8 +30,6 @@ void MapHandler::paintEvent (QPaintEvent *event) {
         painter.drawLine(QPoint( 0, i), QPoint(this->width(), i ) );
     }
 
-
-
     if ( focused.isValid() ) {
         painter.setBrush(QColor(255, 0, 0 ,127));
         painter.setPen(Qt::NoPen);
