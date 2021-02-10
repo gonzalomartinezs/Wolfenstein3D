@@ -40,7 +40,6 @@ void MapHandler::paintEvent (QPaintEvent *event) {
     for (const MapElement &i : filled) {
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
-
 }
 
 void MapHandler::dragEnterEvent(QDragEnterEvent *event) {

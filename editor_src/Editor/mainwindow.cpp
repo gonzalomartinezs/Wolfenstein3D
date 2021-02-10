@@ -62,7 +62,8 @@ void MainWindow::initBar(){
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     toolsMenu->addAction(tr("&Restart"), this, &MainWindow::resizeMap);
-    QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
+    QMenu* helpMenu = menuBar()->addMenu( tr("&Help") );
+    helpMenu->addAction( (tr(("&instructions"))) );
 }
 
 void MainWindow::connectEvents(){
