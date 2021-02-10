@@ -13,6 +13,7 @@ class MapHandler : public QWidget {
 public:
     explicit MapHandler(const IconsContainer& container, unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
     const Map& getMap();
+    void loadElements(std::list<MapElement>& in);
 
 signals:
 

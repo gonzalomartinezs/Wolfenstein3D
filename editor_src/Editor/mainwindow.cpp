@@ -7,7 +7,10 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <string>
+#include <list>
+
 #include "mapparser.h"
+#include "mapelement.h"
 
 
 #define TAM_MAP_DEF 5
@@ -72,6 +75,8 @@ void MainWindow::connectEvents(){
 
 void MainWindow::resizeMap(){
     if(this->mapHandler == nullptr) return;
+
+    std::list<MapElement> elements = mapHandler->getMap().getElements();
     delete mapHandler;
     mapHandler = new MapHandler(container,spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(mapHandler);
@@ -79,7 +84,7 @@ void MainWindow::resizeMap(){
 
 void MainWindow::openFile(){
     QString path = QFileDialog::getOpenFileName(this);
-    if (!path.isEmpty())
+    if ( !path.isEmpty() )
         loadFile(path);
 }
 

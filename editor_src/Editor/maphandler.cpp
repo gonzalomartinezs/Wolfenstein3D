@@ -157,3 +157,12 @@ const Coordinate MapHandler::targetCoordinate(const QPoint& position) const{
 const Map& MapHandler::getMap() {
     return map;
 }
+
+void MapHandler::loadElements(std::list<MapElement>& in){
+    for(auto &i : in){
+        Coordinate coor(i.calculateX(), i.calculateY());
+        if( map.inRange(coor) ) {
+            map.add(coor, i);
+        }
+    }
+}
