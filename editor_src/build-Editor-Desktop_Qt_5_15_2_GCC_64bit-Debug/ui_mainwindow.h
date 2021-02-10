@@ -15,6 +15,7 @@
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -36,11 +37,13 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QFormLayout *formLayout;
-    QSpinBox *spinX;
-    QLabel *label_2;
     QPushButton *button;
-    QSpinBox *spinY;
     QLabel *label;
+    QSpinBox *spinY;
+    QLabel *label_2;
+    QSpinBox *spinX;
+    QLabel *label_3;
+    QLineEdit *lineLabel;
     QFrame *trashFrame;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -54,62 +57,72 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         mapArea = new QScrollArea(centralwidget);
         mapArea->setObjectName(QString::fromUtf8("mapArea"));
-        mapArea->setGeometry(QRect(230, 10, 631, 471));
+        mapArea->setGeometry(QRect(250, 20, 641, 461));
         mapArea->setWidgetResizable(true);
         nada = new QWidget();
         nada->setObjectName(QString::fromUtf8("nada"));
-        nada->setGeometry(QRect(0, 0, 629, 469));
+        nada->setGeometry(QRect(0, 0, 639, 459));
         mapArea->setWidget(nada);
         itemList = new ItemList(centralwidget);
         itemList->setObjectName(QString::fromUtf8("itemList"));
         itemList->setGeometry(QRect(0, 0, 221, 201));
         horizontalLayoutWidget = new QWidget(centralwidget);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(0, 200, 221, 108));
+        horizontalLayoutWidget->setGeometry(QRect(0, 210, 221, 141));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         formLayout = new QFormLayout();
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        spinX = new QSpinBox(horizontalLayoutWidget);
-        spinX->setObjectName(QString::fromUtf8("spinX"));
-        spinX->setMaximum(1000);
-
-        formLayout->setWidget(2, QFormLayout::FieldRole, spinX);
-
-        label_2 = new QLabel(horizontalLayoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, label_2);
-
         button = new QPushButton(horizontalLayoutWidget);
         button->setObjectName(QString::fromUtf8("button"));
 
         formLayout->setWidget(3, QFormLayout::FieldRole, button);
 
+        label = new QLabel(horizontalLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, label);
+
         spinY = new QSpinBox(horizontalLayoutWidget);
         spinY->setObjectName(QString::fromUtf8("spinY"));
         spinY->setMaximum(1000);
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, spinY);
+        formLayout->setWidget(0, QFormLayout::FieldRole, spinY);
 
-        label = new QLabel(horizontalLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label_2 = new QLabel(horizontalLayoutWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, label);
+        formLayout->setWidget(1, QFormLayout::LabelRole, label_2);
+
+        spinX = new QSpinBox(horizontalLayoutWidget);
+        spinX->setObjectName(QString::fromUtf8("spinX"));
+        spinX->setMaximum(1000);
+
+        formLayout->setWidget(1, QFormLayout::FieldRole, spinX);
+
+        label_3 = new QLabel(horizontalLayoutWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        formLayout->setWidget(2, QFormLayout::LabelRole, label_3);
+
+        lineLabel = new QLineEdit(horizontalLayoutWidget);
+        lineLabel->setObjectName(QString::fromUtf8("lineLabel"));
+
+        formLayout->setWidget(2, QFormLayout::FieldRole, lineLabel);
 
 
         horizontalLayout->addLayout(formLayout);
 
         trashFrame = new QFrame(centralwidget);
         trashFrame->setObjectName(QString::fromUtf8("trashFrame"));
-        trashFrame->setGeometry(QRect(0, 310, 221, 131));
+        trashFrame->setGeometry(QRect(0, 360, 221, 101));
         trashFrame->setFrameShape(QFrame::StyledPanel);
         trashFrame->setFrameShadow(QFrame::Raised);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 896, 22));
+        menubar->setGeometry(QRect(0, 0, 896, 23));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -123,9 +136,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "Ancho", nullptr));
         button->setText(QCoreApplication::translate("MainWindow", "Aplicar", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Altura", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Ancho", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Mapa", nullptr));
     } // retranslateUi
 
 };

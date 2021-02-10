@@ -20,9 +20,12 @@ public:
     const MapElement& get(const Coordinate& coor)const;
     const MapElement& get(const QPoint& point) const;
     std::list<MapElement> getElements() const;
+    const std::string& getMap();
+    void setMap(const std::string& name);
 private:
     const unsigned x;
     const unsigned y;
+    std::string name;
     std::unordered_map <std::string, MapElement> matrix;
 };
 
