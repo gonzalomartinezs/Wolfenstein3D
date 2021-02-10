@@ -21,7 +21,7 @@ void MapHandler::paintEvent (QPaintEvent *event) {
     painter.fillRect(event->rect(), Qt::gray);
 
     if (focused.isValid()) {
-        painter.setBrush(QColor("#ffcccc"));
+        painter.setBrush(QColor(255, 0, 0 ,127));
         painter.setPen(Qt::NoPen);
         painter.drawRect(focused.adjusted(0, 0, -1, -1));
     }
