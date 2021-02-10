@@ -7,8 +7,7 @@
 #include <QPainter>
 
 MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y, QWidget *parent) :
-     QWidget(parent), map(x,y),icons(container)
-{
+     QWidget(parent), map(x,y),icons(container) {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
 
@@ -18,16 +17,16 @@ MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y,
 
 void MapHandler::paintEvent (QPaintEvent *event) {
     QPainter painter(this);
-    painter.fillRect(event->rect(), Qt::gray);
+    painter.fillRect(event->rect(), Qt::darkCyan);
 
-    if (focused.isValid()) {
+
+    if ( focused.isValid() ) {
         painter.setBrush(QColor(255, 0, 0 ,127));
         painter.setPen(Qt::NoPen);
-        painter.drawRect(focused.adjusted(0, 0, -1, -1));
+        painter.drawRect( focused.adjusted(0, 0, -1, -1) );
     }
 
     std::list < MapElement> filled = this->map.getElements();
-
     for (const MapElement &i : filled) {
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
