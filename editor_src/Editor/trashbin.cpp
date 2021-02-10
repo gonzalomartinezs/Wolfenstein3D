@@ -7,8 +7,7 @@
 #include <QMimeData>
 #include <QPainter>
 
-TrashBin::TrashBin(QWidget *parent) : QWidget(parent)
-{
+TrashBin::TrashBin(QWidget *parent) : QWidget(parent) {
      setAcceptDrops(true);
      QPalette pal = palette();
      this->resize(500,500);
@@ -18,13 +17,11 @@ TrashBin::TrashBin(QWidget *parent) : QWidget(parent)
 }
 
 
-void TrashBin::dragEnterEvent(QDragEnterEvent *event)
-{
+void TrashBin::dragEnterEvent(QDragEnterEvent *event) {
     event->accept();
 }
 
-void TrashBin::dropEvent(QDropEvent *event)
-{
+void TrashBin::dropEvent(QDropEvent *event) {
     event->setDropAction(Qt::MoveAction);
     event->accept();
 }
