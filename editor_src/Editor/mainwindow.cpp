@@ -79,6 +79,7 @@ void MainWindow::resizeMap(){
     std::list<MapElement> elements = mapHandler->getMap().getElements();
     delete mapHandler;
     mapHandler = new MapHandler(container,spinX->value(), spinY->value(), this);
+    mapHandler->loadElements(elements);
     mapScrollArea->setWidget(mapHandler);
 }
 
