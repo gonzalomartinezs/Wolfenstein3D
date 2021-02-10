@@ -17,8 +17,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow), container(ITEMSIZE)
-{
+    , ui(new Ui::MainWindow), container(ITEMSIZE) {
     ui->setupUi(this);
     this->setWindowTitle("Editor de niveles");
     this->initWidgets();
@@ -26,22 +25,22 @@ MainWindow::MainWindow(QWidget *parent)
     this->connectEvents();
 }
 
-void MainWindow::linkToUI(){
+void MainWindow::linkToUI() {
     this->itemlist = findChild<ItemList*>("itemList");
     this->mapScrollArea = findChild<QScrollArea*>("mapArea");
     this->trashFrame = findChild<QFrame*>("trashFrame");
     this->spinX = findChild<QSpinBox*>("spinX");
     this->spinY = findChild<QSpinBox*>("spinY");
     this->button = findChild<QPushButton*>("button");
+    this->nameLabel = findChild <QLineEdit*>("nameLabel");
 }
 
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::initWidgets(){
+void MainWindow::initWidgets() {
     this->linkToUI();
     this->itemlist->loadList(this->container);
     this->mapHandler = new MapHandler(this->container,TAM_MAP_DEF ,TAM_MAP_DEF ,this);
@@ -51,7 +50,7 @@ void MainWindow::initWidgets(){
     this->trashBin = new TrashBin(this->trashFrame);
 }
 
-void MainWindow::initBar(){
+void MainWindow::initBar() {
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
     QAction *openAction = fileMenu->addAction(tr("&Open..."), this, &MainWindow::openFile);
@@ -69,11 +68,11 @@ void MainWindow::initBar(){
     helpMenu->addAction( (tr(("&instructions"))) );
 }
 
-void MainWindow::connectEvents(){
+void MainWindow::connectEvents() {
    QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
 }
 
-void MainWindow::resizeMap(){
+void MainWindow::resizeMap() {
     if(this->mapHandler == nullptr) return;
 
     std::list<MapElement> elements = mapHandler->getMap().getElements();
@@ -83,20 +82,17 @@ void MainWindow::resizeMap(){
     mapScrollArea->setWidget(mapHandler);
 }
 
-void MainWindow::openFile(){
+void MainWindow::openFile() {
     QString path = QFileDialog::getOpenFileName(this);
-    if ( !path.isEmpty() )
+    if ( !path.isEmpty() ) {
         loadFile(path);
+    }
 }
 
 void MainWindow::loadFile(QString& path) {
-
     parser.loadMap( );
 }
 
 void MainWindow::saveFile(){
     parser.exportMap(mapHandler->getMap() );
 }
-
-
-

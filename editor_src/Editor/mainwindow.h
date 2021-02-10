@@ -44,6 +44,7 @@ private:
     QSpinBox* spinX;
     QSpinBox* spinY;
     QPushButton* button;
+    QLineEdit* nameLabel;
 
     TrashBin* trashBin;
     ItemList* itemlist;
