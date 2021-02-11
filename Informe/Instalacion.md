@@ -1,5 +1,15 @@
 # Instrucciones de instalacion
 
+# Requisitos
+
+- cmake
+- make
+- yaml-cpp
+- lua
+- carpeta cmake
+
+# Pasos
+
 1. Crear carpeta `build` (dentro de la carpeta del TP).
 2. Moverse a la carpeta `build`
 3. Ejecutar `cmake ..` en la terminal (esto generará los archivos necesarios para poder compilar tanto el servidor como el cliente).
