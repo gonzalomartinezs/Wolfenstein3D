@@ -5,6 +5,8 @@ Bot::Bot(const Configuration& config_stats,
          const Configuration& config_map,
          const uint8_t _player_number) :
          Player(config_stats, config_map, _player_number) {
+    // Gran nombre! Pero esto no tiene que estar hardcodeado, levantarlo de un archivo de configuración o bien
+    // recorrer un directorio buscando archivos *.lua
     const char filePath[] = "../server_src/Bots/Destripador.lua";
     this->L = luaL_newstate();
     luaL_openlibs(this->L);

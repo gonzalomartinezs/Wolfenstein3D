@@ -38,6 +38,7 @@ void ClientManager::operator()(std::vector<Lobby*>& games) {
 }
 
 uint8_t ClientManager::_blockingRecv(ThClient* client) {
+    // Por qué un busy wait si tienen colas bloqueantes?
     while (client->isEmpty()) {
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
     }

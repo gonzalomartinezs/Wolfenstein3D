@@ -11,7 +11,7 @@ DrawingInfo::DrawingInfo(DirectedPositionable player_pos, PlayerView view,
             objects(std::move(objects)), sliders_changes(sliders_changes),
             directed_objects(std::move(directed_objects)), view(view) {}
 
-
+// Todo esto tiene que recibir y devolver copias de vectores?
 std::vector<int> DrawingInfo::getPlayerInfo() const {
     return this->player_info;
 }

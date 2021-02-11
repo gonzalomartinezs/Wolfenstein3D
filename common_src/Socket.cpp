@@ -17,6 +17,7 @@ Socket::Socket(const char* ip, const char* port, int flag) :
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = flag;
 
+	// el lifetime de la address info podría reducirse si no fuera atributo de Socket
 	int status = getaddrinfo(ip, port, &hints, &result);
 
 	if (status != SUCCESS) {

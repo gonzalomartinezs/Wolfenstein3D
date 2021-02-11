@@ -17,8 +17,10 @@ static bool isYAMLFile(const std::string& file_name) {
 }
 
 MapsReader::MapsReader(const std::string& folder_name) {
+	// Esta misma lógica es la que digo que estaría buena para los bots
 	DIR* dir = opendir(folder_name.c_str());
 
+	// Tirar exceptions, no char*
 	if (dir == NULL) throw "Error initializing folder.";
 
 	struct dirent* file;
@@ -31,6 +33,7 @@ MapsReader::MapsReader(const std::string& folder_name) {
 		}
 	}
 
+	// Un DirectoryWalker RAII no estaría nada mal
 	closedir(dir);
 }
 

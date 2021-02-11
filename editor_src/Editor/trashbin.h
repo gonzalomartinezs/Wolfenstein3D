@@ -14,7 +14,7 @@ signals:
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
-     void dropEvent(QDropEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
     /*
     void dragLeaveEvent(QDragLeaveEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;

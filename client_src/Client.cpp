@@ -24,6 +24,7 @@
 #define OTHER_PLAYERS_SIZE (4 * sizeof(float) + 1)
 #define MAX_MESSAGE_SIZE 256
 
+// Usar const std::string&
 Client::Client(std::string host, std::string service,
                BlockingQueue<int> &instructions,
                ProtectedQueue<DrawingInfo> &drawing_info):
@@ -32,49 +33,33 @@ Client::Client(std::string host, std::string service,
         drawing_info(drawing_info), is_connected(true) {}
 
 
+// Les hago unos cambios a ojo, prueben y me dicen qué onda
 std::vector<std::vector<int>> Client::receiveMap() {
     uint8_t n_row, n_col;
-    uint8_t bytes_received[MAX_MESSAGE_SIZE];
-    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
 
     this->peer.recv(&n_row, 1);
     this->peer.recv(&n_col, 1);
     std::vector<std::vector<int>> received_map(n_row, std::vector<int>(n_col));
-    std::vector<uint8_t> received_uints;
+    uint16_t bytes_to_receive = n_col * n_row;
+    std::vector<uint8_t> received_uints(bytes_to_receive);
 
-    uint8_t bytes_to_receive = n_col*n_row;
-    uint8_t received = 0;
-
-    while (received < bytes_to_receive){
-        if (bytes_to_receive - received < MAX_MESSAGE_SIZE) {
-            int difference = bytes_to_receive - received;
-            this->peer.recv(bytes_received, difference);
-            received_uints.insert(received_uints.end(), &bytes_received[0],
-                                  &bytes_received[difference]);
-            received += difference;
-        } else {
-            this->peer.recv(bytes_received, MAX_MESSAGE_SIZE);
-            received_uints.insert(received_uints.end(), &bytes_received[0],
-                                  &bytes_received[MAX_MESSAGE_SIZE]);
-            received += MAX_MESSAGE_SIZE;
-        }
-        memset(bytes_received, 0, MAX_MESSAGE_SIZE);
-    }
-
-    for(int i=0; i<received_uints.size(); i++){
+    peer.recv(received_uints.data(), bytes_to_receive);
+    for (int i=0; i< received_uints.size(); i++) {
         received_map[i/n_col][i%n_col] = received_uints[i];
     }
     return received_map;
 }
 
 void Client::sendInstruction() {
-    ssize_t sent = 0;
-    try{
+    try {
+        ssize_t sent = 0;
         while (is_connected && sent >= 0 && !instructions.isWorking()){
             uint8_t instruction = this->instructions.pop();
             sent = this->peer.send(&instruction, sizeof(uint8_t));
         }
-    } catch (WolfensteinException& e){}
+    } catch (WolfensteinException &e) {
+        // Manejar esto o dejarlo subir
+    }
 }
 
 void Client::lobbyInteraction(std::string username) {
@@ -156,6 +141,7 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) 
         memcpy(&received_uint8, bytes_received + i * sizeof(uint8_t), sizeof(uint8_t));
         info.push_back(int(received_uint8));
     }
+    // Considerar endianness al serializar/deserializar tipos de datos de más de un byte
     for(int i=0; i< INT_ATTRIBUTES; i++){
         memcpy(&received_int, bytes_received +
                 UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo

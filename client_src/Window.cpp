@@ -34,6 +34,7 @@ SDL_Surface *Window::getSurface() const {
 }
 
 Window::~Window() {
+    // Con un par de objetitos RAII se ahorraban estos bools (ver el double buffer de la clase de Martín)
     if (this->renderer) {
         SDL_DestroyRenderer(this->renderer);
         this->renderer = nullptr;

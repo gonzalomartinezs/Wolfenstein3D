@@ -22,6 +22,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
 
     Configuration config_stats(config, KEY_PLAYER);
 
+    // La idea es que sean máximo 10?
     this->players.reserve(10);
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
@@ -29,6 +30,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         this->players.push_back(new Player(config_stats, config_player, i));
     }
 
+    // La cantidad de bots hacerla configurable (y el update rate o alguún parámetro que lo determine también)
     for (size_t i = 0; i < BOTS_AMOUNT; ++i) {
         std::string player_number = "player_" + std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
@@ -51,9 +53,10 @@ void Game::execute() {
             std::cout << "Nuevo Tick" << std::endl;
             this->getInstructions();
             this->sendUpdate();
-            this->update();  // Fixed Step-Time
+            this->update();  // Fixed Step-Time  <-- Pasarle el tiempo de un slice (TICK_DURATION por lo que veo)
 
             timeBetweenUpdates.getTime();
+            // lastTickTime = timeBetweenUpdates.getTime(); No sería así???
 
             if (lastTickTime < TICK_DURATION * 1000) {
                 usleep((TICK_DURATION * 1000 - lastTickTime) * 1000);
@@ -171,6 +174,7 @@ void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& 
 
 void Game::recvNames() {
 
+    // se usan clients.size() threads solamente para recibir los nombres? No se pueden usar los mismos que manejan cada conexión?
     std::vector<std::thread*> nameReceivers;
 
     for (size_t i = 0; i < this->clients.size(); i++) {

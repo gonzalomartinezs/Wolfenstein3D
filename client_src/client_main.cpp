@@ -23,6 +23,7 @@
 
 const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse el juego */
 
+// Se les haría más seguible esto si ponen un objeto que tenga como atributos los stack locals de este hilo
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
     log(); //  genera la nueva pestaña.
@@ -68,6 +69,7 @@ int main(int argc, char *argv[]) {
 
         game_interface.start();
 
+        // Encapsular
         while (!quit) {
             time_between_updates.start();
             directed_objects.clear();

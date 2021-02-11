@@ -220,9 +220,11 @@ void Raycaster::_renderize(float wall_dist, char hit_axis, int ray_number,
         tex_portion =  {tex_x, portion, 1, TEX_HEIGHT-2*portion};
     }
 
+    // Está bien, pero esta clase sería más testeable si no dependiera de SDL. Esta es una clase
+    //  con muchas cuentas, valía la pena testear meter unit tests
     SDL_Rect stretched = {ray_number + begin_x, draw_start + begin_y,
                           1,draw_end-draw_start};
-    if (hit_axis == 'y'){
+    if (hit_axis == 'y') {
         texture->changeColorModulation(SHADE);
     }
     texture->render(&tex_portion, &stretched);

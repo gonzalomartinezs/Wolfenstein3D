@@ -14,6 +14,8 @@
 #define POS_DATA_PLANE_SIZE 24
 #define POS_DATA_SIZE 16
 
+// Es normal que les quede tan grande Player, pero sepan que desarmarla estaría mejor. Una forma bastante fácil y práctica
+// es aceptar que tenga una interfaz grande pero que no tenga NADA de lógica y delegue todo en componentes, una especie de Facade.
 class Player : public DirectedPositionable {
 protected:
     PlayerActions action;

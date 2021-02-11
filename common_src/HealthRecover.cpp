@@ -15,7 +15,7 @@ void HealthRecover::equipTo(PlayerActions& action) {
 }
 
 int HealthRecover::operator+(int health) const {
-	if (health >= this->MAX_HEALTH) 
+	if (health >= this->MAX_HEALTH) // No me cierra este chequeo, no tendría que devolver MAX_HEALTH y ya como más abajo?
 		throw HealthRecoverException("Can't recover health, max health"
 									" reached.");
 

@@ -44,10 +44,7 @@ public:
     // Recibe informacion del servidor y la escribe en el archivo 'file'.
     ssize_t receiveInformation();
 
-    // Realiza un shut down del cliente de acuerdo al modo recibido.
-    // 0 -> SHUT_RD, cierra el socket para lectura.
-    // 1 -> SHUT_WR, cierra el socket para escritura.
-    // 2 -> SHUT_RDWR, cierra el socket para lectoescritura.
+    // Realiza un shut down del cliente y marca la cola bloqueante.
     void shutdown();
 
     // Libera los recursos utilizados por el cliente.
