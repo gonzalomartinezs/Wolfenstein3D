@@ -4,4 +4,6 @@ No se especifican dependencias requeridas. Algunas:
     - libyaml-cpp-dev
     - qt5-default
 Correr cpplint y cppcheck, y hacer que el código compile sin warnings (de gcc y de los linters) <- Les había marcado correcciones (las borré) que cppcheck ya estaba detectando 
-Les marco cosas de código en el código mismo
+
+El código está bastante prolijo, punto muy a favor en ese sentido:
+Les marco los detalles de código en el código mismo
