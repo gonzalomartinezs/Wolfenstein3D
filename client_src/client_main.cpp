@@ -14,8 +14,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 320
+#define WINDOW_HEIGHT 200
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0

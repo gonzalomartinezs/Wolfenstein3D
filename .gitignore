@@ -1,6 +1,5 @@
 #Cmake
 cmake-build-debug
-CMakeLists.txt
 
 main.cpp
 
@@ -23,7 +22,6 @@ Makefile
 tests/
 test
 executable
-cmake
 
 #Ejecutables
 client
