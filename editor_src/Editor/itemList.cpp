@@ -14,6 +14,7 @@ ItemList::ItemList(QWidget *parent)
     setAcceptDrops(true);
     setDropIndicatorShown(true);
 }
+
 /*
 void ItemList::loadImages(){
 

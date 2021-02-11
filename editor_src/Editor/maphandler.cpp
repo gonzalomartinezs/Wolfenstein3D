@@ -5,33 +5,42 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QPainter>
+#include <QPen>
 
-MapHandler::MapHandler ( const IconsContainer& container,unsigned x ,unsigned y, QWidget *parent) :
-     QWidget(parent), map(x,y),icons(container)
-{
+MapHandler::MapHandler ( const IconsContainer& container,const std::string& name ,
+                         unsigned x ,unsigned y, QWidget *parent) :
+     QWidget(parent), map(x,y),icons(container) {
     Q_INIT_RESOURCE(editor);
     setAcceptDrops(true);
-
+    map.setName(name);
     setMinimumSize(x*ITEMSIZE, y*ITEMSIZE);
     setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
 }
 
 void MapHandler::paintEvent (QPaintEvent *event) {
     QPainter painter(this);
-    painter.fillRect(event->rect(), Qt::gray);
+    painter.fillRect(event->rect(), Qt::darkCyan);
 
-    if (focused.isValid()) {
-        painter.setBrush(QColor("#ffcccc"));
+    painter.setPen( QPen(Qt::gray, 1, Qt::DashDotLine, Qt::RoundCap) ) ;
+
+    for (int i = ITEMSIZE; i < this->width(); i+=ITEMSIZE ) {
+        painter.drawLine(QPoint( i, 0), QPoint(i, this->height() ) );
+    }
+
+    for (int i = ITEMSIZE; i < this->height(); i+=ITEMSIZE ) {
+        painter.drawLine(QPoint( 0, i), QPoint(this->width(), i ) );
+    }
+
+    if ( focused.isValid() ) {
+        painter.setBrush(QColor(255, 0, 0 ,127));
         painter.setPen(Qt::NoPen);
-        painter.drawRect(focused.adjusted(0, 0, -1, -1));
+        painter.drawRect( focused.adjusted(0, 0, -1, -1) );
     }
 
     std::list < MapElement> filled = this->map.getElements();
-
     for (const MapElement &i : filled) {
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
-
 }
 
 void MapHandler::dragEnterEvent(QDragEnterEvent *event) {
@@ -148,4 +157,13 @@ const Coordinate MapHandler::targetCoordinate(const QPoint& position) const{
 
 const Map& MapHandler::getMap() {
     return map;
+}
+
+void MapHandler::loadElements(std::list<MapElement>& in){
+    for(auto &i : in){
+        Coordinate coor(i.calculateX(), i.calculateY());
+        if( map.inRange(coor) ) {
+            map.add(coor, i);
+        }
+    }
 }

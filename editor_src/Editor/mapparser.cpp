@@ -12,7 +12,7 @@ void MapParser::exportMap(const Map& exported, std::string path) {
     }
 }
 
-Map MapParser::loadMap(std::string path){
+Map MapParser::loadMap(std::string path) {
     printf("hola jorge");
     return Map(0 ,0);
 }

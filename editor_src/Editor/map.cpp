@@ -2,11 +2,9 @@
 #include "map.h"
 #include "mainwindow.h"
 
-Map::Map(const unsigned& x, const unsigned& y): x(x), y(y)
-{
-
+Map::Map(const unsigned& x, const unsigned& y): x(x), y(y) {
+    std::string name = "-";
 }
-
 
 bool Map::isEmpty(const Coordinate &coor) const{
     if(matrix.find(coor.toString()) == matrix.end() ){
@@ -50,15 +48,17 @@ std::list<MapElement> Map::getElements() const{
     return elementList;
 }
 
-const MapElement& Map::get(const QPoint& point) const{
+const MapElement& Map::get(const QPoint& point) const {
     QRect rect(point / ITEMSIZE * ITEMSIZE,
                QSize(ITEMSIZE, ITEMSIZE));
      Coordinate coor( (rect.left() / ITEMSIZE), (rect.top() /ITEMSIZE ) );
     return ( this->matrix.at( coor.toString() ) );
 }
 
+const std::string& Map::getName() const {
+    return name;
+}
 
-
-
-
-
+void Map::setName (const std::string& inName) {
+    name = inName;
+}

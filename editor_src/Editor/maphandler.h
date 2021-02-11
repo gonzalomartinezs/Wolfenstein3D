@@ -11,8 +11,10 @@
 class MapHandler : public QWidget {
     Q_OBJECT
 public:
-    explicit MapHandler(const IconsContainer& container, unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
+    explicit MapHandler(const IconsContainer& container,const std::string& name = "-",
+                        unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
     const Map& getMap();
+    void loadElements(std::list<MapElement>& in);
 
 signals:
 
@@ -30,6 +32,7 @@ private:
     Map map;
     QRect focused;
     const IconsContainer& icons;
+
 };
 
 #endif // MAPHANDLER_H
