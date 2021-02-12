@@ -6,6 +6,7 @@
 #include "ChainGunItem.h"
 #include "RocketLauncherItem.h"
 #include "BulletItem.h"
+#include "KeyItem.h"
 #include <cstring>
 
 #include "Exceptions/ItemsException.h"
@@ -52,13 +53,10 @@ static Item* initializeItem(const Configuration& config,
 	} else if (key == KEY_BLOOD) {
 		item = new Blood(config, config_map.getFloat(KEY_POS_X),
 							config_map.getFloat(KEY_POS_Y));
-	}/* else if (key == KEY_ITEM_KEY) {
-		item = new Key(config_map.getFloat(KEY_POS_X),
-						config_map.getFloat(KEY_POS_Y),
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
-						config.getFloat(KEY_RADIUS));
-	}*/ else if (key == KEY_BULLETS) {
+	} else if (key == KEY_ITEM_KEY) {
+		item = new KeyItem(config, config_map.getFloat(KEY_POS_X),
+							config_map.getFloat(KEY_POS_Y));
+	} else if (key == KEY_BULLETS) {
 		item = new BulletItem(config, config_map.getFloat(KEY_POS_X),
 							config_map.getFloat(KEY_POS_Y));
 	} else if (key == KEY_MACHINE_GUN) {

@@ -418,7 +418,7 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Blood_1, new Texture(BLOOD_ITEM_1, this->renderer));
     static_textures.emplace(Food_0, new Texture(FOOD_ITEM_0, this->renderer));
     static_textures.emplace(Food_1, new Texture(FOOD_ITEM_1, this->renderer));
-    static_textures.emplace(KeyItem, new Texture(KEY_ITEM, this->renderer));
+    static_textures.emplace(KeyItem_, new Texture(KEY_ITEM, this->renderer));
     static_textures.emplace(Cup, new Texture(CUP_ITEM, this->renderer));
     static_textures.emplace(Crown, new Texture(CROWN_ITEM, this->renderer));
     static_textures.emplace(Cross, new Texture(CROSS_ITEM, this->renderer));
