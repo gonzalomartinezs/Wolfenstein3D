@@ -20,7 +20,7 @@ private:
     uint8_t initialHealth;
 	uint8_t health, lives;
     int score;
-    bool hasKey;
+    std::vector<int> keys;
     Weapons weapons;
     int bulletsCounter;
     int killsCounter;
@@ -33,6 +33,7 @@ public:
     void use(BulletItem* bullet);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
+	void equip(int key_id);
 	uint8_t getCurrentWeapon();
 
 	void die();

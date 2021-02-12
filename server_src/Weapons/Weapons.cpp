@@ -24,7 +24,7 @@ Weapons::Weapons(const Configuration& config) :
 	this->weapons.push_back(new Pistol());
 
     //Solo para test
-    Configuration config_chain_gun(config, KEY_CHAIN_GUN);
+/*    Configuration config_chain_gun(config, KEY_CHAIN_GUN);
 	this->weapons.push_back(
                     new ChainGun(config_chain_gun.getFloat(KEY_SHOTS)));
 
@@ -32,7 +32,7 @@ Weapons::Weapons(const Configuration& config) :
 	this->weapons.push_back(new MachineGun(
                                     config_machine_gun.getFloat(KEY_SHOTS),
                                     config_machine_gun.getFloat(KEY_BURSTS),
-                                    config_machine_gun.getInt(KEY_BULLETS)));
+                                    config_machine_gun.getInt(KEY_BULLETS)));*/
 }
 
 bool Weapons::hasWeapon(int id) const {

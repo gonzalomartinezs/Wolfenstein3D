@@ -10,26 +10,26 @@
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
-#define BOTS_AMOUNT 1
+#define KEY_MAX_PLAYERS "max_players"
 
 const double TICK_DURATION = 1/128.f; /* miliseconds que tarda en actualizarse el juego */
 
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
             const Configuration& config_map) : clients(_clients),
             map(config_map), items(Configuration(config, KEY_ITEMS),
-            Configuration(config_map, KEY_ITEMS)) {
+            Configuration(config_map, KEY_ITEMS)),
+            bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
     this->isRunning = true;
 
     Configuration config_stats(config, KEY_PLAYER);
 
-    this->players.reserve(10);
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Player(config_stats, config_player, i));
     }
 
-    for (size_t i = 0; i < BOTS_AMOUNT; ++i) {
+    for (size_t i = 0; i < this->bots_amount; ++i) {
         std::string player_number = "player_" + std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Bot(config_stats, config_player, this->clients.size() + i));
@@ -78,7 +78,7 @@ void Game::getInstructions() {
         }
     }
 
-    for (size_t i = this->clients.size(); i < this->clients.size() + BOTS_AMOUNT; i++) {
+    for (size_t i = this->clients.size(); i < this->clients.size() + this->bots_amount; i++) {
         this->players[i]->getState(this->players, i, this->map);
     }
 }

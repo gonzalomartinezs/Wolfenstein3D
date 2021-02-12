@@ -7,7 +7,6 @@
 #define KEY_INITIAL_HEALTH "initial_health"
 #define KEY_INITIAL_SCORE "initial_score"
 #define KEY_TOTAL_LIVES "total_lives"
-#define KEY_HAS_KEY "has_key"
 #define KEY_INITIAL_BULLETS "initial_bullets"
 #define KEY_WEAPONS "weapons"
 
@@ -16,10 +15,7 @@ PlayerActions::PlayerActions(const Configuration& config) :
 	this->health = config.getInt(KEY_INITIAL_HEALTH);
     this->score = config.getInt(KEY_INITIAL_SCORE);
     this->lives = config.getInt(KEY_TOTAL_LIVES);
-    this->hasKey = config.getInt(KEY_HAS_KEY);
-//    this->bullets = config.getInt(KEY_INITIAL_BULLETS);
     this->initialHealth = config.getInt(KEY_INITIAL_HEALTH);
-//    this->initialBullets = config.getInt(KEY_INITIAL_BULLETS);
     this->bulletsCounter = 0;
     this->killsCounter = 0;
 }
@@ -42,6 +38,10 @@ bool PlayerActions::hasWeapon(int id) const {
 
 void PlayerActions::equip(Weapon* weapon) {
 	this->weapons.equip(weapon);
+}
+
+void PlayerActions::equip(int key_id) {
+    this->keys.push_back(key_id);
 }
 
 uint8_t PlayerActions::getCurrentWeapon() {
@@ -125,10 +125,12 @@ void PlayerActions::geHUDInfo(uint8_t* msg) {
     memcpy(msg + sizeof(uint8_t), &this->health, sizeof(uint8_t));
 
     uint8_t current_weapon = this->weapons.getCurrentWeapon();
-    uint8_t weapon_is_shooting = this->weapons.isShooting();
-
     memcpy(msg + 2 * sizeof(uint8_t), &current_weapon, sizeof(uint8_t));
-    memcpy(msg + 3 * sizeof(uint8_t), &this->hasKey, sizeof(bool));
+
+    bool has_key = !(this->keys.empty());
+    memcpy(msg + 3 * sizeof(uint8_t), &(has_key), sizeof(bool));
+
+    uint8_t weapon_is_shooting = this->weapons.isShooting();
     memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting, sizeof(bool));
 
     int bullets = this->weapons.getBullets();

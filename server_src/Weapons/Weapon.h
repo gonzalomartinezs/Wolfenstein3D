@@ -6,7 +6,7 @@
 #include <vector>
 #include <random>
 
-enum WEAPON_ID{KNIFE = 0, PISTOL, MACHINE_GUN, CHAIN_GUN, ROCKET_LAUNCHER};
+enum WEAPON_ID{KNIFE = 0, PISTOL = 1, MACHINE_GUN = 2, CHAIN_GUN = 3, ROCKET_LAUNCHER = 4};
 
 class Player;
 

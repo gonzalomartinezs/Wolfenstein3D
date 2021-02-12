@@ -79,6 +79,7 @@ add_executable(server server_src/server_main.cpp
         common_src/Treasure.cpp
         common_src/HealthRecover.cpp common_src/Exceptions/HealthRecoverException.cpp
         common_src/Blood.cpp
+        common_src/KeyItem.cpp
         common_src/Exceptions/WolfensteinException.cpp
         common_src/Configuration.cpp
         server_src/PlayerActions.cpp server_src/LeaderBoard.cpp

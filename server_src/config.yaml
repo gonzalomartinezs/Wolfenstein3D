@@ -2,12 +2,12 @@ port: 8080
 max_clients: 2
 
 weapons_general:
-  chain_gun:
-    time_between_shots: &chain_gun_shots 0.1
   machine_gun:
     time_between_shots: &machine_gun_shots 0.1
     time_between_bursts: &machine_gun_bursts 0.3
     bullets_per_burst: &machine_gun_bullets 5
+  chain_gun:
+    time_between_shots: &chain_gun_shots 1
 
 max_health: &max_health_global 100
 
@@ -23,11 +23,13 @@ player:
   initial_health: *max_health_global
   initial_score: 0
   total_lives: 5
-  has_key: 1 # 0 = false, otro numero = true
+  keys:
+    key_0: 1
+    key_1: 2
   #Initial weapons
   weapons:
     initial_weapon: 1 # 0 = knife, 1 = pistol
-    initial_bullets: 10
+    initial_bullets: 100000
     knife:
       time_between_stabs: 1
       range: 0.5
@@ -77,7 +79,7 @@ items:
   #Otros
   key:
     texture: 37
-    value: 1 #value = door?
+    value: 3 #value = door
     radius: 0.2
   bullet:
     texture: 35
@@ -85,15 +87,16 @@ items:
     radius: 0.2
     max_bullets: 10
   #Weapons
-  chain_gun:
-    texture: 25
-    value: 2 #value = id
-    radius: 0.3
-    time_between_shots: *chain_gun_shots
   machine_gun:
     texture: 24
-    value: 3 #value = id
+    value: 2 #value = id
     radius: 0.3
     time_between_shots: *machine_gun_shots
     time_between_bursts: *machine_gun_bursts
     bullets_per_burst: *machine_gun_bullets
+  chain_gun:
+    texture: 25
+    value: 3 #value = id
+    radius: 0.3
+    time_between_shots: *chain_gun_shots
+

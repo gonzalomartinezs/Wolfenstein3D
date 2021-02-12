@@ -19,6 +19,7 @@ class Game {
     std::atomic<bool> isRunning;
     Map map;
     Items items;
+    const size_t bots_amount;
  public:
     /* Constructor */
     Game(std::vector<ThClient*>& _clients, const Configuration& config,
