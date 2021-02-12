@@ -43,7 +43,7 @@ MainWindow::~MainWindow() {
 void MainWindow::initWidgets() {
     this->linkToUI();
     this->itemlist->loadList(this->container);
-    this->mapHandler = new MapHandler(this->container,TAM_MAP_DEF ,TAM_MAP_DEF ,this);
+    this->mapHandler = new MapHandler(this->container,"-",TAM_MAP_DEF ,TAM_MAP_DEF ,this);
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
     mapScrollArea->setWidget(mapHandler);
@@ -77,7 +77,8 @@ void MainWindow::resizeMap() {
 
     std::list<MapElement> elements = mapHandler->getMap().getElements();
     delete mapHandler;
-    mapHandler = new MapHandler(container,spinX->value(), spinY->value(), this);
+    mapHandler = new MapHandler(container,nameLabel->text().toStdString()
+                                ,spinX->value(), spinY->value(), this);
     mapHandler->loadElements(elements);
     mapScrollArea->setWidget(mapHandler);
 }
