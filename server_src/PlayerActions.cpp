@@ -45,10 +45,6 @@ void PlayerActions::equip(int key_id) {
     this->keys.push_back(key_id);
 }
 
-uint8_t PlayerActions::getCurrentWeapon() {
-    return this->weapons.getCurrentWeapon();
-}
-
 void PlayerActions::die(Items* items, float x, float y) {
     this->health = this->initialHealth;
     this->lives--;
@@ -122,7 +118,7 @@ void PlayerActions::getHUDInfo(uint8_t* msg) {
     memcpy(msg, &this->lives, sizeof(uint8_t));
     memcpy(msg + sizeof(uint8_t), &this->health, sizeof(uint8_t));
 
-    uint8_t current_weapon = this->weapons.getCurrentWeapon();
+    uint8_t current_weapon = this->weapons.getWeaponID();
     memcpy(msg + 2 * sizeof(uint8_t), &current_weapon, sizeof(uint8_t));
 
     bool has_key = !(this->keys.empty());

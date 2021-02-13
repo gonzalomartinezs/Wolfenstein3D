@@ -15,16 +15,16 @@ class Weapon {
 protected:
     bool weaponIsShooting;
     std::random_device rd;
-    int id;
+    uint8_t id;
 
     TextureID texture;
     const float item_radius;
 
 public:
     /* Constructor */
-    Weapon(int _id);
+    Weapon(uint8_t _id);
 
-    Weapon(int _id, TextureID _texture, float radius);
+    Weapon(uint8_t _id, TextureID _texture, float radius);
 
     virtual void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) = 0;
 
@@ -38,6 +38,8 @@ public:
     bool isShooting();
 
     bool operator==(int other_id) const;
+
+    uint8_t getWeaponID() const;
 
     virtual Item* getWeaponItem(float x, float y);
 

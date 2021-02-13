@@ -31,7 +31,7 @@ player:
   weapons:
     initial_weapon: 1 # 0 = knife, 1 = pistol
     bullet:
-      initial_bullets: 10
+      initial_bullets: 100
       max_bullets: &max_bullets 100
       texture: &bullet_texture 35
       radius: &bullet_radius 0.2

@@ -33,7 +33,7 @@ public:
                     int shooting_player_number, const Map& map);
 	bool hasBullets() const;
 	void reset(Items* items, float x, float y);
-	uint8_t getCurrentWeapon() const;
+	uint8_t getWeaponID() const;
 	int getBullets() const;
 	~Weapons();
 };

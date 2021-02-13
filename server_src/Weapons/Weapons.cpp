@@ -127,8 +127,8 @@ bool Weapons::hasBullets() const {
     return (this->bullets > 0);
 }
 
-uint8_t Weapons::getCurrentWeapon() const {
-	return this->current_weapon;
+uint8_t Weapons::getWeaponID() const {
+	return this->weapons[this->current_weapon]->getWeaponID();
 }
 
 int Weapons::getBullets() const {
