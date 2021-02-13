@@ -3,7 +3,6 @@
 
 #include "map.h"
 #include <string>
-#include "yaml-cpp/yaml.h"
 
 class MapParser {
 public:
