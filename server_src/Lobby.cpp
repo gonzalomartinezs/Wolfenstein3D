@@ -13,24 +13,36 @@ Lobby::Lobby(ThClient* mainClient, Configuration &config,
     this->clients.push_back(mainClient);
     this->gameInProgress = false;
     this->gameIsOver = false;
+    this->game = NULL;
     this->mapName = config_map.getString(KEY_NAME);
     this->maxPlayers = config_map.getInt(KEY_MAX_PLAYERS);
 }
 
 void Lobby::run() {
-    while (this->clients[MAIN_CLIENT]->isEmpty()) {
+    while (this->clients[MAIN_CLIENT]->isEmpty() && !this->gameIsOver) {
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
     }
-    this->clients[MAIN_CLIENT]->pop();
-    this->_startGame();
+    if (!this->gameIsOver) {
+        this->clients[MAIN_CLIENT]->pop();
+        this->_startGame();
+    }
+    this->_stopClients();
+    this->gameIsOver = true;
 }
 
-void Lobby::pushClient(ThClient* newPlayer) {
-    this->clients.push_back(newPlayer);
+void Lobby::pushClientIfNotInProgress(ThClient* newPlayer) {
+    std::unique_lock<std::mutex> lck(this->clientsMtx);
+    if (!this->inProgress()) {
+        this->clients.push_back(newPlayer);
+    } else {
+        throw WolfensteinException("Invalid Game ID, the game is already started\n");
+    }
 }
 
 void Lobby::_startGame() {
+    std::unique_lock<std::mutex> lck(this->clientsMtx);
     this->gameInProgress = true;
+    lck.unlock();
 
     try {
         this->game = new Game(this->clients, this->config, this->config_map);
@@ -39,11 +51,8 @@ void Lobby::_startGame() {
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     } catch (...) {
-        std::cout << "Unknown error in Game :( \n";
+        std::cerr << "Unknown error in Game :(\n" << std::endl;
     }
-
-    this->_stopClients();
-    this->gameIsOver = true;
 }
 
 void Lobby::_stopClients() {
@@ -72,6 +81,7 @@ bool Lobby::inProgress() {
 
 void Lobby::stop() {
     if (this->game != NULL) this->game->stop();
+    this->gameIsOver = true;
 }
 
 bool Lobby::finished() {

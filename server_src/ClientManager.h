@@ -1,5 +1,5 @@
-#ifndef CLIENTMANAGER_H
-#define CLIENTMANAGER_H
+#ifndef WOLFENSTEIN3D_CLIENTMANAGER_H_
+#define WOLFENSTEIN3D_CLIENTMANAGER_H_
 
 #include <atomic>
 #include <vector>
@@ -8,7 +8,9 @@
 #include "Lobby.h"
 #include "../common_src/Socket.h"
 #include "../common_src/Configuration.h"
-#include "MapsReader.h"
+#include "GamesHandler.h"
+
+class ClientHandler;
 
 class ClientManager {
 private:
@@ -20,20 +22,15 @@ public:
     /* Constructor */
 	ClientManager(Configuration& config);
 
-	void operator()(std::vector<Lobby*>& games);
+	void operator()(GamesHandler& games);
 	void stop();
 
 	/* Destructor */
 	~ClientManager();
 
 private:
-    uint8_t _blockingRecv(ThClient* client);
     ThClient* _createClient(Peer& peer) const;
-    void _talkWithClient(ThClient* client, std::vector<Lobby*>& games);
-    void _deleteFinishedGames(std::vector<Lobby*>& games);
-    void _deleteFailedClient(ThClient* client);
-    int _loadNewGameMsg(uint8_t* msg, const MapsReader& maps_reader);
-    int _loadJoinGameMsg(uint8_t* msg, std::vector<Lobby*>& games);
+    void _deleteFinishedChoosingClients(std::vector<ClientHandler*>& choosingClients);
 };
 
-#endif
+#endif  // WOLFENSTEIN3D_CLIENTMANAGER_H_
