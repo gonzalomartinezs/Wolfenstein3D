@@ -115,10 +115,6 @@ int ClientHandler::_loadJoinGameMsg(uint8_t* msg) {
     return currentByte;
 }
 
-void ClientHandler::_pushLobby(const std::string& map_file_name) {
-    /* borrar este metodo */
-}
-
 void ClientHandler::_deleteFailedClient() {
     this->newClient->stop();
     this->newClient->join();
