@@ -55,6 +55,8 @@ add_executable(server server_src/server_main.cpp
         common_src/Timer.cpp
         server_src/ThClient.cpp
         server_src/GameManager.cpp
+        server_src/GamesHandler.cpp
+        server_src/ClientHandler.cpp
         server_src/ClientManager.cpp server_src/Lobby.cpp
         server_src/MapsReader.cpp
         common_src/ProtectedQueue.h

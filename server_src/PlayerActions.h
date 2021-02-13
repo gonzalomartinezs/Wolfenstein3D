@@ -63,7 +63,7 @@ public:
     /* Escribe los primeros 12 bytes del buffer con la informacion del HUD del
      * jugador de la siguiente manera (respetando el tamanio en bytes de cada variable):
      * [ lives, health, currentWeapon, hasKey, bullets, score ] */
-	void geHUDInfo(uint8_t *msg);
+	void getHUDInfo(uint8_t *msg);
 
 	/* Destructor */
 	~PlayerActions();

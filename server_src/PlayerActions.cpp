@@ -118,7 +118,7 @@ bool PlayerActions::hasBullets() {
     return this->weapons.hasBullets();
 }
 
-void PlayerActions::geHUDInfo(uint8_t* msg) {
+void PlayerActions::getHUDInfo(uint8_t* msg) {
     memcpy(msg, &this->lives, sizeof(uint8_t));
     memcpy(msg + sizeof(uint8_t), &this->health, sizeof(uint8_t));
 

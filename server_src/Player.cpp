@@ -224,7 +224,7 @@ void Player::getPositionDataWithPlane(uint8_t *msg) {
 }
 
 void Player::getHUDData(uint8_t *msg) {
-    this->action.geHUDInfo(msg);
+    this->action.getHUDInfo(msg);
 }
 
 Player::~Player() {}
