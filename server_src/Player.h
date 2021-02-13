@@ -52,7 +52,6 @@ public:
     bool hasBullets();
 
     std::string getName();
-    uint8_t getCurrentWeapon();
     int getKills();
     int getScore();
     int getBulletsFired();

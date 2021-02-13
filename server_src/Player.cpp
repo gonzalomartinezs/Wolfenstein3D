@@ -164,10 +164,6 @@ std::string Player::getName() {
     return this->name;
 }
 
-uint8_t Player::getCurrentWeapon() {
-    return this->action.getCurrentWeapon();
-}
-
 int Player::getKills() {
     return this->action.getKills();
 }
