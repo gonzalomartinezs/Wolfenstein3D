@@ -1,6 +1,8 @@
 #include "ChainGun.h"
+#include "../../common_src/ChainGunItem.h"
 
-ChainGun::ChainGun(const float time_between_shots) : Weapon(CHAIN_GUN),
+ChainGun::ChainGun(const float time_between_shots, TextureID texture,
+                    float item_radius) : Weapon(CHAIN_GUN, texture, item_radius),
                     lastShotDelay(-1),
                     TIME_BETWEEN_SHOTS(time_between_shots) {}
 
@@ -20,6 +22,11 @@ void ChainGun::fireTheGun(std::vector<Player*> &players, int shootingPlayerNumbe
         this->lastShotDelay = this->lastShotDelay + (this->fireTimer.getTime()/1000) - TIME_BETWEEN_SHOTS;
         this->fireTimer.start();
     }
+}
+
+Item* ChainGun::getWeaponItem(float x, float y) {
+    return new ChainGunItem(x, y, this->texture, this->id, this->item_radius,
+                            this->TIME_BETWEEN_SHOTS);
 }
 
 ChainGun::~ChainGun() {}

@@ -115,6 +115,10 @@ void Items::remove(size_t i) {
 	this->items.erase(this->items.begin() + i);
 }
 
+void Items::push_back(Item* item) {
+	this->items.push_back(item);
+}
+
 void Items::loadItemsInfo(uint8_t* msg, uint8_t &currentByte) {
     float aux;
     uint8_t id, size;

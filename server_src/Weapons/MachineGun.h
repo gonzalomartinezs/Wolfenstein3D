@@ -19,11 +19,13 @@ public:
     /* Constructor */
     MachineGun(const float time_between_shots,
                 const float time_between_bursts,
-                const int bullets_per_burst);
+                const int bullets_per_burst, TextureID texture, float item_radius);
 
     void startShooting() override;
 
     void fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) override;
+
+    Item* getWeaponItem(float x, float y) override;
 
     /* Destructor */
     ~MachineGun();

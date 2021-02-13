@@ -104,9 +104,9 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& pl
     }
 
     if (this->action.isDead()) {
+        this->action.die(&items, this->x, this->y);
         this->x = this->initialPosX;
         this->y = this->initialPosY;
-        this->action.die();
     }
 
     // Borrar

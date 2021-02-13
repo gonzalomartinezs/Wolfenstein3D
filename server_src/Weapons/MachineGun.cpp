@@ -1,13 +1,16 @@
 #include "MachineGun.h"
+#include "../../common_src/MachineGunItem.h"
 
 MachineGun::MachineGun(const float time_between_shots,
                     const float time_between_bursts,
-                    const int bullets_per_burst) : Weapon(MACHINE_GUN),
-                        lastShotDelay(-1), burstBulletCounter(0),
-                        isInBurstRecover(false),
-                        TIME_BETWEEN_SHOTS(time_between_shots),
-                        TIME_BETWEEN_BURSTS(time_between_bursts),
-                        BULLETS_PER_BURST(bullets_per_burst) {}
+                    const int bullets_per_burst,
+                    TextureID texture, float item_radius) :
+                    Weapon(MACHINE_GUN, texture, item_radius),
+                    lastShotDelay(-1), burstBulletCounter(0),
+                    isInBurstRecover(false),
+                    TIME_BETWEEN_SHOTS(time_between_shots),
+                    TIME_BETWEEN_BURSTS(time_between_bursts),
+                    BULLETS_PER_BURST(bullets_per_burst) {}
 
 void MachineGun::startShooting() {
     this->weaponIsShooting = true;
@@ -42,4 +45,34 @@ void MachineGun::fireTheGun(std::vector<Player*> &players, int shootingPlayerNum
     }
 }
 
+Item* MachineGun::getWeaponItem(float x, float y) {
+    return new MachineGunItem(x, y, this->texture, this->id, this->item_radius, 
+                            this->TIME_BETWEEN_SHOTS, this->TIME_BETWEEN_BURSTS,
+                            this->BULLETS_PER_BURST);
+}
+/*
+TextureID MachineGun::getTextureItem() const {
+    return this->textureItem;
+}
+
+int MachineGun::getID() const {
+    return this->id;
+}
+
+float MachineGun::getRadius() const {
+    return this->radius;
+}
+
+float MachineGun::getTimeBetweenShots() const {
+    return this->TIME_BETWEEN_SHOTS;
+}
+
+float MachineGun::getTimeBetweenBursts() const {
+    return this->TIME_BETWEEN_BURSTS;
+}
+
+float MachineGun::getBulletsPerBurst() const {
+    return this->BULLETS_PER_BURST;
+}
+*/
 MachineGun::~MachineGun() {}

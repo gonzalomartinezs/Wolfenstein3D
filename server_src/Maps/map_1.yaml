@@ -1,5 +1,5 @@
 map_name: "Soy el mapa, soy el mapa..."
-max_players: 1
+max_players: 2
 
 #Map
 length: 17 #Arriba a abajo
@@ -93,14 +93,6 @@ items:
       pos_x: 2
       pos_y: 12
   #Weapons
-  chain_gun:
-    cant_chain_gun: 2
-    chain_gun_0:
-      pos_x: 8
-      pos_y: 8
-    chain_gun_1:
-      pos_x: 9
-      pos_y: 9
   machine_gun:
     cant_machine_gun: 2
     machine_gun_0:
@@ -109,3 +101,11 @@ items:
     machine_gun_1:
       pos_x: 7
       pos_y: 7
+  chain_gun:
+    cant_chain_gun: 2
+    chain_gun_0:
+      pos_x: 8
+      pos_y: 8
+    chain_gun_1:
+      pos_x: 9
+      pos_y: 9

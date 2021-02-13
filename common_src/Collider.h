@@ -10,6 +10,7 @@ public:
 	bool collidesWith(float _x, float _y, float width, float height) const;
 	//Colisión con círculo.
 	bool collidesWith(const Collider& other) const;
+	float getRadius() const;
 	~Collider();
 };
 

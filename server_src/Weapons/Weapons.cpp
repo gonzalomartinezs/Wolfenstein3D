@@ -1,4 +1,5 @@
 #include "Weapons.h"
+#include <iostream>
 #include "Knife.h"
 #include "Pistol.h"
 #include "ChainGun.h"
@@ -15,13 +16,26 @@
 #define KEY_BULLETS "bullets_per_burst"
 
 #define KEY_INITIAL_BULLETS "initial_bullets"
+#define KEY_MAX_BULLETS "max_bullets"
+#define KEY_BULLET "bullet"
+#define KEY_BULLET_TEXTURE "texture"
+#define KEY_BULLET_RADIUS "radius"
+
+#define LOST_BULLETS 10
 
 Weapons::Weapons(const Configuration& config) :
-				current_weapon(config.getInt(KEY_INITIAL_WEAPON)),
-                initial_bullets(config.getInt(KEY_INITIAL_BULLETS)),
-                bullets(config.getInt(KEY_INITIAL_BULLETS)) { 
+				current_weapon(config.getInt(KEY_INITIAL_WEAPON)) {
 	this->weapons.push_back(new Knife(Configuration(config, KEY_KNIFE)));
 	this->weapons.push_back(new Pistol());
+
+    Configuration config_bullet(config, KEY_BULLET);
+
+    this->initial_bullets = config_bullet.getInt(KEY_INITIAL_BULLETS);
+    this->bullets = this->initial_bullets;
+
+    this->max_bullets = config_bullet.getInt(KEY_MAX_BULLETS);
+    this->bullet_texture = static_cast<TextureID>(config_bullet.getInt(KEY_BULLET_TEXTURE));
+    this->bullet_radius = config_bullet.getFloat(KEY_BULLET_RADIUS);
 
     //Solo para test
 /*    Configuration config_chain_gun(config, KEY_CHAIN_GUN);
@@ -89,12 +103,32 @@ void Weapons::fireTheGun(std::vector<Player*>& players,
                                             	map);
 }
 
-uint8_t Weapons::getCurrentWeapon() const {
-	return this->current_weapon;
+void Weapons::reset(Items* items, float x, float y) {
+    this->bullets = this->initial_bullets;
+    this->current_weapon = 1;
+
+    while (this->weapons.size() > 2) {
+        try {
+            //Calcular posicion x, y
+            items->push_back(weapons.back()->getWeaponItem(x, y));
+            delete this->weapons.back();
+            this->weapons.pop_back();
+        } catch (const std::exception& e) {
+            std::cout << e.what() << std::endl;
+        }
+    }
+
+    items->push_back(new BulletItem(x, y, this->bullet_texture,
+                                    LOST_BULLETS, this->bullet_radius,
+                                    this->max_bullets));
 }
 
 bool Weapons::hasBullets() const {
     return (this->bullets > 0);
+}
+
+uint8_t Weapons::getCurrentWeapon() const {
+	return this->current_weapon;
 }
 
 int Weapons::getBullets() const {

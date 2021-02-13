@@ -9,6 +9,8 @@ private:
 	const int MAX_BULLETS;
 public:
 	BulletItem(const Configuration& config, float _x, float _y);
+	BulletItem(float x, float y, TextureID texture, int _value, float _radius,
+				int max_bullets);
 	int operator+(int bullets) const override;
 	void equipTo(PlayerActions& action) override;
 	~BulletItem();

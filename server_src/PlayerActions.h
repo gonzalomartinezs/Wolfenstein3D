@@ -13,6 +13,7 @@ class Weapon;
 class HealthRecover;
 class Treasure;
 class BulletItem;
+class Items;
 class Player;
 
 class PlayerActions {
@@ -36,7 +37,7 @@ public:
 	void equip(int key_id);
 	uint8_t getCurrentWeapon();
 
-	void die();
+	void die(Items* items, float x, float y);
 	bool isDead() const;
 
     int getKills();

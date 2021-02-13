@@ -2,6 +2,7 @@
 #include "../common_src/HealthRecover.h"
 #include "../common_src/Treasure.h"
 #include "../common_src/BulletItem.h"
+#include "../common_src/Items.h"
 #include <cstring>
 
 #define KEY_INITIAL_HEALTH "initial_health"
@@ -48,14 +49,14 @@ uint8_t PlayerActions::getCurrentWeapon() {
     return this->weapons.getCurrentWeapon();
 }
 
-void PlayerActions::die() {
+void PlayerActions::die(Items* items, float x, float y) {
     this->health = this->initialHealth;
-//    this->bullets = this->initialBullets;
     this->lives--;
+    weapons.reset(items, x, y);
 }
 
 bool PlayerActions::isDead() const {
-	return (this->health <= 0);
+	return (this->health == 0);
 }
 
 int PlayerActions::getKills() {
@@ -97,11 +98,8 @@ void PlayerActions::fireTheGun(std::vector<Player*>& players,
 }
 
 void PlayerActions::receiveShot(uint8_t damage) {
-    this->health -= damage;
-    /* uint8_t no admite valores negativos */
-    if (this->health > 100) {
-        this->health = 0;
-    }
+    if (damage > this->health) this->health = 0;
+    else this->health -= damage;
 }
 
 void PlayerActions::increaseBulletCounter(uint8_t bulletsAmount) {
