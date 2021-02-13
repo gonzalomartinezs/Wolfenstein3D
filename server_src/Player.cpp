@@ -104,9 +104,9 @@ void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& pl
     }
 
     if (this->action.isDead()) {
+        this->action.die(&items, this->x, this->y);
         this->x = this->initialPosX;
         this->y = this->initialPosY;
-        this->action.die();
     }
 
     // Borrar
@@ -162,10 +162,6 @@ bool Player::hasBullets() {
 
 std::string Player::getName() {
     return this->name;
-}
-
-uint8_t Player::getCurrentWeapon() {
-    return this->action.getCurrentWeapon();
 }
 
 int Player::getKills() {
@@ -224,7 +220,7 @@ void Player::getPositionDataWithPlane(uint8_t *msg) {
 }
 
 void Player::getHUDData(uint8_t *msg) {
-    this->action.geHUDInfo(msg);
+    this->action.getHUDInfo(msg);
 }
 
 Player::~Player() {}

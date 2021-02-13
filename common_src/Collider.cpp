@@ -26,4 +26,8 @@ bool Collider::collidesWith(const Collider& other) const {
 	return (distance <= this->radius + other.radius);
 }
 
+float Collider::getRadius() const {
+	return this->radius;
+}
+
 Collider::~Collider() {}

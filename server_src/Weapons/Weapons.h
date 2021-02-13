@@ -3,17 +3,21 @@
 
 #include "../../common_src/Map.h"
 #include "../../common_src/Configuration.h"
+#include "../../client_src/textures/TextureID.h"
 #include <vector>
 
 class Weapon;
 class Player;
 class BulletItem;
+class Items;
 
 class Weapons {
 private:
 	std::vector<Weapon*> weapons;
 	uint8_t current_weapon;
-	int initial_bullets, bullets;
+	int initial_bullets, bullets, max_bullets;
+	TextureID bullet_texture;
+	float bullet_radius;
 public:
 	Weapons(const Configuration& config);
 	bool hasWeapon(int id) const;
@@ -28,7 +32,8 @@ public:
 	void fireTheGun(std::vector<Player*>& players,
                     int shooting_player_number, const Map& map);
 	bool hasBullets() const;
-	uint8_t getCurrentWeapon() const;
+	void reset(Items* items, float x, float y);
+	uint8_t getWeaponID() const;
 	int getBullets() const;
 	~Weapons();
 };

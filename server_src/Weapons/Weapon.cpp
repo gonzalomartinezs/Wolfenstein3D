@@ -1,5 +1,6 @@
 #include "Weapon.h"
 #include <cstring>
+#include "../Exceptions/GameException.h"
 #include <iostream> //borrar
 
 #define PI 3.1415926
@@ -12,8 +13,21 @@
 const float MAX_SHOOTING_ANGLE = PI/6.f;
 const float MAX_SHOOTING_DISTANCE = 10;
 
-Weapon::Weapon(int _id) : id(_id) {
+Weapon::Weapon(uint8_t _id) : id(_id), texture(None), item_radius(0) {
     this->weaponIsShooting = false;
+}
+
+Weapon::Weapon(uint8_t _id, TextureID _texture, float radius) : id(_id),
+                texture(_texture), item_radius(radius) {
+    this->weaponIsShooting = false;   
+}
+
+uint8_t Weapon::getWeaponID() const {
+    return this->id;
+}
+
+Item* Weapon::getWeaponItem(float x, float y) {
+    throw GameException("Can't get this weapon as item.");
 }
 
 float Weapon::_randomNumberGenerator() {

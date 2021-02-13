@@ -13,6 +13,7 @@ class Weapon;
 class HealthRecover;
 class Treasure;
 class BulletItem;
+class Items;
 class Player;
 
 class PlayerActions {
@@ -36,7 +37,7 @@ public:
 	void equip(int key_id);
 	uint8_t getCurrentWeapon();
 
-	void die();
+	void die(Items* items, float x, float y);
 	bool isDead() const;
 
     int getKills();
@@ -62,7 +63,7 @@ public:
     /* Escribe los primeros 12 bytes del buffer con la informacion del HUD del
      * jugador de la siguiente manera (respetando el tamanio en bytes de cada variable):
      * [ lives, health, currentWeapon, hasKey, bullets, score ] */
-	void geHUDInfo(uint8_t *msg);
+	void getHUDInfo(uint8_t *msg);
 
 	/* Destructor */
 	~PlayerActions();

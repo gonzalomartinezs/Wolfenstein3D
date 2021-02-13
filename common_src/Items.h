@@ -19,6 +19,7 @@ public:
 	size_t size() const;
 	void loadItemsInfo(uint8_t* msg, uint8_t& currentByte);
 	void remove(size_t i);
+	void push_back(Item* item);
 	~Items();
 private:
 	void initialize(const Configuration& config,

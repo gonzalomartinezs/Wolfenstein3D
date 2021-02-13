@@ -3,7 +3,6 @@
 
 #include <atomic>
 
-#include "yaml-cpp/yaml.h"
 #include "Player.h"
 #include "Bots/Bot.h"
 #include "ThClient.h"

@@ -9,16 +9,22 @@
 enum WEAPON_ID{KNIFE = 0, PISTOL = 1, MACHINE_GUN = 2, CHAIN_GUN = 3, ROCKET_LAUNCHER = 4};
 
 class Player;
+class Item;
 
 class Weapon {
 protected:
     bool weaponIsShooting;
     std::random_device rd;
-    int id;
+    uint8_t id;
+
+    TextureID texture;
+    const float item_radius;
 
 public:
     /* Constructor */
-    Weapon(int _id);
+    Weapon(uint8_t _id);
+
+    Weapon(uint8_t _id, TextureID _texture, float radius);
 
     virtual void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) = 0;
 
@@ -32,6 +38,10 @@ public:
     bool isShooting();
 
     bool operator==(int other_id) const;
+
+    uint8_t getWeaponID() const;
+
+    virtual Item* getWeaponItem(float x, float y);
 
     /* Destructor */
     virtual ~Weapon();
