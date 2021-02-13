@@ -11,12 +11,7 @@ void GameManager::operator()() {
 
 void GameManager::stop() {
     this->client_manager->stop();
-
-    for (auto game : games) {
-        game->stop();
-        game->join();
-        delete game;
-    }
+    this->games.finishGames();
 }
 
 GameManager::~GameManager() {

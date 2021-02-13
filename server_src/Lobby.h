@@ -13,6 +13,7 @@ private:
     Game* game;
     Configuration& config;
     Configuration config_map;
+    std::mutex clientsMtx;
 
     std::string mapName;
     std::atomic<int> maxPlayers;
@@ -24,7 +25,7 @@ public:
     Lobby(ThClient* mainClient, Configuration& config,
         const std::string& map_file_name);
 
-    void pushClient(ThClient* newPlayer);
+    void pushClientIfNotInProgress(ThClient* newPlayer);
 
     std::string getMapName();
 

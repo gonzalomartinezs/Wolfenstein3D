@@ -1,7 +1,8 @@
-#ifndef GAMEMANAGER_H
-#define GAMEMANAGER_H
+#ifndef WOLFENSTEIN3D_GAMEMANAGER_H_
+#define WOLFENSTEIN3D_GAMEMANAGER_H_
 
 #include "ClientManager.h"
+#include "GamesHandler.h"
 #include "Game.h"
 #include "Lobby.h"
 #include "../common_src/Configuration.h"
@@ -10,7 +11,7 @@ class GameManager {
 private:
 	Configuration config;
 	ClientManager* client_manager;
-	std::vector<Lobby*> games;
+	GamesHandler games;
 
 public:
     /* Constructor */
@@ -23,4 +24,4 @@ public:
 	~GameManager();
 };
 
-#endif
+#endif  // WOLFENSTEIN3D_GAMEMANAGER_H_
