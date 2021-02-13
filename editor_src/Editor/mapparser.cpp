@@ -1,6 +1,5 @@
 #include "mapparser.h"
 #include <mapelement.h>
-#include "yaml-cpp/yaml.h"
 
 MapParser::MapParser() {
 
@@ -14,6 +13,7 @@ void MapParser::exportMap(const Map& exported, std::string path) {
 }
 
 Map MapParser::loadMap(std::string path) {
-    printf("hola jorge");
+    YAML::Node mapFile;
+   // mapFile = YAML::LoadFile(path);
     return Map(0 ,0);
 }
