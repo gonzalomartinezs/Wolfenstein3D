@@ -1,0 +1,5 @@
+/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
+/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
+/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/Editor.dir
+/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/Editor_autogen_timestamp_deps.dir
+/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/Editor_autogen.dir

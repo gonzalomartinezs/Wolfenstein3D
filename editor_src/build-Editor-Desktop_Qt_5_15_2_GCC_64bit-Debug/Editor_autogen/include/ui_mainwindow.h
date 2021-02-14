@@ -139,7 +139,7 @@ public:
         button->setText(QCoreApplication::translate("MainWindow", "Aplicar", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Altura", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Ancho", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "Mapa", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "dough", nullptr));
     } // retranslateUi
 
 };

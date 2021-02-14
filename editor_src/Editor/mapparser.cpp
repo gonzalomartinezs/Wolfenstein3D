@@ -13,7 +13,7 @@ void MapParser::exportMap(const Map& exported, std::string path) {
 }
 
 Map MapParser::loadMap(std::string path) {
-    YAML::Node mapFile;
+   // YAML::Node mapFile;
    // mapFile = YAML::LoadFile(path);
     return Map(0 ,0);
 }

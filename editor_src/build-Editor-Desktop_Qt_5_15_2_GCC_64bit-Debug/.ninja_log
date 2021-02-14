@@ -1,0 +1,14 @@
+# ninja log v5
+4	28	1613262925552994212	Editor_autogen/timestamp	fbb909999bc619d9
+2	1803	1613262934492870237	CMakeFiles/Editor.dir/mainwindow.cpp.o	e7bc46a80a641429
+3	1938	1613261965013142790	CMakeFiles/Editor.dir/maphandler.cpp.o	7ee4f690518de9f6
+2884	5224	1613261382688172290	CMakeFiles/Editor.dir/trashbin.cpp.o	d3b4903f189718aa
+273	3209	1613261222844080100	CMakeFiles/Editor.dir/main.cpp.o	85f073cfcf3659d2
+244	911	1613261378376318387	CMakeFiles/Editor.dir/mapelement.cpp.o	d54055e7386cc857
+1803	2250	1613262934936864152	Editor	6ef8474341562685
+1398	2884	1613261380348250810	CMakeFiles/Editor.dir/mapparser.cpp.o	588c4bc6be3c715e
+244	4126	1613261381588208981	CMakeFiles/Editor.dir/itemList.cpp.o	bc6b3bc82c81340c
+243	1398	1613261378860301662	CMakeFiles/Editor.dir/coordinate.cpp.o	9d4c96430a5e1e99
+2	1211	1613262719132775266	CMakeFiles/Editor.dir/iconscontainer.cpp.o	b60d8507b0a74b67
+243	4159	1613261381620207907	CMakeFiles/Editor.dir/map.cpp.o	57761963d9c72d1f
+28	1535	1613262927060973097	CMakeFiles/Editor.dir/Editor_autogen/mocs_compilation.cpp.o	d1d3c05d258fdeea

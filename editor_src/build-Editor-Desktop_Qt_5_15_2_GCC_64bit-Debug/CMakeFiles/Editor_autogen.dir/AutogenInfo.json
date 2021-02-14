@@ -1,0 +1,224 @@
+{
+	"BUILD_DIR" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/Editor_autogen",
+	"CMAKE_BINARY_DIR" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/riedel/Taller/Wolfenstein3D/editor_src/Editor",
+	"CMAKE_EXECUTABLE" : "/home/riedel/Qt/Tools/CMake/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/CMakeLists.txt",
+		"/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/3.19.2/CMakeSystem.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeSystemSpecificInitialize.cmake",
+		"/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/3.19.2/CMakeCXXCompiler.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeSystemSpecificInformation.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeGenericSystem.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeInitializeConfigs.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Platform/Linux.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Platform/UnixPaths.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeCXXInformation.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeLanguageInformation.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Compiler/GNU-CXX.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Compiler/GNU.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Compiler/CMakeCommonCompilerMacros.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Platform/Linux-GNU-CXX.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/Platform/Linux-GNU.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeCommonLanguageInclude.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5/Qt5Config.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeParseArguments.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QComposePlatformInputContextPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSEmulatorIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSKmsEglDeviceIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEglFSX11IntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevKeyboardPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevMousePlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevTabletPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QEvdevTouchScreenPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QGtk3ThemePlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QIbusPlatformInputContextPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QLinuxFbIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalEglIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QVncIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWaylandEglPlatformIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWaylandIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWaylandXCompositeEglPlatformIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWaylandXCompositeGlxPlatformIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXcbEglIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXcbGlxIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXcbIntegrationPlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake",
+		"/home/riedel/Qt/5.15.2/gcc_64/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeParseArguments.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/riedel/Taller/Wolfenstein3D/editor_src/Editor",
+	"DEP_FILE" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/Editor_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "Editor_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/coordinate.h",
+			"MU",
+			"EWIEGA46WW/moc_coordinate.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/iconscontainer.h",
+			"MU",
+			"EWIEGA46WW/moc_iconscontainer.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/itemList.h",
+			"MU",
+			"EWIEGA46WW/moc_itemList.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/mainwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_mainwindow.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/map.h",
+			"MU",
+			"EWIEGA46WW/moc_map.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/mapelement.h",
+			"MU",
+			"EWIEGA46WW/moc_mapelement.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/maphandler.h",
+			"MU",
+			"EWIEGA46WW/moc_maphandler.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/mapparser.h",
+			"MU",
+			"EWIEGA46WW/moc_mapparser.cpp"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/trashbin.h",
+			"MU",
+			"EWIEGA46WW/moc_trashbin.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/Editor_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/Editor_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug",
+		"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor",
+		"/home/riedel/Qt/5.15.2/gcc_64/include",
+		"/home/riedel/Qt/5.15.2/gcc_64/include/QtWidgets",
+		"/home/riedel/Qt/5.15.2/gcc_64/include/QtGui",
+		"/home/riedel/Qt/5.15.2/gcc_64/include/QtCore",
+		"/home/riedel/Qt/5.15.2/gcc_64/mkspecs/linux-g++",
+		"/usr/include",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/g++",
+		"-dM",
+		"-E",
+		"-c",
+		"/home/riedel/Qt/Tools/CMake/share/cmake-3.19/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/Editor_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/Editor_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/riedel/Qt/5.15.2/gcc_64/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/home/riedel/Qt/5.15.2/gcc_64/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/riedel/Taller/Wolfenstein3D/editor_src/build-Editor-Desktop_Qt_5_15_2_GCC_64bit-Debug/CMakeFiles/Editor_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/coordinate.cpp",
+			"MU"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/iconscontainer.cpp",
+			"MU"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/itemList.cpp",
+			"MU"
+		],
+		[ "/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/main.cpp", "MU" ],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/mainwindow.cpp",
+			"MU"
+		],
+		[ "/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/map.cpp", "MU" ],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/mapelement.cpp",
+			"MU"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/maphandler.cpp",
+			"MU"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/mapparser.cpp",
+			"MU"
+		],
+		[
+			"/home/riedel/Taller/Wolfenstein3D/editor_src/Editor/trashbin.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

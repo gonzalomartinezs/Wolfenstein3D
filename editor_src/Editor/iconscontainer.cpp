@@ -1,8 +1,9 @@
 #include "iconscontainer.h"
+#include <QResource>
 
 IconsContainer::IconsContainer(unsigned in_size) {
-    Q_INIT_RESOURCE(editor);
-
+    //Q_INIT_RESOURCE(editor);
+    QResource::registerResource("editor.rcc");
     this->size = in_size;
 
     unsigned i = 0;
