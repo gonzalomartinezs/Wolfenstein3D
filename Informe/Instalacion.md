@@ -7,6 +7,8 @@
 - yaml-cpp
 - lua
 - carpeta cmake
+- qt5-default
+- sdl2
 
 # Pasos
 

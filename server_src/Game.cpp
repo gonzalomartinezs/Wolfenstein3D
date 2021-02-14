@@ -48,7 +48,7 @@ void Game::execute() {
     //this->recvNames();
 
     try {
-        double lastTickTime = 0;
+    //    double lastTickTime = 0;
         //Cambiar, ahora es un while true
         // (Esperar caracter para o esperar a que finalice la partida)
         while (this->isRunning) {
@@ -59,7 +59,7 @@ void Game::execute() {
             this->sendUpdate();
             this->update();  // Fixed Step-Time
 
-            timeBetweenUpdates.getTime();
+            double lastTickTime = timeBetweenUpdates.getTime();
 
             if (lastTickTime < TICK_DURATION * 1000) {
                 usleep((TICK_DURATION * 1000 - lastTickTime) * 1000);

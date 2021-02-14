@@ -64,7 +64,6 @@ items:
     texture: 34
     value: 100
     radius: 0.5
-
   #Health recover
   food:
     texture: 29

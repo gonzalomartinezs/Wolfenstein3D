@@ -4,6 +4,7 @@
 #include <dirent.h>
 #include <cstddef>
 #include <string>
+#include "Exceptions/GameException.h"
 
 #define KEY_MAP_NAME "map_name"
 #define KEY_MAX_PLAYERS "max_players"
@@ -20,7 +21,7 @@ static bool isYAMLFile(const std::string& file_name) {
 MapsReader::MapsReader(const std::string& folder_name) {
 	DIR* dir = opendir(folder_name.c_str());
 
-	if (dir == NULL) throw "Error initializing folder.";
+	if (dir == NULL) throw GameException("Error initializing folder.");
 
 	struct dirent* file;
 

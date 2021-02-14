@@ -46,9 +46,9 @@ void PlayerActions::equip(int key_id) {
 }
 
 void PlayerActions::die(Items* items, float x, float y) {
+    weapons.reset(items, x, y);
     this->health = this->initialHealth;
     this->lives--;
-    weapons.reset(items, x, y);
 }
 
 bool PlayerActions::isDead() const {
