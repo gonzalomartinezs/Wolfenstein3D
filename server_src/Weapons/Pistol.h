@@ -2,6 +2,7 @@
 #define WOLFENSTEIN3D_PISTOL_H
 
 #include "Weapon.h"
+#include <vector>
 
 class Pistol : public Weapon {
 public:
@@ -10,7 +11,8 @@ public:
 
     void startShooting() override;
 
-    void fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) override;
+    void fireTheGun(std::vector<Player*> &players,
+    				int shootingPlayerNumber, const Map &map) override;
 
     /* Destructor */
     ~Pistol();

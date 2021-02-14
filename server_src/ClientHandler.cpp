@@ -1,6 +1,7 @@
 #include "ClientHandler.h"
 #include <iostream>
 #include <cstring>
+#include <string>
 
 #define ERROR -1
 #define MAX_MSG_LEN 1024
@@ -8,7 +9,9 @@
 #define JOIN_GAME 1
 #define SLEEP_TIME_MILLIS 5
 
-ClientHandler::ClientHandler(ThClient* newClient, GamesHandler& games, Configuration& config) : games(games), config(config) {
+ClientHandler::ClientHandler(ThClient* newClient, GamesHandler& games,
+                            Configuration& config) : games(games),
+                            config(config) {
     this->newClient = newClient;
     this->endTalking = false;
 }
@@ -38,14 +41,14 @@ void ClientHandler::_talkWithClient() {
         uint8_t mapID = _blockingRecv();
 
         if (!this->endTalking) {
-            games.pushGameAndStart(new Lobby(this->newClient, this->config, maps_reader.getFileName(mapID)));
+            games.pushGameAndStart(new Lobby(this->newClient, this->config,
+                                    maps_reader.getFileName(mapID)));
         } else {
-            throw WolfensteinException("Connection ended, server closed (Choosing Map in a New Game)\n");
+            throw WolfensteinException("Connection ended, server closed"
+                                    " (Choosing Map in a New Game)\n");
         }
 
-
     } else if (action == JOIN_GAME && !this->endTalking) {
-
         msgLen = _loadJoinGameMsg(msg);
         this->newClient->push(msg, msgLen);
 
@@ -53,22 +56,23 @@ void ClientHandler::_talkWithClient() {
 
         if (!this->endTalking) {
             if (static_cast<unsigned int>(gameID) >= this->games.size()) {
-                throw WolfensteinException("Invalid Game ID, not existing ID\n");
-
+                throw WolfensteinException("Invalid Game ID,"
+                                            " not existing ID\n");
             } else {
                 this->games.pushClient(gameID, this->newClient);
-
             }
         } else {
-            throw WolfensteinException("Connection ended, server closed (Choosing game ID) \n");
+            throw WolfensteinException("Connection ended, server closed"
+                                        " (Choosing game ID) \n");
         }
-
     } else {
-        throw WolfensteinException("Invalid action from the client or server closed (New/Join)\n");
+        throw WolfensteinException("Invalid action from the client or"
+                                    " server closed (New/Join)\n");
     }
 }
 
-int ClientHandler::_loadNewGameMsg(uint8_t* msg, const MapsReader& maps_reader) {
+int ClientHandler::_loadNewGameMsg(uint8_t* msg,
+                                    const MapsReader& maps_reader) {
     msg[0] = static_cast<uint8_t>(maps_reader.size());
     int currentByte = 1;
 
@@ -96,10 +100,13 @@ int ClientHandler::_loadJoinGameMsg(uint8_t* msg) {
             msg[currentByte] = i;  // Game ID
             currentByte++;
 
-            msg[currentByte] = static_cast<uint8_t>(games.getMapName(i).size());
+            msg[currentByte] = static_cast<uint8_t>(
+                                                games.getMapName(i).size());
             currentByte++;
 
-            memcpy(msg + currentByte, reinterpret_cast<const uint8_t*>(games.getMapName(i).c_str()), games.getMapName(i).size());
+            memcpy(msg + currentByte,
+                reinterpret_cast<const uint8_t*>(games.getMapName(i).c_str()),
+                games.getMapName(i).size());
             currentByte += games.getMapName(i).size();
 
             msg[currentByte] = games.getPlayersAmountInLobby(i);
@@ -123,7 +130,8 @@ void ClientHandler::_deleteFailedClient() {
 
 uint8_t ClientHandler::_blockingRecv() {
     while (this->newClient->isEmpty() && !this->endTalking) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+        std::this_thread::sleep_for(
+                        std::chrono::milliseconds(SLEEP_TIME_MILLIS));
     }
     /* Evito warnings sobre comportamiento indefinido (Valgrind) */
     if (this->endTalking) {

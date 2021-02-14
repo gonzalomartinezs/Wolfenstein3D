@@ -2,6 +2,8 @@
 #include "LeaderBoard.h"
 #include <iostream>
 #include <unistd.h>
+#include <string>
+#include <vector>
 #include <cstring> //borrar
 
 #define END_GAME_CHAR 0
@@ -12,13 +14,14 @@
 #define KEY_PLAYER "player"
 #define KEY_MAX_PLAYERS "max_players"
 
-const double TICK_DURATION = 1/128.f; /* miliseconds que tarda en actualizarse el juego */
+const double TICK_DURATION = 1/128.f; // miliseconds que tarda en
+                                      // actualizarse el juego
 
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
-            const Configuration& config_map) : clients(_clients),
-            map(config_map), items(Configuration(config, KEY_ITEMS),
-            Configuration(config_map, KEY_ITEMS)),
-            bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
+        const Configuration& config_map) : clients(_clients),
+        map(config_map), items(Configuration(config, KEY_ITEMS),
+        Configuration(config_map, KEY_ITEMS)),
+    bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
     this->isRunning = true;
 
     Configuration config_stats(config, KEY_PLAYER);
@@ -30,14 +33,15 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
     }
 
     for (size_t i = 0; i < this->bots_amount; ++i) {
-        std::string player_number = "player_" + std::to_string(this->clients.size() + i);
+        std::string player_number = "player_" +
+                                    std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
-        this->players.push_back(new Bot(config_stats, config_player, this->clients.size() + i));
+        this->players.push_back(new Bot(config_stats, config_player,
+                                        this->clients.size() + i));
     }
 }
 
 void Game::execute() {
-
     Timer timeBetweenUpdates;
 
     this->sendMap();
@@ -45,7 +49,9 @@ void Game::execute() {
 
     try {
         double lastTickTime = 0;
-        while (this->isRunning) { //Cambiar, ahora es un while true (Esperar caracter para o esperar a que finalice la partida)
+        //Cambiar, ahora es un while true
+        // (Esperar caracter para o esperar a que finalice la partida)
+        while (this->isRunning) {
             timeBetweenUpdates.start();
 
             std::cout << "Nuevo Tick" << std::endl;
@@ -77,7 +83,8 @@ void Game::getInstructions() {
         }
     }
 
-    for (size_t i = this->clients.size(); i < this->clients.size() + this->bots_amount; i++) {
+    for (size_t i = this->clients.size();
+        i < this->clients.size() + this->bots_amount; i++) {
         this->players[i]->getState(this->players, i, this->map);
     }
 }
@@ -137,14 +144,16 @@ void Game::createLeaderBoard() {
     }
 }
 
-void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& players) {
+void _recvName(size_t i, std::vector<ThClient*>& clients,
+                std::vector<Player*>& players) {
     std::string name;
     Timer timer;
 
     timer.start();
 
     while (clients[i]->isEmpty() && timer.getTime() < NAME_TIME_TOLERANCE) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+        std::this_thread::sleep_for(
+                            std::chrono::milliseconds(SLEEP_TIME_MILLIS));
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
@@ -167,7 +176,6 @@ void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& 
 }
 
 void Game::recvNames() {
-
     std::vector<std::thread*> nameReceivers;
 
     for (size_t i = 0; i < this->clients.size(); i++) {

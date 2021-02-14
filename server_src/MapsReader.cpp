@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <cstddef>
+#include <string>
 
 #define KEY_MAP_NAME "map_name"
 #define KEY_MAX_PLAYERS "max_players"

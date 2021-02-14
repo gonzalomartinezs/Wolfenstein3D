@@ -2,6 +2,7 @@
 #define WOLFENSTEIN3D_GAME_H
 
 #include <atomic>
+#include <vector>
 
 #include "Player.h"
 #include "Bots/Bot.h"
@@ -12,14 +13,15 @@
 #include "../common_src/Configuration.h"
 
 class Game {
- private:
+private:
     std::vector<Player*> players;
     std::vector<ThClient*>& clients;
     std::atomic<bool> isRunning;
     Map map;
     Items items;
     const size_t bots_amount;
- public:
+
+public:
     /* Constructor */
     Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map);

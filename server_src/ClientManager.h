@@ -30,7 +30,8 @@ public:
 
 private:
     ThClient* _createClient(Peer& peer) const;
-    void _deleteFinishedChoosingClients(std::vector<ClientHandler*>& choosingClients);
+    void _deleteFinishedChoosingClients(
+    							std::vector<ClientHandler*>& choosingClients);
 };
 
 #endif  // WOLFENSTEIN3D_CLIENTMANAGER_H_

@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <utility>
+#include <vector>
 #include "Configuration.h"
 #include "SlidingSurface.h"
 

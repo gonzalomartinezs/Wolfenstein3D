@@ -2,6 +2,8 @@
 #define WOLFENSTEIN3D_THCLIENT_H
 
 #include <atomic>
+#include <string>
+
 #include "../common_src/Thread.h"
 #include "../common_src/Peer.h"
 #include "../common_src/ProtectedQueue.h"
@@ -27,11 +29,9 @@ public:
 
     /* Destructor */
     ~ThClient();
-
 private:
     void recv();
     void send();
-
 };
 
 #endif  // WOLFENSTEIN3D_THCLIENT_H

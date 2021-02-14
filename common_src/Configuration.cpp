@@ -1,5 +1,6 @@
 #include "Configuration.h"
 #include "Exceptions/ConfigurationException.h"
+#include <utility>
 
 #define EXCEPTION_MSG "Key '%s' does not exist. Can't get %s from file %s."
 

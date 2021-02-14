@@ -5,6 +5,7 @@
 #include <iostream> //Borrar
 #include <cmath>
 #include <cstring>
+#include <string>
 
 #define WALKABLE 0
 #define PI 3.14159
@@ -72,7 +73,8 @@ void Player::lookForItem(Items& items, const Collider& collider) {
 	}
 }
 
-void Player::updatePlayer(const Map& map, Items& items, std::vector<Player*>& players) {
+void Player::updatePlayer(const Map& map, Items& items,
+                        std::vector<Player*>& players) {
     float old_x = this->x, old_y = this->y;
 
     if (this->state != ISNOTMOVING) {
@@ -188,22 +190,30 @@ void Player::_moveBackwards() {
 
 void Player::_turnLeft() {
     float oldDirX = this->dir_x;
-    this->dir_x = (this->dir_x * cos(this->rotSpeed) - this->dir_y * sin(this->rotSpeed));
-    this->dir_y = (oldDirX * sin(this->rotSpeed) + this->dir_y * cos(this->rotSpeed));
+    this->dir_x = (this->dir_x * cos(this->rotSpeed) -
+                    this->dir_y * sin(this->rotSpeed));
+    this->dir_y = (oldDirX * sin(this->rotSpeed) +
+                    this->dir_y * cos(this->rotSpeed));
 
     float oldPlaneX = this->camPlaneX;
-    this->camPlaneX = this->camPlaneX * cos(this->rotSpeed) - this->camPlaneY * sin(this->rotSpeed);
-    this->camPlaneY = oldPlaneX * sin(this->rotSpeed) + this->camPlaneY * cos(this->rotSpeed);
+    this->camPlaneX = this->camPlaneX * cos(this->rotSpeed) -
+                        this->camPlaneY * sin(this->rotSpeed);
+    this->camPlaneY = oldPlaneX * sin(this->rotSpeed) +
+                        this->camPlaneY * cos(this->rotSpeed);
 }
 
 void Player::_turnRight() {
     float oldDirX = this->dir_x;
-    this->dir_x = (this->dir_x * cos(-this->rotSpeed) - this->dir_y * sin(-this->rotSpeed));
-    this->dir_y = (oldDirX * sin(-this->rotSpeed) + this->dir_y * cos(-this->rotSpeed));
+    this->dir_x = (this->dir_x * cos(-this->rotSpeed) -
+                    this->dir_y * sin(-this->rotSpeed));
+    this->dir_y = (oldDirX * sin(-this->rotSpeed) +
+                    this->dir_y * cos(-this->rotSpeed));
 
     float oldPlaneX = this->camPlaneX;
-    this->camPlaneX = (this->camPlaneX * cos(-this->rotSpeed) - this->camPlaneY * sin(-this->rotSpeed));
-    this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) + this->camPlaneY * cos(-this->rotSpeed));
+    this->camPlaneX = (this->camPlaneX * cos(-this->rotSpeed) -
+                        this->camPlaneY * sin(-this->rotSpeed));
+    this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) +
+                        this->camPlaneY * cos(-this->rotSpeed));
 }
 
 void Player::getPositionData(uint8_t *msg) {

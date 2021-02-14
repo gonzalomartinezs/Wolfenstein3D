@@ -16,7 +16,8 @@ private:
 
 public:
     /* Constructor */
-    ClientHandler(ThClient* newClient, GamesHandler& games, Configuration& config);
+    ClientHandler(ThClient* newClient, GamesHandler& games,
+                    Configuration& config);
 
     void run() override;
     void stop() override;

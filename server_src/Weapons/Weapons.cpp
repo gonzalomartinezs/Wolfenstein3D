@@ -34,7 +34,8 @@ Weapons::Weapons(const Configuration& config) :
     this->bullets = this->initial_bullets;
 
     this->max_bullets = config_bullet.getInt(KEY_MAX_BULLETS);
-    this->bullet_texture = static_cast<TextureID>(config_bullet.getInt(KEY_BULLET_TEXTURE));
+    this->bullet_texture = static_cast<TextureID>(
+                                    config_bullet.getInt(KEY_BULLET_TEXTURE));
     this->bullet_radius = config_bullet.getFloat(KEY_BULLET_RADIUS);
 
     //Solo para test

@@ -26,7 +26,8 @@ void ClientManager::operator()(GamesHandler& games) {
             if (this->is_connected) {
                 ThClient* newClient = this->_createClient(peer);
                 this->_deleteFinishedChoosingClients(choosingClients);
-                choosingClients.push_back(new ClientHandler(newClient, games, this->config));
+                choosingClients.push_back(new ClientHandler(newClient, games,
+                                            this->config));
                 choosingClients.back()->start();
             }
         } catch (const std::exception &e) {
@@ -58,8 +59,11 @@ bool _clientHasFinished(Thread* thread) {
     return false;
 }
 
-void ClientManager::_deleteFinishedChoosingClients(std::vector<ClientHandler*>& choosingClients) {
-    choosingClients.erase(std::remove_if(choosingClients.begin(), choosingClients.end(), _clientHasFinished), choosingClients.end());
+void ClientManager::_deleteFinishedChoosingClients(
+                            std::vector<ClientHandler*>& choosingClients) {
+    choosingClients.erase(std::remove_if(choosingClients.begin(),
+                            choosingClients.end(), _clientHasFinished),
+                            choosingClients.end());
 }
 
 void ClientManager::stop() {

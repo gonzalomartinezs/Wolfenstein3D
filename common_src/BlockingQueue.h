@@ -9,6 +9,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
+#include <utility>
 
 template <class T>
 class BlockingQueue {
@@ -41,7 +42,8 @@ template <typename T> T BlockingQueue<T>::pop() {
         queue.pop();
         return element;
     }
-    throw WolfensteinException("Blocking queue doesn't accept new elements anymore!\n");
+    throw WolfensteinException("Blocking queue doesn't"
+                                " accept new elements anymore!\n");
 }
 
 template <typename T>bool BlockingQueue<T>::isWorking() {

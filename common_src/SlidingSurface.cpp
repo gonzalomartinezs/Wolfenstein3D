@@ -2,7 +2,7 @@
 #include "GameConstants.h"
 
 SlidingSurface::SlidingSurface(int id, int x, int y, int surface_type,
-                               int opened_time, int moving_time, int initial_state) :
+                        int opened_time, int moving_time, int initial_state) :
                     id(id), pos_x(x), pos_y(y), surface_type(surface_type),
                     moving_time(moving_time), opened_time(opened_time),
                     state(initial_state), elapsed_fraction(0.0) {

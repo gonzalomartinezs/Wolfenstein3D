@@ -1,4 +1,6 @@
 #include "LeaderBoard.h"
+#include <vector>
+#include <string>
 #include <cstring>
 
 LeaderBoard::LeaderBoard() {}
@@ -93,7 +95,8 @@ int LeaderBoard::_loadBullets(uint8_t* msg, std::vector<Player*>& players) {
 
     for (size_t i = 0; i < players.size(); i++) {
         for (size_t j = 0; j < players.size(); j++) {
-            if (players[j]->getBulletsFired()> players[j+1]->getBulletsFired()) {
+            if (players[j]->getBulletsFired() >
+                players[j+1]->getBulletsFired()) {
                 swap = players[j];
                 players[j] = players[j+1];
                 players[j+1] = swap;

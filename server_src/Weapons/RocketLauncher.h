@@ -1,8 +1,6 @@
 #ifndef WOLFENSTEIN3D_ROCKETLAUNCHER_H
 #define WOLFENSTEIN3D_ROCKETLAUNCHER_H
 
-class RocketLauncher {
-
-};
+class RocketLauncher {};
 
 #endif //WOLFENSTEIN3D_ROCKETLAUNCHER_H

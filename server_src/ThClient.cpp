@@ -1,6 +1,8 @@
 #include "ThClient.h"
 #include <thread>
 #include <iostream>
+#include <utility>
+#include <string>
 
 #define EMPTY ""
 
@@ -25,18 +27,21 @@ void ThClient::send() {
         while (is_connected && sent >= 0 && !SendQueue.isWorking()) {
             str = SendQueue.pop();
             int bytesToSend = str.size();
-            const uint8_t* buffer = reinterpret_cast<const uint8_t *>(str.c_str());
+            const uint8_t* buffer = reinterpret_cast<const uint8_t *>(
+                                                            str.c_str());
             sent = peer.send(buffer, bytesToSend);
         }
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     } catch (...) {
-        std::cerr << "Unknown error in the send method of one of the clients! :(\n" << std::endl;
+        std::cerr << "Unknown error in the send method of"
+                        " one of the clients! :(\n" << std::endl;
     }
 }
 
 void ThClient::push(uint8_t *buffer, int bytes_to_send) {
-    std::string str = std::string(reinterpret_cast<const char*>(buffer), static_cast<size_t>(bytes_to_send));
+    std::string str = std::string(reinterpret_cast<const char*>(buffer),
+                                    static_cast<size_t>(bytes_to_send));
     this->SendQueue.push(str);
 }
 

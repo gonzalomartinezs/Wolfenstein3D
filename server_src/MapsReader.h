@@ -2,6 +2,7 @@
 #define MAPSREADER_H
 
 #include <vector>
+#include <string>
 #include "../common_src/Configuration.h"
 
 #define MAPS_FOLDER_PATH "../server_src/Maps/"

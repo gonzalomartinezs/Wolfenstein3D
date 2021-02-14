@@ -1,4 +1,5 @@
 #include "Bot.h"
+#include <vector>
 #include <iostream> //borrar
 
 Bot::Bot(const Configuration& config_stats,
@@ -12,7 +13,8 @@ Bot::Bot(const Configuration& config_stats,
     lua_pcall(this->L, 0, LUA_MULTRET, 0);
 }
 
-void Bot::getState(std::vector<Player*> &players, int botNumber, const Map &map) {
+void Bot::getState(std::vector<Player*> &players, int botNumber,
+                    const Map &map) {
     uint8_t newState;
     this->_pushMap(map);
     this->_pushPlayersPositions(players, botNumber);
@@ -24,7 +26,6 @@ void Bot::getState(std::vector<Player*> &players, int botNumber, const Map &map)
 }
 
 void Bot::_pushMap(const Map& map){
-
     lua_getglobal(this->L, "getBotInstruction");
     lua_newtable(this->L);
 
@@ -67,7 +68,6 @@ void Bot::_pushBotInfo() {
     lua_pushnumber(this->L, this->getY());
     lua_pushnumber(this->L, this->getDirX());
     lua_pushnumber(this->L, this->getDirY());
-
 }
 
 Bot::~Bot() {

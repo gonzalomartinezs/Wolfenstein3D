@@ -10,8 +10,9 @@ RocketLauncherItem::RocketLauncherItem(const Configuration& config, float _x,
 						config.getFloat(KEY_RADIUS)) {}
 
 void RocketLauncherItem::equipTo(PlayerActions& action) {
-	if(action.hasWeapon(this->value)) throw WeaponItemException("Can't equip"
-																" weapon.");;
+	if(action.hasWeapon(this->value)) {
+		throw WeaponItemException("Can't equip weapon.");
+	}
 
 //	action.equip(new RocketLauncher());
 }

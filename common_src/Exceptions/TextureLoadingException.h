@@ -10,8 +10,7 @@ private:
 public:
     explicit TextureLoadingException(const std::string& error);
     const char* what() const noexcept;
-    ~TextureLoadingException(){};
-
+    ~TextureLoadingException(){}
 };
 
 

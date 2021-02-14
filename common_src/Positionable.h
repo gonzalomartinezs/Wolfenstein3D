@@ -8,6 +8,7 @@ protected:
     float x;
     float y;
     TextureID texture;
+
 public:
     // Crea un posicionable listo para ser utilizado.
     Positionable(float x, float y, TextureID tex): x(x), y(y), texture(tex){}
@@ -31,7 +32,6 @@ public:
 
     // Libera los recursos utilizados por el posicionable.
     ~Positionable(){}
-
 };
 
 

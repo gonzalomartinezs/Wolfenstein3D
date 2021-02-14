@@ -8,6 +8,7 @@
 #include "BulletItem.h"
 #include "KeyItem.h"
 #include <cstring>
+#include <string>
 
 #include "Exceptions/ItemsException.h"
 

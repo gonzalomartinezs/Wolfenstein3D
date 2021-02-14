@@ -1,6 +1,9 @@
 #ifndef WOLFENSTEIN3D_GAMESHANDLER_H_
 #define WOLFENSTEIN3D_GAMESHANDLER_H_
 
+#include <vector>
+#include <string>
+
 #include "Game.h"
 #include "Lobby.h"
 

@@ -1,7 +1,6 @@
 #ifndef WINDOWEXCEPTION_H
 #define WINDOWEXCEPTION_H
 
-
 #include <exception>
 #include <string>
 
@@ -11,8 +10,7 @@ private:
 public:
     explicit WindowException(const std::string& error);
     const char* what() const noexcept;
-    ~WindowException(){};
-
+    ~WindowException(){}
 };
 
 #endif //WINDOWEXCEPTION_H

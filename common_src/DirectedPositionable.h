@@ -17,7 +17,8 @@ public:
 
     DirectedPositionable& operator=(const DirectedPositionable& other);
 
-    // Establecen una nueva direccion para el posicionable. Deberian ser un unico metodo??
+    // Establecen una nueva direccion para el posicionable.
+    // Deberian ser un unico metodo??
     void setDirX(float new_dir);
     void setDirY(float new_dir);
 
@@ -30,7 +31,6 @@ public:
 
     // Libera los recursos utilzados por el posicionable dirigido.
     ~DirectedPositionable(){}
-
 };
 
 

@@ -2,6 +2,7 @@
 #define ITEMS_H
 
 #include <vector>
+#include <string>
 
 #include "Item.h"
 #include "Configuration.h"

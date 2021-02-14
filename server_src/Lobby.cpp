@@ -20,7 +20,8 @@ Lobby::Lobby(ThClient* mainClient, Configuration &config,
 
 void Lobby::run() {
     while (this->clients[MAIN_CLIENT]->isEmpty() && !this->gameIsOver) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
+        std::this_thread::sleep_for(
+                                std::chrono::milliseconds(SLEEP_TIME_MILLIS));
     }
     if (!this->gameIsOver) {
         this->clients[MAIN_CLIENT]->pop();
@@ -35,7 +36,8 @@ void Lobby::pushClientIfNotInProgress(ThClient* newPlayer) {
     if (!this->inProgress()) {
         this->clients.push_back(newPlayer);
     } else {
-        throw WolfensteinException("Invalid Game ID, the game is already started\n");
+        throw WolfensteinException("Invalid Game ID,"
+                                    " the game is already started\n");
     }
 }
 
@@ -47,7 +49,6 @@ void Lobby::_startGame() {
     try {
         this->game = new Game(this->clients, this->config, this->config_map);
         this->game->execute();
-
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     } catch (...) {

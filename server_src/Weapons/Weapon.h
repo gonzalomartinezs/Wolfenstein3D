@@ -6,7 +6,8 @@
 #include <vector>
 #include <random>
 
-enum WEAPON_ID{KNIFE = 0, PISTOL = 1, MACHINE_GUN = 2, CHAIN_GUN = 3, ROCKET_LAUNCHER = 4};
+enum WEAPON_ID{KNIFE = 0, PISTOL = 1, MACHINE_GUN = 2,
+                CHAIN_GUN = 3, ROCKET_LAUNCHER = 4};
 
 class Player;
 class Item;
@@ -22,11 +23,12 @@ protected:
 
 public:
     /* Constructor */
-    Weapon(uint8_t _id);
+    explicit Weapon(uint8_t _id);
 
     Weapon(uint8_t _id, TextureID _texture, float radius);
 
-    virtual void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) = 0;
+    virtual void fireTheGun(std::vector<Player*>& players,
+                            int shootingPlayerNumber, const Map& map) = 0;
 
     /* AKA started pulling the trigger */
     virtual void startShooting() = 0;
@@ -48,14 +50,17 @@ public:
 
 protected:
     /* Logica de disparar una sola bala */
-    void shoot(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map);
+    void shoot(std::vector<Player*>& players, int shootingPlayerNumber,
+                const Map& map);
 
     /* Este metodo es equivalente a una distribucion uniforme [0,1] */
     float _randomNumberGenerator();
 
 private:
-    /* Devuelve true si no hay paredes entre los jugadores, en otro caso false */
-    bool _isInTheFieldOfView(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, const Map& map);
+    // Devuelve true si no hay paredes entre los jugadores,
+    // en otro caso false
+    bool _isInTheFieldOfView(uint8_t* thisPlayerInfo,
+                            uint8_t* otherPlayerInfo, const Map& map);
 
     /* Probability decays linearly with the angle */
     float _angleProbabilityFunction(float angle);

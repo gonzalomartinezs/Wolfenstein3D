@@ -18,6 +18,7 @@ private:
 	int initial_bullets, bullets, max_bullets;
 	TextureID bullet_texture;
 	float bullet_radius;
+
 public:
 	explicit Weapons(const Configuration& config);
 	bool hasWeapon(int id) const;

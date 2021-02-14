@@ -3,6 +3,8 @@
 
 #define MAX_LEADERBOARD 5
 
+#include <vector>
+
 #include "Player.h"
 
 class LeaderBoard {

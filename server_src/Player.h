@@ -3,6 +3,8 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
+
 #include "Exceptions/GameException.h"
 #include "PlayerActions.h"
 #include "../common_src/Map.h"
@@ -42,7 +44,8 @@ public:
 
     void setName(const std::string& newName);
 
-    virtual void getState(std::vector<Player*> &players, int botNumber, const Map &map) {};
+    virtual void getState(std::vector<Player*> &players,
+                        int botNumber, const Map &map) {}
 
     bool isDead();
     void receiveShot(uint8_t damage);

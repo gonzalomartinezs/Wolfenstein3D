@@ -4,6 +4,8 @@
 #include "Weapon.h"
 #include "../../common_src/Timer.h"
 
+#include <vector>
+
 class ChainGun : public Weapon {
 private:
     Timer fireTimer;
@@ -12,11 +14,13 @@ private:
 
 public:
     /* Constructor */
-    ChainGun(const float time_between_shots, TextureID texture, float item_radius);
+    ChainGun(const float time_between_shots, TextureID texture,
+            float item_radius);
 
     void startShooting() override;
 
-    void fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber, const Map &map) override;
+    void fireTheGun(std::vector<Player*> &players, int shootingPlayerNumber,
+                    const Map &map) override;
 
 	Item* getWeaponItem(float x, float y) override;
 

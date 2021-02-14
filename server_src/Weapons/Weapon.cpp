@@ -31,12 +31,13 @@ Item* Weapon::getWeaponItem(float x, float y) {
 }
 
 float Weapon::_randomNumberGenerator() {
-    return (static_cast<float>(this->rd())/static_cast<float>(this->rd.max()));
+    return (static_cast<float>(this->rd()) / 
+            static_cast<float>(this->rd.max()));
 }
 
 float Weapon::_angleProbabilityFunction(float angle) {
     float probability = (-1/MAX_SHOOTING_ANGLE * std::abs(angle)) + 1;
-    if (probability < 0 ) {
+    if (probability < 0) {
         probability = 0;
     }
     return probability;
@@ -50,7 +51,8 @@ float Weapon::_distanceProbabilityFunction(float distance) {
     return probability;
 }
 
-bool Weapon::_runProbability(uint8_t *thisPlayerInfo, uint8_t *otherPlayerInfo) {
+bool Weapon::_runProbability(uint8_t *thisPlayerInfo,
+                            uint8_t *otherPlayerInfo) {
     float dirXP1, xP2, dirYP1, yP2, xP1, yP1;
     float angle, distance, probability;
     memcpy(&dirXP1, thisPlayerInfo + 2 * FLOAT_SIZE, FLOAT_SIZE);
@@ -63,14 +65,17 @@ bool Weapon::_runProbability(uint8_t *thisPlayerInfo, uint8_t *otherPlayerInfo) 
     float diffX = xP2 - xP1;
     float diffY = yP2 - yP1;
 
-    angle = acos((dirXP1 * diffX + dirYP1 * diffY) / std::sqrt(diffX * diffX + diffY * diffY));
+    angle = acos((dirXP1 * diffX + dirYP1 * diffY) / 
+            std::sqrt(diffX * diffX + diffY * diffY));
     distance = std::sqrt((diffX * diffX) + (diffY * diffY));
-    probability = _angleProbabilityFunction(angle) * _distanceProbabilityFunction(distance);
+    probability = _angleProbabilityFunction(angle) *
+                    _distanceProbabilityFunction(distance);
 
     return (probability >= _randomNumberGenerator());
  }
 
-bool Weapon::_isInTheFieldOfView(uint8_t* thisPlayerInfo, uint8_t* otherPlayerInfo, const Map& map) {
+bool Weapon::_isInTheFieldOfView(uint8_t* thisPlayerInfo,
+                                uint8_t* otherPlayerInfo, const Map& map) {
     bool isInTheFieldOfView = true;
     float xP1, xP2, yP1, yP2;
     float dirX, dirY, stepX, stepY, norm;
@@ -95,7 +100,8 @@ bool Weapon::_isInTheFieldOfView(uint8_t* thisPlayerInfo, uint8_t* otherPlayerIn
     return isInTheFieldOfView;
 }
 
-void Weapon::shoot(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) {
+void Weapon::shoot(std::vector<Player*>& players,
+                    int shootingPlayerNumber, const Map& map) {
     uint8_t thisPlayerInfo[POSITION_DATA_SIZE];
     players[shootingPlayerNumber]->getPositionData(thisPlayerInfo);
 
@@ -107,14 +113,18 @@ void Weapon::shoot(std::vector<Player*>& players, int shootingPlayerNumber, cons
             if (static_cast<int>(i) != shootingPlayerNumber) {
                 uint8_t otherPlayerInfo[POSITION_DATA_SIZE];
                 players[i]->getPositionData(otherPlayerInfo);
-                if (_isInTheFieldOfView(thisPlayerInfo, otherPlayerInfo, map)) {
-                    bool shotHit = _runProbability(thisPlayerInfo, otherPlayerInfo);
+                if (_isInTheFieldOfView(thisPlayerInfo, otherPlayerInfo,
+                                        map)) {
+                    bool shotHit = _runProbability(thisPlayerInfo,
+                                                    otherPlayerInfo);
                     if (shotHit) {
                         /* Bajar vida del jugador con el que impacto */
                         players[i]->receiveShot(static_cast<uint8_t>
-                        (this->_randomNumberGenerator() * 10) + 1);  // Rango [1, 10]
+                        (this->_randomNumberGenerator() * 10) + 1);
+                        // Rango [1, 10]
                         if (players[i]->isDead()) {
-                            players[shootingPlayerNumber]->increaseKillCounter();
+                            players[shootingPlayerNumber]->\
+                            increaseKillCounter();
                         }
                         break;
                     }

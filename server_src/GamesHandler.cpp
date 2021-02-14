@@ -1,4 +1,5 @@
 #include "GamesHandler.h"
+#include <string>
 
 GamesHandler::GamesHandler() {}
 

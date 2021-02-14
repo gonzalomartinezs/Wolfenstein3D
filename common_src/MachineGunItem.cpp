@@ -27,8 +27,9 @@ MachineGunItem::MachineGunItem(float _x, float _y, TextureID texture,
                         BULLETS_PER_BURST(bullets_per_burst) {}
 
 void MachineGunItem::equipTo(PlayerActions& action) {
-	if(action.hasWeapon(this->value)) throw WeaponItemException("Can't equip"
-																" weapon.");;
+	if(action.hasWeapon(this->value)) {
+		throw WeaponItemException("Can't equip weapon.");;
+	}
 
 	action.equip(new MachineGun(this->TIME_BETWEEN_SHOTS,
 								this->TIME_BETWEEN_BURSTS,

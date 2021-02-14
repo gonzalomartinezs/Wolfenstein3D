@@ -14,6 +14,7 @@ private:
     int opened_time;
     int state;
     float elapsed_fraction;
+
 public:
     // Crea una superficie deslizante lista para ser utilizada.
     // El tiempo es medido en ms.
@@ -54,7 +55,7 @@ public:
     int getId() const;
 
     // Libera los recursos uilizados por la puerta
-    ~SlidingSurface(){};
+    ~SlidingSurface(){}
 
 protected:
     void _updateElapsedFraction();

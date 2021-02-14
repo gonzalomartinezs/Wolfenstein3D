@@ -10,7 +10,8 @@ DirectedPositionable::DirectedPositionable(float pos_x, float pos_y,
     this-> dir_y = dir_y/norm;
 }
 
-DirectedPositionable& DirectedPositionable::operator=(const DirectedPositionable &other) {
+DirectedPositionable& DirectedPositionable::operator=(const
+                                                DirectedPositionable &other) {
     this->x = other.x;
     this->y = other.y;
     this->dir_x = other.dir_x;

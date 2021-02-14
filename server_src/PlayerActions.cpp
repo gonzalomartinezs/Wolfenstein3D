@@ -94,8 +94,11 @@ void PlayerActions::fireTheGun(std::vector<Player*>& players,
 }
 
 void PlayerActions::receiveShot(uint8_t damage) {
-    if (damage > this->health) this->health = 0;
-    else this->health -= damage;
+    if (damage > this->health){
+        this->health = 0;  
+    } else {
+        this->health -= damage;
+    }
 }
 
 void PlayerActions::increaseBulletCounter(uint8_t bulletsAmount) {
@@ -125,12 +128,14 @@ void PlayerActions::getHUDInfo(uint8_t* msg) {
     memcpy(msg + 3 * sizeof(uint8_t), &(has_key), sizeof(bool));
 
     uint8_t weapon_is_shooting = this->weapons.isShooting();
-    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting, sizeof(bool));
+    memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting,
+            sizeof(bool));
 
     int bullets = this->weapons.getBullets();
-    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &bullets, sizeof(int));
-    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool) + sizeof(int), &this->score, sizeof(int));
-
+    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &bullets,
+            sizeof(int));
+    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool) + sizeof(int),
+            &this->score, sizeof(int));
 }
 
 PlayerActions::~PlayerActions() {}
