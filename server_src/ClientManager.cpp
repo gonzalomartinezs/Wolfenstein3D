@@ -21,11 +21,10 @@ void ClientManager::operator()(GamesHandler& games) {
 
 	while (this->is_connected) {
         try {
-            ThClient* newClient;
             Peer peer = socket.acceptClient();
 
             if (this->is_connected) {
-                newClient = this->_createClient(peer);
+                ThClient* newClient = this->_createClient(peer);
                 this->_deleteFinishedChoosingClients(choosingClients);
                 choosingClients.push_back(new ClientHandler(newClient, games, this->config));
                 choosingClients.back()->start();

@@ -20,7 +20,7 @@ private:
 
 public:
     /* Constructor */
-	ClientManager(Configuration& config);
+	explicit ClientManager(Configuration& config);
 
 	void operator()(GamesHandler& games);
 	void stop();

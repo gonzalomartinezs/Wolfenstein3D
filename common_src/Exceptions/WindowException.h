@@ -9,7 +9,7 @@ class WindowException: public std::exception {
 private:
     std::string msg_error;
 public:
-    WindowException(const std::string& error);
+    explicit WindowException(const std::string& error);
     const char* what() const noexcept;
     ~WindowException(){};
 

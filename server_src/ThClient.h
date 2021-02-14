@@ -16,7 +16,7 @@ private:
 
 public:
     /* Constructor */
-    ThClient(Peer& _peer);
+    explicit ThClient(Peer& _peer);
 
     void run() override;
     bool isEmpty() const;

@@ -11,7 +11,6 @@ private:
     float lastShotDelay;
     int burstBulletCounter;
     bool isInBurstRecover;
-    bool isFirstBulletOfTheBurst;
     const float TIME_BETWEEN_SHOTS, TIME_BETWEEN_BURSTS;
     const int BULLETS_PER_BURST;
 

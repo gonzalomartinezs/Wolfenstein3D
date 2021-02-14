@@ -10,7 +10,7 @@ private:
 	std::string filename;
 public:
 	/*Constructor en base a archivo.*/
-	Configuration(const char* _filename);
+	explicit Configuration(const char* _filename);
 	/*Constructor en base a otro Configuration, se crea a partir de una 
 	referencia a una key con mas keys dentro.*/
 	Configuration(const Configuration& config, const std::string& key);

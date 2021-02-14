@@ -19,14 +19,13 @@ void ThClient::recv() {
 
 void ThClient::send() {
     std::string str;
-    const uint8_t* buffer;
-    int bytesToSend, sent = 0;
 
     try {
+        int sent = 0;
         while (is_connected && sent >= 0 && !SendQueue.isWorking()) {
             str = SendQueue.pop();
-            bytesToSend = str.size();
-            buffer = reinterpret_cast<const uint8_t *>(str.c_str());
+            int bytesToSend = str.size();
+            const uint8_t* buffer = reinterpret_cast<const uint8_t *>(str.c_str());
             sent = peer.send(buffer, bytesToSend);
         }
     } catch (const std::exception& e) {

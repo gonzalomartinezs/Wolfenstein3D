@@ -132,7 +132,7 @@ void Player::setState(uint8_t newState) {
     }
 }
 
-void Player::setName(std::string newName) {
+void Player::setName(const std::string& newName) {
     this->name = newName;
 }
 

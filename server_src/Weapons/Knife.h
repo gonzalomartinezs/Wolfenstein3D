@@ -13,7 +13,7 @@ private:
 
 public:
     /* Constructor */
-    Knife(const Configuration& config);
+    explicit Knife(const Configuration& config);
 
     void startShooting() override;
 

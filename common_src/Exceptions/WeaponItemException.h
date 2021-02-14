@@ -8,7 +8,7 @@ class WeaponItemException : public std::exception {
 private:
 	std::string msg_error;
 public:
-	WeaponItemException(const std::string& error);
+	explicit WeaponItemException(const std::string& error);
 	const char* what() const noexcept;
 	~WeaponItemException();
 

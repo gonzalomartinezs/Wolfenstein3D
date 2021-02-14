@@ -8,7 +8,7 @@ class FontLoadingException: public std::exception {
 private:
     std::string msg_error;
 public:
-    FontLoadingException(const std::string& error);
+    explicit FontLoadingException(const std::string& error);
     const char* what() const noexcept;
     ~FontLoadingException(){};
 

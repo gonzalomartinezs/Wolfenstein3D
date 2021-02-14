@@ -39,12 +39,12 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
 void Game::execute() {
 
     Timer timeBetweenUpdates;
-    double lastTickTime = 0;
 
     this->sendMap();
     //this->recvNames();
 
     try {
+        double lastTickTime = 0;
         while (this->isRunning) { //Cambiar, ahora es un while true (Esperar caracter para o esperar a que finalice la partida)
             timeBetweenUpdates.start();
 
@@ -70,10 +70,9 @@ void Game::execute() {
 
 void Game::getInstructions() {
     /* Recibir data de los clientes y actualizar "players" */
-    uint8_t stateRecv = -1;
     for (size_t i = 0; i < this->clients.size(); i++) {
         if (!this->clients[i]->isEmpty()) {
-            stateRecv = this->clients[i]->pop();
+            uint8_t stateRecv = this->clients[i]->pop();
             this->players[i]->setState(stateRecv);
         }
     }
@@ -92,9 +91,8 @@ void Game::update() {
 void Game::sendUpdate() {
     /* Enviar update a los clientes */
     uint8_t msg[MAX_MSG_SIZE];
-    int bytesToSend;
     for (size_t i = 0; i < this->clients.size(); i++) {
-        bytesToSend = this->createMsg(msg, i);
+        int bytesToSend = this->createMsg(msg, i);
         this->clients[i]->push(msg, bytesToSend);
     }
 }
@@ -140,7 +138,6 @@ void Game::createLeaderBoard() {
 }
 
 void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& players) {
-    uint8_t size;
     std::string name;
     Timer timer;
 
@@ -153,7 +150,7 @@ void _recvName(size_t i, std::vector<ThClient*>& clients, std::vector<Player*>& 
     std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MILLIS));
 
     if (!clients[i]->isEmpty()) {
-        size = clients[i]->pop();
+        uint8_t size = clients[i]->pop();
         for (int j = 0; j < size; j++) {
             if (!clients[i]->isEmpty()) {
                 name.push_back(clients[i]->pop());

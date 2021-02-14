@@ -8,7 +8,7 @@
 
 Map::Map(const Configuration& config) : n_row(config.getInt(KEY_ROW)),
 										n_col(config.getInt(KEY_COL)) {
-	map = new int*[n_row];
+	this->map = new int*[n_row];
 
 	for (int i = 0; i < n_row; ++i) {
 		map[i] = new int[n_col];
@@ -20,7 +20,7 @@ Map::Map(const Configuration& config) : n_row(config.getInt(KEY_ROW)),
 Map::Map(const std::vector<std::vector<int>>& initial_map) : n_row(initial_map.size()),
                                                              n_col(initial_map[0].size()){
 
-    map = new int*[n_row];
+    this->map = new int*[n_row];
 
     for (int i = 0; i < n_row; ++i) {
         map[i] = new int[n_col];

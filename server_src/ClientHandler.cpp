@@ -24,7 +24,7 @@ void ClientHandler::run() {
 }
 
 void ClientHandler::_talkWithClient() {
-    uint8_t action, gameID, mapID, msg[MAX_MSG_LEN];
+    uint8_t action, gameID, msg[MAX_MSG_LEN];
     int msgLen;
 
     action = this->_blockingRecv();
@@ -35,7 +35,7 @@ void ClientHandler::_talkWithClient() {
         msgLen = _loadNewGameMsg(msg, maps_reader);
         this->newClient->push(msg, msgLen);
 
-        mapID = _blockingRecv();
+        uint8_t mapID = _blockingRecv();
 
         if (!this->endTalking) {
             games.pushGameAndStart(new Lobby(this->newClient, this->config, maps_reader.getFileName(mapID)));

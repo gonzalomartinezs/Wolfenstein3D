@@ -40,7 +40,7 @@ public:
 
     void setState(uint8_t newState);
 
-    void setName(std::string newName);
+    void setName(const std::string& newName);
 
     virtual void getState(std::vector<Player*> &players, int botNumber, const Map &map) {};
 

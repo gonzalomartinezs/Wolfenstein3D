@@ -15,7 +15,9 @@ private:
 
 public:
     /* Constructor */
-	GameManager(const char* _file_name);
+	explicit GameManager(const char* _file_name);
+	GameManager(GameManager& other) = delete;
+	GameManager& operator=(const GameManager& other) = delete;
 
 	void operator()();
 	void stop();

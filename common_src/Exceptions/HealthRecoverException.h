@@ -8,7 +8,7 @@ class HealthRecoverException : public std::exception {
 private:
     std::string error;
 public:
-	HealthRecoverException(std::string&& error);
+	explicit HealthRecoverException(std::string&& error);
 	const char* what() const noexcept;
 	~HealthRecoverException();
 };

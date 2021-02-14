@@ -11,8 +11,10 @@ private:
 	long int n_row, n_col;
 	int** map;
 public:
-	Map(const Configuration& config);
-    Map(const std::vector<std::vector<int>>& initial_map);
+	explicit Map(const Configuration& config);
+    explicit Map(const std::vector<std::vector<int>>& initial_map);
+    Map(Map& other) = delete;
+    Map& operator=(const Map& other) = delete;
 	int get(int x, int y) const;
     long int get_n_row() const;
     long int get_n_col() const;

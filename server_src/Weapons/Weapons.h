@@ -19,7 +19,7 @@ private:
 	TextureID bullet_texture;
 	float bullet_radius;
 public:
-	Weapons(const Configuration& config);
+	explicit Weapons(const Configuration& config);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* weapon);
 	void equip(BulletItem* bullet);

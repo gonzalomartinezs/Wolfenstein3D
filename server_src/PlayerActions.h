@@ -28,7 +28,7 @@ private:
 
 public:
     /* Constructor */
-	PlayerActions(const Configuration& config);
+	explicit PlayerActions(const Configuration& config);
 	void use(HealthRecover* recover);
 	void use(Treasure* treasure);
     void use(BulletItem* bullet);

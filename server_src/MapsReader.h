@@ -10,7 +10,7 @@ class MapsReader {
 private:
 	std::vector<Configuration> files;
 public:
-	MapsReader(const std::string& folder_name);
+	explicit MapsReader(const std::string& folder_name);
 	std::string getFileName(uint8_t i) const;
 	size_t size() const;
 	std::string getName(uint8_t i) const;

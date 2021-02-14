@@ -4,9 +4,7 @@
 
 Thread::Thread() {}
 
-Thread::Thread(Thread&& other) {
-	thread = std::move(other.thread);
-}
+Thread::Thread(Thread&& other) : thread(std::move(other.thread)) {}
 
 Thread& Thread::operator=(Thread&& other) {
 	thread = std::move(other.thread);

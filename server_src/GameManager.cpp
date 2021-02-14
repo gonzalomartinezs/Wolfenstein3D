@@ -2,7 +2,7 @@
 #include "../common_src/Exceptions/ConfigurationException.h"
 
 GameManager::GameManager(const char* _file_name) : config(_file_name) {
-	client_manager = new ClientManager(config);
+	this->client_manager = new ClientManager(config);
 }
 
 void GameManager::operator()() {
