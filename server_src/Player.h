@@ -78,6 +78,7 @@ public:
 private:
     void lookForItem(Items& items, const Collider& collider);
     void lookForWallCollision(const Map& map, const Collider& collider);
+    void _move();
     void _respawn(Items& items);
     void _moveForwards();
     void _moveBackwards();

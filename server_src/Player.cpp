@@ -79,25 +79,9 @@ void Player::updatePlayer(const Map& map, Items& items,
                         std::vector<Player*>& players) {
     float old_x = this->x, old_y = this->y;
 
-    if (this->state != ISNOTMOVING) {
-        if (this->state == ISMOVINGFORWARDS) {
-            this->_moveForwards();
-        } else if (this->state == ISMOVINGBACKWARDS) {
-            this->_moveBackwards();
-        } else if (this->state == ISTURNINGLEFT) {
-            this->_turnLeft();
-        } else if (this->state == ISTURNINGRIGHT) {
-            this->_turnRight();
-        } else {
-            throw GameException("Player has an invalid state!");
-        }
-    }
-
-    if (this->action.isShooting()) {
-        this->action.fireTheGun(players, this->player_number, map);
-    }
-
     try {
+        Player::_move();
+
         Collider collider(this->x, this->y, this->player_size);
         Player::lookForWallCollision(map, collider);
         Player::lookForItem(items, collider);
@@ -105,6 +89,10 @@ void Player::updatePlayer(const Map& map, Items& items,
         std::cerr << e.what() << std::endl;
         this->x = old_x;
         this->y = old_y;
+    }
+
+    if (this->action.isShooting()) {
+        this->action.fireTheGun(players, this->player_number, map);
     }
 
     if (this->action.isDead()) {
@@ -214,6 +202,22 @@ void Player::_turnRight() {
                         this->camPlaneY * sin(-this->rotSpeed));
     this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) +
                         this->camPlaneY * cos(-this->rotSpeed));
+}
+
+void Player::_move() {
+    if (this->state != ISNOTMOVING) {
+        if (this->state == ISMOVINGFORWARDS) {
+            this->_moveForwards();
+        } else if (this->state == ISMOVINGBACKWARDS) {
+            this->_moveBackwards();
+        } else if (this->state == ISTURNINGLEFT) {
+            this->_turnLeft();
+        } else if (this->state == ISTURNINGRIGHT) {
+            this->_turnRight();
+        } else {
+            throw GameException("Player has an invalid state!");
+        }
+    }
 }
 
 void Player::_respawn(Items& items) {
