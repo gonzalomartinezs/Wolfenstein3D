@@ -35,12 +35,14 @@ Player::Player(const Configuration& config_stats,
             const Configuration& config_map,
             const uint8_t _player_number) :
             DirectedPositionable(config_map.getFloat(KEY_POS_X),
-            config_map.getFloat(KEY_POS_Y), config_map.getInt(KEY_DIR_X),
-            config_map.getInt(KEY_DIR_Y), None), action(config_stats) {
+            config_map.getFloat(KEY_POS_Y), config_map.getFloat(KEY_DIR_X),
+            config_map.getFloat(KEY_DIR_Y), None), action(config_stats) {
     this->moveSpeed = config_stats.getFloat(KEY_MOVE_SPEED);
     this->rotSpeed = config_stats.getFloat(KEY_ROT_SPEED);
-    this->initialPosX = config_map.getFloat(KEY_POS_X);
-    this->initialPosY = config_map.getFloat(KEY_POS_Y);
+    this->initial_dir_x = this->dir_x;
+    this->initial_dir_y = this->dir_y;
+    this->initialPosX = this->x;
+    this->initialPosY = this->y;
     this->camPlaneX = this->dir_y; // Rotation matrix 90 degrees clockwise
     this->camPlaneY = -this->dir_x; // Rotation matrix 90 degrees clockwise
     this->state = ISNOTMOVING;
@@ -106,9 +108,7 @@ void Player::updatePlayer(const Map& map, Items& items,
     }
 
     if (this->action.isDead()) {
-        this->action.die(&items, this->x, this->y);
-        this->x = this->initialPosX;
-        this->y = this->initialPosY;
+        Player::_respawn(items);
     }
 
     // Borrar
@@ -214,6 +214,19 @@ void Player::_turnRight() {
                         this->camPlaneY * sin(-this->rotSpeed));
     this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) +
                         this->camPlaneY * cos(-this->rotSpeed));
+}
+
+void Player::_respawn(Items& items) {
+    this->action.die(&items, this->x, this->y);
+
+    this->dir_x = this->initial_dir_x;
+    this->dir_y = this->initial_dir_y;
+
+    this->camPlaneX = this->dir_y;
+    this->camPlaneY = -this->dir_x;
+
+    this->x = this->initialPosX;
+    this->y = this->initialPosY;
 }
 
 void Player::getPositionData(uint8_t *msg) {

@@ -20,6 +20,7 @@ class Player : public DirectedPositionable {
 protected:
     PlayerActions action;
     float camPlaneX, camPlaneY;
+    float initial_dir_x, initial_dir_y;
     float initialPosX, initialPosY;
     uint8_t player_number;
     std::string name;
@@ -77,6 +78,7 @@ public:
 private:
     void lookForItem(Items& items, const Collider& collider);
     void lookForWallCollision(const Map& map, const Collider& collider);
+    void _respawn(Items& items);
     void _moveForwards();
     void _moveBackwards();
     void _turnLeft();
