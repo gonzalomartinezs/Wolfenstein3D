@@ -24,7 +24,7 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Peer.h common_src/Peer.cpp
         common_src/DirectedPositionable.h common_src/DirectedPositionable.cpp
         common_src/Map.h common_src/Map.cpp
-        common_src/SlidingSurface.cpp
+        common_src/SlidingSurface.cpp common_src/Collider.cpp
         common_src/GameConstants.h
         client_src/textures/TexturesContainer.h client_src/textures/TexturesContainer.cpp
         client_src/textures/Texture.h client_src/textures/Texture.cpp
@@ -69,7 +69,7 @@ add_executable(server server_src/server_main.cpp
         common_src/DirectedPositionable.h common_src/DirectedPositionable.cpp
         common_src/Map.h common_src/Map.cpp
         common_src/Exceptions/ErrorMap.h common_src/Exceptions/ErrorMap.cpp
-        common_src/SlidingSurface.cpp
+        common_src/SlidingSurface.cpp common_src/Doors.cpp
         common_src/GameConstants.h
         common_src/Item.cpp
         common_src/Items.cpp common_src/Exceptions/ItemsException.cpp

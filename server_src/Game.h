@@ -11,6 +11,7 @@
 #include "../common_src/Map.h"
 #include "../client_src/textures/TextureID.h"
 #include "../common_src/Configuration.h"
+#include "../common_src/Doors.h"
 
 class Game {
 private:
@@ -19,6 +20,7 @@ private:
     std::atomic<bool> isRunning;
     Map map;
     Items items;
+    Doors doors;
     const size_t bots_amount;
 
 public:

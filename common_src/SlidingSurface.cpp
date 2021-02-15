@@ -1,5 +1,7 @@
 #include "SlidingSurface.h"
 #include "GameConstants.h"
+#include "../server_src/PlayerActions.h"
+#include "Map.h"
 
 SlidingSurface::SlidingSurface(int id, int x, int y, int surface_type,
                         int opened_time, int moving_time, int initial_state) :
@@ -22,6 +24,16 @@ void SlidingSurface::update(int new_state) {
         state = new_state;
         if (!isClosed()) timer.start();
     }
+}
+
+void SlidingSurface::update(Map& map) {
+    if (state == SLIDER_OPENING || state == SLIDER_OPENED) {
+        map.set(this->pos_x, this->pos_y, SLIDER_OPENED);
+    } else {
+        map.set(this->pos_x, this->pos_y, this->surface_type);
+    }
+
+    SlidingSurface::update(this->state);
 }
 
 int SlidingSurface::getState() {
@@ -63,6 +75,19 @@ int SlidingSurface::getSurfaceType() const{
 
 int SlidingSurface::getId() const{
     return this->id;
+}
+
+bool SlidingSurface::collidesWith(const Collider& collider) const {
+    //Cambiar el Width y Height
+    return collider.collidesWith(this->pos_x, this->pos_y, 1, 1);
+}
+
+void SlidingSurface::interact(PlayerActions* player) {
+    if (this->state == SLIDER_OPENED) {
+        this->state = SLIDER_CLOSING;
+    } else {
+        this->state = SLIDER_OPENING;
+    }
 }
 
 // Actualiza la fraccion de tiempo transcurrido del lapso.

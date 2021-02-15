@@ -9,6 +9,7 @@
 #define NOT_FIRING 6
 #define NEXT_GUN 7
 #define PREV_GUN 8
+#define INTERACT_WITH_DOOR 9
 
 void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
     SDL_Event event;
@@ -52,12 +53,12 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
                 flag = PREV_GUN;
                 this->instructions.push(PREV_GUN);
             }
-        }/* else if (keys[SDL_SCANCODE_F]) {
-            if (flag != OPEN_DOOR) {
-                flag = OPEN_DOOR;
-                this->instructions.push(OPEN_DOOR);
+        } else if (keys[SDL_SCANCODE_F]) {
+            if (flag != INTERACT_WITH_DOOR) {
+                flag = INTERACT_WITH_DOOR;
+                this->instructions.push(INTERACT_WITH_DOOR);
             }
-        }*/ else {
+        } else {
             if (flag == IS_FIRING) {
                 flag = NOT_FIRING;
                 this->instructions.push(NOT_FIRING);

@@ -12,6 +12,7 @@
 #include "../common_src/Items.h"
 #include "../common_src/Item.h"
 #include "../common_src/Configuration.h"
+#include "../common_src/Doors.h"
 
 #define POS_DATA_PLANE_SIZE 24
 #define POS_DATA_SIZE 16
@@ -39,7 +40,7 @@ public:
             const Configuration& config_map, const uint8_t _player_number);
 
     void updatePlayer(const Map& map, Items& items,
-                        std::vector<Player*>& players);
+                        std::vector<Player*>& players, Doors& doors);
 
     void setState(uint8_t newState);
 
@@ -78,6 +79,7 @@ public:
 private:
     void lookForItem(Items& items, const Collider& collider);
     void lookForWallCollision(const Map& map, const Collider& collider);
+    void lookForDoor(Doors& doors, const Collider& collider);
     void _move();
     void _respawn(Items& items);
     void _moveForwards();

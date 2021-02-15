@@ -5,6 +5,7 @@
 #include <vector>
 #include "../common_src/Configuration.h"
 #include "../common_src/Map.h"
+#include "../common_src/SlidingSurface.h"
 #include "Weapons/Weapons.h"
 
 #define HUD_INFO_SIZE 13
@@ -35,6 +36,8 @@ public:
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
 	void equip(int key_id);
+	void interactWith(SlidingSurface& door);
+
 	uint8_t getCurrentWeapon();
 
 	void die(Items* items, float x, float y);

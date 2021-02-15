@@ -8,6 +8,8 @@
 #include <string>
 
 #define WALKABLE 0
+#define WALL 1
+#define DOOR 2
 #define PI 3.14159
 #define WALL_SIZE 1
 
@@ -21,6 +23,7 @@
 #define STOPSHOOTING 6
 #define NEXT_WEAPON 7
 #define PREV_WEAPON 8
+#define INTERACT_WITH_DOOR 9
 
 //Keys
 #define KEY_POS_X "pos_x"
@@ -53,8 +56,17 @@ Player::Player(const Configuration& config_stats,
 void Player::lookForWallCollision(const Map& map, const Collider& collider) {
     for (int i = this->x-1; i <= this->x+1; ++i) {
         for (int j = this->y-1; j <= this->y+1; ++j) {
-            if (map.get(i, j) != WALKABLE) {
-                if (collider.collidesWith(i, j, WALL_SIZE, WALL_SIZE)) {
+            int value = map.get(i, j);
+            if (value != WALKABLE) {
+                float width = WALL_SIZE, height = WALL_SIZE;
+                if (value == DOOR) {
+                    if (this->dir_x > this->dir_y){
+                        height = 0.9f;
+                    } else {
+                        width = 0.9f;
+                    }
+                }
+                if (collider.collidesWith(i, j, width, height)) {
                     throw ErrorMap("Collision detected.");
                 }
             }
@@ -70,25 +82,47 @@ void Player::lookForItem(Items& items, const Collider& collider) {
                 items.remove(i);
             } catch (const std::exception& e) {
                 std::cout << e.what() << std::endl;
-            } 
+            }
         }
 	}
 }
 
+void Player::lookForDoor(Doors& doors, const Collider& collider) {
+    for (size_t i = 0; i < doors.size(); ++i) {
+        if (doors[i].collidesWith(collider)) {
+            try {
+                this->action.interactWith(doors[i]);
+            } catch (const std::exception& e) {
+                std::cout << e.what() << std::endl;
+            }
+            break;
+        }
+    }
+}
+
 void Player::updatePlayer(const Map& map, Items& items,
-                        std::vector<Player*>& players) {
+                        std::vector<Player*>& players, Doors& doors) {
     float old_x = this->x, old_y = this->y;
 
     try {
         Player::_move();
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
-        Collider collider(this->x, this->y, this->player_size);
+    Collider collider(this->x, this->y, this->player_size);
+
+    try {
         Player::lookForWallCollision(map, collider);
         Player::lookForItem(items, collider);
     } catch(const std::exception& e) {
         std::cerr << e.what() << std::endl;
         this->x = old_x;
         this->y = old_y;
+    }
+
+    if (this->state == INTERACT_WITH_DOOR) {
+        Player::lookForDoor(doors, collider);
     }
 
     if (this->action.isShooting()) {

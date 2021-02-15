@@ -20,7 +20,7 @@ const double TICK_DURATION = 1/128.f; // miliseconds que tarda en
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map) : clients(_clients),
         map(config_map), items(Configuration(config, KEY_ITEMS),
-        Configuration(config_map, KEY_ITEMS)),
+        Configuration(config_map, KEY_ITEMS)), doors(this->map),
     bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
     this->isRunning = true;
 
@@ -90,7 +90,12 @@ void Game::getInstructions() {
 
 void Game::update() {
     for (size_t i = 0; i < this->players.size(); i++) {
-        this->players[i]->updatePlayer(this->map, this->items, this->players);
+        this->players[i]->updatePlayer(this->map, this->items, this->players,
+                                        this->doors);
+    }
+
+    for (size_t i = 0; i < this->doors.size(); ++i) {
+        this->doors[i].update(this->map);
     }
 }
 
