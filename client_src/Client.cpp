@@ -24,7 +24,7 @@
 #define OTHER_PLAYERS_SIZE (4 * sizeof(float) + 1)
 #define MAX_MESSAGE_SIZE 256
 
-Client::Client(std::string host, std::string service,
+Client::Client(const std::string &host, const std::string &service,
                BlockingQueue<int> &instructions,
                ProtectedQueue<DrawingInfo> &drawing_info):
         socket(host.c_str(), service.c_str(), 0),
@@ -34,34 +34,16 @@ Client::Client(std::string host, std::string service,
 
 std::vector<std::vector<int>> Client::receiveMap() {
     uint8_t n_row, n_col;
-    uint8_t bytes_received[MAX_MESSAGE_SIZE];
-    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
 
     this->peer.recv(&n_row, 1);
     this->peer.recv(&n_col, 1);
+    uint16_t bytes_to_receive = n_col * n_row;
     std::vector<std::vector<int>> received_map(n_row, std::vector<int>(n_col));
-    std::vector<uint8_t> received_uints;
+    std::vector<uint8_t> received_uints(bytes_to_receive);
 
-    uint8_t bytes_to_receive = n_col*n_row;
-    uint8_t received = 0;
+    peer.recv(received_uints.data(), bytes_to_receive);
 
-    while (received < bytes_to_receive){
-        if (bytes_to_receive - received < MAX_MESSAGE_SIZE) {
-            int difference = bytes_to_receive - received;
-            this->peer.recv(bytes_received, difference);
-            received_uints.insert(received_uints.end(), &bytes_received[0],
-                                  &bytes_received[difference]);
-            received += difference;
-        } else {
-            this->peer.recv(bytes_received, MAX_MESSAGE_SIZE);
-            received_uints.insert(received_uints.end(), &bytes_received[0],
-                                  &bytes_received[MAX_MESSAGE_SIZE]);
-            received += MAX_MESSAGE_SIZE;
-        }
-        memset(bytes_received, 0, MAX_MESSAGE_SIZE);
-    }
-
-    for(int i=0; i<received_uints.size(); i++){
+    for (int i=0; i<received_uints.size(); i++) {
         received_map[i/n_col][i%n_col] = received_uints[i];
     }
     return received_map;
