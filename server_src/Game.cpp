@@ -48,7 +48,6 @@ void Game::execute() {
     //this->recvNames();
 
     try {
-    //    double lastTickTime = 0;
         //Cambiar, ahora es un while true
         // (Esperar caracter para o esperar a que finalice la partida)
         while (this->isRunning) {
