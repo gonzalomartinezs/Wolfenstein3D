@@ -16,27 +16,28 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
         if (event.type == SDL_QUIT) {
             quit = true;
         }
-        if (keys[SDL_SCANCODE_UP]){
+        if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W]){
             if (flag != IS_MOVING_FORWARDS){
                 flag = IS_MOVING_FORWARDS;
                 this->instructions.push(IS_MOVING_FORWARDS);
             }
-        } else if (keys[SDL_SCANCODE_DOWN]) {
+        } else if (keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_S]) {
             if (flag != IS_MOVING_BACKWARDS) {
                 flag = IS_MOVING_BACKWARDS;
                 this->instructions.push(IS_MOVING_BACKWARDS);
             }
-        } else if (keys[SDL_SCANCODE_RIGHT]) {
+        } else if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D]) {
             if (flag != IS_TURNING_RIGHT) {
                 flag = IS_TURNING_RIGHT;
                 this->instructions.push(IS_TURNING_RIGHT);
             }
-        } else if (keys[SDL_SCANCODE_LEFT]) {
+        } else if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_A]) {
             if (flag != IS_TURNING_LEFT) {
                 flag = IS_TURNING_LEFT;
                 this->instructions.push(IS_TURNING_LEFT);
             }
-        } else if (keys[SDL_SCANCODE_LCTRL] || keys[SDL_SCANCODE_RCTRL]) {
+        } else if (keys[SDL_SCANCODE_LCTRL] || keys[SDL_SCANCODE_RCTRL]
+                    || keys[SDL_SCANCODE_SPACE]) {
             if (flag != IS_FIRING) {
                 flag = IS_FIRING;
                 this->instructions.push(IS_FIRING);
@@ -51,7 +52,12 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
                 flag = PREV_GUN;
                 this->instructions.push(PREV_GUN);
             }
-        } else {
+        }/* else if (keys[SDL_SCANCODE_F]) {
+            if (flag != OPEN_DOOR) {
+                flag = OPEN_DOOR;
+                this->instructions.push(OPEN_DOOR);
+            }
+        }*/ else {
             if (flag == IS_FIRING) {
                 flag = NOT_FIRING;
                 this->instructions.push(NOT_FIRING);
