@@ -1,9 +1,11 @@
 #include "MapsReader.h"
-
+/*
 #include <sys/types.h>
 #include <dirent.h>
-#include <cstddef>
+#include <cstddef>*/
 #include <string>
+
+#include "DirectoryWalker.h"
 #include "Exceptions/GameException.h"
 
 #define KEY_MAP_NAME "map_name"
@@ -19,21 +21,17 @@ static bool isYAMLFile(const std::string& file_name) {
 }
 
 MapsReader::MapsReader(const std::string& folder_name) {
-	DIR* dir = opendir(folder_name.c_str());
-
-	if (dir == NULL) throw GameException("Error initializing folder.");
+	DirectoryWalker dir(folder_name);
 
 	struct dirent* file;
 
-	while ((file = readdir(dir)) != NULL) {
+	while ((file = dir.read()) != NULL) {
 		std::string file_name = file->d_name;
 		if (isYAMLFile(file_name)) {
 			file_name = MAPS_FOLDER_PATH + file_name;
 			this->files.emplace_back(file_name.c_str());
 		}
 	}
-
-	closedir(dir);
 }
 
 std::string MapsReader::getFileName(uint8_t i) const {

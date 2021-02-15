@@ -58,7 +58,7 @@ add_executable(server server_src/server_main.cpp
         server_src/GamesHandler.cpp
         server_src/ClientHandler.cpp
         server_src/ClientManager.cpp server_src/Lobby.cpp
-        server_src/MapsReader.cpp
+        server_src/MapsReader.cpp server_src/DirectoryWalker.cpp
         common_src/ProtectedQueue.h
         common_src/Socket.cpp
         common_src/Peer.cpp
