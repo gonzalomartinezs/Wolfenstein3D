@@ -2,6 +2,10 @@
 #define SLIDINGSURFACE_H
 
 #include "Timer.h"
+#include "Collider.h"
+
+class Map;
+class PlayerActions;
 
 class SlidingSurface {
 private:
@@ -23,6 +27,8 @@ public:
 
     // Actuliza el estado de la puerta
     void update(int new_state);
+
+    void update(Map& map);
 
     // Retorna el estado actual de la puerta.
     int getState();
@@ -53,6 +59,10 @@ public:
 
     // Retorna el ID de la superficie.
     int getId() const;
+
+    bool collidesWith(const Collider& collider) const;
+
+    void interact(PlayerActions* player);
 
     // Libera los recursos uilizados por la puerta
     ~SlidingSurface(){}

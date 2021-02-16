@@ -9,6 +9,7 @@
 #define NOT_FIRING 6
 #define NEXT_GUN 7
 #define PREV_GUN 8
+#define INTERACT_WITH_DOOR 9
 
 void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
     SDL_Event event;
@@ -16,27 +17,28 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
         if (event.type == SDL_QUIT) {
             quit = true;
         }
-        if (keys[SDL_SCANCODE_UP]){
+        if (keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_W]){
             if (flag != IS_MOVING_FORWARDS){
                 flag = IS_MOVING_FORWARDS;
                 this->instructions.push(IS_MOVING_FORWARDS);
             }
-        } else if (keys[SDL_SCANCODE_DOWN]) {
+        } else if (keys[SDL_SCANCODE_DOWN] || keys[SDL_SCANCODE_S]) {
             if (flag != IS_MOVING_BACKWARDS) {
                 flag = IS_MOVING_BACKWARDS;
                 this->instructions.push(IS_MOVING_BACKWARDS);
             }
-        } else if (keys[SDL_SCANCODE_RIGHT]) {
+        } else if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D]) {
             if (flag != IS_TURNING_RIGHT) {
                 flag = IS_TURNING_RIGHT;
                 this->instructions.push(IS_TURNING_RIGHT);
             }
-        } else if (keys[SDL_SCANCODE_LEFT]) {
+        } else if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_A]) {
             if (flag != IS_TURNING_LEFT) {
                 flag = IS_TURNING_LEFT;
                 this->instructions.push(IS_TURNING_LEFT);
             }
-        } else if (keys[SDL_SCANCODE_LCTRL] || keys[SDL_SCANCODE_RCTRL]) {
+        } else if (keys[SDL_SCANCODE_LCTRL] || keys[SDL_SCANCODE_RCTRL]
+                    || keys[SDL_SCANCODE_SPACE]) {
             if (flag != IS_FIRING) {
                 flag = IS_FIRING;
                 this->instructions.push(IS_FIRING);
@@ -50,6 +52,11 @@ void EventHandler::run(bool &quit, int &flag, const Uint8 *keys) {
             if (flag != PREV_GUN) {
                 flag = PREV_GUN;
                 this->instructions.push(PREV_GUN);
+            }
+        } else if (keys[SDL_SCANCODE_F]) {
+            if (flag != INTERACT_WITH_DOOR) {
+                flag = INTERACT_WITH_DOOR;
+                this->instructions.push(INTERACT_WITH_DOOR);
             }
         } else {
             if (flag == IS_FIRING) {
