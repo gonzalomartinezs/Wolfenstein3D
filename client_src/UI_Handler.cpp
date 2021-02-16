@@ -52,7 +52,7 @@ void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
 
     DynamicTexture* dynamic = tex.getDynamic(TextureID(int(Knife_Pl)+player_info[Weapon]));
     if (dynamic) {
-        if (last_ammo > player_info[Ammo]){
+        if (last_ammo > player_info[Ammo] || (player_info[Weapon] == 0 && player_info[Firing])){
             dynamic->getTexture(1).render(nullptr, &this->elements.weapon_animation);
         } else {
             dynamic->getTexture(0).render(nullptr, &this->elements.weapon_animation);

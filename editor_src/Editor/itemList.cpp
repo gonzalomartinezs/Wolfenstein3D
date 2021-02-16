@@ -6,7 +6,7 @@
 #include <QMimeData>
 
 ItemList::ItemList(QWidget *parent)
-    : QListWidget(parent){
+    : QListWidget(parent) {
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
     setIconSize(QSize(ITEMSIZE, ITEMSIZE));
@@ -15,41 +15,11 @@ ItemList::ItemList(QWidget *parent)
     setDropIndicatorShown(true);
 }
 
-/*
-void ItemList::loadImages(){
-
-    Q_INIT_RESOURCE(editor);
-
-    int i = 0;
-    bool done = false;
-    while(!done){
-       QPixmap newImage;
-       if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
-            Item x;
-            x.id = i;
-            x.pixmap = newImage.scaled(ITEMSIZE, ITEMSIZE);
-            items.push_back(x);
-           i++;
-       } else {
-           done = true;
-       }
-    }
-}
-*/
-void ItemList::loadList(const IconsContainer& list){
-    const std::vector<QPixmap>& items = list.getIcons();
-
-    for(unsigned i = 0; i < items.size(); i++) {
-        QListWidgetItem *pieceItem = new QListWidgetItem(this);
-        pieceItem->setIcon(QIcon(items[i]));
-        pieceItem->setData(Qt::UserRole, QVariant(items[i]));
-        pieceItem->setData(Qt::UserRole+1, i);
-        pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
-    }
+void ItemList::loadList(const IconsContainer& inContainer) {
+    inContainer.loadItemList(*this);
 }
 
-void ItemList::startDrag(Qt::DropActions )
-{
+void ItemList::startDrag(Qt::DropActions ) {
     QListWidgetItem *item = currentItem();
 
     QByteArray itemData;
@@ -67,9 +37,16 @@ void ItemList::startDrag(Qt::DropActions )
     drag->setHotSpot(QPoint(pixmap.width()/2, pixmap.height()/2));
     drag->setPixmap(pixmap);
     drag->exec(Qt::MoveAction);
+}
 
-    /*if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
-        delete takeItem(row(item));
-    */
+void ItemList::addIcon(const int &key, const QPixmap &icon) {
+
+    QListWidgetItem *pieceItem = new QListWidgetItem(this);
+    pieceItem->setIcon(icon);
+    pieceItem->setData(Qt::UserRole, QVariant(icon));
+    pieceItem->setData(Qt::UserRole+1, key);
+    pieceItem->setFlags(Qt::ItemIsEnabled |
+                        Qt::ItemIsSelectable |
+                        Qt::ItemIsDragEnabled);
 }
 

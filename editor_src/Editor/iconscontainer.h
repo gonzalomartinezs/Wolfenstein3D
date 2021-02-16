@@ -2,21 +2,20 @@
 #define ICONSCONTAINER_H
 
 #include <QPixmap>
-#include <vector>
+#include <map>
 
-#define MAX_ITEMS 12
+
+class ItemList;
 
 class IconsContainer {
 
 public:
-    IconsContainer(unsigned size);
+    IconsContainer();
     const QPixmap& getIcon(int id)const;
-    unsigned getSize()const;
-    const std::vector<QPixmap>& getIcons()const;
+    void loadItemList(ItemList& list) const;
 private:
-    std::vector<QPixmap> icons;
+    std::map<int,QPixmap> icons;
     unsigned size;
-
 };
 
 #endif // ICONSCONTAINER_H
