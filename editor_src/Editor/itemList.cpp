@@ -15,28 +15,7 @@ ItemList::ItemList(QWidget *parent)
     setDropIndicatorShown(true);
 }
 
-/*
-void ItemList::loadImages(){
-
-    Q_INIT_RESOURCE(editor);
-
-    int i = 0;
-    bool done = false;
-    while(!done){
-       QPixmap newImage;
-       if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
-            Item x;
-            x.id = i;
-            x.pixmap = newImage.scaled(ITEMSIZE, ITEMSIZE);
-            items.push_back(x);
-           i++;
-       } else {
-           done = true;
-       }
-    }
-}
-*/
-void ItemList::loadList(const IconsContainer& list){
+void ItemList::loadList(const IconsContainer& list) {
     const std::vector<QPixmap>& items = list.getIcons();
 
     for(unsigned i = 0; i < items.size(); i++) {
@@ -48,8 +27,7 @@ void ItemList::loadList(const IconsContainer& list){
     }
 }
 
-void ItemList::startDrag(Qt::DropActions )
-{
+void ItemList::startDrag(Qt::DropActions ) {
     QListWidgetItem *item = currentItem();
 
     QByteArray itemData;
@@ -67,9 +45,5 @@ void ItemList::startDrag(Qt::DropActions )
     drag->setHotSpot(QPoint(pixmap.width()/2, pixmap.height()/2));
     drag->setPixmap(pixmap);
     drag->exec(Qt::MoveAction);
-
-    /*if (drag->exec(Qt::MoveAction) == Qt::MoveAction)
-        delete takeItem(row(item));
-    */
 }
 
