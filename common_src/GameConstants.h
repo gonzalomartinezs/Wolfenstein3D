@@ -4,6 +4,8 @@
 //#define STATIC_TEXTURE 0
 //#define DYNAMIC_TEXTURE 1
 
+#define WALL 1
+
 #define DOOR 2
 #define PASSAGE 5
 
