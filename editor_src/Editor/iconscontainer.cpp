@@ -7,7 +7,7 @@
 
 
 IconsContainer::IconsContainer() {
-
+/*
     while( !done ) {
        QPixmap newImage;
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
@@ -17,9 +17,9 @@ IconsContainer::IconsContainer() {
            done = true;
        }
     }
-    */
 
-   /* QPixmap newImage;
+
+QPixmap newImage;
      newImage.load( "../icons/bowie-knife.png" );
     this->icons.push_back(newImage.scaled(this->size, this->size));
     */
@@ -34,5 +34,6 @@ void IconsContainer::loadItemList( ItemList &list) const {
     for (auto const& x : icons) {
         list.addIcon(x.first, x.second);
     }
+
 }
 

@@ -48,7 +48,7 @@ set(PROJECT_SOURCES
         mapparser.h
         trashbin.h
         trashbin.cpp
-)
+        icons/iconsPaths.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Editor
