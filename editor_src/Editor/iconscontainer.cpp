@@ -6,10 +6,7 @@
 #define CUCHILLO "icons/bowie-knife.png"
 
 
-
-IconsContainer::IconsContainer(unsigned in_size) {
-    QResource::registerResource("editor.rcc");
-    this->size = in_size;
+IconsContainer::IconsContainer() {
     /*
     unsigned i = 0;
     bool done = false;
@@ -32,10 +29,11 @@ const QPixmap& IconsContainer::getIcon(int id)const {
     return this->icons.at(id);
 }
 
-unsigned IconsContainer::getSize()const {
-    return this->size;
+void IconsContainer::loadItemList( ItemList &list) {
+
+    for (const auto& [key, value] : icons) {
+        list.addIcon(key, value);
+    }
+
 }
 
-const std::vector<QPixmap>& IconsContainer::getIcons()const {
-    return icons;
-}

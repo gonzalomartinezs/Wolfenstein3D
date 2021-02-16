@@ -3,20 +3,18 @@
 
 #include <QPixmap>
 #include <map>
-
+#include "itemList.h"
 #define MAX_ITEMS 12
 
 class IconsContainer {
 
 public:
-    IconsContainer(unsigned size);
+    IconsContainer();
     const QPixmap& getIcon(int id)const;
-    unsigned getSize()const;
-    const std::vector<QPixmap>& getIcons()const;
+    void loadItemList( ItemList& list);
 private:
     std::map<int,QPixmap> icons;
     unsigned size;
-
 };
 
 #endif // ICONSCONTAINER_H

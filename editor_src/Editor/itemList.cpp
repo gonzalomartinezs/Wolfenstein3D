@@ -15,16 +15,8 @@ ItemList::ItemList(QWidget *parent)
     setDropIndicatorShown(true);
 }
 
-void ItemList::loadList(const IconsContainer& list) {
-    const std::vector<QPixmap>& items = list.getIcons();
-
-    for(unsigned i = 0; i < items.size(); i++) {
-        QListWidgetItem *pieceItem = new QListWidgetItem(this);
-        pieceItem->setIcon(QIcon(items[i]));
-        pieceItem->setData(Qt::UserRole, QVariant(items[i]));
-        pieceItem->setData(Qt::UserRole+1, i);
-        pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
-    }
+void ItemList::loadList(const IconsContainer& inContainer) {
+    inContainer.loadItemList(*this);
 }
 
 void ItemList::startDrag(Qt::DropActions ) {
@@ -45,5 +37,16 @@ void ItemList::startDrag(Qt::DropActions ) {
     drag->setHotSpot(QPoint(pixmap.width()/2, pixmap.height()/2));
     drag->setPixmap(pixmap);
     drag->exec(Qt::MoveAction);
+}
+
+void ItemList::addIcon(const int &key, const QPixmap &icon) {
+
+    QListWidgetItem *pieceItem = new QListWidgetItem(this);
+    pieceItem->setIcon(icon);
+    pieceItem->setData(Qt::UserRole, QVariant(icon));
+    pieceItem->setData(Qt::UserRole+1, key);
+    pieceItem->setFlags(Qt::ItemIsEnabled |
+                        Qt::ItemIsSelectable |
+                        Qt::ItemIsDragEnabled);
 }
 
