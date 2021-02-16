@@ -2,7 +2,7 @@
 #define ICONSCONTAINER_H
 
 #include <QPixmap>
-#include <vector>
+#include <map>
 
 #define MAX_ITEMS 12
 
@@ -14,7 +14,7 @@ public:
     unsigned getSize()const;
     const std::vector<QPixmap>& getIcons()const;
 private:
-    std::vector<QPixmap> icons;
+    std::map<int,QPixmap> icons;
     unsigned size;
 
 };

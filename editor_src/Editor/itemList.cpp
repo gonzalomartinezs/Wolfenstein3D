@@ -6,7 +6,7 @@
 #include <QMimeData>
 
 ItemList::ItemList(QWidget *parent)
-    : QListWidget(parent){
+    : QListWidget(parent) {
     setDragEnabled(true);
     setViewMode(QListView::IconMode);
     setIconSize(QSize(ITEMSIZE, ITEMSIZE));

@@ -5,18 +5,7 @@
 #define PUERTA "/icons/arc-triomphe.png"
 #define CUCHILLO "icons/bowie-knife.png"
 
-/*
-<file alias="2">icons/brick-wall.png</file>
-<file alias="3">icons/flying-shuriken.png</file>
-<file alias="4">icons/heart-tower.png</file>
-<file alias="5">icons/luger.png</file>
-<file alias="6">icons/player-base.png</file>
-<file alias="7">icons/revolver.png</file>
-<file alias="8">icons/steyr-aug.png</file>
-<file alias="9">icons/stick-grenade.png</file>
-<file alias="10">icons/tesla-turret.png</file>
-<file alias="11">icons/uzi.png</file>
-*/
+
 
 IconsContainer::IconsContainer(unsigned in_size) {
     QResource::registerResource("editor.rcc");
@@ -35,7 +24,7 @@ IconsContainer::IconsContainer(unsigned in_size) {
     }
     */
     QPixmap newImage;
-     newImage.load( PUERTA );
+     newImage.load( "../icons/bowie-knife.png" );
     this->icons.push_back(newImage.scaled(this->size, this->size));
 }
 
