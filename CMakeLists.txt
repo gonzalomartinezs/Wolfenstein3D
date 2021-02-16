@@ -45,7 +45,10 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Exceptions/WolfensteinException.cpp
         common_src/Configuration.cpp
         client_src/UI_Handler.cpp
-        common_src/Exceptions/ConfigurationException.cpp client_src/textures/FontTexture.cpp client_src/textures/FontTexture.h)
+        common_src/Exceptions/ConfigurationException.cpp
+        client_src/textures/FontTexture.cpp
+        client_src/RaycastingRenderer.cpp
+        common_src/Exceptions/RaycastingException.cpp )
 
 add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp
