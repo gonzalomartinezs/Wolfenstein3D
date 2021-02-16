@@ -61,6 +61,8 @@ public:
     int getScore();
     int getBulletsFired();
 
+    Collider getCollider() const;
+
     /* Escribe los primeros 16 bytes del buffer con la informacion de
      * la posicion del jugador de la siguiente manera (floats):
      * [ posX, posY, dirX, dirY ] */

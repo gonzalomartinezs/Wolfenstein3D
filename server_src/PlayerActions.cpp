@@ -45,8 +45,8 @@ void PlayerActions::equip(int key_id) {
     this->keys.push_back(key_id);
 }
 
-void PlayerActions::interactWith(SlidingSurface& door) {
-    door.interact(this);
+void PlayerActions::interactWith(ManualDoor& door) {
+    door.interact();
 }
 
 void PlayerActions::die(Items* items, float x, float y) {
