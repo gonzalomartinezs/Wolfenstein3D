@@ -7,9 +7,7 @@
 
 
 IconsContainer::IconsContainer() {
-    /*
-    unsigned i = 0;
-    bool done = false;
+
     while( !done ) {
        QPixmap newImage;
        if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
@@ -33,9 +31,8 @@ const QPixmap& IconsContainer::getIcon(int id)const {
 
 void IconsContainer::loadItemList( ItemList &list) const {
 
-    for (const auto& [key, value] : icons) {
-        list.addIcon(key, value);
+    for (auto const& x : icons) {
+        list.addIcon(x.first, x.second);
     }
-
 }
 
