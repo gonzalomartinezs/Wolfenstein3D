@@ -54,7 +54,7 @@ add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp
         server_src/Bots/Destripador.lua
         server_src/Player.cpp
-        common_src/Collider.cpp
+        common_src/Collider.cpp common_src/RectCollider.cpp
         common_src/Timer.cpp
         server_src/ThClient.cpp
         server_src/GameManager.cpp
@@ -72,7 +72,7 @@ add_executable(server server_src/server_main.cpp
         common_src/DirectedPositionable.h common_src/DirectedPositionable.cpp
         common_src/Map.h common_src/Map.cpp
         common_src/Exceptions/ErrorMap.h common_src/Exceptions/ErrorMap.cpp
-        common_src/SlidingSurface.cpp common_src/Doors.cpp
+        common_src/ManualDoor.cpp common_src/Doors.cpp common_src/SlidingSurface.cpp
         common_src/GameConstants.h
         common_src/Item.cpp
         common_src/Items.cpp common_src/Exceptions/ItemsException.cpp
