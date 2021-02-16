@@ -34,10 +34,10 @@ Client::Client(const std::string &host, const std::string &service,
 
 std::vector<std::vector<int>> Client::receiveMap() {
     uint8_t n_row, n_col;
-
     this->peer.recv(&n_row, 1);
     this->peer.recv(&n_col, 1);
     uint16_t bytes_to_receive = n_col * n_row;
+
     std::vector<std::vector<int>> received_map(n_row, std::vector<int>(n_col));
     std::vector<uint8_t> received_uints(bytes_to_receive);
 
@@ -50,13 +50,15 @@ std::vector<std::vector<int>> Client::receiveMap() {
 }
 
 void Client::sendInstruction() {
-    ssize_t sent = 0;
     try{
+        ssize_t sent = 0;
         while (is_connected && sent >= 0 && !instructions.isWorking()){
             uint8_t instruction = this->instructions.pop();
             sent = this->peer.send(&instruction, sizeof(uint8_t));
         }
-    } catch (WolfensteinException& e){}
+    } catch (WolfensteinException& e){
+        std::cerr << "Failed to send instructions to the server.\n";
+    }
 }
 
 void Client::lobbyInteraction(std::string username) {

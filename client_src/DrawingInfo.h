@@ -25,18 +25,18 @@ public:
                 std::vector<std::pair<int,int>> sliders_changes);
 
     // Retorna un arreglo con los valores de vidas, hp, balas,... del jugador.
-    std::vector<int> getPlayerInfo() const;
+    std::vector<int>& getPlayerInfo();
     // Retorna la posicion del jugador.
-    DirectedPositionable getPlayerPos() const;
+    DirectedPositionable& getPlayerPos();
     // Retorna un vector con los objetos estaticos en el mapa.
-    std::vector<Positionable> getStaticObjects() const;
+    std::vector<Positionable>& getStaticObjects();
     // Retorna un vector con los objetos dinamicos en el mapa.
-    std::vector<DirectedPositionable> getDirectedObjects() const;
+    std::vector<DirectedPositionable>& getDirectedObjects();
     // Retorna el plano camara del jugador.
-    PlayerView getCameraPlanes() const;
+    PlayerView& getCameraPlanes();
     // Retorna un arreglo con pares de los cambios en las puertas y pasadizos
     // (id, nuevo_estado)
-    std::vector<std::pair<int,int>> getSlidersChanges() const;
+    std::vector<std::pair<int,int>>& getSlidersChanges();
 
     ~DrawingInfo(){}
 };

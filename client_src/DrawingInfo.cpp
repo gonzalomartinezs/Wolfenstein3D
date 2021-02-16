@@ -12,26 +12,26 @@ DrawingInfo::DrawingInfo(DirectedPositionable player_pos, PlayerView view,
             directed_objects(std::move(directed_objects)), view(view) {}
 
 
-std::vector<int> DrawingInfo::getPlayerInfo() const {
+std::vector<int>& DrawingInfo::getPlayerInfo() {
     return this->player_info;
 }
-DirectedPositionable DrawingInfo::getPlayerPos() const {
+DirectedPositionable& DrawingInfo::getPlayerPos() {
     return this->player_pos;
 }
 
-std::vector<Positionable> DrawingInfo::getStaticObjects() const {
+std::vector<Positionable>& DrawingInfo::getStaticObjects() {
     return this->objects;
 }
 
-std::vector<DirectedPositionable> DrawingInfo::getDirectedObjects() const {
+std::vector<DirectedPositionable>& DrawingInfo::getDirectedObjects() {
     return this->directed_objects;
 }
 
-PlayerView DrawingInfo::getCameraPlanes() const {
+PlayerView& DrawingInfo::getCameraPlanes() {
     return this->view;
 }
 
-std::vector<std::pair<int, int>> DrawingInfo::getSlidersChanges() const {
+std::vector<std::pair<int, int>>& DrawingInfo::getSlidersChanges() {
     return this->sliders_changes;
 }
 
