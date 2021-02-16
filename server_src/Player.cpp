@@ -56,17 +56,8 @@ Player::Player(const Configuration& config_stats,
 void Player::lookForWallCollision(const Map& map, const Collider& collider) {
     for (int i = this->x-1; i <= this->x+1; ++i) {
         for (int j = this->y-1; j <= this->y+1; ++j) {
-            int value = map.get(i, j);
-            if (value != WALKABLE) {
-                float width = WALL_SIZE, height = WALL_SIZE;
-                if (value == DOOR) {
-                    if (this->dir_x > this->dir_y){
-                        height = 0.9f;
-                    } else {
-                        width = 0.9f;
-                    }
-                }
-                if (collider.collidesWith(i, j, width, height)) {
+            if (map.get(i, j) != WALKABLE) {
+                if (collider.collidesWith(i, j, WALL_SIZE, WALL_SIZE)) {
                     throw ErrorMap("Collision detected.");
                 }
             }
@@ -110,7 +101,8 @@ void Player::updatePlayer(const Map& map, Items& items,
         std::cerr << e.what() << std::endl;
     }
 
-    Collider collider(this->x, this->y, this->player_size);
+    Collider collider = Player::getCollider();
+//    Collider collider(this->x, this->y, this->player_size);
 
     try {
         Player::lookForWallCollision(map, collider);
@@ -162,6 +154,10 @@ void Player::setName(const std::string& newName) {
 
 bool Player::isDead() {
     return this->action.isDead();
+}
+
+Collider Player::getCollider() const {
+    return Collider(this->x, this->y, this->player_size);
 }
 
 void Player::receiveShot(uint8_t damage) {

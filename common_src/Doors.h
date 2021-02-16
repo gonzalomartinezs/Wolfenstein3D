@@ -3,16 +3,19 @@
 
 #include <vector>
 #include "Map.h"
-#include "SlidingSurface.h"
+#include "ManualDoor.h"
 
 class Doors {
 private:
-	std::vector<SlidingSurface> doors;
+	std::vector<ManualDoor> doors;
 public:
 	Doors(const Map& map);
-	SlidingSurface& operator[](const size_t i);
+	ManualDoor& operator[](const size_t i);
 	size_t size() const;
 	~Doors();
+private:
+	void _calculateDirection(const Map& map, long x, long y,
+							int* dir_x, int* dir_y);
 };
 
 #endif

@@ -95,7 +95,7 @@ void Game::update() {
     }
 
     for (size_t i = 0; i < this->doors.size(); ++i) {
-        this->doors[i].update(this->map);
+        this->doors[i].update(this->map, this->players);
     }
 }
 
