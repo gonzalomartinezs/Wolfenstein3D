@@ -34,7 +34,7 @@ void TrashBin::dropEvent(QDropEvent *event) {
 void TrashBin::paintEvent(QPaintEvent *event) {
     QWidget::paintEvent(event);
     QPainter painter(this);
-    if(isDrag) {
+    if (isDrag) {
         printDrop(event, painter);
     } else{
         printDefault(event, painter);

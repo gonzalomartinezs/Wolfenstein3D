@@ -35,6 +35,9 @@
       <height>461</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: darkGray;</string>
+    </property>
     <property name="widgetResizable">
      <bool>true</bool>
     </property>
@@ -126,10 +129,10 @@
    <widget class="TrashBin" name="trashBin" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>50</x>
       <y>360</y>
-      <width>211</width>
-      <height>101</height>
+      <width>141</width>
+      <height>111</height>
      </rect>
     </property>
    </widget>
