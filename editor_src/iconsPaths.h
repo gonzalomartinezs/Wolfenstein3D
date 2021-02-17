@@ -30,7 +30,6 @@ enum editor_icons {
     Health,
     Jewelry,
     Key,
-    Pistol,
     Machinegun,
     Pistol,
     Rpg,

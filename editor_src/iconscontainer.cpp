@@ -35,7 +35,6 @@ QPixmap newImage;
     this->add(Blood, BLOOD_PATH);
     this->add(Blood, BLOOD_PATH);
 
-
 }
 
 const QPixmap& IconsContainer::getIcon(editor_icons id)const {
@@ -52,6 +51,6 @@ void IconsContainer::loadItemList( ItemList &list) const {
 void IconsContainer::add(const editor_icons& id, const std::string& path) {
     QPixmap newImage;
     newImage.load( path.c_str() );
-    icons.insert ( std::pair<editor_icons,QPixmap>(id,newImage).scaled(this->size, this->size) );
+    icons.insert ( std::pair<editor_icons,QPixmap>(id,newImage.scaled(this->size, this->size)) );
 }
 
