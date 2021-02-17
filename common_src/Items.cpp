@@ -111,7 +111,6 @@ size_t Items::size() const {
 }
 
 void Items::remove(size_t i) {
-//	if (Items::size() < i || Items::size() == 0) throw "Element out of range";
 	delete this->items[i];
 	this->items.erase(this->items.begin() + i);
 }

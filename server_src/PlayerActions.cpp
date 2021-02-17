@@ -59,6 +59,12 @@ void PlayerActions::interactWith(ManualDoor& door) {
 
 void PlayerActions::die(Items* items, float x, float y) {
     weapons.reset(items, x, y);
+    
+    if (this->key.has()) {
+        items->push_back(this->key.getItem(x, y));
+        this->key.used();
+    }
+
     this->health = this->initialHealth;
     this->lives--;
 }

@@ -12,6 +12,7 @@ public:
 	Doors(const Map& map);
 	ManualDoor& operator[](const size_t i);
 	size_t size() const;
+	void loadDoorsInfo(uint8_t* msg, uint8_t &currentByte);
 	~Doors();
 private:
 	void _calculateDirection(const Map& map, long x, long y,
