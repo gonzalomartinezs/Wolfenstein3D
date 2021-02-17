@@ -8,33 +8,22 @@
 
 
 IconsContainer::IconsContainer() {
-/*
-    while( !done ) {
-       QPixmap newImage;
-       if( newImage.load( QStringLiteral(":/img/%1").arg(i) ) ){
-            this->icons.push_back(newImage.scaled(this->size, this->size));
-           i++;
-       } else {
-           done = true;
-       }
-    }
-
-
-QPixmap newImage;
-     newImage.load( "../icons/bowie-knife.png" );
-    this->icons.push_back(newImage.scaled(this->size, this->size));
-    */
-
     this->add(Barrel, BARREL_PATH);
     this->add(Blood, BLOOD_PATH);
     this->add(Bullet, BULLET_PATH);
     this->add(Chaingun, CHAINGUN_PATH);
     this->add(Crown, CROWN_PATH);
     this->add(Cup, CUP_PATH);
-    this->add(Blood, BLOOD_PATH);
-    this->add(Blood, BLOOD_PATH);
-    this->add(Blood, BLOOD_PATH);
-
+    this->add(Door, DOOR_PATH);
+    this->add(Health, HEALTH_PATH);
+    this->add(Jewelry, JEWELRY_PATH);
+    this->add(Key,  KEY_PATH);
+    this->add(Machinegun, MACHINEGUN_PATH);
+    this->add(Pistol, PISTOL_PATH);
+    this->add(Rpg, RPG_PATH);
+    this->add(Slider, SLIDER_PATH);
+    this->add(Spawn, SPAWN_PATH);
+    this->add(Wall0, WALL0_PATH);
 }
 
 const QPixmap& IconsContainer::getIcon(editor_icons id)const {

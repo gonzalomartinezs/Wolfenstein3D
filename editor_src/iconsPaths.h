@@ -14,9 +14,12 @@
 #define JEWELRY_PATH "../icons/jewelry.png"
 #define KEY_PATH "../icons/key.png"
 #define MACHINEGUN_PATH "../icons/machineGun.png"
+#define PISTOL_PATH "../icons/pistol.png"
+#define RPG_PATH "../icons/rpg.png"
 #define SLIDER_PATH "../icons/slider.jpg"
 #define SPAWN_PATH "../icons/spawn.png"
 #define WALL0_PATH "../icons/wall0.jpg"
+
 
 enum editor_icons {
     Barrel,
