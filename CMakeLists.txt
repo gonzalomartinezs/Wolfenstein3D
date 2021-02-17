@@ -12,7 +12,8 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 find_package(SDL2 REQUIRED SDL2)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
+find_package(SDL2_mixer REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS})
 
 add_executable(Wolfenstein3D client_src/client_main.cpp
         client_src/Client.h client_src/Client.cpp
@@ -100,4 +101,6 @@ target_link_libraries(server PRIVATE ${YAMLCPP_LIBRARIES} ${LUA_LIBRARIES} -ldl)
 
 target_link_options(server PRIVATE -pthread)
 
-target_link_libraries(Wolfenstein3D PRIVATE SDL2 Qt5::Widgets ${YAMLCPP_LIBRARIES} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(Wolfenstein3D PRIVATE SDL2 Qt5::Widgets ${YAMLCPP_LIBRARIES}
+                        ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES}
+                        ${SDL2_MIXER_LIBRARIES})
