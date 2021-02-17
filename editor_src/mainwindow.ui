@@ -76,7 +76,7 @@
        <item row="0" column="1">
         <widget class="QSpinBox" name="spinY">
          <property name="maximum">
-          <number>1000</number>
+          <number>999999999</number>
          </property>
         </widget>
        </item>
@@ -90,7 +90,10 @@
        <item row="1" column="1">
         <widget class="QSpinBox" name="spinX">
          <property name="maximum">
-          <number>1000</number>
+          <number>999999999</number>
+         </property>
+         <property name="stepType">
+          <enum>QAbstractSpinBox::DefaultStepType</enum>
          </property>
         </widget>
        </item>
