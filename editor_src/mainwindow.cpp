@@ -17,7 +17,8 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow) {
+    , ui(new Ui::MainWindow),
+      container(ITEMSIZE){
     ui->setupUi(this);
     this->setWindowTitle("Editor de niveles");
     this->initWidgets();

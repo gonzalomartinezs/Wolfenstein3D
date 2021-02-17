@@ -1,12 +1,14 @@
 #ifndef MAPELEMENT_H
 #define MAPELEMENT_H
 
+#include "iconscontainer.h"
 #include <QRect>
+
 
 class MapElement {
 public:
     MapElement();
-    int id;
+    Editor_icon id;
     QRect rect;
     MapElement(MapElement &in);
 
@@ -15,7 +17,7 @@ public:
     MapElement(const MapElement &in);
 
     MapElement& operator=(const MapElement& in);
-    int getId()const;
+    Editor_icon getId()const;
     const QRect& getRect() const;
     int calculateX() const;
     int calculateY() const;

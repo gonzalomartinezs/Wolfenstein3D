@@ -6,6 +6,7 @@
 #define BLOOD_PATH "../icons/blood.png"
 #define BULLET_PATH "../icons/bullet.png"
 #define CHAINGUN_PATH "../icons/chaingun.png"
+#define CROSS_PATH "../icons/cross.png"
 #define CROWN_PATH "../icons/crown.png"
 #define CUP_PATH "../icons/cup.png"
 #define DOOR_PATH "../icons/door.jpg"
@@ -21,25 +22,6 @@
 #define WALL0_PATH "../icons/wall0.jpg"
 
 
-enum editor_icons {
-    Barrel,
-    Blood,
-    Bullet,
-    Chaingun,
-    Crown,
-    Cup,
-    Door,
-    Food,
-    Health,
-    Jewelry,
-    Key,
-    Machinegun,
-    Pistol,
-    Rpg,
-    Slider,
-    Spawn,
-    Wall0
-};
 
 
 
