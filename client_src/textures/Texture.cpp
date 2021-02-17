@@ -1,7 +1,8 @@
 #include "Texture.h"
 #include <SDL2/SDL_image.h>
 #include <algorithm>
-#include "../../common_src/Exceptions/TextureLoadingException.h"
+#include <iostream>
+#include "../Exceptions/TextureLoadingException.h"
 
 #define R 152
 #define G 0

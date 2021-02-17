@@ -440,7 +440,7 @@ void TexturesContainer::_loadDynamicTextures() {
                                      PISTOL_PL_8, PISTOL_PL_9,
                                      PISTOL_PL_10, PISTOL_PL_11, PISTOL_PL_12,
                                      PISTOL_PL_13, PISTOL_PL_14},
-            this->renderer, this->window_surface, 500, false));
+            this->renderer, this->window_surface, 250, false));
 
     dynamic_textures.emplace(MachineGun_Pl, new DynamicTexture(
             std::vector<std::string>{MACHINEGUN_PL, MACHINEGUN_PL_1,

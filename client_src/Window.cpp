@@ -1,18 +1,25 @@
 #include "Window.h"
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include "../common_src/Exceptions/WindowException.h"
+
+#define STEREO 2
 
 Window::Window(std::string name, int width, int height, int pos_x, int pos_y,
                Uint32 flag) : width(width), height(height), sdl_initiated(false),
                               img_initiated(false) {
-    int err_code_sdl = SDL_Init(SDL_INIT_VIDEO);
+    int err_code_sdl = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     if (err_code_sdl) throw WindowException("Failed to initiate SDL.");
     sdl_initiated = true;
 
     err_code_sdl = TTF_Init();
     if (err_code_sdl) throw WindowException("Failed to initiate SDL_ttf.");
     img_initiated = true;
+
+    err_code_sdl = Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, STEREO, 4096);
+    if (err_code_sdl) throw WindowException("Failed to initiate SDL_mixer.");
+    mixer_initiated = true;
 
     if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) throw WindowException("Failed to initiate SDL_image.");
 
@@ -43,6 +50,11 @@ Window::~Window() {
         this->window = nullptr;
     }
     if (TTF_WasInit()) TTF_Quit();
+    if (mixer_initiated) {
+        Mix_CloseAudio();
+        Mix_Quit();
+        SDL_AudioQuit();
+    }
     if (img_initiated) IMG_Quit();
     if (sdl_initiated) SDL_Quit();
 }

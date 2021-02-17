@@ -5,17 +5,19 @@
 #include "Raycaster.h"
 #include "PlayerView.h"
 #include "UI_Handler.h"
+#include "SoundHandler.h"
 #include "EventHandler.h"
 #include "GameInterface.h"
 #include "textures/TexturesContainer.h"
 #include "login/ClientLoginScreen.h"
+#include "sound/SoundsContainer.h"
 #include "../common_src/Configuration.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -36,6 +38,7 @@ int main(int argc, char *argv[]) {
                       SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                       SDL_WINDOW_SHOWN);
         TexturesContainer tex(window.getRenderer(), window.getSurface());
+        SoundsContainer sounds;
 
         Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         client.lobbyInteraction(log.getName());
@@ -48,6 +51,7 @@ int main(int argc, char *argv[]) {
         UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
                               "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
+        SoundHandler sound_handler(sounds);
 
         DirectedPositionable player(2, 2, -1, 0, None);
         PlayerView view(0,1);
@@ -57,7 +61,7 @@ int main(int argc, char *argv[]) {
 
         DrawingInfo initial_info(player, view, std::vector<int>(7,0), static_objects,
                                  directed_objects, sliders_changes);
-        GameInterface game_interface(ui_handler, drawing_info, initial_info, REFRESH_RATE);
+        GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;
         Timer time_between_updates;

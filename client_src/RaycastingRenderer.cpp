@@ -2,7 +2,7 @@
 #include "Raycaster.h"
 #include "textures/TextureID.h"
 #include "../common_src/GameConstants.h"
-#include "../common_src/Exceptions/RaycastingException.h"
+#include "Exceptions/RaycastingException.h"
 
 #define VISUAL_PROPORTION 1.5
 

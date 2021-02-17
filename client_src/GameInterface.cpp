@@ -1,9 +1,13 @@
 #include "GameInterface.h"
-GameInterface::GameInterface(UI_Handler& ui_handler,
+
+GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
                              ProtectedQueue<DrawingInfo> &queue,
                              DrawingInfo initial_info, int refresh_rate):
-                        ui_handler(ui_handler), queue(queue), keep_running(true),
-                        refresh_rate(refresh_rate), latest_info(initial_info){}
+                        ui_handler(ui_handler), sound_handler(sound_handler),
+                        queue(queue), keep_running(true),refresh_rate(refresh_rate),
+                        latest_info(initial_info){
+    this->sound_handler.startBackMusic();
+}
 
 
 void GameInterface::run() {
@@ -63,6 +67,7 @@ void GameInterface::_updateScreen(DrawingInfo new_info) {
                            new_info.getSlidersChanges());
         ui_handler.loadPlayerHUD(new_info.getPlayerInfo());
         ui_handler.render();
+        sound_handler.loadGameSfx(new_info.getPlayerInfo());
     }
     this->latest_info = new_info;
 }
