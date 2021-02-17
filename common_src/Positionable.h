@@ -27,6 +27,9 @@ public:
     float getX() const;
     float getY() const;
 
+    // Retorna la distancia euclideana del posicionable actual al recibido.
+    float distanceTo(Positionable& other) const;
+
     // Retorna el ID de la textura del posicionble.
     TextureID getTexture();
 
