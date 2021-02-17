@@ -67,6 +67,7 @@ void GameInterface::_updateScreen(DrawingInfo new_info) {
                            new_info.getSlidersChanges());
         ui_handler.loadPlayerHUD(new_info.getPlayerInfo());
         ui_handler.render();
+        sound_handler.loadGameSfx(new_info.getPlayerInfo());
     }
     this->latest_info = new_info;
 }
