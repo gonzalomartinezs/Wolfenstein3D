@@ -12,7 +12,7 @@ void SoundEffect::play(int loops) {
 }
 
 void SoundEffect::setVolume(float relative_volume) {
-    Mix_Volume(-1, (int) relative_volume * MIX_MAX_VOLUME);
+    Mix_Volume(-1, int(relative_volume * MIX_MAX_VOLUME));
 }
 
 SoundEffect::~SoundEffect() {
