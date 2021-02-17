@@ -9,6 +9,7 @@ private:
     int height;
     bool sdl_initiated;
     bool img_initiated;
+    bool mixer_initiated;
     SDL_Window* window;
     SDL_Renderer* renderer;
 

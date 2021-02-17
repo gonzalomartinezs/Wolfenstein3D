@@ -15,8 +15,7 @@ private:
 
 public:
     // Crea un contenedor de texturas con todas las texturas del juego cargadas
-    explicit TexturesContainer(SDL_Renderer *renderer,
-                               SDL_Surface *window_surface);
+    TexturesContainer(SDL_Renderer *renderer, SDL_Surface *window_surface);
 
     // Retorna un puntero a la textura estatica solicitada.
     Texture* getStatic(TextureID id);
