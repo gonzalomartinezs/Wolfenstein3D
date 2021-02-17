@@ -1,5 +1,5 @@
 #include "FontTexture.h"
-#include "../../common_src/Exceptions/FontLoadingException.h"
+#include "../Exceptions/FontLoadingException.h"
 
 FontTexture::FontTexture(FontTexture&& other) noexcept{
     this->texture = other.texture;
