@@ -17,15 +17,17 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
-    /*
+
+
     void dragLeaveEvent(QDragLeaveEvent *event) override;
+    /*
     void dragMoveEvent(QDragMoveEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     */
 private:
-    void printDefault(QPainter& painter);
-    void printDrop(QPainter& painter);
+    void printDefault(const QPaintEvent* event, QPainter& painter);
+    void printDrop(const QPaintEvent* event, QPainter& painter);
     QPixmap trashIcon;
     QPixmap openedTrashIcon;
     std::atomic<bool> isDrag;
