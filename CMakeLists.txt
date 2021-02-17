@@ -30,8 +30,8 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         client_src/textures/TexturesContainer.h client_src/textures/TexturesContainer.cpp
         client_src/textures/Texture.h client_src/textures/Texture.cpp
         client_src/textures/DynamicTexture.cpp
-        common_src/Exceptions/TextureLoadingException.cpp
-        common_src/Exceptions/FontLoadingException.cpp
+        client_src/Exceptions/TextureLoadingException.cpp
+        client_src/Exceptions/FontLoadingException.cpp
         client_src/login/ClientLoginScreen.h client_src/login/ClientLoginScreen.cpp
         client_src/login/Login.h client_src/login/Login.cpp
         client_src/login/ui_Login.h
@@ -49,7 +49,7 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Exceptions/ConfigurationException.cpp
         client_src/textures/FontTexture.cpp
         client_src/RaycastingRenderer.cpp
-        common_src/Exceptions/RaycastingException.cpp )
+        client_src/Exceptions/RaycastingException.cpp client_src/sound/Music.cpp client_src/sound/Music.h client_src/Exceptions/SoundLoadingException.cpp client_src/Exceptions/SoundLoadingException.h client_src/sound/SoundEffect.cpp client_src/sound/SoundEffect.h client_src/sound/SoundsContainer.cpp client_src/sound/SoundsContainer.h client_src/sound/SoundID.h client_src/SoundHandler.cpp client_src/SoundHandler.h)
 
 add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp

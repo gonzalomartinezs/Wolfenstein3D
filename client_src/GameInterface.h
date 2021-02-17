@@ -8,10 +8,12 @@
 #include "../common_src/Positionable.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../client_src/UI_Handler.h"
+#include "../client_src/SoundHandler.h"
 
 class GameInterface: public Thread {
 private:
     UI_Handler& ui_handler;
+    SoundHandler& sound_handler;
     ProtectedQueue<DrawingInfo>& queue;
     DrawingInfo latest_info;
     int refresh_rate;
@@ -19,7 +21,8 @@ private:
 
 public:
     // Crea una interfaz de juego lista para ser utilizada.
-    GameInterface(UI_Handler& ui_handler, ProtectedQueue<DrawingInfo>& queue,
+    GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
+                  ProtectedQueue<DrawingInfo>& queue,
                   DrawingInfo initial_info, int refresh_rate);
 
     // Realiza el renderizado entre 2 transiciones la cantidad de veces
