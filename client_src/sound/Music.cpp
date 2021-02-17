@@ -23,7 +23,7 @@ void Music::resume() {
 }
 
 void Music::setVolume(float relative_volume) {
-    Mix_VolumeMusic((int)relative_volume*MIX_MAX_VOLUME);
+    Mix_VolumeMusic(int(relative_volume*MIX_MAX_VOLUME));
 }
 
 void Music::stop() {
