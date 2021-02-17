@@ -15,11 +15,12 @@
 #define JEWELRY_PATH "../icons/jewelry.png"
 #define KEY_PATH "../icons/key.png"
 #define MACHINEGUN_PATH "../icons/machineGun.png"
+#define OPENED_TRASH_BIN_PATH "../icons/openedTrashBin.png"
 #define PISTOL_PATH "../icons/pistol.png"
 #define RPG_PATH "../icons/rpg.png"
 #define SLIDER_PATH "../icons/slider.png"
 #define SPAWN_PATH "../icons/spawn.png"
-#define TRASH_BIN "../icons/trashBin.png"
+#define TRASH_BIN_PATH "../icons/trashBin.png"
 #define WALL0_PATH "../icons/wall0.png"
 #define WALL1_PATH "../icons/wall1.png"
 

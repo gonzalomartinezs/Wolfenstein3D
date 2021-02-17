@@ -11,11 +11,9 @@
 TrashBin::TrashBin(QWidget *parent) : QWidget(parent) {
      setAcceptDrops(true);
      QPalette pal = palette();
-     trashIcon.load("");
-     //this->resize(500,500);
-     pal.setColor(QPalette::Background, Qt::darkRed);
-     this->setAutoFillBackground(true);
-     this->setPalette(pal);
+     trashIcon.load(TRASH_BIN_PATH);
+     openedTrashIcon.load(OPENED_TRASH_BIN_PATH);
+     isDrag = false;
 }
 
 
@@ -31,32 +29,13 @@ void TrashBin::dropEvent(QDropEvent *event) {
 void TrashBin::paintEvent(QPaintEvent *event) {
     QWidget::paintEvent(event);
     QPainter painter(this);
-    painter.drawPixmap()
+    painter.fillRect(event->rect(), Qt::darkRed);
+    QPoint center = this->rect().center();
+    QRect rect;
+    rect.setHeight(72); rect.setWidth(72);
+    rect.moveCenter(center);
+    painter.drawPixmap(rect,
+                       trashIcon.scaled(50,50));
 }
 
-/*void MapHandler::paintEvent (QPaintEvent *event) {
-    QPainter painter(this);
-    painter.fillRect(event->rect(), Qt::darkGreen);
 
-    painter.setPen( QPen(Qt::gray, 1, Qt::DashDotLine, Qt::RoundCap) ) ;
-
-    for (int i = ITEMSIZE; i < this->width(); i+=ITEMSIZE ) {
-        painter.drawLine(QPoint( i, 0), QPoint(i, this->height() ) );
-    }
-
-    for (int i = ITEMSIZE; i < this->height(); i+=ITEMSIZE ) {
-        painter.drawLine(QPoint( 0, i), QPoint(this->width(), i ) );
-    }
-
-    if ( focused.isValid() ) {
-        painter.setBrush(QColor(255, 0, 0 ,127));
-        painter.setPen(Qt::NoPen);
-        painter.drawRect( focused.adjusted(0, 0, -1, -1) );
-    }
-
-    std::list < MapElement> filled = this->map.getElements();
-    for (const MapElement &i : filled) {
-        painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
-    }
-}
- * */

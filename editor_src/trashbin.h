@@ -2,10 +2,11 @@
 #define TRASHBIN_H
 
 #include <QWidget>
-#include  <QVector>
+#include <QVector>
+#include <QPaintEvent>
+#include <atomic>
 
-class TrashBin : public QWidget
-{
+class TrashBin : public QWidget {
     Q_OBJECT
 public:
     explicit TrashBin(QWidget *parent = nullptr);
@@ -23,7 +24,11 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     */
 private:
+    void printDefault(QPainter& painter);
+    void printDrop(QPainter& painter);
     QPixmap trashIcon;
+    QPixmap openedTrashIcon;
+    std::atomic<bool> isDrag;
 };
 
 #endif // TRASHBIN_H
