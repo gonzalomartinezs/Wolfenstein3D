@@ -1,4 +1,5 @@
 #include "Positionable.h"
+#include <math.h>
 
 Positionable &Positionable::operator=(const Positionable &other) {
     this->x = other.x;
@@ -31,7 +32,13 @@ float Positionable::getY() const{
     return this->y;
 }
 
+
+float Positionable::distanceTo(Positionable &other) const{
+    return sqrt(pow(this->x-other.getX(), 2) +
+                        pow(this->y-other.getY(), 2));
+}
+
+
 TextureID Positionable::getTexture() {
     return this->texture;
 }
-
