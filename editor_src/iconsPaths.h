@@ -19,9 +19,9 @@
 #define RPG_PATH "../icons/rpg.png"
 #define SLIDER_PATH "../icons/slider.png"
 #define SPAWN_PATH "../icons/spawn.png"
+#define TRASH_BIN "../icons/trashBin.png"
 #define WALL0_PATH "../icons/wall0.png"
 #define WALL1_PATH "../icons/wall1.png"
-
 
 
 

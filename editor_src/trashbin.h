@@ -22,6 +22,8 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     */
+private:
+    QPixmap trashIcon;
 };
 
 #endif // TRASHBIN_H
