@@ -1,5 +1,4 @@
 port: 8080
-max_clients: 2
 
 weapons_general:
   machine_gun:
@@ -83,7 +82,6 @@ items:
   #Otros
   key:
     texture: 37
-    value: 3 #value = door
     radius: 0.2
   bullet:
     texture: *bullet_texture
