@@ -26,6 +26,8 @@ void TrashBin::dragEnterEvent(QDragEnterEvent *event) {
 
 void TrashBin::dropEvent(QDropEvent *event) {
     event->setDropAction(Qt::MoveAction);
+    this->isDrag = false;
+    update(this->rect());
     event->accept();
 }
 
