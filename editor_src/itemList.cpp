@@ -13,6 +13,19 @@ ItemList::ItemList(QWidget *parent)
     setSpacing(10);
     setAcceptDrops(true);
     setDropIndicatorShown(true);
+    this->setStyleSheet(
+            "QListWidget::item {"
+            "border-style: solid;"
+            "border-width:1px;"
+            "border-color:white;"
+            "background-color: black;"
+            "}"
+            "QListWidget::item:selected {"
+            "background-color: darkRed;"
+            "}"
+            "QListWidget{"
+            "background-color: grey;"
+            "}");
 }
 
 void ItemList::loadList(const IconsContainer& inContainer) {
