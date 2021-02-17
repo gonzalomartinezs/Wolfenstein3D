@@ -75,7 +75,6 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event) {
 
 void MapHandler::dropEvent(QDropEvent *event) {
 
-
     if ( event->mimeData()->hasFormat(ItemList::editorMimeType())
         && map.isEmpty(targetCoordinate( event->pos() ) ) ) {
 
@@ -84,9 +83,11 @@ void MapHandler::dropEvent(QDropEvent *event) {
         MapElement element;
         element.rect = targetSquare(event->pos());
         QPixmap aux;
-        dataStream >> aux >> element.id;
+        int auxInt;
+        dataStream >> aux >> auxInt;
         // intentar hacerlo sin mandar el pixmap del otro lado.
 
+        element.id = (Editor_icon) auxInt;
         map.add(targetCoordinate(event->pos() ) ,element);
 
         focused = QRect();

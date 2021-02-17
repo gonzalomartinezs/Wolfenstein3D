@@ -30,7 +30,7 @@ MapElement& MapElement::operator=(const MapElement& in){
     return *this;
 }
 
-int MapElement::getId() const{
+Editor_icon MapElement::getId() const{
     return id;
 }
 
