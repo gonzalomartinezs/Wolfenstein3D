@@ -2,7 +2,14 @@
 
 #define BACK_MUSIC "../client_src/sound/resources/music.wav"
 #define KNIFE_SFX "../client_src/sound/resources/knife.wav"
-#define PISTOL_SFX "../client_src/sound/resources/pistol.wav"
+#define PISTOL_SFX "../client_src/sound/resources/real_pistol.wav"
+#define MACHINEGUN_SFX "../client_src/sound/resources/machine.wav"
+#define CHAINGUN_SFX "../client_src/sound/resources/chain.wav"
+#define RPG_SFX "../client_src/sound/resources/rpg.wav"
+#define DOG_STEP "../client_src/sound/resources/dog_step.wav"
+#define STEP_1 "../client_src/sound/resources/step_1.wav"
+#define STEP_2 "../client_src/sound/resources/step_2.wav"
+#define HEAVY_STEP "../client_src/sound/resources/heavy_step.wav"
 
 SoundsContainer::SoundsContainer() {
     _loadMusic();
@@ -26,7 +33,11 @@ void SoundsContainer::_loadMusic() {
 void SoundsContainer::_loadSFX() {
     this->sfx.emplace(KnifeSFX, KNIFE_SFX);
     this->sfx.emplace(PistolSFX, PISTOL_SFX);
-    this->sfx.emplace(MachineGunSFX, PISTOL_SFX);
-    this->sfx.emplace(ChainGunSFX, PISTOL_SFX);
-    this->sfx.emplace(RPGSFX, PISTOL_SFX);
+    this->sfx.emplace(MachineGunSFX, MACHINEGUN_SFX);
+    this->sfx.emplace(ChainGunSFX, CHAINGUN_SFX);
+    this->sfx.emplace(RPGSFX, RPG_SFX);
+    this->sfx.emplace(DogStep, DOG_STEP);
+    this->sfx.emplace(Step_1, STEP_1);
+    this->sfx.emplace(Step_2, STEP_2);
+    this->sfx.emplace(HeavyStep, HEAVY_STEP);
 }
