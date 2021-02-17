@@ -7,7 +7,11 @@ enum SoundID{
     PistolSFX,
     MachineGunSFX,
     ChainGunSFX,
-    RPGSFX
+    RPGSFX,
+    DogStep,
+    Step_1,
+    Step_2,
+    HeavyStep
 };
 
 #endif //SOUNDID_H

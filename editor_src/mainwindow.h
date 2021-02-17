@@ -40,14 +40,13 @@ private:
     Ui::MainWindow *ui;
 
     QScrollArea* mapScrollArea;
-    QFrame* trashFrame;
     QSpinBox* spinX;
     QSpinBox* spinY;
     QPushButton* button;
     QLineEdit* nameLabel;
 
     TrashBin* trashBin;
-    ItemList* itemlist;
+    ItemList* itemList;
     MapHandler* mapHandler;
     IconsContainer container;
     MapParser parser;
