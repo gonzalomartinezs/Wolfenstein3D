@@ -6,7 +6,6 @@
 
 #define STEREO 2
 
-
 Window::Window(std::string name, int width, int height, int pos_x, int pos_y,
                Uint32 flag) : width(width), height(height), sdl_initiated(false),
                               img_initiated(false) {
