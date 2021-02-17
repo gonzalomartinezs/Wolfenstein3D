@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::linkToUI() {
     this->itemList = findChild<ItemList*>("itemList");
     this->mapScrollArea = findChild<QScrollArea*>("mapArea");
-    this->trashFrame = findChild<QFrame*>("trashFrame");
+    this->trashBin = findChild<TrashBin*>("trashBin");
     this->spinX = findChild<QSpinBox*>("spinX");
     this->spinY = findChild<QSpinBox*>("spinY");
     this->button = findChild<QPushButton*>("button");
@@ -48,7 +48,6 @@ void MainWindow::initWidgets() {
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
     mapScrollArea->setWidget(mapHandler);
-    this->trashBin = new TrashBin(this->trashFrame);
 }
 
 void MainWindow::initBar() {

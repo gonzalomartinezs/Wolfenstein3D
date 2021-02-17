@@ -11,10 +11,9 @@ TrashBin::TrashBin(QWidget *parent) : QWidget(parent) {
      setAcceptDrops(true);
      QPalette pal = palette();
      //this->resize(500,500);
-     /*pal.setColor(QPalette::Background, Qt::red);
+     pal.setColor(QPalette::Background, Qt::red);
      this->setAutoFillBackground(true);
      this->setPalette(pal);
-      */
 }
 
 

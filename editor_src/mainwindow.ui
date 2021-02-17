@@ -111,20 +111,14 @@
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="trashFrame">
+   <widget class="TrashBin" name="trashBin" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>360</y>
-      <width>221</width>
+      <width>211</width>
       <height>101</height>
      </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
     </property>
    </widget>
   </widget>
@@ -145,6 +139,12 @@
    <class>ItemList</class>
    <extends>QListWidget</extends>
    <header>itemList.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TrashBin</class>
+   <extends>QWidget</extends>
+   <header>trashbin.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

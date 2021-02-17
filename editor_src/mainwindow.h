@@ -40,7 +40,6 @@ private:
     Ui::MainWindow *ui;
 
     QScrollArea* mapScrollArea;
-    QFrame* trashFrame;
     QSpinBox* spinX;
     QSpinBox* spinY;
     QPushButton* button;
