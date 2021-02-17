@@ -1,6 +1,6 @@
 #include "MachineGunItem.h"
 #include "../server_src/Weapons/MachineGun.h"
-#include "Exceptions/WeaponItemException.h"
+#include "Exceptions/ItemException.h"
 
 #define KEY_SHOTS "time_between_shots"
 #define KEY_BURSTS "time_between_bursts"
@@ -28,7 +28,7 @@ MachineGunItem::MachineGunItem(float _x, float _y, TextureID texture,
 
 void MachineGunItem::equipTo(PlayerActions& action) {
 	if(action.hasWeapon(this->value)) {
-		throw WeaponItemException("Can't equip weapon.");;
+		throw ItemException("Can't equip weapon.");;
 	}
 
 	action.equip(new MachineGun(this->TIME_BETWEEN_SHOTS,

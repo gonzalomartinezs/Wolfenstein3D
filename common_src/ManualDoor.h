@@ -6,6 +6,7 @@
 #include "Positionable.h"
 #include "Collider.h"
 #include "RectCollider.h"
+#include "../server_src/Key.h"
 
 class Player;
 
@@ -16,13 +17,14 @@ private:
 	const int surface_type;
 	const float moving_time;
 	float elapsed_fraction;
+	bool locked;
 	RectCollider collider;
 	Timer timer;
 public:
 	ManualDoor(int _x, int _y, int _dir_x, int _dir_y, int _surface_type,
 				float _moving_time);
 	void update(Map& map, const std::vector<Player*> players);
-	void interact();
+	void interact(Key& key);
 	bool collidesWith(const Collider& other_collider);
 	~ManualDoor();
 private:

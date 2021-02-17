@@ -12,7 +12,7 @@ ManualDoor::ManualDoor(int _x, int _y, int _dir_x, int _dir_y,
 					static_cast<TextureID>(_surface_type)),
 					dir_x(_dir_x), dir_y(_dir_y), state(_surface_type),
 					surface_type(_surface_type), moving_time(_moving_time),
-					elapsed_fraction(0),
+					elapsed_fraction(0), locked(true),
 			collider(this->x - (EXTRA_SIZE * this->dir_x),
 					this->y - (EXTRA_SIZE * this->dir_y),
 					SIZE + ((2 * EXTRA_SIZE) * this->dir_x),
@@ -36,13 +36,27 @@ void ManualDoor::update(Map& map, const std::vector<Player*> players) {
 	}
 }
 
-void ManualDoor::interact() {
+//interactWithKey, interactWithoutKey
+//if (needKey()) 
+
+void ManualDoor::interact(Key& key) {
+//	this->state.interact(key);
+	
 	if (this->state == SLIDER_OPENED) {
 		this->state = SLIDER_CLOSING;
 		timer.start();
 	} else if (this->state == surface_type) {
-		this->state = SLIDER_OPENING;
-		timer.start();
+		if (locked) {
+			if (key.has()) {
+				this->state = SLIDER_OPENING;
+				timer.start();
+				locked = false;
+				key.used();
+			}
+		} else {
+			this->state = SLIDER_OPENING;
+			timer.start();
+		}
 	}
 }
 

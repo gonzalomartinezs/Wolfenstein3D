@@ -22,10 +22,10 @@ player:
   initial_health: *max_health_global
   initial_score: 0
   total_lives: 5
-  #Keys / Modificar
-  keys:
-    key_0: 1
-    key_1: 2
+  #Key
+  key:
+    texture: &key_texture 37
+    radius: &key_radius 0.2
   #Initial weapons
   weapons:
     initial_weapon: 1 # 0 = knife, 1 = pistol
@@ -81,8 +81,8 @@ items:
     max_health: 11
   #Otros
   key:
-    texture: 37
-    radius: 0.2
+    texture: *key_texture
+    radius: *key_radius
   bullet:
     texture: *bullet_texture
     value: 5

@@ -3,6 +3,8 @@
 #include "../common_src/Treasure.h"
 #include "../common_src/BulletItem.h"
 #include "../common_src/Items.h"
+#include "Key.h"
+#include "Exceptions/GameException.h"
 #include <cstring>
 
 #define KEY_INITIAL_HEALTH "initial_health"
@@ -10,8 +12,10 @@
 #define KEY_TOTAL_LIVES "total_lives"
 #define KEY_INITIAL_BULLETS "initial_bullets"
 #define KEY_WEAPONS "weapons"
+#define KEY_KEY "key"
 
 PlayerActions::PlayerActions(const Configuration& config) :
+                            key(Configuration(config, KEY_KEY)),
                             weapons(Configuration(config, KEY_WEAPONS)) {
 	this->health = config.getInt(KEY_INITIAL_HEALTH);
     this->score = config.getInt(KEY_INITIAL_SCORE);
@@ -41,12 +45,16 @@ void PlayerActions::equip(Weapon* weapon) {
 	this->weapons.equip(weapon);
 }
 
-void PlayerActions::equip(int key_id) {
-    this->keys.push_back(key_id);
+void PlayerActions::equipKey() {
+    this->key.equip();
+}
+
+bool PlayerActions::hasKey() const {
+    return this->key.has();
 }
 
 void PlayerActions::interactWith(ManualDoor& door) {
-    door.interact();
+    door.interact(this->key);
 }
 
 void PlayerActions::die(Items* items, float x, float y) {
@@ -128,8 +136,8 @@ void PlayerActions::getHUDInfo(uint8_t* msg) {
     uint8_t current_weapon = this->weapons.getWeaponID();
     memcpy(msg + 2 * sizeof(uint8_t), &current_weapon, sizeof(uint8_t));
 
-    bool has_key = !(this->keys.empty());
-    memcpy(msg + 3 * sizeof(uint8_t), &(has_key), sizeof(bool));
+    bool has_key = this->key.has();
+    memcpy(msg + 3 * sizeof(uint8_t), &has_key, sizeof(bool));
 
     uint8_t weapon_is_shooting = this->weapons.isShooting();
     memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting,

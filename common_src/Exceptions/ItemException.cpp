@@ -1,11 +1,11 @@
-#include "WeaponItemException.h"
+#include "ItemException.h"
 
-WeaponItemException::WeaponItemException(const std::string& error) {
+ItemException::ItemException(const std::string& error) {
 	this->msg_error = error;
 }
 
-const char* WeaponItemException::what() const noexcept {
+const char* ItemException::what() const noexcept {
     return msg_error.c_str();
 }
 
-WeaponItemException::~WeaponItemException() {}
+ItemException::~ItemException() {}

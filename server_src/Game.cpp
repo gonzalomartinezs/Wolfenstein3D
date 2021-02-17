@@ -53,7 +53,7 @@ void Game::execute() {
         while (this->isRunning) {
             timeBetweenUpdates.start();
 
-            std::cout << "Nuevo Tick" << std::endl;
+//            std::cout << "Nuevo Tick" << std::endl;
             this->getInstructions();
             this->sendUpdate();
             this->update();  // Fixed Step-Time

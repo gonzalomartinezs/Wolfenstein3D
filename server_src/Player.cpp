@@ -102,7 +102,6 @@ void Player::updatePlayer(const Map& map, Items& items,
     }
 
     Collider collider = Player::getCollider();
-//    Collider collider(this->x, this->y, this->player_size);
 
     try {
         Player::lookForWallCollision(map, collider);
@@ -124,12 +123,12 @@ void Player::updatePlayer(const Map& map, Items& items,
     if (this->action.isDead()) {
         Player::_respawn(items);
     }
-
+/*
     // Borrar
     std::cout << "posX: " << this->x;
     std::cout << ", posY: " << this->y;
     std::cout << ", dir_x: " << this->dir_x;
-    std::cout << ", dir_y: " << this->dir_y << std::endl;
+    std::cout << ", dir_y: " << this->dir_y << std::endl;*/
 }
 
 void Player::setState(uint8_t newState) {

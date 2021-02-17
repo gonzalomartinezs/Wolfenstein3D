@@ -7,6 +7,7 @@
 #include "../common_src/Map.h"
 #include "../common_src/ManualDoor.h"
 #include "Weapons/Weapons.h"
+#include "Key.h"
 
 #define HUD_INFO_SIZE 13
 
@@ -22,7 +23,7 @@ private:
     uint8_t initialHealth;
 	uint8_t health, lives;
     int score;
-    std::vector<int> keys;
+    Key key;
     Weapons weapons;
     int bulletsCounter;
     int killsCounter;
@@ -35,7 +36,8 @@ public:
     void use(BulletItem* bullet);
 	bool hasWeapon(int id) const;
 	void equip(Weapon* machine_gun);
-	void equip(int key_id);
+	void equipKey();
+	bool hasKey() const;
 	void interactWith(ManualDoor& door);
 
 	uint8_t getCurrentWeapon();
