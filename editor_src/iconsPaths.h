@@ -19,24 +19,24 @@
 #define WALL0_PATH "../icons/wall0.jpg"
 
 enum editor_icons {
-    barrel,
-    blood,
-    bullet,
-    chaingun,
-    crown,
-    cup,
-    door,
-    food,
-    health,
-    jewelry,
-    key,
-    pistol,
-    machinegun,
-    pistol,
-    rpg,
-    slider,
-    spawn,
-    wall0
+    Barrel,
+    Blood,
+    Bullet,
+    Chaingun,
+    Crown,
+    Cup,
+    Door,
+    Food,
+    Health,
+    Jewelry,
+    Key,
+    Pistol,
+    Machinegun,
+    Pistol,
+    Rpg,
+    Slider,
+    Spawn,
+    Wall0
 };
 
 
