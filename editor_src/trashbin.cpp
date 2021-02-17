@@ -10,10 +10,11 @@
 TrashBin::TrashBin(QWidget *parent) : QWidget(parent) {
      setAcceptDrops(true);
      QPalette pal = palette();
-     this->resize(500,500);
-     pal.setColor(QPalette::Background, Qt::red);
+     //this->resize(500,500);
+     /*pal.setColor(QPalette::Background, Qt::red);
      this->setAutoFillBackground(true);
      this->setPalette(pal);
+      */
 }
 
 
@@ -24,4 +25,8 @@ void TrashBin::dragEnterEvent(QDragEnterEvent *event) {
 void TrashBin::dropEvent(QDropEvent *event) {
     event->setDropAction(Qt::MoveAction);
     event->accept();
+}
+
+void TrashBin::paintEvent(QPaintEvent *event) {
+    QWidget::paintEvent(event);
 }

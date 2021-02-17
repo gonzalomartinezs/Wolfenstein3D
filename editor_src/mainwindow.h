@@ -47,7 +47,7 @@ private:
     QLineEdit* nameLabel;
 
     TrashBin* trashBin;
-    ItemList* itemlist;
+    ItemList* itemList;
     MapHandler* mapHandler;
     IconsContainer container;
     MapParser parser;
