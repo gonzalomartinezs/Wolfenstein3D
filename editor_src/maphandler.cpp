@@ -18,7 +18,7 @@ MapHandler::MapHandler ( const IconsContainer& container,const std::string& name
 
 void MapHandler::paintEvent (QPaintEvent *event) {
     QPainter painter(this);
-    painter.fillRect(event->rect(), Qt::darkCyan);
+    painter.fillRect(event->rect(), Qt::darkGreen);
 
     painter.setPen( QPen(Qt::gray, 1, Qt::DashDotLine, Qt::RoundCap) ) ;
 

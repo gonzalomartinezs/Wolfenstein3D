@@ -26,6 +26,7 @@ IconsContainer::IconsContainer(const unsigned& size) : iconSize(size) {
     this->add(Slider, SLIDER_PATH);
     this->add(Spawn, SPAWN_PATH);
     this->add(Wall0, WALL0_PATH);
+    this->add(Wall1, WALL1_PATH);
 }
 
 const QPixmap& IconsContainer::getIcon(Editor_icon id)const {

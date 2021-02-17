@@ -13,7 +13,7 @@
 #include "mapelement.h"
 
 
-#define TAM_MAP_DEF 5
+#define TAM_MAP_DEF 25
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

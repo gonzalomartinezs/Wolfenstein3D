@@ -25,7 +25,8 @@ enum Editor_icon {
     Rpg,
     Slider,
     Spawn,
-    Wall0
+    Wall0,
+    Wall1
 };
 
 class IconsContainer {
