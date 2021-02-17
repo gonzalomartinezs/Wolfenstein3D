@@ -48,7 +48,7 @@ set(PROJECT_SOURCES
         mapparser.h
         trashbin.h
         trashbin.cpp
-        icons/iconsPaths.h
+        iconsPaths.h
         ../common_src/GameConstants.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
