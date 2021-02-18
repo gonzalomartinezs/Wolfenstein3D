@@ -47,8 +47,6 @@ public:
     void createLeaderBoard();
 
     void sendMap();
-
-    void recvNames();
 };
 
 #endif  // WOLFENSTEIN3D_GAME_H
