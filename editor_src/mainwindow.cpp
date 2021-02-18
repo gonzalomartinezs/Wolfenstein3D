@@ -63,7 +63,7 @@ void MainWindow::initBar() {
     exitAction->setShortcuts(QKeySequence::Quit);
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
-    toolsMenu->addAction(tr("&Restart"), this, &MainWindow::resizeMap);
+    toolsMenu->addAction(tr("&Restart"), this, &MainWindow::restart);
     QMenu* helpMenu = menuBar()->addMenu( tr("&Help") );
     helpMenu->addAction( (tr(("&instructions"))) );
 }
@@ -96,4 +96,14 @@ void MainWindow::loadFile(QString& path) {
 
 void MainWindow::saveFile(){
     parser.exportMap(mapHandler->getMap() );
+}
+
+void MainWindow::restart() {
+    if(this->mapHandler == nullptr) return;
+    delete mapHandler;
+    spinX->setValue(TAM_MAP_DEF);
+    spinY->setValue(TAM_MAP_DEF);
+    mapHandler = new MapHandler(container,nameLabel->text().toStdString()
+            ,spinX->value(), spinY->value(), this);
+    mapScrollArea->setWidget(mapHandler);
 }

@@ -29,6 +29,7 @@ private slots:
     void resizeMap();
     void openFile();
     void saveFile();
+    void restart();
 
 private:
     void initWidgets();
