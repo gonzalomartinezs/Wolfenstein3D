@@ -82,10 +82,8 @@ void MapHandler::dropEvent(QDropEvent *event) {
         QDataStream dataStream(&pieceData, QIODevice::ReadOnly);
         MapElement element;
         element.rect = targetSquare(event->pos());
-        QPixmap aux;
         int auxInt;
-        dataStream >> aux >> auxInt;
-        // intentar hacerlo sin mandar el pixmap del otro lado.
+        dataStream  >> auxInt;
 
         element.id = (Editor_icon) auxInt;
         map.add(targetCoordinate(event->pos() ) ,element);
@@ -113,17 +111,16 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
 
     if (map.isEmpty(targetCoordinate(event->pos()))) return;
 
-
     MapElement element = map.get(coor);
     map.remove(coor);
 
     update(square);
 
-    QPixmap aux = icons.getIcon(element.id);
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    dataStream << aux << element.id;
+    dataStream << element.id;
+    QPixmap pixmap = icons.getIcon(element.id);
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(ItemList::editorMimeType(), itemData);
@@ -131,7 +128,7 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->setHotSpot(event->pos() - square.topLeft());
-    drag->setPixmap(aux);
+    drag->setPixmap(pixmap);
 
     if (drag->exec(Qt::MoveAction) != Qt::MoveAction) {
         map.add(coor,element);
@@ -145,14 +142,24 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
 
  // cambiar a coordenadas !
 const QRect MapHandler::targetSquare(const QPoint &position) const {
+    /*QRect rect;
+    rect.setWidth(ITEMSIZE); rect.setHeight(ITEMSIZE);
+    rect.moveCenter(position / ITEMSIZE * ITEMSIZE);
+     */
     return QRect(position / ITEMSIZE * ITEMSIZE,
                  QSize(ITEMSIZE, ITEMSIZE));
 }
 
-const Coordinate MapHandler::targetCoordinate(const QPoint& position) const{
+const Coordinate MapHandler::targetCoordinate(const QPoint& position) const {
     QRect rect(position / ITEMSIZE * ITEMSIZE,
                QSize(ITEMSIZE, ITEMSIZE));
     return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
+
+    /* QRect rect;
+    rect.setWidth(ITEMSIZE); rect.setHeight(ITEMSIZE);
+    rect.moveCenter(position / ITEMSIZE * ITEMSIZE);
+    return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
+     */
 }
 
 const Map& MapHandler::getMap() {

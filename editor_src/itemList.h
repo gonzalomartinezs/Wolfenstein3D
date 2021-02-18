@@ -5,8 +5,7 @@
 #include <vector>
 #include "iconscontainer.h"
 
-class ItemList : public QListWidget
-{
+class ItemList : public QListWidget {
     Q_OBJECT
 public:
     explicit ItemList(QWidget *parent = nullptr);

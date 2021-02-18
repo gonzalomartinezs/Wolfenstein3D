@@ -40,7 +40,7 @@ void ItemList::startDrag(Qt::DropActions ) {
     QPixmap pixmap = qvariant_cast<QPixmap>(item->data(Qt::UserRole));
     int id = item->data(Qt::UserRole+1).toInt();
 
-    dataStream << pixmap << id;
+    dataStream << id;
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(ItemList::editorMimeType(), itemData);
@@ -57,7 +57,7 @@ void ItemList::addIcon(const int &key, const QPixmap &icon) {
     QListWidgetItem *pieceItem = new QListWidgetItem(this);
     pieceItem->setIcon(icon);
     pieceItem->setData(Qt::UserRole, QVariant(icon));
-    pieceItem->setData(Qt::UserRole+1, key);
+    pieceItem->setData(Qt::UserRole, key);
     pieceItem->setFlags(Qt::ItemIsEnabled |
                         Qt::ItemIsSelectable |
                         Qt::ItemIsDragEnabled);
