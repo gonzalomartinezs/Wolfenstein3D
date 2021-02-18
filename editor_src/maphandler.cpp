@@ -149,9 +149,9 @@ const QRect MapHandler::targetSquare(const QPoint &p) const {
 }
 
 const Coordinate MapHandler::targetCoordinate(const QPoint& position) const {
-    QRect rect(position / ITEMSIZE * ITEMSIZE,
-               QSize(ITEMSIZE, ITEMSIZE));
-    return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
+
+    return ( Coordinate ( (targetSquare(position).left() / ITEMSIZE),
+                          targetSquare(position).top() /ITEMSIZE ) );
 }
 
 const Map& MapHandler::getMap() {
