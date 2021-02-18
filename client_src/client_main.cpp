@@ -16,8 +16,8 @@
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
         UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
                               "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
-        SoundHandler sound_handler(sounds);
+        SoundHandler sound_handler(sounds, map.getSlidingSurfaces());
 
         DirectedPositionable player(2, 2, -1, 0, None);
         PlayerView view(0,1);
