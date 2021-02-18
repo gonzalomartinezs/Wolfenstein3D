@@ -3,7 +3,6 @@
 #include <cstring>
 #include <string>
 
-#define ERROR -1
 #define MAX_MSG_LEN 1024
 #define NEW_GAME 0
 #define JOIN_GAME 1
@@ -30,6 +29,7 @@ void ClientHandler::_talkWithClient() {
     uint8_t action, gameID, msg[MAX_MSG_LEN];
     int msgLen;
 
+    //this->_receiveName();
     action = this->_blockingRecv();
 
     if (action == NEW_GAME && !this->endTalking) {
@@ -122,6 +122,20 @@ int ClientHandler::_loadJoinGameMsg(uint8_t* msg) {
     return currentByte;
 }
 
+void ClientHandler::_receiveName() {
+    uint8_t nameLen, aux;
+    std::string name;
+
+    nameLen = this->_blockingRecv();
+
+    for (uint8_t i = 0; i < nameLen; i++) {
+        aux = this->_blockingRecv();
+        name.append(reinterpret_cast<const char*>(&aux), 1);
+    }
+
+    this->newClient->setName(name);
+}
+
 void ClientHandler::_deleteFailedClient() {
     this->newClient->stop();
     this->newClient->join();
@@ -135,7 +149,7 @@ uint8_t ClientHandler::_blockingRecv() {
     }
     /* Evito warnings sobre comportamiento indefinido (Valgrind) */
     if (this->endTalking) {
-        return ERROR;
+        throw WolfensteinException("Waiting for Queue when the server closed\n");
     }
     /* - - - - - - - - - - - - - - - - - - - - - - - */
     return this->newClient->pop();
