@@ -47,6 +47,7 @@ void MainWindow::initWidgets() {
     this->mapHandler = new MapHandler(this->container,"-",TAM_MAP_DEF ,TAM_MAP_DEF ,this);
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
+    this->nameLabel->setPlaceholderText("Name of the map");
     mapScrollArea->setWidget(mapHandler);
 }
 
@@ -91,7 +92,12 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::loadFile(QString& path) {
-    parser.loadMap( path.toStdString() );
+
+    Map map = parser.loadMap( path.toStdString() );
+    spinX->setValue( map.getX() ) ;
+    spinY->setValue( map.getY() );
+    nameLabel->setText( map.getName().c_str() );
+
 }
 
 void MainWindow::saveFileAs() {

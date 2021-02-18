@@ -166,3 +166,4 @@ void MapHandler::loadElements(std::list<MapElement>& in){
         }
     }
 }
+
