@@ -94,7 +94,7 @@ void MainWindow::loadFile(QString& path) {
     parser.loadMap( );
 }
 
-void MainWindow::saveFile(){
+void MainWindow::saveFile() {
     parser.exportMap(mapHandler->getMap() );
 }
 
