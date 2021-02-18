@@ -140,13 +140,11 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
     }
 }
 
- // cambiar a coordenadas !
-const QRect MapHandler::targetSquare(const QPoint &position) const {
-    /*QRect rect;
-    rect.setWidth(ITEMSIZE); rect.setHeight(ITEMSIZE);
-    rect.moveCenter(position / ITEMSIZE * ITEMSIZE);
-     */
-    return QRect(position / ITEMSIZE * ITEMSIZE,
+
+const QRect MapHandler::targetSquare(const QPoint &p) const {
+
+    return QRect(QPoint( (p.x()/ITEMSIZE) * ITEMSIZE,
+                        (p.y()/ITEMSIZE ) * ITEMSIZE),
                  QSize(ITEMSIZE, ITEMSIZE));
 }
 
@@ -154,12 +152,6 @@ const Coordinate MapHandler::targetCoordinate(const QPoint& position) const {
     QRect rect(position / ITEMSIZE * ITEMSIZE,
                QSize(ITEMSIZE, ITEMSIZE));
     return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
-
-    /* QRect rect;
-    rect.setWidth(ITEMSIZE); rect.setHeight(ITEMSIZE);
-    rect.moveCenter(position / ITEMSIZE * ITEMSIZE);
-    return ( Coordinate ( (rect.left() / ITEMSIZE), rect.top() /ITEMSIZE ) );
-     */
 }
 
 const Map& MapHandler::getMap() {
