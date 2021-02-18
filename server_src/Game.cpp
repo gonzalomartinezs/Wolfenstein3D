@@ -119,7 +119,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     currentByte += POS_DATA_PLANE_SIZE;
 
     this->items.loadItemsInfo(msg, currentByte);
-//    this->doors.loadDoorsInfo(msg, currentByte);
+    this->doors.loadDoorsInfo(msg, currentByte);
 
     for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
