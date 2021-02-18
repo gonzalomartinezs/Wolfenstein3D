@@ -36,8 +36,8 @@ protected:
 
 public:
     /* Constructor */
-    Player(const Configuration& config_stats,
-            const Configuration& config_map, const uint8_t _player_number);
+    Player(const Configuration& config_stats, const Configuration& config_map,
+           const uint8_t _player_number, std::string name);
 
     void updatePlayer(const Map& map, Items& items,
                         std::vector<Player*>& players, Doors& doors);
