@@ -62,3 +62,14 @@ const std::string& Map::getName() const {
 void Map::setName (const std::string& inName) {
     name = inName;
 }
+
+void Map::resizeMap(int newX, int newY) {
+    for (unsigned i = 0; i < x ; ++i) {
+        for (unsigned j = 0; j < y ; ++j) {
+            if( !isEmpty( Coordinate( i,j) ) ){
+                remove(Coordinate( i,j) );
+            }
+        }
+    }
+    x = newX; y = newY;
+}

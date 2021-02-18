@@ -167,3 +167,7 @@ void MapHandler::loadElements(std::list<MapElement>& in){
     }
 }
 
+void MapHandler::resizeMap (int x, int y) {
+    this->map.resizeMap(x, y);
+}
+

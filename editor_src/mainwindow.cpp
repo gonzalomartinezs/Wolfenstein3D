@@ -74,14 +74,7 @@ void MainWindow::connectEvents() {
 }
 
 void MainWindow::resizeMap() {
-    if(this->mapHandler == nullptr) return;
-
-    std::list<MapElement> elements = mapHandler->getMap().getElements();
-    delete mapHandler;
-    mapHandler = new MapHandler(container,nameLabel->text().toStdString()
-                                ,spinX->value(), spinY->value(), this);
-    mapHandler->loadElements(elements);
-    mapScrollArea->setWidget(mapHandler);
+    mapHandler->resizeMap( spinX->value(), spinY->value() );
 }
 
 void MainWindow::openFile() {

@@ -24,9 +24,12 @@ public:
     const std::string& getName() const;
     void setName(const std::string& name);
     void setOutline();
+
+    void resizeMap(int x, int y);
+
 private:
-    const unsigned x;
-    const unsigned y;
+     unsigned x;
+     unsigned y;
     std::string name;
     std::unordered_map <std::string, MapElement> matrix;
 };
