@@ -22,6 +22,7 @@ void Map::remove(const Coordinate& coor){
     if( !this->isEmpty(coor)) {
         matrix.erase(coor.toString());
     }
+
 }
 
 unsigned Map::getX() const{
@@ -32,9 +33,10 @@ unsigned Map::getY() const {
     return this->y;
 }
 
-bool Map::inRange(const Coordinate& coor){
-    return coor.inRange(this);
+bool Map::inRange(const Coordinate& coor) const{
+    return coor.inRange(*this);
 }
+
 
 const MapElement& Map::get(const Coordinate& coor)const{
    return (this->matrix.at( coor.toString() ) );
@@ -43,6 +45,7 @@ const MapElement& Map::get(const Coordinate& coor)const{
 std::list<MapElement> Map::getElements() const{
     std::list< MapElement> elementList;
     for(auto &kv : this->matrix){
+        if( inRange ( Coordinate (kv.second.calculateX(), kv.second.calculateY() ) ) )
         elementList.push_back( (kv.second) ) ;
     }
     return elementList;
@@ -64,12 +67,16 @@ void Map::setName (const std::string& inName) {
 }
 
 void Map::resizeMap(int newX, int newY) {
-    for (unsigned i = 0; i < x ; ++i) {
-        for (unsigned j = 0; j < y ; ++j) {
-            if( !isEmpty( Coordinate( i,j) ) ){
-                remove(Coordinate( i,j) );
+    //unsigned  oldX = x;
+    //unsigned  oldY = y;
+    x = newX, y = newY;
+    /*for ( unsigned i = 0; i < oldX ; i++ ) {
+        for ( unsigned j = 0; j < oldY ; j++ ) {
+            Coordinate coor(i, j);
+            if ( !inRange(coor) ) {
+                    remove(coor);
             }
         }
     }
-    x = newX; y = newY;
+     */
 }

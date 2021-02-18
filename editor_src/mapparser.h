@@ -7,7 +7,7 @@
 class MapParser {
 public:
     MapParser();
-    void exportMap(const Map& exported, std::string path = "map.yamlg");
+    void exportMap(const Map& exported, std::string path = "map.yamlg") const;
     Map loadMap(std::string path = "map.yaml");
 };
 

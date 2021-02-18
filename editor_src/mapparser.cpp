@@ -6,7 +6,7 @@
 MapParser::MapParser() {
 }
 
-void MapParser::exportMap(const Map& exported, std::string path) {
+void MapParser::exportMap(const Map& exported, std::string path) const{
     YAML::Node file;
     std::list<MapElement> list = exported.getElements();
     for(auto& i : list) {

@@ -168,6 +168,9 @@ void MapHandler::loadElements(std::list<MapElement>& in){
 }
 
 void MapHandler::resizeMap (int x, int y) {
+    printf("se llamo");
+    setMinimumSize(x*ITEMSIZE, y*ITEMSIZE);
+    setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
     this->map.resizeMap(x, y);
 }
 

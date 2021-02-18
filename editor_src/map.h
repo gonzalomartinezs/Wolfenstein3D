@@ -14,7 +14,7 @@ public:
     Map(const unsigned& x, const unsigned& y);
     void add(const Coordinate& coor, const MapElement& map);
     void remove(const Coordinate& coor);
-    bool inRange(const Coordinate& coor);
+    bool inRange(const Coordinate& coor)const;
     bool isEmpty(const Coordinate& coor)const;
     unsigned getX() const;
     unsigned getY() const;
