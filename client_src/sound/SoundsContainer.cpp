@@ -10,6 +10,8 @@
 #define STEP_1 "../client_src/sound/resources/step_1.wav"
 #define STEP_2 "../client_src/sound/resources/step_2.wav"
 #define HEAVY_STEP "../client_src/sound/resources/heavy_step.wav"
+#define DOOR "../client_src/sound/resources/door.wav"
+#define PASSAGE "../client_src/sound/resources/passage.wav"
 
 SoundsContainer::SoundsContainer() {
     _loadMusic();
@@ -40,4 +42,6 @@ void SoundsContainer::_loadSFX() {
     this->sfx.emplace(Step_1, STEP_1);
     this->sfx.emplace(Step_2, STEP_2);
     this->sfx.emplace(HeavyStep, HEAVY_STEP);
+    this->sfx.emplace(DoorMoving, DOOR);
+    this->sfx.emplace(PassageMoving, PASSAGE);
 }

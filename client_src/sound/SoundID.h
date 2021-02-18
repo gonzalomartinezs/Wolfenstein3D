@@ -11,7 +11,9 @@ enum SoundID{
     DogStep,
     Step_1,
     Step_2,
-    HeavyStep
+    HeavyStep,
+    DoorMoving,
+    PassageMoving
 };
 
 #endif //SOUNDID_H
