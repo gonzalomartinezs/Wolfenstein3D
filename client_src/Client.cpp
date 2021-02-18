@@ -104,7 +104,10 @@ ssize_t Client::receiveInformation() {
         std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
         std::vector<std::pair<int,int>> sliders_changes;
 
-        //sliders_changes.emplace_back(0,3);
+//        sliders_changes.emplace_back(0,2);
+//        sliders_changes.emplace_back(1,3);
+//        sliders_changes.emplace_back(2,2);
+//        sliders_changes.emplace_back(3,2);
         _assignPlayerInfo(player_info, bytes_received);
         _assignPlayerCoordenates(player, view, coordinates, bytes_received);
         _assignObjectsCoordenates(bytes_received, objects, coordinates, objects_amount);

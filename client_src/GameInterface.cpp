@@ -69,7 +69,8 @@ void GameInterface::_updateScreen(DrawingInfo new_info) {
         ui_handler.render();
     }
     sound_handler.loadGameSfx(new_info.getPlayerInfo(), new_pos,
-                              new_info.getDirectedObjects());
+                              new_info.getDirectedObjects(),
+                              new_info.getSlidersChanges());
     this->latest_info = new_info;
 }
 
