@@ -1,5 +1,5 @@
 #include "BulletItem.h"
-#include "Exceptions/WeaponItemException.h"
+#include "Exceptions/ItemException.h"
 
 #define KEY_MAX_BULLETS "max_bullets"
 
@@ -21,7 +21,7 @@ void BulletItem::equipTo(PlayerActions& action) {
 
 int BulletItem::operator+(int bullets) const {
 	if (bullets >= this->MAX_BULLETS) 
-		throw WeaponItemException("Can't take more bullets.");
+		throw ItemException("Can't take more bullets.");
 
 	int new_bullets = this->value + bullets;
 

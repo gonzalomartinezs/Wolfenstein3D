@@ -1,6 +1,6 @@
 #include "RocketLauncherItem.h"
 //#include "../server_src/Weapons/RocketLauncher.h"
-#include "Exceptions/WeaponItemException.h"
+#include "Exceptions/ItemException.h"
 
 RocketLauncherItem::RocketLauncherItem(const Configuration& config, float _x,
 									float _y) :
@@ -11,7 +11,7 @@ RocketLauncherItem::RocketLauncherItem(const Configuration& config, float _x,
 
 void RocketLauncherItem::equipTo(PlayerActions& action) {
 	if(action.hasWeapon(this->value)) {
-		throw WeaponItemException("Can't equip weapon.");
+		throw ItemException("Can't equip weapon.");
 	}
 
 //	action.equip(new RocketLauncher());

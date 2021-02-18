@@ -80,7 +80,7 @@ add_executable(server server_src/server_main.cpp
         common_src/BulletItem.cpp common_src/BulletItem.h
         common_src/MachineGunItem.cpp common_src/MachineGunItem.h
         common_src/ChainGunItem.cpp common_src/ChainGunItem.h
-        common_src/Exceptions/WeaponItemException.cpp common_src/Exceptions/WeaponItemException.h
+        common_src/Exceptions/ItemException.cpp common_src/Exceptions/ItemException.h
         common_src/RocketLauncherItem.cpp common_src/RocketLauncherItem.h
         common_src/Treasure.cpp
         common_src/HealthRecover.cpp common_src/Exceptions/HealthRecoverException.cpp
@@ -93,6 +93,7 @@ add_executable(server server_src/server_main.cpp
         server_src/Weapons/Weapon.cpp server_src/Weapons/Knife.cpp
         server_src/Weapons/Pistol.cpp server_src/Weapons/ChainGun.cpp
         server_src/Weapons/MachineGun.cpp
+        server_src/Key.cpp
         common_src/Exceptions/ConfigurationException.cpp)
 
 target_compile_options(server PRIVATE -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -std=c++11 -DDEBUG -fno-inline)

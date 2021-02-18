@@ -1,6 +1,6 @@
 #include "ChainGunItem.h"
 #include "../server_src/Weapons/ChainGun.h"
-#include "Exceptions/WeaponItemException.h"
+#include "Exceptions/ItemException.h"
 
 #define KEY_SHOTS "time_between_shots"
 
@@ -17,7 +17,7 @@ ChainGunItem::ChainGunItem(float _x, float _y, TextureID texture, int _value,
 					TIME_BETWEEN_SHOTS(time_between_shots) {}
 
 void ChainGunItem::equipTo(PlayerActions& action) {
-	if(action.hasWeapon(this->value)) throw WeaponItemException("Can't equip"
+	if(action.hasWeapon(this->value)) throw ItemException("Can't equip"
 																" weapon.");
 
 	action.equip(new ChainGun(this->TIME_BETWEEN_SHOTS, this->texture,

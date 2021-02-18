@@ -6,6 +6,7 @@
 class KeyItem : public Item {
 public:
 	KeyItem(const Configuration& config, float _x, float _y);
+	KeyItem(float _x, float _y, TextureID _texture, int _radius);
 	void equipTo(PlayerActions& action) override;
 	~KeyItem();
 };

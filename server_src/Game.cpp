@@ -53,7 +53,7 @@ void Game::execute() {
         while (this->isRunning) {
             timeBetweenUpdates.start();
 
-            std::cout << "Nuevo Tick" << std::endl;
+//            std::cout << "Nuevo Tick" << std::endl;
             this->getInstructions();
             this->sendUpdate();
             this->update();  // Fixed Step-Time
@@ -119,6 +119,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     currentByte += POS_DATA_PLANE_SIZE;
 
     this->items.loadItemsInfo(msg, currentByte);
+//    this->doors.loadDoorsInfo(msg, currentByte);
 
     for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
@@ -129,6 +130,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
             currentByte += sizeof(uint8_t);
         }
     }
+
     msg[0] = currentByte - 1;
     return currentByte;
 }
