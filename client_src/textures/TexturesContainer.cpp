@@ -292,6 +292,15 @@
 #define RPG_PL_1 "../client_src/textures/img/sprites/rpg_1.bmp"
 #define RPG_PL_2 "../client_src/textures/img/sprites/rpg_2.bmp"
 #define RPG_PL_3 "../client_src/textures/img/sprites/rpg_3.bmp"
+#define MISSILE_0 "../client_src/textures/img/sprites/missile_0.bmp"
+#define MISSILE_1 "../client_src/textures/img/sprites/missile_1.bmp"
+#define MISSILE_2 "../client_src/textures/img/sprites/missile_2.bmp"
+#define MISSILE_3 "../client_src/textures/img/sprites/missile_3.bmp"
+#define MISSILE_4 "../client_src/textures/img/sprites/missile_4.bmp"
+#define MISSILE_5 "../client_src/textures/img/sprites/missile_5.bmp"
+#define MISSILE_6 "../client_src/textures/img/sprites/missile_6.bmp"
+#define MISSILE_7 "../client_src/textures/img/sprites/missile_7.bmp"
+
 
 #define KNIFE_ITEM "../client_src/textures/img/sprites/knife_item.bmp"
 #define PISTOL_ITEM "../client_src/textures/img/sprites/pistol_item.bmp"
@@ -341,8 +350,8 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Wall, new Texture(WALL_PATH, this->renderer));
     static_textures.emplace(Door, new Texture(DOOR_PATH, this->renderer));
     static_textures.emplace(InvertedDoor, new Texture(INVERTED_DOOR_PATH, this->renderer));
-    static_textures.emplace(Barrel, new Texture(BARREL_PATH, this->renderer))
-    ;
+    static_textures.emplace(Barrel, new Texture(BARREL_PATH, this->renderer));
+
     static_textures.emplace(BJ_0, new Texture(BJ_0_PATH, this->renderer));
     static_textures.emplace(BJ_1, new Texture(BJ_1_PATH, this->renderer));
     static_textures.emplace(BJ_2, new Texture(BJ_2_PATH, this->renderer));
@@ -407,6 +416,15 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Mutant_5, new Texture(MUTANT_5_0, this->renderer));
     static_textures.emplace(Mutant_6, new Texture(MUTANT_6_0, this->renderer));
     static_textures.emplace(Mutant_7, new Texture(MUTANT_7_0, this->renderer));
+
+    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
+    static_textures.emplace(Missile_1, new Texture(MISSILE_1, this->renderer));
+    static_textures.emplace(Missile_2, new Texture(MISSILE_2, this->renderer));
+    static_textures.emplace(Missile_3, new Texture(MISSILE_3, this->renderer));
+    static_textures.emplace(Missile_4, new Texture(MISSILE_4, this->renderer));
+    static_textures.emplace(Missile_5, new Texture(MISSILE_5, this->renderer));
+    static_textures.emplace(Missile_6, new Texture(MISSILE_6, this->renderer));
+    static_textures.emplace(Missile_7, new Texture(MISSILE_7, this->renderer));
 
     static_textures.emplace(KnifeItem, new Texture(KNIFE_ITEM, this->renderer));
     static_textures.emplace(PistolItem, new Texture(PISTOL_ITEM, this->renderer));
