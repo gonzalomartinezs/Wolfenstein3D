@@ -28,7 +28,7 @@ public:
 private slots:
     void resizeMap();
     void openFile();
-    void saveFile();
+    void saveFileAs();
     void restart();
 
 private:

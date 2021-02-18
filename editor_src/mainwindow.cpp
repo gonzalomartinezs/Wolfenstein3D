@@ -56,7 +56,7 @@ void MainWindow::initBar() {
     QAction *openAction = fileMenu->addAction(tr("&Open..."), this, &MainWindow::openFile);
     openAction->setShortcuts(QKeySequence::Open);
 
-    QAction *saveAsAction = fileMenu->addAction(tr("&Save as..."), this, &MainWindow::saveFile);
+    QAction *saveAsAction = fileMenu->addAction(tr("&Save as..."), this, &MainWindow::saveFileAs);
     saveAsAction->setShortcuts(QKeySequence::SaveAs);
 
     QAction *exitAction = fileMenu->addAction(tr("E&xit"), qApp, &QCoreApplication::quit);
@@ -91,11 +91,12 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::loadFile(QString& path) {
-    parser.loadMap( );
+    parser.loadMap( path.toStdString() );
 }
 
-void MainWindow::saveFile() {
-    parser.exportMap(mapHandler->getMap() );
+void MainWindow::saveFileAs() {
+    QString path = QFileDialog::getSaveFileName(this);
+    parser.exportMap(mapHandler->getMap(), path.toStdString() );
 }
 
 void MainWindow::restart() {
