@@ -57,7 +57,7 @@ void ItemList::addIcon(const int &key, const QPixmap &icon) {
     QListWidgetItem *pieceItem = new QListWidgetItem(this);
     pieceItem->setIcon(icon);
     pieceItem->setData(Qt::UserRole, QVariant(icon));
-    pieceItem->setData(Qt::UserRole, key);
+    pieceItem->setData(Qt::UserRole+1, key);
     pieceItem->setFlags(Qt::ItemIsEnabled |
                         Qt::ItemIsSelectable |
                         Qt::ItemIsDragEnabled);
