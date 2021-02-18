@@ -72,4 +72,12 @@ bool ThClient::finished() {
     return !is_connected;
 }
 
+void ThClient::setName(std::string name) {
+    this->name = name;
+}
+
+std::string ThClient::getName() const {
+    return name;
+}
+
 ThClient::~ThClient() {}
