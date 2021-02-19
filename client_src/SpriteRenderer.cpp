@@ -6,10 +6,22 @@
 #define TEX_WIDTH 64
 #define PI 3.141592
 
+
+SpriteRenderer::SpriteRenderer(TexturesContainer &textures, int begin_x,
+                               int begin_y, int width, int height):
+        textures(textures), selector(textures),
+        width(width), height(height), begin_x(begin_x),
+        begin_y(begin_y), initialized(false){}
+
 void SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView view,
                             std::vector<DirectedPositionable> &directed_objects,
                             std::vector<Positionable> &objects,
                             const std::vector<float> &wall_dist) {
+    if (!initialized) {
+        selector.initializePlayers(directed_objects);
+        initialized = true;
+    }
+    selector.updatePlayers(directed_objects);
     std::vector<Positionable> directed_sprites;
     std::vector<Positionable> final_sprites;
     _selectDirectedSprite(player_pos, directed_objects, directed_sprites);
@@ -27,7 +39,7 @@ void SpriteRenderer::_selectDirectedSprite(DirectedPositionable player_pos,
                                            std::vector<DirectedPositionable> &directed_objects,
                                            std::vector<Positionable> &directed_sprites) {
     for (DirectedPositionable positionable: directed_objects){
-        TextureID texture = poronga.selectTexture(player_pos, positionable);
+        TextureID texture = selector.selectTextureID(player_pos, positionable);
         Positionable directed_sprite(positionable.getX(), positionable.getY(),
                                      texture);
         directed_sprites.push_back(directed_sprite);
@@ -146,9 +158,10 @@ void SpriteRenderer::_showSprite(const SpriteInfo &info,
         SDL_Rect stretched = {info.sprite_begin + begin_x, info.draw_start_y + begin_y,
                               info.sprite_end-info.sprite_begin,
                               info.draw_end_y-info.draw_start_y};
-        Texture* texture = textures.getStatic(sprite.getTexture());
+        Texture* texture = selector.selectTexture(sprite);
         texture->render(&tex_portion, &stretched);
     }
 }
+
 
 

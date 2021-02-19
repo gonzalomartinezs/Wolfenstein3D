@@ -7,12 +7,11 @@ DynamicTexture::DynamicTexture(TextureSet *textures, bool single_event) :
                                state(STILL), single_event(single_event){
 }
 
-void DynamicTexture::updatePeriod(int new_period) {
-    this->period = new_period;
-    timer.start();
+void DynamicTexture::updateSet(TextureSet *texture) {
+    this->textures = texture;
 }
 
-Texture &DynamicTexture::getTexture(int new_state) {
+Texture *DynamicTexture::getTexture(int new_state) {
     float fraction = timer.getTime()/(float)period;
 
     if (state == MOVING && fraction < 1){
@@ -26,6 +25,8 @@ Texture &DynamicTexture::getTexture(int new_state) {
 }
 
 DynamicTexture::~DynamicTexture() {}
+
+
 
 
 
