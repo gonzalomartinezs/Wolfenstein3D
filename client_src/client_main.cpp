@@ -59,8 +59,9 @@ int main(int argc, char *argv[]) {
         std::vector<DirectedPositionable> directed_objects;
         std::vector<std::pair<int,int>> sliders_changes;
 
-        DrawingInfo initial_info(player, view, std::vector<int>(7,0), static_objects,
-                                 directed_objects, sliders_changes);
+        DrawingInfo initial_info(player, view, std::vector<int>(7, 0),
+                                 static_objects,
+                                 directed_objects, sliders_changes, false);
         GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;
