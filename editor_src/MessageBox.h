@@ -13,7 +13,7 @@ class MessageBox : public QMessageBox {
 public:
     explicit MessageBox(QWidget* parent = nullptr);
 public slots:
-    void showMessage(const std::string& msg);
+    void showMessage(std::string msg);
 };
 
 

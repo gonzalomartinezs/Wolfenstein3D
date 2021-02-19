@@ -6,9 +6,11 @@
 
 MessageBox::MessageBox(QWidget *parent) : QMessageBox(parent) {
 
+
 }
 
-void MessageBox::showMessage (const std::string &msg) {
+void MessageBox::showMessage (std::string msg) {
+    this->setText( "gonza te amo" );
     this->exec();
 }
 

@@ -12,7 +12,7 @@
 #include <QScrollArea>
 #include <QSpinBox>
 #include <QPushButton>
-#include <QMessageBox>
+#include "MessageBox.h"
 
 #define ITEMSIZE 50
 
@@ -26,13 +26,16 @@ class MainWindow : public QMainWindow {
  public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
  private slots:
     void resizeMap();
     void openFile();
     void saveFileAs();
     void restart();
+
  signals:
-    void showMessage (const std::string& msg);
+    void showMessage (std::string msg);
+
  private:
     void initWidgets();
     void initBar();
@@ -52,7 +55,7 @@ class MainWindow : public QMainWindow {
     ItemList* itemList;
     MapHandler* mapHandler;
     IconsContainer container;
-    QMessageBox notiBox;
+    MessageBox notiBox;
 };
 
 #endif // MAINWINDOW_H

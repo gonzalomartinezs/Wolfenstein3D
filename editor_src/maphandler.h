@@ -21,6 +21,7 @@ public:
     void loadElements(std::list<MapElement>& in);
 
 signals:
+    void showMessage (const std::string& msg);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

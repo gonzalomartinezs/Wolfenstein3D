@@ -6,7 +6,6 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QMessageBox>
 
 #include <string>
 #include <list>
@@ -14,7 +13,7 @@
 
 #include "mapparser.h"
 #include "mapelement.h"
-
+#include "MessageBox.h"
 
 #define TAM_MAP_DEF 25
 
@@ -74,6 +73,8 @@ void MainWindow::initBar() {
 
 void MainWindow::connectEvents() {
    QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
+   QObject::connect(this, &MainWindow::showMessage, &notiBox, &MessageBox::showMessage);
+   QObject::connect(this->mapHandler, &MapHandler::showMessage, &notiBox, &MessageBox::showMessage);
 }
 
 void MainWindow::resizeMap() {
@@ -93,6 +94,7 @@ void MainWindow::loadFile(QString& path) {
     try {
         map = parser.loadMap( path.toStdString() );
     }catch (InvalidFileException &e){
+            emit showMessage(e.what());
             return;
     }
     if(this->mapHandler == nullptr) return;
