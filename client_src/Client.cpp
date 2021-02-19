@@ -20,6 +20,9 @@
 #define OBJECTS_ATTRIBUTES 3
 #define OBJECTS_SIZE (2 * sizeof(float) + 1)
 
+#define SLIDERS_DATA 2
+#define SLIDERS_SIZE 2
+
 #define OTHER_PLAYERS_COORDS 5
 #define OTHER_PLAYERS_SIZE (4 * sizeof(float) + 1)
 #define MAX_MESSAGE_SIZE 256
@@ -99,26 +102,24 @@ ssize_t Client::receiveInformation() {
         this->peer.recv(&bytes_to_receive, 1);
         this->peer.recv(bytes_received, bytes_to_receive);
         DirectedPositionable player(0, 0, 0, 0, None);
-        int objects_amount;
+        int already_parsed = 0;
         PlayerView view;
         std::vector<float> coordinates;
         std::vector<int> player_info;
         std::vector<Positionable> objects;
         std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
-        std::vector<std::pair<int,int>> sliders_changes;
+        std::vector<std::pair<int,int>> sliders_states;
 
-//        sliders_changes.emplace_back(0,2);
-//        sliders_changes.emplace_back(1,3);
-//        sliders_changes.emplace_back(2,2);
-//        sliders_changes.emplace_back(3,2);
-        _assignPlayerInfo(player_info, bytes_received, important);
-        _assignPlayerCoordenates(player, view, coordinates, bytes_received);
-        _assignObjectsCoordenates(bytes_received, objects, coordinates, objects_amount);
-        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
-                                       coordinates, objects_amount);
+        _assignPlayerInfo(player_info, bytes_received, important,already_parsed);
+        _assignPlayerCoordenates(player, view, coordinates, bytes_received,already_parsed);
+        _assignObjectsCoordenates(bytes_received, objects, coordinates,already_parsed);
+        _assignSlidersStates(bytes_received, sliders_states, already_parsed);
+        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,
+                                       directed_objects,coordinates,
+                                       already_parsed);
 
         DrawingInfo new_info(player, view, player_info, objects,
-                             directed_objects, sliders_changes, important);
+                             directed_objects, sliders_states, important);
         this->drawing_info.push(new_info);
     }
     return 0;
@@ -141,7 +142,7 @@ Client::~Client() {
 
 // Asigna la informacion del jugador (vida, balas, arma, ...) a sus atributos
 void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
-                               bool &important) {
+                               bool &important, int &already_parsed) {
     uint8_t received_uint8;
     int received_int;
     for(int i=0; i< UINT_ATTRIBUTES; i++){
@@ -154,16 +155,17 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
         info.push_back(received_int);
     }
     important = (info[IS_SHOOTING] != 0);
+    already_parsed += PLAYER_INFO_SIZE;
 }
 
 // Asigna las coordenadas recibidas a los atributos del jugador
 void
 Client::_assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                                  std::vector<float> &coordinates,
-                                 uint8_t *bytes_received) {
+                                 uint8_t *bytes_received, int &already_parsed) {
     float received;
     for (std::size_t i = 0; i < PLAYER_COORDS; i++) {
-        memcpy(&received, bytes_received + PLAYER_INFO_SIZE + FLOAT_SIZE * i, FLOAT_SIZE);
+        memcpy(&received, bytes_received + already_parsed + FLOAT_SIZE * i, FLOAT_SIZE);
         coordinates.push_back(received);
     }
     player.setX(coordinates[0]);
@@ -173,18 +175,59 @@ Client::_assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
     view.movePlaneX(coordinates[4]);
     view.movePlaneY(coordinates[5]);
     coordinates.clear();
+    already_parsed += PLAYER_COORDS_SIZE;
 }
 
-// Asigna las coordenadas recibidasa los demas jugadores del mapa.
+// Asigna las coordenadas de los objetos del mapa.
+void Client::_assignObjectsCoordenates(uint8_t *bytes_received,
+                                       std::vector<Positionable> &objects,
+                                       std::vector<float> &coordinates,
+                                       int &already_parsed) {
+    float received;
+    uint8_t texture, objects_parsed;
+    memcpy(&objects_parsed, bytes_received + already_parsed, 1);
+
+    for (int i = 0; i < objects_parsed; i++) {
+        memcpy(&received, bytes_received + already_parsed + i*OBJECTS_SIZE + 1, FLOAT_SIZE);
+        coordinates.push_back(received);
+        memcpy(&received, bytes_received + already_parsed + i*OBJECTS_SIZE + FLOAT_SIZE + 1, FLOAT_SIZE);
+        coordinates.push_back(received);
+        memcpy(&texture, bytes_received + already_parsed + i*OBJECTS_SIZE + 2*FLOAT_SIZE + 1, 1);
+        coordinates.push_back((float)texture);
+    }
+
+    for(std::size_t j=0; j < coordinates.size(); j+=OBJECTS_ATTRIBUTES){
+        Positionable object(coordinates[j],coordinates[j + 1],
+                            TextureID(coordinates[j+2]));
+        objects.push_back(object);
+    }
+    coordinates.clear();
+    already_parsed += (objects_parsed * OBJECTS_SIZE) + 1;
+}
+
+// Parsea los estados de las puertas.
+void Client::_assignSlidersStates(uint8_t *bytes_received,
+                                  std::vector<std::pair<int, int>> &sliders_changes,
+                                  int &already_parsed) {
+    uint8_t slider_id, slider_state, sliders_amount;
+    memcpy(&sliders_amount, bytes_received + already_parsed, 1);
+
+    for (int i=0; i<sliders_amount; i++) {
+        memcpy(&slider_id, bytes_received + already_parsed + i*SLIDERS_SIZE + 1, 1);
+        memcpy(&slider_state, bytes_received + already_parsed + i*SLIDERS_SIZE + 2, 1);
+        sliders_changes.emplace_back(slider_id, slider_state);
+    }
+    already_parsed += (sliders_amount * SLIDERS_SIZE) + 1;
+}
+
+// Asigna las coordenadas recibidas a los demas jugadores del mapa.
 void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
                                             uint8_t bytes_to_receive,
                                             std::vector<DirectedPositionable> &players,
                                             std::vector<float> &coordinates,
-                                            int objects_parsed) {
-
+                                            int &already_parsed) {
     float received;
     uint8_t texture;
-    int already_parsed = PLAYER_COORDS_SIZE + PLAYER_INFO_SIZE + OBJECTS_SIZE * objects_parsed + 1;
     int players_amount = (bytes_to_receive - already_parsed) / OTHER_PLAYERS_SIZE;
 
     for (int i = 0; i < players_amount; i++) {
@@ -211,31 +254,6 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
     coordinates.clear();
 }
 
-void Client::_assignObjectsCoordenates(uint8_t *bytes_received,
-                                       std::vector<Positionable> &objects,
-                                       std::vector<float> &coordinates,
-                                       int &objects_parsed) {
-    float received;
-    uint8_t texture;
-    int already_parsed = PLAYER_COORDS_SIZE + PLAYER_INFO_SIZE;
-    memcpy(&objects_parsed, bytes_received + already_parsed, 1);
-
-    for (int i = 0; i < objects_parsed; i++) {
-        memcpy(&received, bytes_received + already_parsed + i*OBJECTS_SIZE + 1, FLOAT_SIZE);
-        coordinates.push_back(received);
-        memcpy(&received, bytes_received + already_parsed + i*OBJECTS_SIZE + FLOAT_SIZE + 1, FLOAT_SIZE);
-        coordinates.push_back(received);
-        memcpy(&texture, bytes_received + already_parsed + i*OBJECTS_SIZE + 2*FLOAT_SIZE + 1, 1);
-        coordinates.push_back((float)texture);
-    }
-
-    for(std::size_t j=0; j < coordinates.size(); j+=OBJECTS_ATTRIBUTES){
-        Positionable object(coordinates[j],coordinates[j + 1],
-                            TextureID(coordinates[j+2]));
-        objects.push_back(object);
-    }
-    coordinates.clear();
-}
 
 
 
@@ -373,5 +391,6 @@ void Client::_joinGame() {
     uint_choice = (uint8_t) choice;
     this->peer.send(&uint_choice, sizeof(uint8_t));
 }
+
 
 
