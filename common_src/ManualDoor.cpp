@@ -19,21 +19,24 @@ ManualDoor::ManualDoor(int _x, int _y, int _dir_x, int _dir_y,
 					SIZE + ((2 * EXTRA_SIZE) * this->dir_y)) {}
 
 void ManualDoor::update(Map& map, const std::vector<Player*> players) {
-	ManualDoor::_updateElapsedFraction();
+	_updateElapsedFraction();
 
 	if (this->state == SLIDER_CLOSING) {
-		if (!ManualDoor::isPlayerBlockingDoor(players)) {
-			if (elapsed_fraction > 1) {
-				this->state = surface_type;
-			}
-			map.set(this->x, this->y, this->surface_type);
-		} else {
-			this->state = SLIDER_OPENED;
-		}
-	} else if (this->state == SLIDER_OPENING && elapsed_fraction > 1) {
-		this->state = SLIDER_OPENED;
-		map.set(this->x, this->y, SLIDER_OPENED);
-	}
+        if (!ManualDoor::isPlayerBlockingDoor(players)) {
+            if (elapsed_fraction > 1) {
+                this->state = surface_type;
+            }
+
+            map.set(this->x, this->y, this->surface_type);
+        } else {
+            this->state = SLIDER_OPENED;
+        }
+    } else if (this->state == SLIDER_OPENING && elapsed_fraction > 1) {
+        this->state = SLIDER_OPENED;
+        map.set(this->x, this->y, SLIDER_OPENED);
+        timer.start();
+    }
+
 }
 
 uint8_t ManualDoor::getState() const {
@@ -45,14 +48,12 @@ void ManualDoor::interact(Key& key) {
 		this->state = SLIDER_CLOSING;
 		timer.start();
 	} else if (this->state == surface_type) {
-		if (locked) {
-			if (key.has()) {
-				this->state = SLIDER_OPENING;
-				timer.start();
-				locked = false;
-				key.used();
-			}
-		} else {
+		if (locked && key.has()) {
+			this->state = SLIDER_OPENING;
+			timer.start();
+			locked = false;
+			key.used();
+		} else if (!locked) {
 			this->state = SLIDER_OPENING;
 			timer.start();
 		}

@@ -2,7 +2,7 @@
 #include "GameConstants.h"
 #include <cstring>
 
-#define WALL 1
+#define ID_WALL 1
 
 Doors::Doors(const Map& map) {
 	long int n_rows = map.get_n_row(), n_cols = map.get_n_col();
@@ -10,23 +10,27 @@ Doors::Doors(const Map& map) {
 	for (long int i = 0; i < n_rows; ++i) {
 		for (long int j = 0; j < n_cols; ++j) {
 			int value = map.get(i, j);
-			if (value == DOOR) {
+			if (value > ID_WALL) {
 				int dir_x = 0, dir_y = 0;
 				Doors::_calculateDirection(map, i, j, &dir_x, &dir_y);
-				this->doors.emplace_back(i, j, dir_x, dir_y, DOOR,
-										MOVING_DOOR_TIME, true);
-			} else if (value == PASSAGE) {
-				int dir_x = 0, dir_y = 0;
-				Doors::_calculateDirection(map, i, j, &dir_x, &dir_y);
-				this->doors.emplace_back(i, j, dir_x, dir_y, PASSAGE,
-										MOVING_PASSAGE_TIME, false);
+				if (value == DOOR) {
+					this->doors.push_back(new ManualDoor(i, j, dir_x, dir_y,
+										DOOR, MOVING_DOOR_TIME, true));
+				} else if (value == PASSAGE) {
+					this->doors.push_back(new ManualDoor(i, j, dir_x, dir_y,
+										PASSAGE, MOVING_PASSAGE_TIME, false));
+				} else if (value == AUTOMATIC_DOOR) {
+					this->doors.push_back(new SlidingSurface(i, j, dir_x, dir_y,
+										AUTOMATIC_DOOR, MOVING_AUTO_DOOR_TIME,
+										false, TIME_BEFORE_CLOSING_AUTO_DOOR));
+				}
 			}
 		}
 	}
 }
 
 ManualDoor& Doors::operator[](const size_t i) {
-	return this->doors[i];
+	return (*this->doors[i]);
 }
 
 size_t Doors::size() const {
@@ -45,7 +49,7 @@ void Doors::loadDoorsInfo(uint8_t* msg, uint8_t &currentByte) {
         memcpy(msg + currentByte, &id, sizeof(uint8_t));
         currentByte += sizeof(uint8_t);
 
-        state = this->doors[i].getState();
+        state = this->doors[i]->getState();
         memcpy(msg + currentByte, &state, sizeof(uint8_t));
         currentByte += sizeof(uint8_t);
     }
@@ -60,4 +64,9 @@ void Doors::_calculateDirection(const Map& map, long x, long y,
 	}
 }
 
-Doors::~Doors() {}
+Doors::~Doors() {
+	for (size_t i = 0; i < this->doors.size(); ++i) {
+		delete this->doors[i];
+	}
+}
+

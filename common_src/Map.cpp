@@ -52,7 +52,7 @@ long Map::get_n_col() const{
 void Map::set(int x, int y, int value) {
     map[x][y] = value;
 }
-
+/*
 std::vector<SlidingSurface> Map::getSlidingSurfaces() const {
     std::vector<SlidingSurface> surfaces;
     int counter = 0;
@@ -73,7 +73,7 @@ std::vector<SlidingSurface> Map::getSlidingSurfaces() const {
     }
     return surfaces;
 }
-
+*/
 Map::~Map() {
 	for (int i = 0; i < n_row; ++i) {
 		delete[] map[i];
