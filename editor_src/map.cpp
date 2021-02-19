@@ -37,9 +37,8 @@ bool Map::inRange(const Coordinate& coor) const{
     return coor.inRange(*this);
 }
 
-
 const MapElement& Map::get(const Coordinate& coor)const{
-   return (this->matrix.at( coor.toString() ) );
+   return ( this->matrix.at( coor.toString() ) );
 }
 
 std::list<MapElement> Map::getElements() const{
@@ -69,7 +68,7 @@ void Map::setName (const std::string& inName) {
 void Map::resizeMap(int newX, int newY) {
     //unsigned  oldX = x;
     //unsigned  oldY = y;
-    x = newX, y = newY;
+    x = newX, y = newY; // ojo al tejo.
     /*for ( unsigned i = 0; i < oldX ; i++ ) {
         for ( unsigned j = 0; j < oldY ; j++ ) {
             Coordinate coor(i, j);
