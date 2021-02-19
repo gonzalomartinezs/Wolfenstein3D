@@ -16,7 +16,8 @@ public:
     Bot(const Configuration& config_stats,
         const Configuration& config_map,
         const uint8_t _player_number,
-        std::string botName);
+        std::string botName,
+        std::vector<Sound>& sounds);
 
     /* Actualiza el estado del Bot segun lo indique el script de Lua */
     void getState(std::vector<Player*> &players, int botNumber,

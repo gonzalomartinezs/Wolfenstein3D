@@ -5,8 +5,9 @@
 Bot::Bot(const Configuration& config_stats,
          const Configuration& config_map,
          const uint8_t _player_number,
-         std::string botName) :
-         Player(config_stats, config_map, _player_number, botName) {
+         std::string botName,
+         std::vector<Sound>& sounds) :
+         Player(config_stats, config_map, _player_number, botName, sounds) {
     const char filePath[] = "../server_src/Bots/Destripador.lua";
     this->L = luaL_newstate();
     luaL_openlibs(this->L);
