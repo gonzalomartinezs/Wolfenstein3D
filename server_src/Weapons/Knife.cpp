@@ -23,6 +23,8 @@ void Knife::_stab(std::vector<Player*> &players, int shootingPlayerNumber,
     uint8_t thisPlayerInfo[POSITION_DATA_SIZE];
     players[shootingPlayerNumber]->getPositionData(thisPlayerInfo);
 
+    players[shootingPlayerNumber]->makeSound(KnifeSFX);
+
     for (size_t i = 0; i < players.size(); i++) {
         if (static_cast<int>(i) != shootingPlayerNumber) {
             uint8_t otherPlayerInfo[POSITION_DATA_SIZE];
