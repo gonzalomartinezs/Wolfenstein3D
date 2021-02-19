@@ -15,8 +15,13 @@ void MapParser::exportMap(const Map& exported, std::string path) const{
 }
 
 Map MapParser::loadMap(std::string path) {
-   YAML::Node mapFile;
- // mapFile = YAML::LoadFile(path);
+    this->mapFile = YAML::LoadFile(path);
 
-    return Map(5 ,5);
+    return map;
 }
+
+bool MapParser::hasKey(const std::string &key) const {
+
+}
+
+

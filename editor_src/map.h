@@ -11,7 +11,7 @@ class Coordinate; // una foward declaration para safar.
 
 class Map {
 public:
-    Map(const unsigned& x, const unsigned& y);
+    Map(const unsigned& x = 5, const unsigned& y = 5);
     void add(const Coordinate& coor, const MapElement& map);
     void remove(const Coordinate& coor);
     bool inRange(const Coordinate& coor)const;

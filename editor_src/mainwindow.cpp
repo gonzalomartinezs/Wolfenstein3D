@@ -93,14 +93,16 @@ void MainWindow::loadFile(QString& path) {
     spinY->setValue( map.getY() );
     nameLabel->setText( map.getName().c_str() );
     std::list<MapElement> elements = map.getElements();
-    mapHandler =  new MapHandler(container,nameLabel->text().toStdString()
-            ,map.getX(), map.getX(), this);
+    mapHandler =  new MapHandler (container,
+                                  nameLabel->text().toStdString()
+                                    ,map.getX(), map.getX(), this );
     mapHandler->loadElements(elements);
     mapScrollArea->setWidget(mapHandler);
 }
 
 void MainWindow::saveFileAs() {
     QString path = QFileDialog::getSaveFileName(this);
+    //meter return si no puede xD.
     parser.exportMap(mapHandler->getMap(), path.toStdString() );
 }
 

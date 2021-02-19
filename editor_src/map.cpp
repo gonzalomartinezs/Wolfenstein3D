@@ -65,17 +65,6 @@ void Map::setName (const std::string& inName) {
     name = inName;
 }
 
-void Map::resizeMap(int newX, int newY) {
-    //unsigned  oldX = x;
-    //unsigned  oldY = y;
-    x = newX, y = newY; // ojo al tejo.
-    /*for ( unsigned i = 0; i < oldX ; i++ ) {
-        for ( unsigned j = 0; j < oldY ; j++ ) {
-            Coordinate coor(i, j);
-            if ( !inRange(coor) ) {
-                    remove(coor);
-            }
-        }
-    }
-     */
-}
+void Map::resizeMap(int _x, int _y) {
+    x = _x, y = _y;
+ }
