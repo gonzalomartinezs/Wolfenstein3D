@@ -94,8 +94,9 @@ void MainWindow::loadFile(QString& path) {
     nameLabel->setText( map.getName().c_str() );
     std::list<MapElement> elements = map.getElements();
     mapHandler =  new MapHandler(container,nameLabel->text().toStdString()
-            ,spinX->value(), spinY->value(), this);
+            ,map.getX(), map.getX(), this);
     mapHandler->loadElements(elements);
+    mapScrollArea->setWidget(mapHandler);
 }
 
 void MainWindow::saveFileAs() {
