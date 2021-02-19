@@ -29,7 +29,7 @@ void ClientHandler::_talkWithClient() {
     uint8_t action, gameID, msg[MAX_MSG_LEN];
     int msgLen;
 
-    //this->_receiveName();
+    this->_receiveName();
     action = this->_blockingRecv();
 
     if (action == NEW_GAME && !this->endTalking) {
