@@ -103,6 +103,7 @@ void MainWindow::restart() {
     delete mapHandler;
     spinX->setValue(TAM_MAP_DEF);
     spinY->setValue(TAM_MAP_DEF);
+    nameLabel->clear();
     mapHandler = new MapHandler(container,nameLabel->text().toStdString()
             ,spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(mapHandler);
