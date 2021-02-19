@@ -37,10 +37,12 @@
 Player::Player(const Configuration& config_stats,
             const Configuration& config_map,
             const uint8_t _player_number,
-            std::string playerName) :
+            std::string playerName,
+            std::vector<Sound>& sounds) :
             DirectedPositionable(config_map.getFloat(KEY_POS_X),
             config_map.getFloat(KEY_POS_Y), config_map.getFloat(KEY_DIR_X),
-            config_map.getFloat(KEY_DIR_Y), None), action(config_stats) {
+            config_map.getFloat(KEY_DIR_Y), None), action(config_stats),
+            sounds(sounds) {
     this->moveSpeed = config_stats.getFloat(KEY_MOVE_SPEED);
     this->rotSpeed = config_stats.getFloat(KEY_ROT_SPEED);
     this->initial_dir_x = this->dir_x;
@@ -154,8 +156,8 @@ void Player::setState(uint8_t newState) {
     }
 }
 
-void Player::setName(const std::string& newName) {
-    this->name = newName;
+void Player::makeSound(SoundID sound) {
+    this->sounds.emplace_back(this->x, this->y, sound);
 }
 
 bool Player::isDead() {
