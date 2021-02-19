@@ -92,7 +92,7 @@ add_executable(server server_src/server_main.cpp
         server_src/Weapons/Weapons.cpp
         server_src/Weapons/Weapon.cpp server_src/Weapons/Knife.cpp
         server_src/Weapons/Pistol.cpp server_src/Weapons/ChainGun.cpp
-        server_src/Weapons/MachineGun.cpp
+        server_src/Weapons/MachineGun.cpp server_src/Weapons/Rocket.cpp
         server_src/Key.cpp
         common_src/Exceptions/ConfigurationException.cpp)
 

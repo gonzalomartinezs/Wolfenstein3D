@@ -12,6 +12,7 @@
 #include "../client_src/textures/TextureID.h"
 #include "../common_src/Configuration.h"
 #include "../common_src/Doors.h"
+#include "Weapons/Rocket.h"
 
 class Game {
 private:
@@ -19,6 +20,7 @@ private:
     std::vector<ThClient*>& clients;
     std::vector<Sound> sounds;
     std::atomic<bool> isRunning;
+    std::vector<Rocket> rockets;
     Map map;
     Items items;
     Doors doors;

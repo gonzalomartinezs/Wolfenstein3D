@@ -6,12 +6,14 @@
 
 #include "Item.h"
 #include "Configuration.h"
+#include "../server_src/Weapons/Rocket.h"
 
 class Items {
 private:
 	std::vector<Item*> items;
 public:
-	Items(const Configuration& config, const Configuration& config_map);
+	Items(const Configuration& config, const Configuration& config_map,
+		std::vector<Rocket>& rockets);
 	Items(Items& other) = delete;
 	Items& operator=(const Items& other) = delete;
 	Items(Items&& other) = delete;
@@ -24,7 +26,8 @@ public:
 	~Items();
 private:
 	void initialize(const Configuration& config,
-					const Configuration& config_map, const std::string& key);
+					const Configuration& config_map, const std::string& key,
+					std::vector<Rocket>& rockets);
 };
 
 #endif
