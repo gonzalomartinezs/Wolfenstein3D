@@ -449,7 +449,7 @@ void TexturesContainer::_loadTextureSets() {
     dynamic_textures.emplace(Knife_Pl, new TextureSet(
             std::vector<std::string>{KNIFE_PL, KNIFE_PL_1, KNIFE_PL_2,
                                      KNIFE_PL_3},
-            this->renderer, this->window_surface, 400));
+            this->renderer, this->window_surface, 200));
 
     dynamic_textures.emplace(Pistol_Pl, new TextureSet(
             std::vector<std::string>{PISTOL_PL, PISTOL_PL_1, PISTOL_PL_2,

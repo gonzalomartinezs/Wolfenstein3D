@@ -26,7 +26,6 @@ private:
     HUDElements elements;
     std::vector<FontTexture> font_textures;
     std::vector<DynamicTexture> dynamic;
-    int last_ammo;
 
 public:
     // Crea un UI_Handler listo para ser utilizado.

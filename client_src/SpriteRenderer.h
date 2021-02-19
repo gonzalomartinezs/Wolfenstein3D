@@ -24,7 +24,7 @@ struct SpriteInfo {
 class SpriteRenderer {
 private:
     TexturesContainer& textures;
-    SpriteSelector poronga;
+    SpriteSelector selector;
     int width;
     int height;
     int begin_x;

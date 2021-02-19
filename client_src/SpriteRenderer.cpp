@@ -27,7 +27,7 @@ void SpriteRenderer::_selectDirectedSprite(DirectedPositionable player_pos,
                                            std::vector<DirectedPositionable> &directed_objects,
                                            std::vector<Positionable> &directed_sprites) {
     for (DirectedPositionable positionable: directed_objects){
-        TextureID texture = poronga.selectTexture(player_pos, positionable);
+        TextureID texture = selector.selectTexture(player_pos, positionable);
         Positionable directed_sprite(positionable.getX(), positionable.getY(),
                                      texture);
         directed_sprites.push_back(directed_sprite);

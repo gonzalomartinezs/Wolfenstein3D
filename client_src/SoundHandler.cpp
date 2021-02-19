@@ -11,7 +11,7 @@
 enum PlayerInfo {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 SoundHandler::SoundHandler(SoundsContainer &sounds, std::vector<SlidingSurface> sliders):
-                                        sounds(sounds), sliders(sliders), last_ammo(0){}
+                                        sounds(sounds), sliders(sliders){}
 
 void SoundHandler::startBackMusic() {
     Music& music = this->sounds.getMusic(BackMusic);
@@ -34,11 +34,10 @@ SoundHandler::~SoundHandler() {}
 // ------------------------- Metodos privados --------------------------------//
 // Carga los sfx del arma del jugador.
 void SoundHandler::_loadWeaponSfx(std::vector<int> &player_info) {
-    if (last_ammo > player_info[Ammo] || (player_info[Weapon] == 0 && player_info[Firing])){
+    if (player_info[Firing]){
         auto id = SoundID(KnifeSFX + player_info[Weapon]);
         this->sounds.getSFX(id).play(0);
     }
-    last_ammo = player_info[Ammo];
 }
 
 // Carga los sfx del arma de los objetos que se mueven por el mapa

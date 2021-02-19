@@ -9,7 +9,7 @@ enum ttfTextures {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, std::string font_path, int width,
-                       int height) : renderer(renderer), raycaster(raycaster), tex(tex), last_ammo(0){
+                       int height) : renderer(renderer), raycaster(raycaster), tex(tex){
     int cell_height = (4*height)/18;
     int cell_y_pos = (14*height)/18;
 
@@ -56,12 +56,11 @@ void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
     int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
 
     DynamicTexture& weapon = dynamic[player_info[Weapon]];
-    if (last_ammo > player_info[Ammo] || (player_info[Weapon] == 0 && player_info[Firing])){
+    if (player_info[Firing]){
         weapon.getTexture(1).render(nullptr, &this->elements.weapon_animation);
     } else {
         weapon.getTexture(0).render(nullptr, &this->elements.weapon_animation);
     }
-    last_ammo = player_info[Ammo];
     tex.getStatic(HUD)->render(nullptr, nullptr);
     tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
     tex.getStatic(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
