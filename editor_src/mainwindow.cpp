@@ -93,7 +93,6 @@ void MainWindow::loadFile(QString& path) {
     try {
         map = parser.loadMap( path.toStdString() );
     }catch (InvalidFileException &e){
-            notiBox
             return;
     }
     if(this->mapHandler == nullptr) return;

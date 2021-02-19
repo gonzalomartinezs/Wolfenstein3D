@@ -23,16 +23,17 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-private slots:
+ private slots:
     void resizeMap();
     void openFile();
     void saveFileAs();
     void restart();
-
-private:
+ signals:
+    void showMessage (const std::string& msg);
+ private:
     void initWidgets();
     void initBar();
     void loadElements();

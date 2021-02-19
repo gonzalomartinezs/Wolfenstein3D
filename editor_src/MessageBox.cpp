@@ -8,7 +8,7 @@ MessageBox::MessageBox(QWidget *parent) : QMessageBox(parent) {
 
 }
 
-void MessageBox::showError(const std::string &error) {
+void MessageBox::showMessage (const std::string &msg) {
     this->exec();
 }
 
