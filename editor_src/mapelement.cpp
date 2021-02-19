@@ -44,3 +44,8 @@ int MapElement::calculateX() const{
 int MapElement::calculateY() const{
     return (rect.top() / ITEMSIZE);
 }
+
+MapElement::MapElement(const Editor_icon &id, const QRect& rect) {
+    this->id = id;
+    this->rect = rect;
+}
