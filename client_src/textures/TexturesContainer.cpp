@@ -323,14 +323,14 @@ TexturesContainer::TexturesContainer(SDL_Renderer *renderer,
                                      SDL_Surface *window_surface)
         : renderer(renderer), window_surface(window_surface){
     _loadStaticTextures();
-    _loadDynamicTextures();
+    _loadTextureSets();
 }
 
 Texture* TexturesContainer::getStatic(TextureID id) {
     return static_textures[id];
 }
 
-DynamicTexture *TexturesContainer::getDynamic(TextureID id) {
+TextureSet *TexturesContainer::getDynamic(TextureID id) {
     return dynamic_textures[id];
 }
 
@@ -417,14 +417,14 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Mutant_6, new Texture(MUTANT_6_0, this->renderer));
     static_textures.emplace(Mutant_7, new Texture(MUTANT_7_0, this->renderer));
 
-    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
-    static_textures.emplace(Missile_1, new Texture(MISSILE_1, this->renderer));
-    static_textures.emplace(Missile_2, new Texture(MISSILE_2, this->renderer));
-    static_textures.emplace(Missile_3, new Texture(MISSILE_3, this->renderer));
-    static_textures.emplace(Missile_4, new Texture(MISSILE_4, this->renderer));
-    static_textures.emplace(Missile_5, new Texture(MISSILE_5, this->renderer));
-    static_textures.emplace(Missile_6, new Texture(MISSILE_6, this->renderer));
-    static_textures.emplace(Missile_7, new Texture(MISSILE_7, this->renderer));
+//    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
+//    static_textures.emplace(Missile_1, new Texture(MISSILE_1, this->renderer));
+//    static_textures.emplace(Missile_2, new Texture(MISSILE_2, this->renderer));
+//    static_textures.emplace(Missile_3, new Texture(MISSILE_3, this->renderer));
+//    static_textures.emplace(Missile_4, new Texture(MISSILE_4, this->renderer));
+//    static_textures.emplace(Missile_5, new Texture(MISSILE_5, this->renderer));
+//    static_textures.emplace(Missile_6, new Texture(MISSILE_6, this->renderer));
+//    static_textures.emplace(Missile_7, new Texture(MISSILE_7, this->renderer));
 
     static_textures.emplace(KnifeItem, new Texture(KNIFE_ITEM, this->renderer));
     static_textures.emplace(PistolItem, new Texture(PISTOL_ITEM, this->renderer));
@@ -445,32 +445,31 @@ void TexturesContainer::_loadStaticTextures() {
 
 }
 
-void TexturesContainer::_loadDynamicTextures() {
-    dynamic_textures.emplace(Knife_Pl, new DynamicTexture(
+void TexturesContainer::_loadTextureSets() {
+    dynamic_textures.emplace(Knife_Pl, new TextureSet(
             std::vector<std::string>{KNIFE_PL, KNIFE_PL_1, KNIFE_PL_2,
                                      KNIFE_PL_3},
-            this->renderer, this->window_surface, 400, false));
+            this->renderer, this->window_surface, 400));
 
-    dynamic_textures.emplace(Pistol_Pl, new DynamicTexture(
+    dynamic_textures.emplace(Pistol_Pl, new TextureSet(
             std::vector<std::string>{PISTOL_PL, PISTOL_PL_1, PISTOL_PL_2,
                                      PISTOL_PL_3, PISTOL_PL_4,
                                      PISTOL_PL_5, PISTOL_PL_6, PISTOL_PL_7,
                                      PISTOL_PL_8, PISTOL_PL_9,
                                      PISTOL_PL_10, PISTOL_PL_11, PISTOL_PL_12,
                                      PISTOL_PL_13, PISTOL_PL_14},
-            this->renderer, this->window_surface, 250, false));
+            this->renderer, this->window_surface, 250));
 
-    dynamic_textures.emplace(MachineGun_Pl, new DynamicTexture(
-            std::vector<std::string>{MACHINEGUN_PL, MACHINEGUN_PL_1,
-                                     MACHINEGUN_PL_2},
-            this->renderer, this->window_surface, 100, false));
+    dynamic_textures.emplace(MachineGun_Pl, new TextureSet(
+            std::vector<std::string>{MACHINEGUN_PL, MACHINEGUN_PL_1, MACHINEGUN_PL_2},
+            this->renderer, this->window_surface, 100));
 
-    dynamic_textures.emplace(ChainGun_Pl, new DynamicTexture(
+    dynamic_textures.emplace(ChainGun_Pl, new TextureSet(
             std::vector<std::string>{CHAINGUN_PL, CHAINGUN_PL_1, CHAINGUN_PL_2},
-            this->renderer, this->window_surface, 250, false));
+            this->renderer, this->window_surface, 250));
 
-    dynamic_textures.emplace(RPG_Pl, new DynamicTexture(
+    dynamic_textures.emplace(RPG_Pl, new TextureSet(
             std::vector<std::string>{RPG_PL, RPG_PL_1, RPG_PL_2, RPG_PL_3},
-            this->renderer, this->window_surface, 250, false));
+            this->renderer, this->window_surface, 250));
 
 }
