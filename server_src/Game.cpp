@@ -120,7 +120,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
 
     //this->loadSounds(msg, currentByte, clientNumber);
 
-    //this->doors.loadDoorsInfo(msg, currentByte);
+    this->doors.loadDoorsInfo(msg, currentByte);
 
     for (size_t i = 0; i < this->players.size(); i++) {
         if (i != clientNumber) {
