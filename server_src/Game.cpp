@@ -29,7 +29,8 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
     for (size_t i = 0; i < this->clients.size(); ++i) {
         std::string player_number = "player_" + std::to_string(i + 1);
         Configuration config_player(config_map, player_number);
-        this->players.push_back(new Player(config_stats, config_player, i, this->clients[i]->getName()));
+        this->players.push_back(new Player(config_stats, config_player, i,
+                                    this->clients[i]->getName(), this->sounds));
     }
 
     for (size_t i = 0; i < this->bots_amount; ++i) {
@@ -37,7 +38,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
                                     std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Bot(config_stats, config_player,
-                                        this->clients.size() + i, "Bot_" + std::to_string(i)));
+                                        this->clients.size() + i, "Bot_" + std::to_string(i), this->sounds));
     }
 }
 
@@ -102,6 +103,7 @@ void Game::sendUpdate() {
         int bytesToSend = this->createMsg(msg, i);
         this->clients[i]->push(msg, bytesToSend);
     }
+    this->sounds.clear();
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
@@ -115,6 +117,9 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     currentByte += POS_DATA_PLANE_SIZE;
 
     this->items.loadItemsInfo(msg, currentByte);
+
+    //this->loadSounds(msg, currentByte, clientNumber);
+
     //this->doors.loadDoorsInfo(msg, currentByte);
 
     for (size_t i = 0; i < this->players.size(); i++) {
@@ -139,11 +144,11 @@ void Game::createLeaderBoard() {
 
     msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
 
-    for (size_t i = 0; i < this->clients.size(); i++) {
+    /*for (size_t i = 0; i < this->clients.size(); i++) {
         this->clients[i]->push(&endGameChar, 1);
         this->clients[i]->push(&msgLen, 1);
         this->clients[i]->push(msg, msgLen);
-    }
+    }*/
 }
 
 void Game::stop() {
@@ -163,6 +168,23 @@ void Game::sendMap() {
                 this->clients[k]->push(&aux, 1);
             }
         }
+    }
+}
+
+void Game::loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber) {
+    uint8_t size = static_cast<uint8_t>(this->sounds.size());
+    memcpy(msg + currentByte, &size, sizeof(uint8_t));
+    currentByte += sizeof(uint8_t);
+
+    for (size_t i = 0; i < this->sounds.size(); i++) {
+        uint8_t sound = this->sounds[i].getSound();
+        float distance = this->players[playerNumber]->distanceTo(this->sounds[i]);
+
+        memcpy(msg + currentByte, &sound, sizeof(uint8_t));
+        currentByte += sizeof(uint8_t);
+
+        memcpy(msg + currentByte, &distance, sizeof(float));
+        currentByte += sizeof(float);
     }
 }
 
