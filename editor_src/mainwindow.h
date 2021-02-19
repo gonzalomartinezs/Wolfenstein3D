@@ -50,7 +50,6 @@ private:
     ItemList* itemList;
     MapHandler* mapHandler;
     IconsContainer container;
-    MapParser parser;
 };
 
 #endif // MAINWINDOW_H

@@ -6,8 +6,10 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QErrorMessage>
 #include <string>
 #include <list>
+#include "InvalidFileException.h"
 
 #include "mapparser.h"
 #include "mapelement.h"
@@ -85,10 +87,16 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::loadFile(QString& path) {
-
+    MapParser parser;
+    Map map;
+    try {
+        map = parser.loadMap( path.toStdString() );
+    }catch (InvalidFileException &e){
+            QErrorMessage(this).showMessage(e.what());
+            return;
+    }
     if(this->mapHandler == nullptr) return;
-    delete mapHandler;
-    Map map = parser.loadMap( path.toStdString() );
+    delete mapHandler; mapHandler = nullptr;
     spinX->setValue( map.getX() );
     spinY->setValue( map.getY() );
     nameLabel->setText( map.getName().c_str() );
@@ -101,6 +109,7 @@ void MainWindow::loadFile(QString& path) {
 }
 
 void MainWindow::saveFileAs() {
+    MapParser parser;
     QString path = QFileDialog::getSaveFileName(this);
     //meter return si no puede xD.
     parser.exportMap(mapHandler->getMap(), path.toStdString() );

@@ -5,7 +5,7 @@
 #include "coordinate.h"
 #include "InvalidFileException.h"
 
-#define INVALIDFORMAT "Invalid file format, please use .Yaml"
+#define INVALID_FORMAT "Invalid file format, please use .Yaml"
 
 MapParser::MapParser() {
 }
@@ -19,7 +19,11 @@ void MapParser::exportMap(const Map& exported, std::string path) const{
 }
 
 Map MapParser::loadMap(std::string path) {
-    this->mapFile = YAML::LoadFile(path);
+    try {
+        this->mapFile = YAML::LoadFile(path);
+    } catch (YAML::Exception){
+        throw (InvalidFileException(INVALID_FORMAT));
+    }
     this->loadSize();
     this->loadName();
     this->loadElements();
@@ -37,7 +41,7 @@ bool MapParser::hasKey(const std::string &key) const {
 
 void MapParser::loadSize() {
     if( !hasKey("length") || !hasKey("width") ) {
-        throw InvalidFileException(INVALIDFORMAT);
+        throw InvalidFileException(INVALID_FORMAT);
     }
     x = mapFile["width"].as<int>();
     y = mapFile["length"].as<int>();
@@ -45,7 +49,7 @@ void MapParser::loadSize() {
 
 void MapParser::loadName() {
     if( !hasKey("map_name") ) {
-        throw InvalidFileException(INVALIDFORMAT);
+        throw InvalidFileException(INVALID_FORMAT);
     }
     name = mapFile["map_name"].as<std::string>();
 }
