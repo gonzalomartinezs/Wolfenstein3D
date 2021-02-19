@@ -6,7 +6,8 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QErrorMessage>
+#include <QMessageBox>
+
 #include <string>
 #include <list>
 #include "InvalidFileException.h"
@@ -92,7 +93,7 @@ void MainWindow::loadFile(QString& path) {
     try {
         map = parser.loadMap( path.toStdString() );
     }catch (InvalidFileException &e){
-            QErrorMessage(this).showMessage(e.what());
+            printf("xD no se pudo abrir pa");
             return;
     }
     if(this->mapHandler == nullptr) return;

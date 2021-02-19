@@ -21,7 +21,8 @@ void MapParser::exportMap(const Map& exported, std::string path) const{
 Map MapParser::loadMap(std::string path) {
     try {
         this->mapFile = YAML::LoadFile(path);
-    } catch (YAML::Exception){
+        hasKey("map_name");
+    } catch ( ... ){
         throw (InvalidFileException(INVALID_FORMAT));
     }
     this->loadSize();
