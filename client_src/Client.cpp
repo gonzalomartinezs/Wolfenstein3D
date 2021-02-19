@@ -81,10 +81,10 @@ void Client::lobbyInteraction(std::string username) {
     if (choice == NEW_GAME) _createGame();
     else _joinGame();
 
-//    name_len = username.size();
-//    this->peer.send(&name_len, 1);
-//    memcpy(bytes_sent, username.c_str(), name_len);
-//    this->peer.send(bytes_sent, name_len);
+    name_len = username.size();
+    this->peer.send(&name_len, 1);
+    memcpy(bytes_sent, username.c_str(), name_len);
+    this->peer.send(bytes_sent, name_len);
 }
 
 ssize_t Client::receiveInformation() {
