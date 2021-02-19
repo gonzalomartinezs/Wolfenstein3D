@@ -93,7 +93,7 @@ void MainWindow::loadFile(QString& path) {
     try {
         map = parser.loadMap( path.toStdString() );
     }catch (InvalidFileException &e){
-            printf("xD no se pudo abrir pa");
+            notiBox
             return;
     }
     if(this->mapHandler == nullptr) return;

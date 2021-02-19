@@ -55,7 +55,7 @@ set(PROJECT_SOURCES
         trashbin.h
         trashbin.cpp
         iconsPaths.h
-        ../common_src/GameConstants.h InvalidFileException.cpp InvalidFileException.h)
+        ../common_src/GameConstants.h InvalidFileException.cpp InvalidFileException.h MessageBox.cpp MessageBox.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Editor
