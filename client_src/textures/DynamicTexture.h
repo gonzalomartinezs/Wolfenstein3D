@@ -19,11 +19,11 @@ public:
     // Crea una textura dinamica lista para ser utilizada.
     DynamicTexture(TextureSet *textures, bool single_event);
 
-    // Actualiza el periodo de renderizado de la textura.
-    void updatePeriod(int new_period);
+    // Actualiza el set de texturas.
+    void updateSet(TextureSet* texture);
 
     // Retorna una referencia a la textura que se desea renderizar.
-    Texture& getTexture(int state);
+    Texture* getTexture(int state);
 
     // Libera los recursos utilizados por la textura dinamica.
     ~DynamicTexture();

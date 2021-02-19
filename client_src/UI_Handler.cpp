@@ -57,9 +57,9 @@ void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
 
     DynamicTexture& weapon = dynamic[player_info[Weapon]];
     if (player_info[Firing]){
-        weapon.getTexture(1).render(nullptr, &this->elements.weapon_animation);
+        weapon.getTexture(1)->render(nullptr, &this->elements.weapon_animation);
     } else {
-        weapon.getTexture(0).render(nullptr, &this->elements.weapon_animation);
+        weapon.getTexture(0)->render(nullptr, &this->elements.weapon_animation);
     }
     tex.getStatic(HUD)->render(nullptr, nullptr);
     tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
