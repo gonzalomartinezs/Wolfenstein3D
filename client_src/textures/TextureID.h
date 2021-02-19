@@ -40,7 +40,7 @@ enum TextureID{
     Bullets,
     HealthKit,
     KeyItem_,
-//    Missile_0,
+//    Missile_0, // de acá para abajo son sprites dinamicos
 //    Missile_1,
 //    Missile_2,
 //    Missile_3,
@@ -48,7 +48,7 @@ enum TextureID{
 //    Missile_5,
 //    Missile_6,
 //    Missile_7,
-    Dog_0, // de acá para abajo son sprites dinamicos
+    Dog_0,
     Dog_1,
     Dog_2,
     Dog_3,
