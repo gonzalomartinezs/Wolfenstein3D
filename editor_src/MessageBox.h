@@ -13,7 +13,8 @@ class MessageBox : public QMessageBox {
 public:
     explicit MessageBox(QWidget* parent = nullptr);
 public slots:
-    void showMessage(std::string msg);
+    void showYamlError();
+    void showOccupiedPosition();
 };
 
 
