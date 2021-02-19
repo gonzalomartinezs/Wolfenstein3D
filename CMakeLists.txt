@@ -54,7 +54,7 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
 add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp
         server_src/Bots/Destripador.lua
-        server_src/Player.cpp
+        server_src/Player.cpp server_src/Sound.cpp
         common_src/Collider.cpp common_src/RectCollider.cpp
         common_src/Timer.cpp
         server_src/ThClient.cpp

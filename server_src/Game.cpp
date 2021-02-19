@@ -137,12 +137,12 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
 }
 
 void Game::createLeaderBoard() {
-    uint8_t endGameChar = END_GAME_CHAR;
-    uint8_t msg[MAX_MSG_SIZE];
-    uint8_t msgLen;
-    LeaderBoard leaderBoard;
+//    uint8_t endGameChar = END_GAME_CHAR;
+//    uint8_t msg[MAX_MSG_SIZE];
+//    uint8_t msgLen;
+//    LeaderBoard leaderBoard;
 
-    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
+//    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
 
     /*for (size_t i = 0; i < this->clients.size(); i++) {
         this->clients[i]->push(&endGameChar, 1);
