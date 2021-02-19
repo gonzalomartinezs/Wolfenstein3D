@@ -26,6 +26,7 @@ void MachineGun::fireTheGun(std::vector<Player*> &players,
                             int shootingPlayerNumber, const Map &map) {
     if (this->lastShotDelay == -1) {
         this->shoot(players, shootingPlayerNumber, map);  /* First shot */
+        players[shootingPlayerNumber]->makeSound(MachineGunSFX);
         this->burstBulletCounter++;
         this->lastShotDelay = 0;
 
@@ -34,6 +35,7 @@ void MachineGun::fireTheGun(std::vector<Player*> &players,
                 (this->burstBulletCounter < this->BULLETS_PER_BURST) &&
                 (this->isInBurstRecover == false)) {
         this->shoot(players, shootingPlayerNumber, map);
+        players[shootingPlayerNumber]->makeSound(MachineGunSFX);
         this->lastShotDelay = this->lastShotDelay +
                                 (this->fireTimer.getTime()/1000) -
                                 this->TIME_BETWEEN_SHOTS;

@@ -10,6 +10,7 @@ void Pistol::startShooting() {
 void Pistol::fireTheGun(std::vector<Player*> &players,
 						int shootingPlayerNumber, const Map &map) {
     this->shoot(players, shootingPlayerNumber, map);
+    players[shootingPlayerNumber]->makeSound(PistolSFX);
     this->weaponIsShooting = false;
 }
 
