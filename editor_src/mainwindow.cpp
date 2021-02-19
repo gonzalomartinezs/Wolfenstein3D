@@ -36,9 +36,9 @@ void MainWindow::linkToUI() {
     this->nameLabel = findChild <QLineEdit*>("nameLabel");
 }
 
-
 MainWindow::~MainWindow() {
     delete ui;
+    delete mapHandler;
 }
 
 void MainWindow::initWidgets() {
@@ -86,11 +86,16 @@ void MainWindow::openFile() {
 
 void MainWindow::loadFile(QString& path) {
 
+    if(this->mapHandler == nullptr) return;
+    delete mapHandler;
     Map map = parser.loadMap( path.toStdString() );
-    spinX->setValue( map.getX() ) ;
+    spinX->setValue( map.getX() );
     spinY->setValue( map.getY() );
     nameLabel->setText( map.getName().c_str() );
-
+    std::list<MapElement> elements = map.getElements();
+    mapHandler =  new MapHandler(container,nameLabel->text().toStdString()
+            ,spinX->value(), spinY->value(), this);
+    mapHandler->loadElements(elements);
 }
 
 void MainWindow::saveFileAs() {
