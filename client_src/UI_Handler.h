@@ -5,6 +5,7 @@
 #include "Raycaster.h"
 #include "textures/TexturesContainer.h"
 #include "textures/FontTexture.h"
+#include "textures/DynamicTexture.h"
 
 struct HUDElements{
     SDL_Rect score;
@@ -24,6 +25,7 @@ private:
     TexturesContainer& tex;
     HUDElements elements;
     std::vector<FontTexture> font_textures;
+    std::vector<DynamicTexture> dynamic;
     int last_ammo;
 
 public:
