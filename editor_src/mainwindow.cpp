@@ -73,8 +73,11 @@ void MainWindow::initBar() {
 
 void MainWindow::connectEvents() {
    QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
-   QObject::connect(this, &MainWindow::showMessage, &notiBox, &MessageBox::showMessage);
-   QObject::connect(this->mapHandler, &MapHandler::showMessage, &notiBox, &MessageBox::showMessage);
+   QObject::connect(this, &MainWindow::showYamlError,
+                    &notiBox, &MessageBox::showYamlError);
+
+   QObject::connect(this->mapHandler, &MapHandler::showOccupiedPosition,
+                    &notiBox, &MessageBox::showOccupiedPosition);
 }
 
 void MainWindow::resizeMap() {
@@ -94,7 +97,7 @@ void MainWindow::loadFile(QString& path) {
     try {
         map = parser.loadMap( path.toStdString() );
     }catch (InvalidFileException &e){
-            emit showMessage(e.what());
+            emit showYamlError();
             return;
     }
     if(this->mapHandler == nullptr) return;
