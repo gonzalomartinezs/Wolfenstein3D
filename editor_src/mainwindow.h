@@ -39,7 +39,6 @@ class MainWindow : public QMainWindow {
  private:
     void initWidgets();
     void initBar();
-    void loadElements();
     void linkToUI();
     void connectEvents();
     void loadFile(QString& path);

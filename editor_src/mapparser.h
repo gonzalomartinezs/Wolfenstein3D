@@ -25,6 +25,10 @@ private:
     void loadName();
 
     void loadElements();
+
+    void loadMatrix();
+
+    Qrect calculateRect(int x, int y);
 };
 
 #endif // MAPPARSER_H

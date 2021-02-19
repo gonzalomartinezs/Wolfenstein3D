@@ -69,6 +69,7 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event) {
     } else {
         this->focused = QRect();
         event->ignore();
+        // emit showOccupiedPosition();
     }
     update(updateRect);
 }
@@ -101,6 +102,7 @@ void MapHandler::dropEvent(QDropEvent *event) {
         } else {
         focused = QRect();
         event->ignore();
+        // emit showOccupiedPosition();
         }
 }
 
