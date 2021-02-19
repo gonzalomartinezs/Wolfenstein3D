@@ -17,6 +17,7 @@ class Game {
 private:
     std::vector<Player*> players;
     std::vector<ThClient*>& clients;
+    std::vector<Sound> sounds;
     std::atomic<bool> isRunning;
     Map map;
     Items items;
@@ -48,7 +49,7 @@ public:
 
     void sendMap();
 
-    void recvNames();
+    void loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber);
 };
 
 #endif  // WOLFENSTEIN3D_GAME_H

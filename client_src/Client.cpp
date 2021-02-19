@@ -24,6 +24,8 @@
 #define OTHER_PLAYERS_SIZE (4 * sizeof(float) + 1)
 #define MAX_MESSAGE_SIZE 256
 
+#define IS_SHOOTING 4
+
 Client::Client(const std::string &host, const std::string &service,
                BlockingQueue<int> &instructions,
                ProtectedQueue<DrawingInfo> &drawing_info):
@@ -67,6 +69,11 @@ void Client::lobbyInteraction(std::string username) {
     uint8_t bytes_sent[MAX_MESSAGE_SIZE];
     memset(bytes_sent, 0, MAX_MESSAGE_SIZE);
 
+    name_len = username.size();
+    this->peer.send(&name_len, 1);
+    memcpy(bytes_sent, username.c_str(), name_len);
+    this->peer.send(bytes_sent, name_len);
+
     std::cout << "Ingrese 0 si desea crear una nueva partida o 1 si "
                  "desea unirse a una existente." << std::endl;
 
@@ -80,11 +87,6 @@ void Client::lobbyInteraction(std::string username) {
 
     if (choice == NEW_GAME) _createGame();
     else _joinGame();
-
-//    name_len = username.size();
-//    this->peer.send(&name_len, 1);
-//    memcpy(bytes_sent, username.c_str(), name_len);
-//    this->peer.send(bytes_sent, name_len);
 }
 
 ssize_t Client::receiveInformation() {
@@ -92,6 +94,7 @@ ssize_t Client::receiveInformation() {
         uint8_t bytes_to_receive;
         uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
         memset(bytes_received, 0, MAX_MESSAGE_SIZE);
+        bool important = false;
 
         this->peer.recv(&bytes_to_receive, 1);
         this->peer.recv(bytes_received, bytes_to_receive);
@@ -108,13 +111,14 @@ ssize_t Client::receiveInformation() {
 //        sliders_changes.emplace_back(1,3);
 //        sliders_changes.emplace_back(2,2);
 //        sliders_changes.emplace_back(3,2);
-        _assignPlayerInfo(player_info, bytes_received);
+        _assignPlayerInfo(player_info, bytes_received, important);
         _assignPlayerCoordenates(player, view, coordinates, bytes_received);
         _assignObjectsCoordenates(bytes_received, objects, coordinates, objects_amount);
         _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
                                        coordinates, objects_amount);
 
-        DrawingInfo new_info(player, view, player_info, objects, directed_objects, sliders_changes);
+        DrawingInfo new_info(player, view, player_info, objects,
+                             directed_objects, sliders_changes, important);
         this->drawing_info.push(new_info);
     }
     return 0;
@@ -136,7 +140,8 @@ Client::~Client() {
 
 
 // Asigna la informacion del jugador (vida, balas, arma, ...) a sus atributos
-void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) {
+void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
+                               bool &important) {
     uint8_t received_uint8;
     int received_int;
     for(int i=0; i< UINT_ATTRIBUTES; i++){
@@ -148,6 +153,7 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received) 
                 UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo
         info.push_back(received_int);
     }
+    important = (info[IS_SHOOTING] != 0);
 }
 
 // Asigna las coordenadas recibidas a los atributos del jugador

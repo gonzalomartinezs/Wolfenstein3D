@@ -10,13 +10,18 @@
 
 class MapHandler : public QWidget {
     Q_OBJECT
+
+
 public:
+    void resizeMap( int x, int y);
+
     explicit MapHandler(const IconsContainer& container,const std::string& name = "-",
                         unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
     const Map& getMap();
     void loadElements(std::list<MapElement>& in);
 
 signals:
+    void showMessage (const std::string& msg);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

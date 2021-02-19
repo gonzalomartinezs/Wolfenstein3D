@@ -1,6 +1,8 @@
 #include "TexturesContainer.h"
 #include <SDL2/SDL_image.h>
 
+#define WALKING_TIME 800
+
 #define WALL_PATH "../client_src/textures/img/sprites/rocky.bmp"
 #define DOOR_PATH "../client_src/textures/img/sprites/door.bmp"
 #define INVERTED_DOOR_PATH "../client_src/textures/img/sprites/inv_door.bmp"
@@ -323,14 +325,14 @@ TexturesContainer::TexturesContainer(SDL_Renderer *renderer,
                                      SDL_Surface *window_surface)
         : renderer(renderer), window_surface(window_surface){
     _loadStaticTextures();
-    _loadDynamicTextures();
+    _loadTextureSets();
 }
 
 Texture* TexturesContainer::getStatic(TextureID id) {
     return static_textures[id];
 }
 
-DynamicTexture *TexturesContainer::getDynamic(TextureID id) {
+TextureSet *TexturesContainer::getDynamic(TextureID id) {
     return dynamic_textures[id];
 }
 
@@ -372,15 +374,6 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Background,new Texture(BACKGROUND, this->renderer, this->window_surface));
     static_textures.emplace(HUD, new Texture(PL_HUD, this->renderer, this->window_surface));
 
-    static_textures.emplace(Dog_0, new Texture(DOG_0_0, this->renderer));
-    static_textures.emplace(Dog_1, new Texture(DOG_1_0, this->renderer));
-    static_textures.emplace(Dog_2, new Texture(DOG_2_0, this->renderer));
-    static_textures.emplace(Dog_3, new Texture(DOG_3_0, this->renderer));
-    static_textures.emplace(Dog_4, new Texture(DOG_4_0, this->renderer));
-    static_textures.emplace(Dog_5, new Texture(DOG_5_0, this->renderer));
-    static_textures.emplace(Dog_6, new Texture(DOG_6_0, this->renderer));
-    static_textures.emplace(Dog_7, new Texture(DOG_7_0, this->renderer));
-
     static_textures.emplace(Guard_0, new Texture(GUARD_0_0, this->renderer));
     static_textures.emplace(Guard_1, new Texture(GUARD_1_0, this->renderer));
     static_textures.emplace(Guard_2, new Texture(GUARD_2_0, this->renderer));
@@ -417,14 +410,14 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Mutant_6, new Texture(MUTANT_6_0, this->renderer));
     static_textures.emplace(Mutant_7, new Texture(MUTANT_7_0, this->renderer));
 
-    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
-    static_textures.emplace(Missile_1, new Texture(MISSILE_1, this->renderer));
-    static_textures.emplace(Missile_2, new Texture(MISSILE_2, this->renderer));
-    static_textures.emplace(Missile_3, new Texture(MISSILE_3, this->renderer));
-    static_textures.emplace(Missile_4, new Texture(MISSILE_4, this->renderer));
-    static_textures.emplace(Missile_5, new Texture(MISSILE_5, this->renderer));
-    static_textures.emplace(Missile_6, new Texture(MISSILE_6, this->renderer));
-    static_textures.emplace(Missile_7, new Texture(MISSILE_7, this->renderer));
+//    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
+//    static_textures.emplace(Missile_1, new Texture(MISSILE_1, this->renderer));
+//    static_textures.emplace(Missile_2, new Texture(MISSILE_2, this->renderer));
+//    static_textures.emplace(Missile_3, new Texture(MISSILE_3, this->renderer));
+//    static_textures.emplace(Missile_4, new Texture(MISSILE_4, this->renderer));
+//    static_textures.emplace(Missile_5, new Texture(MISSILE_5, this->renderer));
+//    static_textures.emplace(Missile_6, new Texture(MISSILE_6, this->renderer));
+//    static_textures.emplace(Missile_7, new Texture(MISSILE_7, this->renderer));
 
     static_textures.emplace(KnifeItem, new Texture(KNIFE_ITEM, this->renderer));
     static_textures.emplace(PistolItem, new Texture(PISTOL_ITEM, this->renderer));
@@ -445,32 +438,155 @@ void TexturesContainer::_loadStaticTextures() {
 
 }
 
-void TexturesContainer::_loadDynamicTextures() {
-    dynamic_textures.emplace(Knife_Pl, new DynamicTexture(
+void TexturesContainer::_loadTextureSets() {
+    dynamic_textures.emplace(Knife_Pl, new TextureSet(
             std::vector<std::string>{KNIFE_PL, KNIFE_PL_1, KNIFE_PL_2,
                                      KNIFE_PL_3},
-            this->renderer, this->window_surface, 400, false));
+            this->renderer, this->window_surface, 200));
 
-    dynamic_textures.emplace(Pistol_Pl, new DynamicTexture(
+    dynamic_textures.emplace(Pistol_Pl, new TextureSet(
             std::vector<std::string>{PISTOL_PL, PISTOL_PL_1, PISTOL_PL_2,
                                      PISTOL_PL_3, PISTOL_PL_4,
                                      PISTOL_PL_5, PISTOL_PL_6, PISTOL_PL_7,
                                      PISTOL_PL_8, PISTOL_PL_9,
                                      PISTOL_PL_10, PISTOL_PL_11, PISTOL_PL_12,
                                      PISTOL_PL_13, PISTOL_PL_14},
-            this->renderer, this->window_surface, 250, false));
+            this->renderer, this->window_surface, 250));
 
-    dynamic_textures.emplace(MachineGun_Pl, new DynamicTexture(
-            std::vector<std::string>{MACHINEGUN_PL, MACHINEGUN_PL_1,
-                                     MACHINEGUN_PL_2},
-            this->renderer, this->window_surface, 100, false));
+    dynamic_textures.emplace(MachineGun_Pl, new TextureSet(
+            std::vector<std::string>{MACHINEGUN_PL, MACHINEGUN_PL_1, MACHINEGUN_PL_2},
+            this->renderer, this->window_surface, 100));
 
-    dynamic_textures.emplace(ChainGun_Pl, new DynamicTexture(
+    dynamic_textures.emplace(ChainGun_Pl, new TextureSet(
             std::vector<std::string>{CHAINGUN_PL, CHAINGUN_PL_1, CHAINGUN_PL_2},
-            this->renderer, this->window_surface, 250, false));
+            this->renderer, this->window_surface, 250));
 
-    dynamic_textures.emplace(RPG_Pl, new DynamicTexture(
+    dynamic_textures.emplace(RPG_Pl, new TextureSet(
             std::vector<std::string>{RPG_PL, RPG_PL_1, RPG_PL_2, RPG_PL_3},
-            this->renderer, this->window_surface, 250, false));
+            this->renderer, this->window_surface, 250));
 
+    dynamic_textures.emplace(Dog_0, new TextureSet(
+            std::vector<std::string>{DOG_0_0, DOG_0_1, DOG_0_2, DOG_0_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_1, new TextureSet(
+            std::vector<std::string>{DOG_1_0, DOG_1_1, DOG_1_2, DOG_1_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_2, new TextureSet(
+            std::vector<std::string>{DOG_2_0, DOG_2_1, DOG_2_2, DOG_2_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_3, new TextureSet(
+            std::vector<std::string>{DOG_3_0, DOG_3_1, DOG_3_2, DOG_3_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_4, new TextureSet(
+            std::vector<std::string>{DOG_4_0, DOG_4_1, DOG_4_2, DOG_4_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_5, new TextureSet(
+            std::vector<std::string>{DOG_5_0, DOG_5_1, DOG_5_2, DOG_5_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_6, new TextureSet(
+            std::vector<std::string>{DOG_6_0, DOG_6_1, DOG_6_2, DOG_6_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Dog_7, new TextureSet(
+            std::vector<std::string>{DOG_7_0, DOG_7_1, DOG_7_2, DOG_7_3},
+            this->renderer, this->window_surface, WALKING_TIME));
+
+    dynamic_textures.emplace(Guard_0, new TextureSet(
+            std::vector<std::string>{GUARD_0_0, GUARD_0_1, GUARD_0_2, GUARD_0_3, GUARD_0_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_1, new TextureSet(
+            std::vector<std::string>{GUARD_1_0, GUARD_1_1, GUARD_1_2, GUARD_1_3, GUARD_1_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_2, new TextureSet(
+            std::vector<std::string>{GUARD_2_0, GUARD_2_1, GUARD_2_2, GUARD_2_3, GUARD_2_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_3, new TextureSet(
+            std::vector<std::string>{GUARD_3_0, GUARD_3_1, GUARD_3_2, GUARD_3_3, GUARD_3_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_4, new TextureSet(
+            std::vector<std::string>{GUARD_4_0, GUARD_4_1, GUARD_4_2, GUARD_4_3, GUARD_4_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_5, new TextureSet(
+            std::vector<std::string>{GUARD_5_0, GUARD_5_1, GUARD_5_2, GUARD_5_3, GUARD_5_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_6, new TextureSet(
+            std::vector<std::string>{GUARD_6_0, GUARD_6_1, GUARD_6_2, GUARD_6_3, GUARD_6_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Guard_7, new TextureSet(
+            std::vector<std::string>{GUARD_7_0, GUARD_7_1, GUARD_7_2, GUARD_7_3, GUARD_7_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+
+    dynamic_textures.emplace(SS_0, new TextureSet(
+            std::vector<std::string>{SS_0_0, SS_0_1, SS_0_2, SS_0_3, SS_0_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_1, new TextureSet(
+            std::vector<std::string>{SS_1_0, SS_1_1, SS_1_2, SS_1_3, SS_1_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_2, new TextureSet(
+            std::vector<std::string>{SS_2_0, SS_2_1, SS_2_2, SS_2_3, SS_2_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_3, new TextureSet(
+            std::vector<std::string>{SS_3_0, SS_3_1, SS_3_2, SS_3_3, SS_3_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_4, new TextureSet(
+            std::vector<std::string>{SS_4_0, SS_4_1, SS_4_2, SS_4_3, SS_4_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_5, new TextureSet(
+            std::vector<std::string>{SS_5_0, SS_5_1, SS_5_2, SS_5_3, SS_5_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_6, new TextureSet(
+            std::vector<std::string>{SS_6_0, SS_6_1, SS_6_2, SS_6_3, SS_6_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(SS_7, new TextureSet(
+            std::vector<std::string>{SS_7_0, SS_7_1, SS_7_2, SS_7_3, SS_7_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+
+    dynamic_textures.emplace(Officer_0, new TextureSet(
+            std::vector<std::string>{OFFICER_0_0, OFFICER_0_1, OFFICER_0_2, OFFICER_0_3, OFFICER_0_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_1, new TextureSet(
+            std::vector<std::string>{OFFICER_1_0, OFFICER_1_1, OFFICER_1_2, OFFICER_1_3, OFFICER_1_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_2, new TextureSet(
+            std::vector<std::string>{OFFICER_2_0, OFFICER_2_1, OFFICER_2_2, OFFICER_2_3, OFFICER_2_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_3, new TextureSet(
+            std::vector<std::string>{OFFICER_3_0, OFFICER_3_1, OFFICER_3_2, OFFICER_3_3, OFFICER_3_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_4, new TextureSet(
+            std::vector<std::string>{OFFICER_4_0, OFFICER_4_1, OFFICER_4_2, OFFICER_4_3, OFFICER_4_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_5, new TextureSet(
+            std::vector<std::string>{OFFICER_5_0, OFFICER_5_1, OFFICER_5_2, OFFICER_5_3, OFFICER_5_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_6, new TextureSet(
+            std::vector<std::string>{OFFICER_6_0, OFFICER_6_1, OFFICER_6_2, OFFICER_6_3, OFFICER_6_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Officer_7, new TextureSet(
+            std::vector<std::string>{OFFICER_7_0, OFFICER_7_1, OFFICER_7_2, OFFICER_7_3, OFFICER_7_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+
+    dynamic_textures.emplace(Mutant_0, new TextureSet(
+            std::vector<std::string>{MUTANT_0_0, MUTANT_0_1, MUTANT_0_2, MUTANT_0_3, MUTANT_0_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_1, new TextureSet(
+            std::vector<std::string>{MUTANT_1_0, MUTANT_1_1, MUTANT_1_2, MUTANT_1_3, MUTANT_1_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_2, new TextureSet(
+            std::vector<std::string>{MUTANT_2_0, MUTANT_2_1, MUTANT_2_2, MUTANT_2_3, MUTANT_2_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_3, new TextureSet(
+            std::vector<std::string>{MUTANT_3_0, MUTANT_3_1, MUTANT_3_2, MUTANT_3_3, MUTANT_3_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_4, new TextureSet(
+            std::vector<std::string>{MUTANT_4_0, MUTANT_4_1, MUTANT_4_2, MUTANT_4_3, MUTANT_4_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_5, new TextureSet(
+            std::vector<std::string>{MUTANT_5_0, MUTANT_5_1, MUTANT_5_2, MUTANT_5_3, MUTANT_5_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_6, new TextureSet(
+            std::vector<std::string>{MUTANT_6_0, MUTANT_6_1, MUTANT_6_2, MUTANT_6_3, MUTANT_6_4},
+            this->renderer, this->window_surface, WALKING_TIME));
+    dynamic_textures.emplace(Mutant_7, new TextureSet(
+            std::vector<std::string>{MUTANT_7_0, MUTANT_7_1, MUTANT_7_2, MUTANT_7_3, MUTANT_7_4},
+            this->renderer, this->window_surface, WALKING_TIME));
 }

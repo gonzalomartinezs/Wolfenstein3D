@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GameInterface.h"
 
 GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
@@ -15,6 +16,7 @@ void GameInterface::run() {
         DrawingInfo new_info = this->latest_info;
         while(!this->queue.isEmpty()){
             new_info = this->queue.pop();
+            if (new_info.isImportant()) break;
         }
         _updateScreen(new_info);
     }

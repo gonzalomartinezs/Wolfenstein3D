@@ -11,10 +11,10 @@ class Coordinate; // una foward declaration para safar.
 
 class Map {
 public:
-    Map(const unsigned& x, const unsigned& y);
+    Map(const unsigned& x = 5, const unsigned& y = 5);
     void add(const Coordinate& coor, const MapElement& map);
     void remove(const Coordinate& coor);
-    bool inRange(const Coordinate& coor);
+    bool inRange(const Coordinate& coor)const;
     bool isEmpty(const Coordinate& coor)const;
     unsigned getX() const;
     unsigned getY() const;
@@ -24,9 +24,12 @@ public:
     const std::string& getName() const;
     void setName(const std::string& name);
     void setOutline();
+
+    void resizeMap(int x, int y);
+
 private:
-    const unsigned x;
-    const unsigned y;
+     unsigned x;
+     unsigned y;
     std::string name;
     std::unordered_map <std::string, MapElement> matrix;
 };

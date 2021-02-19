@@ -1,6 +1,7 @@
 #include <iostream>
 #include "UI_Handler.h"
 #define TTF_TEXTURES 4
+#define WEAPONS 5
 #define BJ_FACES 8
 #define TOTAL_HP 100
 
@@ -8,7 +9,7 @@ enum ttfTextures {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, std::string font_path, int width,
-                       int height) : renderer(renderer), raycaster(raycaster), tex(tex), last_ammo(0){
+                       int height) : renderer(renderer), raycaster(raycaster), tex(tex){
     int cell_height = (4*height)/18;
     int cell_y_pos = (14*height)/18;
 
@@ -25,6 +26,10 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
     int font_size = width/16;
     for(int i=0; i < TTF_TEXTURES; i++)
         this->font_textures.emplace_back(font_path, font_size, color, renderer, "0");
+
+    for(int i=0; i < WEAPONS; i++){
+        this->dynamic.emplace_back(tex.getDynamic(TextureID(Knife_Pl+i)), false);
+    }
 }
 
 void UI_Handler::raycast(DirectedPositionable player_pos, PlayerView view,
@@ -50,15 +55,12 @@ void UI_Handler::loadBackground() {
 void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
     int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
 
-    DynamicTexture* dynamic = tex.getDynamic(TextureID(int(Knife_Pl)+player_info[Weapon]));
-    if (dynamic) {
-        if (last_ammo > player_info[Ammo] || (player_info[Weapon] == 0 && player_info[Firing])){
-            dynamic->getTexture(1).render(nullptr, &this->elements.weapon_animation);
-        } else {
-            dynamic->getTexture(0).render(nullptr, &this->elements.weapon_animation);
-        }
+    DynamicTexture& weapon = dynamic[player_info[Weapon]];
+    if (player_info[Firing]){
+        weapon.getTexture(1)->render(nullptr, &this->elements.weapon_animation);
+    } else {
+        weapon.getTexture(0)->render(nullptr, &this->elements.weapon_animation);
     }
-    last_ammo = player_info[Ammo];
     tex.getStatic(HUD)->render(nullptr, nullptr);
     tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
     tex.getStatic(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);

@@ -2,12 +2,12 @@
 #define DYNAMICTEXTURE_H
 
 #include <vector>
-#include "Texture.h"
+#include "TextureSet.h"
 #include "../../common_src/Timer.h"
 
 class DynamicTexture {
 private:
-    std::vector <Texture> textures;
+    TextureSet* textures;
     Timer timer;
     int period;
     int state;
@@ -17,14 +17,13 @@ private:
 public:
     // Pre: los paths de la textura se encuentran ordenados.
     // Crea una textura dinamica lista para ser utilizada.
-    DynamicTexture(std::vector<std::string> paths, SDL_Renderer *renderer,
-                   SDL_Surface *surface, int period, bool single_event);
+    DynamicTexture(TextureSet *textures, bool single_event);
 
-    // Actualiza el periodo de renderizado de la textura.
-    void updatePeriod(int new_period);
+    // Actualiza el set de texturas.
+    void updateSet(TextureSet* texture);
 
     // Retorna una referencia a la textura que se desea renderizar.
-    Texture& getTexture(int state);
+    Texture* getTexture(int state);
 
     // Libera los recursos utilizados por la textura dinamica.
     ~DynamicTexture();

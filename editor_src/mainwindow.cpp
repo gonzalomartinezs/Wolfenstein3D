@@ -6,12 +6,14 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QFileDialog>
+
 #include <string>
 #include <list>
+#include "InvalidFileException.h"
 
 #include "mapparser.h"
 #include "mapelement.h"
-
+#include "MessageBox.h"
 
 #define TAM_MAP_DEF 25
 
@@ -36,9 +38,9 @@ void MainWindow::linkToUI() {
     this->nameLabel = findChild <QLineEdit*>("nameLabel");
 }
 
-
 MainWindow::~MainWindow() {
     delete ui;
+    delete mapHandler;
 }
 
 void MainWindow::initWidgets() {
@@ -47,6 +49,7 @@ void MainWindow::initWidgets() {
     this->mapHandler = new MapHandler(this->container,"-",TAM_MAP_DEF ,TAM_MAP_DEF ,this);
     this->spinX->setValue(TAM_MAP_DEF);
     this->spinY->setValue(TAM_MAP_DEF);
+    this->nameLabel->setPlaceholderText("Name of the map");
     mapScrollArea->setWidget(mapHandler);
 }
 
@@ -56,7 +59,7 @@ void MainWindow::initBar() {
     QAction *openAction = fileMenu->addAction(tr("&Open..."), this, &MainWindow::openFile);
     openAction->setShortcuts(QKeySequence::Open);
 
-    QAction *saveAsAction = fileMenu->addAction(tr("&Save as..."), this, &MainWindow::saveFile);
+    QAction *saveAsAction = fileMenu->addAction(tr("&Save as..."), this, &MainWindow::saveFileAs);
     saveAsAction->setShortcuts(QKeySequence::SaveAs);
 
     QAction *exitAction = fileMenu->addAction(tr("E&xit"), qApp, &QCoreApplication::quit);
@@ -70,17 +73,12 @@ void MainWindow::initBar() {
 
 void MainWindow::connectEvents() {
    QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
+   QObject::connect(this, &MainWindow::showMessage, &notiBox, &MessageBox::showMessage);
+   QObject::connect(this->mapHandler, &MapHandler::showMessage, &notiBox, &MessageBox::showMessage);
 }
 
 void MainWindow::resizeMap() {
-    if(this->mapHandler == nullptr) return;
-
-    std::list<MapElement> elements = mapHandler->getMap().getElements();
-    delete mapHandler;
-    mapHandler = new MapHandler(container,nameLabel->text().toStdString()
-                                ,spinX->value(), spinY->value(), this);
-    mapHandler->loadElements(elements);
-    mapScrollArea->setWidget(mapHandler);
+    mapHandler->resizeMap( spinX->value(), spinY->value() );
 }
 
 void MainWindow::openFile() {
@@ -91,11 +89,32 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::loadFile(QString& path) {
-    parser.loadMap( );
+    MapParser parser;
+    Map map;
+    try {
+        map = parser.loadMap( path.toStdString() );
+    }catch (InvalidFileException &e){
+            emit showMessage(e.what());
+            return;
+    }
+    if(this->mapHandler == nullptr) return;
+    delete mapHandler; mapHandler = nullptr;
+    spinX->setValue( map.getX() );
+    spinY->setValue( map.getY() );
+    nameLabel->setText( map.getName().c_str() );
+    std::list<MapElement> elements = map.getElements();
+    mapHandler =  new MapHandler (container,
+                                  nameLabel->text().toStdString()
+                                    ,map.getX(), map.getX(), this );
+    mapHandler->loadElements(elements);
+    mapScrollArea->setWidget(mapHandler);
 }
 
-void MainWindow::saveFile() {
-    parser.exportMap(mapHandler->getMap() );
+void MainWindow::saveFileAs() {
+    MapParser parser;
+    QString path = QFileDialog::getSaveFileName(this);
+    //meter return si no puede xD.
+    parser.exportMap(mapHandler->getMap(), path.toStdString() );
 }
 
 void MainWindow::restart() {
@@ -103,6 +122,7 @@ void MainWindow::restart() {
     delete mapHandler;
     spinX->setValue(TAM_MAP_DEF);
     spinY->setValue(TAM_MAP_DEF);
+    nameLabel->clear();
     mapHandler = new MapHandler(container,nameLabel->text().toStdString()
             ,spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(mapHandler);

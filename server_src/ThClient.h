@@ -15,6 +15,7 @@ private:
     Peer peer;
     ProtectedQueue<uint8_t> RecvQueue;
     BlockingQueue<std::string> SendQueue;
+    std::string name;
 
 public:
     /* Constructor */
@@ -26,6 +27,9 @@ public:
     void push(uint8_t* buffer, int bytes_to_send);
     void stop() override;
     bool finished() override;
+
+    void setName(std::string name);
+    std::string getName() const;
 
     /* Destructor */
     ~ThClient();

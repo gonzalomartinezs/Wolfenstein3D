@@ -8,7 +8,7 @@ Raycaster::Raycaster(Map &map, int begin_x, int begin_y, int width, int height,
                      TexturesContainer &textures)
                      : map(map), width(width), height(height),
                      renderer(textures, map, nullptr, begin_x, begin_y, width, height),
-                     sprite_renderer(textures, begin_x, begin_y, width,height) {
+                     sprite_renderer(textures, begin_x, begin_y, width, height) {
 
     for(auto& surface : map.getSlidingSurfaces()){
         this->surfaces.emplace(surface.getId(), surface);

@@ -6,10 +6,12 @@ DrawingInfo::DrawingInfo(DirectedPositionable player_pos, PlayerView view,
                          std::vector<int> player_info,
                          std::vector<Positionable> objects,
                          std::vector<DirectedPositionable> directed_objects,
-                         std::vector<std::pair<int,int>> sliders_changes) :
+                         std::vector<std::pair<int, int>> sliders_changes,
+                         bool important) :
             player_pos(player_pos), player_info(std::move(player_info)),
             objects(std::move(objects)), sliders_changes(sliders_changes),
-            directed_objects(std::move(directed_objects)), view(view) {}
+            directed_objects(std::move(directed_objects)), view(view),
+            important(important){}
 
 
 std::vector<int>& DrawingInfo::getPlayerInfo() {
@@ -33,5 +35,9 @@ PlayerView& DrawingInfo::getCameraPlanes() {
 
 std::vector<std::pair<int, int>>& DrawingInfo::getSlidersChanges() {
     return this->sliders_changes;
+}
+
+bool DrawingInfo::isImportant() {
+    return important;
 }
 

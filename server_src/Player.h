@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+#include "Sound.h"
 #include "Exceptions/GameException.h"
 #include "PlayerActions.h"
 #include "../common_src/Map.h"
@@ -20,6 +21,7 @@
 class Player : public DirectedPositionable {
 protected:
     PlayerActions action;
+    std::vector<Sound>& sounds;
     float camPlaneX, camPlaneY;
     float initial_dir_x, initial_dir_y;
     float initialPosX, initialPosY;
@@ -37,18 +39,20 @@ protected:
 public:
     /* Constructor */
     Player(const Configuration& config_stats,
-            const Configuration& config_map, const uint8_t _player_number);
+           const Configuration& config_map,
+           const uint8_t _player_number,
+           std::string name,
+           std::vector<Sound>& sounds);
 
     void updatePlayer(const Map& map, Items& items,
                         std::vector<Player*>& players, Doors& doors);
 
     void setState(uint8_t newState);
 
-    void setName(const std::string& newName);
-
     virtual void getState(std::vector<Player*> &players,
                         int botNumber, const Map &map) {}
 
+    void makeSound(SoundID sound);
     bool isDead();
     void receiveShot(uint8_t damage);
     void increaseBulletCounter(uint8_t bulletsAmount);

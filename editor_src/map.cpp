@@ -22,6 +22,7 @@ void Map::remove(const Coordinate& coor){
     if( !this->isEmpty(coor)) {
         matrix.erase(coor.toString());
     }
+
 }
 
 unsigned Map::getX() const{
@@ -32,17 +33,18 @@ unsigned Map::getY() const {
     return this->y;
 }
 
-bool Map::inRange(const Coordinate& coor){
-    return coor.inRange(this);
+bool Map::inRange(const Coordinate& coor) const{
+    return coor.inRange(*this);
 }
 
 const MapElement& Map::get(const Coordinate& coor)const{
-   return (this->matrix.at( coor.toString() ) );
+   return ( this->matrix.at( coor.toString() ) );
 }
 
 std::list<MapElement> Map::getElements() const{
     std::list< MapElement> elementList;
     for(auto &kv : this->matrix){
+        if( inRange ( Coordinate (kv.second.calculateX(), kv.second.calculateY() ) ) )
         elementList.push_back( (kv.second) ) ;
     }
     return elementList;
@@ -62,3 +64,7 @@ const std::string& Map::getName() const {
 void Map::setName (const std::string& inName) {
     name = inName;
 }
+
+void Map::resizeMap(int _x, int _y) {
+    x = _x, y = _y;
+ }

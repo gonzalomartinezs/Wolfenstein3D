@@ -30,8 +30,9 @@ private:
     void _talkWithClient();
     int _loadNewGameMsg(uint8_t* msg, const MapsReader& maps_reader);
     int _loadJoinGameMsg(uint8_t* msg);
+    void _receiveName();
     void _deleteFailedClient();
     uint8_t _blockingRecv();
 };
 
-#endif //WOLFENSTEINCLIENT_CLIENTHANDLER_H_
+#endif //WOLFENSTEIN3D_CLIENTHANDLER_H_

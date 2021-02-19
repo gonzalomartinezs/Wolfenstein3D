@@ -53,7 +53,8 @@ public:
 private:
     void _createGame();
     void _joinGame();
-    void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received);
+    void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
+                           bool &important);
     void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                              std::vector<float> &coordinates, uint8_t *bytes_received);
     void _assignOtherPlayersCoordenates(uint8_t *bytes_received,
