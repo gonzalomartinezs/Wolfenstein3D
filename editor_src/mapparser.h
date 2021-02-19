@@ -19,6 +19,12 @@ private:
     unsigned int y;
     std::string name;
     std::list<MapElement> elements;
+
+    void loadSize();
+
+    void loadName();
+
+    void loadElements();
 };
 
 #endif // MAPPARSER_H
