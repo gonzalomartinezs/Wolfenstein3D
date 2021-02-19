@@ -12,6 +12,7 @@
 #include <QScrollArea>
 #include <QSpinBox>
 #include <QPushButton>
+#include <QMessageBox>
 
 #define ITEMSIZE 50
 
@@ -50,7 +51,7 @@ private:
     ItemList* itemList;
     MapHandler* mapHandler;
     IconsContainer container;
-    MapParser parser;
+    QMessageBox notiBox;
 };
 
 #endif // MAINWINDOW_H
