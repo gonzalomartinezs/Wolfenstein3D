@@ -4,12 +4,30 @@
 
 #define PI 3.141592
 #define TEXTURES_AMOUNT 8
+#define MOVED 1
+#define NOT_MOVED 0
+
+SpriteSelector::SpriteSelector(TexturesContainer &tex): tex(tex) {}
 
 
-SpriteSelector::SpriteSelector() {}
+void SpriteSelector::initializePlayers(std::vector<DirectedPositionable> &players) {
+    this->players = players;
+    this->latest_players = players;
+    dynamic_tex.clear();
+    for (auto& player: players) {
+        dynamic_tex.emplace_back(tex.getDynamic(player.getTexture()), false);
+    }
+}
 
-TextureID SpriteSelector::selectTexture(DirectedPositionable &player_pos,
-                                        DirectedPositionable &positionable) {
+
+void SpriteSelector::updatePlayers(std::vector<DirectedPositionable> &players) {
+    this->latest_players = this->players;
+    this->players = players;
+}
+
+
+TextureID SpriteSelector::selectTextureID(DirectedPositionable &player_pos,
+                                          DirectedPositionable &positionable) {
 
     float gamma = _calculateAngle(positionable, player_pos);
     int offset = int((gamma+PI/16)*(4/PI))%TEXTURES_AMOUNT;
@@ -53,3 +71,20 @@ float SpriteSelector::_calculateAngle(const DirectedPositionable &sprite,
     }
     return gamma;
 }
+
+Texture *SpriteSelector::selectTexture(Positionable &positionable) {
+    if (positionable.getTexture() > Dog_0) {
+        int i = 0;
+        for(auto& player: players) {
+            if (player.distanceTo(positionable) < 0.01) break;
+            i++;
+        }
+        dynamic_tex[i].updateSet(tex.getDynamic(positionable.getTexture()));
+        int state = (players[i].distanceTo(latest_players[i]) > 0.01) ? MOVED: NOT_MOVED;
+        return dynamic_tex[i].getTexture(state);
+    //} else if (positionable.getTexture() > Missile_0) {
+    } else {
+        return tex.getStatic(positionable.getTexture());
+    }
+}
+

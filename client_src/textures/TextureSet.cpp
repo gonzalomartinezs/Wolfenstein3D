@@ -5,11 +5,11 @@ TextureSet::TextureSet(std::vector<std::string> paths, SDL_Renderer *renderer,
                        SDL_Surface *surface, unsigned period): period(period) {
     textures.reserve(paths.size());
     for (auto& path: paths){
-        textures.emplace_back(path, renderer, surface);
+        textures.emplace_back(new Texture(path, renderer, surface));
     }
 }
 
-Texture &TextureSet::get(int i) {
+Texture *TextureSet::get(int i) {
     if (i > textures.size() || i < 0) {
         throw WolfensteinException("Index out of range");
     }
@@ -24,5 +24,9 @@ size_t TextureSet::size() {
     return textures.size();
 }
 
-TextureSet::~TextureSet() {}
+TextureSet::~TextureSet() {
+    for (auto& texture: textures) {
+        delete texture;
+    }
+}
 

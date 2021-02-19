@@ -11,7 +11,6 @@ private:
     SoundsContainer& sounds;
     std::vector<DirectedPositionable> lastest_positionables;
     std::vector<SlidingSurface> sliders;
-    int last_ammo;
 
 public:
     // Crea un handler de sonidos listo para ser utilizado.

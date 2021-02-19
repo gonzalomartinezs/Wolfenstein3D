@@ -6,7 +6,7 @@
 
 class TextureSet {
 private:
-    std::vector <Texture> textures;
+    std::vector <Texture*> textures;
     unsigned period;
 
 public:
@@ -15,7 +15,7 @@ public:
                SDL_Surface *surface, unsigned period);
 
     // Sobrecarga de operador []
-    Texture& get(int i);
+    Texture* get(int i);
 
     // Retorna el tamaño del set
     size_t size();
