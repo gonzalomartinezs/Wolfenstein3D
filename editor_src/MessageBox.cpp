@@ -8,10 +8,7 @@ MessageBox::MessageBox(QWidget *parent) : QMessageBox(parent) {
 
 }
 
-void MessageBox::showErrorOnFile() {
+void MessageBox::showError(const std::string &error) {
     this->exec();
 }
 
-void MessageBox::showCoordinateOccupied() {
-    this->exec();
-}
