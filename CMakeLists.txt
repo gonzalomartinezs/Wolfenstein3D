@@ -49,7 +49,7 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Exceptions/ConfigurationException.cpp
         client_src/textures/FontTexture.cpp
         client_src/RaycastingRenderer.cpp
-        client_src/Exceptions/RaycastingException.cpp client_src/sound/Music.cpp client_src/sound/Music.h client_src/Exceptions/SoundLoadingException.cpp client_src/Exceptions/SoundLoadingException.h client_src/sound/SoundEffect.cpp client_src/sound/SoundEffect.h client_src/sound/SoundsContainer.cpp client_src/sound/SoundsContainer.h client_src/sound/SoundID.h client_src/SoundHandler.cpp client_src/SoundHandler.h)
+        client_src/Exceptions/RaycastingException.cpp client_src/sound/Music.cpp client_src/sound/Music.h client_src/Exceptions/SoundLoadingException.cpp client_src/Exceptions/SoundLoadingException.h client_src/sound/SoundEffect.cpp client_src/sound/SoundEffect.h client_src/sound/SoundsContainer.cpp client_src/sound/SoundsContainer.h client_src/sound/SoundID.h client_src/SoundHandler.cpp client_src/SoundHandler.h client_src/textures/TextureSet.cpp client_src/textures/TextureSet.h client_src/SpriteSelector.cpp client_src/SpriteSelector.h)
 
 add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp

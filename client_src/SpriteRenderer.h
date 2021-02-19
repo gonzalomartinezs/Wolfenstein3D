@@ -4,6 +4,7 @@
 #include "textures/TexturesContainer.h"
 #include "../common_src/DirectedPositionable.h"
 #include "PlayerView.h"
+#include "SpriteSelector.h"
 
 struct SpriteInfo {
     // Porporciones de sprite en pantalla.
@@ -23,6 +24,7 @@ struct SpriteInfo {
 class SpriteRenderer {
 private:
     TexturesContainer& textures;
+    SpriteSelector poronga;
     int width;
     int height;
     int begin_x;
@@ -45,7 +47,7 @@ public:
     ~SpriteRenderer(){}
 
 private:
-    static void _selectDirectedSprite(DirectedPositionable player_pos,
+    void _selectDirectedSprite(DirectedPositionable player_pos,
                                std::vector<DirectedPositionable> &directed_objects,
                                std::vector<Positionable> &directed_sprites);
 
@@ -65,11 +67,6 @@ private:
                                 const std::vector<float> &wall_distances);
 
     void _showSprite(const SpriteInfo& info, Positionable &sprite);
-
-    static float _distance(float x_1, float y_1, float x_2, float y_2);
-
-    static float _calculateAngle(const DirectedPositionable& sprite,
-                                 const Positionable& player_pos);
 };
 
 
