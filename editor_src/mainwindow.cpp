@@ -130,3 +130,5 @@ void MainWindow::restart() {
             ,spinX->value(), spinY->value(), this);
     mapScrollArea->setWidget(mapHandler);
 }
+
+

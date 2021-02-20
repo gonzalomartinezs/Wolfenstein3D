@@ -21,7 +21,7 @@ IconsContainer::IconsContainer(const unsigned& size) : iconSize(size) {
     this->add(Jewelry, JEWELRY_PATH);
     this->add(Key,  KEY_PATH);
     this->add(Machinegun, MACHINEGUN_PATH);
-    this->add(Pistol, PISTOL_PATH);
+   //this->add(Pistol, PISTOL_PATH);
     this->add(Rpg, RPG_PATH);
     this->add(Slider, SLIDER_PATH);
     this->add(Spawn, SPAWN_PATH);
