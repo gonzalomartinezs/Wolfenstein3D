@@ -6,12 +6,12 @@ UI_Info::UI_Info(DirectedPositionable player_pos, PlayerView view,
                  std::vector<int> player_info,
                  std::vector<Positionable> objects,
                  std::vector<DirectedPositionable> directed_objects,
-                 std::vector<std::pair<int, int>> sliders_changes,
-                 bool important) :
+                 std::vector<std::pair<int, int>> sliders,
+                 std::vector<std::pair<int,float>> sounds, bool important) :
             player_pos(player_pos), player_info(std::move(player_info)),
-            objects(std::move(objects)), sliders_changes(sliders_changes),
+            objects(std::move(objects)), sliders(std::move(sliders)),
             directed_objects(std::move(directed_objects)), view(view),
-            important(important){}
+            sounds(std::move(sounds)), important(important){}
 
 
 std::vector<int>& UI_Info::getPlayerInfo() {
@@ -33,11 +33,16 @@ PlayerView& UI_Info::getCameraPlanes() {
     return this->view;
 }
 
-std::vector<std::pair<int, int>>& UI_Info::getSlidersChanges() {
-    return this->sliders_changes;
+std::vector<std::pair<int, int>>& UI_Info::getSliders() {
+    return this->sliders;
 }
 
-bool UI_Info::isImportant() {
+std::vector<std::pair<int, float>> &UI_Info::getSounds() {
+    return this->sounds;
+}
+
+bool UI_Info::isImportant() const {
     return important;
 }
+
 

@@ -27,7 +27,7 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    //log(); //  genera la nueva pestaña.
+    log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -40,9 +40,8 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
         SoundsContainer sounds;
 
-        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        Client client("localhost", "8080", instructions, drawing_info);
-        client.lobbyInteraction("asd");
+        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        client.lobbyInteraction(log.getName());
         Map map(client.receiveMap());
 
         EventHandler event_handler(instructions);
@@ -58,11 +57,12 @@ int main(int argc, char *argv[]) {
         PlayerView view(0,1);
         std::vector<Positionable> static_objects;
         std::vector<DirectedPositionable> directed_objects;
-        std::vector<std::pair<int,int>> sliders_changes;
+        std::vector<std::pair<int,int>> sliders;
+        std::vector<std::pair<int,float>> game_sounds;
 
         UI_Info initial_info(player, view, std::vector<int>(7, 0),
-                             static_objects,
-                             directed_objects, sliders_changes, false);
+                             static_objects, directed_objects, sliders,
+                             game_sounds, false);
         GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;

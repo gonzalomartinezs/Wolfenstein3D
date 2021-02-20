@@ -22,10 +22,12 @@ void SoundHandler::startBackMusic() {
 void SoundHandler::loadGameSfx(std::vector<int> &player_info,
                                DirectedPositionable &player_pos,
                                std::vector<DirectedPositionable> &positionables,
-                               std::vector<std::pair<int, int>> &sliders) {
+                               std::vector<std::pair<int, int>> &sliders,
+                               std::vector<std::pair<int, float>> &sounds) {
     _loadWeaponSfx(player_info);
     _loadMovingObjectsSfx(player_pos, positionables);
     _loadSlidersSfx(player_pos, sliders);
+    _loadRemainingSfx(sounds);
 }
 
 SoundHandler::~SoundHandler() {}
@@ -70,7 +72,6 @@ void SoundHandler::_loadObjectSfx(DirectedPositionable &player_pos,
         SoundEffect& sfx = this->sounds.getSFX(id);
         sfx.setVolume(1-distance/(float)LIMIT_DISTANCE);
         sfx.play(0);
-        sfx.setVolume(1);
     }
 }
 
@@ -99,12 +100,22 @@ void SoundHandler::_loadSlidersSfx(DirectedPositionable &player_pos,
     }
 }
 
+void SoundHandler::_loadRemainingSfx(std::vector<std::pair<int, float>> &sounds) {
+    for(auto& sound: sounds) {
+        auto id = SoundID(sound.first);
+        SoundEffect& sfx = this->sounds.getSFX(id);
+        sfx.setVolume(1-sound.second/(float)LIMIT_DISTANCE);
+        sfx.play(0);
+    }
+}
+
 // Retorna un booleano indicando si el posicionable se movio entre la primera y
 // la segunda posicion.
 bool SoundHandler::_hasMoved(DirectedPositionable &first,
                              DirectedPositionable &second) {
     return (abs(first.getX()-second.getX())>0.001 && abs(first.getY()-second.getY())>0.001);
 }
+
 
 
 

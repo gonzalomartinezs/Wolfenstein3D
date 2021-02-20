@@ -22,7 +22,8 @@ public:
     void
     loadGameSfx(std::vector<int> &player_info, DirectedPositionable &player_pos,
                 std::vector<DirectedPositionable> &positionables,
-                std::vector<std::pair<int, int>> & sliders);
+                std::vector<std::pair<int, int>> & sliders,
+                std::vector<std::pair<int, float>> &sounds);
 
     // Libera los recursos utilizados por el objeto.
     ~SoundHandler();
@@ -32,9 +33,10 @@ private:
     void _loadMovingObjectsSfx(DirectedPositionable &player_pos,
                                std::vector<DirectedPositionable> &positionables);
     void _loadSlidersSfx(DirectedPositionable &player_pos, std::vector<std::pair<int, int>> &sliders);
+    void _loadRemainingSfx(std::vector<std::pair<int, float>> &sounds);
     void _loadObjectSfx(DirectedPositionable &player_pos, DirectedPositionable object);
     bool _hasMoved(DirectedPositionable& first, DirectedPositionable& second);
 };
 
 
-#endif //WOLFENSTEINCLIENT_SOUNDHANDLER_H
+#endif //SOUNDHANDLER_H
