@@ -6,7 +6,7 @@
 #include <vector>
 #include <atomic>
 #include "PlayerView.h"
-#include "DrawingInfo.h"
+#include "UI_Info.h"
 #include "../common_src/Map.h"
 #include "../common_src/Peer.h"
 #include "../common_src/Socket.h"
@@ -19,14 +19,14 @@ private:
     Socket socket;
     Peer peer;
     BlockingQueue<int>& instructions;
-    ProtectedQueue<DrawingInfo>& drawing_info;
+    ProtectedQueue<UI_Info>& drawing_info;
     std::atomic<bool> is_connected;
 
 public:
     // Crea un cliente listo para ser utilizado
     Client(const std::string &host, const std::string &service,
            BlockingQueue<int>& instructions,
-           ProtectedQueue<DrawingInfo>& drawing_info);
+           ProtectedQueue<UI_Info>& drawing_info);
 
     // Se borran el constructor por copia y el operador =.
     Client(const Client&) = delete;
