@@ -39,6 +39,8 @@ public:
 
 	bool isOpening() const;
 
+	float getElapsedFraction() const;
+
 	virtual void interact(Key& key);
 
 	bool collidesWith(const Collider& other_collider);
