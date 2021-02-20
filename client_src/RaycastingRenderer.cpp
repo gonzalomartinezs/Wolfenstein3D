@@ -7,15 +7,11 @@
 #define VISUAL_PROPORTION 1.5
 
 RaycastingRenderer::RaycastingRenderer(TexturesContainer &textures, Map &map,
-                                       std::unordered_map<int, SlidingSurface> *surfaces,
-                                       int begin_x, int begin_y, int width, int height):
-                                       textures(textures), map(map), surfaces(surfaces),
-                                       width(width), height(height), begin_x(begin_x), begin_y(begin_y){
-}
-
-void RaycastingRenderer::updateSurfaces(
-        std::unordered_map<int, SlidingSurface> *new_surfaces) {
-    this->surfaces = new_surfaces;
+                                       Doors& doors, int begin_x, int begin_y,
+                                       int width, int height):
+                                       textures(textures), map(map), doors(doors),
+                                       width(width), height(height), begin_x(begin_x),
+                                       begin_y(begin_y){
 }
 
 void RaycastingRenderer::render(float wall_dist, char hit_axis, int ray_number,
@@ -79,29 +75,25 @@ int RaycastingRenderer::_calculateTextureXCoordinate(const DirectedPositionable&
 // Reposiciona el inicio de la textura de la puerta de acuerdo al estado de la misma.
 void RaycastingRenderer::_processSurfaceTexture(int &tex_x, int &tex_id, int map_x,
                                                 int map_y, RayDirection ray_dir, char hit_axis) {
-    if (surfaces == nullptr){
-        throw RaycastingException("Invalid sliding surfaces to render.");
-    }
     int id;
-    for(auto& surface: *surfaces){
-        if(surface.second.getX() == map_x && surface.second.getY() == map_y)
-            id = surface.first;
+    for(id=0; id<doors.size(); id++){
+        if(int(doors[id].getX()) == map_x && int(doors[id].getY()) == map_y) break;
     }
-    SlidingSurface surface = surfaces->at(id);
+    ManualDoor& door = doors[id];
 
     if ((hit_axis == 'x' && ray_dir.x>0) || (hit_axis == 'y' && ray_dir.y<0)){
-        if (surface.isOpening()){
-            tex_x -= surface.getElapsedFraction()*TEX_WIDTH;
-        } else if(surface.isClosing()){
-            tex_x -= (1 - surface.getElapsedFraction())*TEX_WIDTH;
+        if (door.isOpening()){
+            tex_x -= door.getElapsedFraction()*TEX_WIDTH;
+        } else if(door.isClosing()){
+            tex_x -= (1 - door.getElapsedFraction())*TEX_WIDTH;
         }
     } else {
-        if (surface.isOpening()){
-            tex_x += surface.getElapsedFraction()*TEX_WIDTH;
-        } else if(surface.isClosing()){
-            tex_x += (1 - surface.getElapsedFraction())*TEX_WIDTH;
+        if (door.isOpening()){
+            tex_x += door.getElapsedFraction()*TEX_WIDTH;
+        } else if(door.isClosing()){
+            tex_x += (1 - door.getElapsedFraction())*TEX_WIDTH;
         }
-        if(surface.getSurfaceType() == DOOR) tex_id = int(InvertedDoor);
+        if(map.get(map_x, map_y) == DOOR) tex_id = int(InvertedDoor);
     }
-    if(surface.getSurfaceType() == PASSAGE) tex_id = int(Wall);
+    if(map.get(map_x, map_y) == PASSAGE) tex_id = int(Wall);
 }

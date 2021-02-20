@@ -8,6 +8,7 @@
 #include "../common_src/SlidingSurface.h"
 #include "../common_src/Map.h"
 #include "PlayerView.h"
+#include "../common_src/Doors.h"
 
 struct RayDirection{
     float x = 0;
@@ -20,23 +21,23 @@ private:
     RaycastingRenderer renderer;
     SpriteRenderer sprite_renderer;
     std::vector<float> wall_distances;
-    std::unordered_map<int, SlidingSurface> surfaces;
+    Doors doors;
     int width;
     int height;
 
 public:
     // Pre: renderer se encuentra inicializado.
     // Post: crear un Raycaster listo para ser utilizado.
-    Raycaster(Map &map, int begin_x, int begin_y, int width, int height,
-              TexturesContainer &textures);
+    Raycaster(Map &map, int begin_x, int begin_y, int width,
+              int height, TexturesContainer &textures);
 
     // Pre: el VERSOR (dir_x, dir_y) y el vector (plane_x, plane_y)
     //      son perpendiculares.
     // Post: dibuja en el renderer la imagen raycasting generada.
-    void draw(DirectedPositionable player_pos, PlayerView view,
-              std::vector<Positionable> objects,
-              std::vector<DirectedPositionable> directed_objects,
-              std::vector<std::pair<int,int>> sliders_changes);
+    void draw(DirectedPositionable &player_pos, PlayerView &view,
+              std::vector<Positionable> &objects,
+              std::vector<DirectedPositionable> &directed_objects,
+              std::vector<int> &doors_state);
 
     // Libera los recursos utilizados por el RayCaster
     ~Raycaster(){}
@@ -61,7 +62,7 @@ private:
                                RayDirection ray_dir, float delta_dist_x,
                                float delta_dist_y, char hit_axis);
 
-    static bool _rayHitsSurface(float ray_step_in, const SlidingSurface& surface);
+    static bool _rayHitsDoor(float ray_step_in, const ManualDoor &door);
 
 };
 
