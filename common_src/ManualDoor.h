@@ -41,6 +41,8 @@ public:
 
 	float getElapsedFraction() const;
 
+	int getSurfaceType() const;
+
 	virtual void interact(Key& key);
 
 	bool collidesWith(const Collider& other_collider);
