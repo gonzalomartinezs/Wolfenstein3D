@@ -3,11 +3,9 @@
 
 #include "../../common_src/Map.h"
 #include "../Player.h"
+#include "WeaponID.h"
 #include <vector>
 #include <random>
-
-enum WEAPON_ID{KNIFE = 0, PISTOL = 1, MACHINE_GUN = 2,
-                CHAIN_GUN = 3, ROCKET_LAUNCHER = 4};
 
 class Player;
 class Item;

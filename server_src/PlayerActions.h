@@ -40,7 +40,7 @@ public:
 	bool hasKey() const;
 	void interactWith(ManualDoor& door);
 
-	uint8_t getCurrentWeapon();
+	uint8_t getWeaponID() const;
 
 	void die(Items* items, float x, float y);
 	bool isDead() const;

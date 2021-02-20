@@ -65,6 +65,8 @@ public:
     int getScore();
     int getBulletsFired();
 
+    uint8_t getWeaponID() const;
+
     Collider getCollider() const;
 
     /* Escribe los primeros 16 bytes del buffer con la informacion de

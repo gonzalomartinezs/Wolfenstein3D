@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "LeaderBoard.h"
+#include "Weapons/WeaponID.h"
 #include <iostream>
 #include <unistd.h>
 #include <string>
@@ -114,7 +115,7 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
-    uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
+//    uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
     uint8_t currentByte = 1;
 
     this->players[clientNumber]->getHUDData(msg + currentByte);
@@ -133,6 +134,9 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
         if (i != clientNumber) {
             this->players[i]->getPositionData(msg + currentByte);
             currentByte += POS_DATA_SIZE;
+
+            uint8_t texture = Game::getTexture(this->players[i]->\
+                                                getWeaponID());
 
             memcpy(msg + currentByte, &texture, sizeof(uint8_t));
             currentByte += sizeof(uint8_t);
@@ -193,6 +197,15 @@ void Game::loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber) {
         memcpy(msg + currentByte, &distance, sizeof(float));
         currentByte += sizeof(float);
     }
+}
+
+TextureID Game::getTexture(uint8_t weapon_id) const {
+    if (weapon_id == KNIFE) return Dog_0;
+    if (weapon_id == PISTOL) return Guard_0;
+    if (weapon_id == MACHINE_GUN) return SS_0;
+    if (weapon_id == CHAIN_GUN) return Officer_0;
+    
+    return Mutant_0;
 }
 
 Game::~Game() {

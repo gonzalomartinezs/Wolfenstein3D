@@ -205,6 +205,10 @@ int Player::getBulletsFired() {
     return this->action.getBulletsFired();
 }
 
+uint8_t Player::getWeaponID() const {
+    return this->action.getWeaponID();
+}
+
 void Player::_moveForwards() {
     this->x += this->dir_x * this->moveSpeed;
     this->y += this->dir_y * this->moveSpeed;

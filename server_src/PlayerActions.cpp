@@ -102,6 +102,10 @@ void PlayerActions::prevWeapon() {
     this->weapons.prevWeapon();
 }
 
+uint8_t PlayerActions::getWeaponID() const {
+    return this->weapons.getWeaponID();
+}
+
 bool PlayerActions::isShooting() const {
     return this->weapons.isShooting();
 }
