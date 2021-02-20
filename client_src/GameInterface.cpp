@@ -72,13 +72,13 @@ void GameInterface::_updateScreen(UI_Info new_info) {
 
         ui_handler.raycast(old_pos, old_view, new_info.getStaticObjects(),
                            new_info.getDirectedObjects(),
-                           new_info.getSliders());
+                           new_info.getDoorStates());
         ui_handler.loadPlayerHUD(new_info.getPlayerInfo());
         ui_handler.render();
     }
     sound_handler.loadGameSfx(new_info.getPlayerInfo(), new_pos,
                               new_info.getDirectedObjects(),
-                              new_info.getSliders(),
+                              new_info.getDoorStates(),
                               new_info.getSounds());
     this->latest_info = new_info;
 }

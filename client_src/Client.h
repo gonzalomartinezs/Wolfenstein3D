@@ -67,7 +67,7 @@ private:
                        bool &important,
                        int &already_parsed);
     void _assignSlidersStates(uint8_t *bytes_received,
-                              std::vector<std::pair<int,int>>& sliders_states,
+                              std::vector<int> &sliders_states,
                               int& already_parsed);
     void _assignOtherPlayersCoordenates(uint8_t *bytes_received,
                                         uint8_t bytes_to_receive,

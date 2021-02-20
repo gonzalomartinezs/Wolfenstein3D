@@ -32,11 +32,11 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
     }
 }
 
-void UI_Handler::raycast(DirectedPositionable player_pos, PlayerView view,
-                         std::vector<Positionable> objects,
-                         std::vector<DirectedPositionable> directed_objects,
-                         std::vector<std::pair<int,int>> sliders_changes) {
-    this->raycaster.draw(player_pos, view, objects, directed_objects, sliders_changes);
+void UI_Handler::raycast(DirectedPositionable &player_pos, PlayerView &view,
+                         std::vector<Positionable> &objects,
+                         std::vector<DirectedPositionable> &directed_objects,
+                         std::vector<int> &doors_states) {
+    this->raycaster.draw(player_pos, view, objects, directed_objects, doors_states);
 }
 
 void UI_Handler::render() {
@@ -52,7 +52,7 @@ void UI_Handler::loadBackground() {
     tex.getStatic(Background)->render(nullptr, nullptr);
 }
 
-void UI_Handler::loadPlayerHUD(std::vector<int> player_info) {
+void UI_Handler::loadPlayerHUD(std::vector<int> &player_info) {
     int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
 
     DynamicTexture& weapon = dynamic[player_info[Weapon]];

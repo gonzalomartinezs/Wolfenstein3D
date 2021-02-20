@@ -35,10 +35,10 @@ public:
 
     // Aplica el raycasting sobre el target de renderizado (no lo muestra por
     // pantalla)
-    void raycast(DirectedPositionable player_pos, PlayerView view,
-                 std::vector<Positionable> objects,
-                 std::vector<DirectedPositionable> directed_objects,
-                 std::vector<std::pair<int,int>> sliders_changes);
+    void raycast(DirectedPositionable &player_pos, PlayerView &view,
+                 std::vector<Positionable> &objects,
+                 std::vector<DirectedPositionable> &directed_objects,
+                 std::vector<int> &doors_states);
 
     // Limpia el contenido de la ventana.
     void clearScreen();
@@ -47,7 +47,7 @@ public:
     void loadBackground();
 
     // Carga la interfaz informativa de los datos del jugador(vidas, salud, ...)
-    void loadPlayerHUD(std::vector<int> player_info);
+    void loadPlayerHUD(std::vector<int> &player_info);
 
     // Renderiza el contenido de la ventana.
     void render();

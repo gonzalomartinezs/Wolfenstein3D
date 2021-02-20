@@ -22,7 +22,7 @@
 
 #define SOUND_SIZE (sizeof(float) + 1)
 
-#define SLIDERS_SIZE 2
+#define SLIDERS_SIZE 1
 
 #define OTHER_PLAYERS_COORDS 5
 #define OTHER_PLAYERS_SIZE (4 * sizeof(float) + 1)
@@ -110,19 +110,19 @@ ssize_t Client::receiveInformation() {
         std::vector<int> player_info;
         std::vector<Positionable> objects;
         std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
-        std::vector<std::pair<int,int>> sliders_states;
+        std::vector<int> doors_states;
         std::vector<std::pair<int,float>> sounds;
 
         _assignPlayerInfo(player_info, bytes_received, important,already_parsed);
         _assignPlayerCoordenates(player, view, coordinates, bytes_received,already_parsed);
         _assignItemsCoordenates(bytes_received, objects, coordinates,already_parsed);
         _assignSounds(bytes_received, sounds, important, already_parsed);
-        _assignSlidersStates(bytes_received, sliders_states, already_parsed);
+        _assignSlidersStates(bytes_received, doors_states, already_parsed);
         _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
                                        coordinates,already_parsed);
 
         UI_Info new_info(player, view, player_info, objects, directed_objects,
-                         sliders_states, sounds, important);
+                         doors_states, sounds, important);
         this->drawing_info.push(new_info);
     }
     return 0;
@@ -230,15 +230,14 @@ void Client::_assignSounds(uint8_t *bytes_received,
 
 // Parsea los estados de las puertas.
 void Client::_assignSlidersStates(uint8_t *bytes_received,
-                                  std::vector<std::pair<int, int>> &sliders_changes,
+                                  std::vector<int> &sliders_states,
                                   int &already_parsed) {
-    uint8_t slider_id, slider_state, sliders_amount;
+    uint8_t slider_state, sliders_amount;
     memcpy(&sliders_amount, bytes_received + already_parsed, 1);
 
     for (int i=0; i<sliders_amount; i++) {
-        memcpy(&slider_id, bytes_received + already_parsed + i*SLIDERS_SIZE + 1, 1);
-        memcpy(&slider_state, bytes_received + already_parsed + i*SLIDERS_SIZE + 2, 1);
-        sliders_changes.emplace_back(slider_id, slider_state);
+        memcpy(&slider_state, bytes_received + already_parsed + i*SLIDERS_SIZE + 1, 1);
+        sliders_states.emplace_back(slider_state);
     }
     already_parsed += (sliders_amount * SLIDERS_SIZE) + 1;
 }

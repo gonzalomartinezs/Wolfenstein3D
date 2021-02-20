@@ -15,7 +15,7 @@ private:
     std::vector<int> player_info;
     std::vector<Positionable> objects;
     std::vector<DirectedPositionable> directed_objects;
-    std::vector<std::pair<int,int>> sliders;
+    std::vector<int> doors_states;
     std::vector<std::pair<int,float>> sounds;
     bool important;
 
@@ -24,7 +24,7 @@ public:
     UI_Info(DirectedPositionable player_pos, PlayerView view,
             std::vector<int> player_info, std::vector<Positionable> objects,
             std::vector<DirectedPositionable> directed_objects,
-            std::vector<std::pair<int, int>> sliders,
+            std::vector<int> doors_states,
             std::vector<std::pair<int,float>> sounds, bool important);
 
     // Retorna un arreglo con los valores de vidas, hp, balas,... del jugador.
@@ -38,7 +38,7 @@ public:
     // Retorna el plano camara del jugador.
     PlayerView& getCameraPlanes();
     // Retorna un arreglo con pares de estados de puertas y pasadizos (id, estado)
-    std::vector<std::pair<int,int>>& getSliders();
+    std::vector<int> & getDoorStates();
     // Retorna un arreglo con pares de sonidos y distancias al jugador (id, dist)
     std::vector<std::pair<int,float>>& getSounds();
     // Retorna un booleano indicando si el paqeute es importante o no.
