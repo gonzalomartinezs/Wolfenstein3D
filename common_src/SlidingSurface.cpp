@@ -1,107 +1,59 @@
 #include "SlidingSurface.h"
 #include "GameConstants.h"
 #include "../server_src/PlayerActions.h"
-#include "Map.h"
 
-SlidingSurface::SlidingSurface(int id, int x, int y, int surface_type,
-                        int opened_time, int moving_time, int initial_state) :
-                    id(id), pos_x(x), pos_y(y), surface_type(surface_type),
-                    moving_time(moving_time), opened_time(opened_time),
-                    state(initial_state), elapsed_fraction(0.0) {
-    timer.start();
-}
+SlidingSurface::SlidingSurface(int _x, int _y, int _dir_x, int _dir_y,
+                    int _surface_type, float _moving_time, bool is_locked,
+                    int _opened_time) : 
+                ManualDoor(_x, _y, _dir_x, _dir_y, _surface_type,
+                        _moving_time, is_locked),
+                opened_time(_opened_time) {}
 
-void SlidingSurface::update(int new_state) {
-    if (state == new_state){
-        _updateElapsedFraction();
-        if (!isClosed() && elapsed_fraction > 1){
-            if (isClosing()) new_state = surface_type;
-            else if (isOpening()) new_state = SLIDER_OPENED;
-            else if (isOpened()) new_state = SLIDER_CLOSING;
+void SlidingSurface::update(Map& map, const std::vector<Player*> players) {
+    _updateElapsedFraction();
+
+    if (this->state == SLIDER_OPENED && elapsed_fraction > 1) {
+        if (!ManualDoor::isPlayerBlockingDoor(players)) {
+            this->state = SLIDER_CLOSING;
+            this->timer.start();
+            map.set(this->x, this->y, this->surface_type);
         }
+
+    } else if (this->state == SLIDER_CLOSING && elapsed_fraction > 1) {
+        this->state = this->surface_type;
+
+    } else if (this->state == SLIDER_OPENING && elapsed_fraction > 1) {
+        this->state = SLIDER_OPENED;
+        map.set(this->x, this->y, SLIDER_OPENED);
+        this->timer.start();
     }
-    if (state != new_state) {
-        state = new_state;
-        if (!isClosed()) timer.start();
-    }
 }
 
-void SlidingSurface::update(Map& map) {
-    if (state == SLIDER_OPENING || state == SLIDER_OPENED) {
-        map.set(this->pos_x, this->pos_y, SLIDER_OPENED);
-    } else {
-        map.set(this->pos_x, this->pos_y, this->surface_type);
-    }
-
-    SlidingSurface::update(this->state);
-}
-
-int SlidingSurface::getState() {
-    update(state);
-    return state;
-}
-
-bool SlidingSurface::isOpened() const{
-    return state == SLIDER_OPENED;
-}
-
-bool SlidingSurface::isOpening() const{
-    return state == SLIDER_OPENING;
-}
-
-bool SlidingSurface::isClosed() const{
-    return state == surface_type;
-}
-
-bool SlidingSurface::isClosing() const{
-    return state == SLIDER_CLOSING;
-}
-
-float SlidingSurface::getElapsedFraction() const{
-    return elapsed_fraction;
-}
-
-int SlidingSurface::getX() const{
-    return pos_x;
-}
-
-int SlidingSurface::getY() const{
-    return pos_y;
-}
-
-int SlidingSurface::getSurfaceType() const{
-    return surface_type;
-}
-
-int SlidingSurface::getId() const{
-    return this->id;
-}
-
-bool SlidingSurface::collidesWith(const Collider& collider) const {
-    //Cambiar el Width y Height
-    return collider.collidesWith(this->pos_x, this->pos_y, 1, 1);
-}
-
-void SlidingSurface::interact(PlayerActions* player) {
-    if (this->state == SLIDER_OPENED) {
-        this->state = SLIDER_CLOSING;
-    } else {
-        this->state = SLIDER_OPENING;
+void SlidingSurface::interact(Key& key) {
+    if (this->state == this->surface_type) {
+        if (locked && key.has()) {
+            this->state = SLIDER_OPENING;
+            this->timer.start();
+            locked = false;
+            key.used();
+        } else if (!locked) {
+            this->state = SLIDER_OPENING;
+            this->timer.start();
+        }
     }
 }
 
 // Actualiza la fraccion de tiempo transcurrido del lapso.
 void SlidingSurface::_updateElapsedFraction() {
-    if ((state == SLIDER_OPENING) || (state == SLIDER_CLOSING)){
-        elapsed_fraction = timer.getTime()/moving_time;
-    } else if (state == SLIDER_OPENED){
-        elapsed_fraction = timer.getTime()/opened_time;
-    } else {
-        elapsed_fraction = 0;
+    if (state == SLIDER_OPENED){
+        this->elapsed_fraction = this->timer.getTime()/this->opened_time;
+        return;
     }
+
+    ManualDoor::_updateElapsedFraction();
 }
 
-
+SlidingSurface::~SlidingSurface() {}
 
 
 

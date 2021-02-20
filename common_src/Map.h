@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 #include "Configuration.h"
-#include "SlidingSurface.h"
+//#include "SlidingSurface.h"
 
 class Map {
 private:
@@ -22,7 +22,7 @@ public:
     // Modifica una celda del mapa;
     void set(int x, int y, int value);
     // Retorna las puertas y pasadizos en el mapa.
-    std::vector<SlidingSurface> getSlidingSurfaces() const;
+//    std::vector<SlidingSurface> getSlidingSurfaces() const;
 	~Map();
 private:
 	bool outOfRange(int x, int y) const;

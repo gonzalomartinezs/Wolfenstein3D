@@ -6,8 +6,9 @@
 
 #define WALL 1
 
-#define DOOR 2
+#define DOOR 6
 #define PASSAGE 5
+#define AUTOMATIC_DOOR 2
 
 #define DOOR_CLOSED 2
 #define PASSAGE_CLOSED 5
@@ -21,6 +22,9 @@
 
 #define MOVING_PASSAGE_TIME 3000
 #define TIME_BEFORE_CLOSING_PASSAGE 10000
+
+#define MOVING_AUTO_DOOR_TIME 3000
+#define TIME_BEFORE_CLOSING_AUTO_DOOR 10000
 
 #define TEX_WIDTH 64
 #define TEX_HEIGHT 64

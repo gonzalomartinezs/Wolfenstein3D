@@ -11,7 +11,7 @@
 class Player;
 
 class ManualDoor : public Positionable {
-private:
+protected:
 	const int dir_x, dir_y;
 	uint8_t state;
 	const int surface_type;
@@ -20,17 +20,24 @@ private:
 	bool locked;
 	RectCollider collider;
 	Timer timer;
+
 public:
 	ManualDoor(int _x, int _y, int _dir_x, int _dir_y, int _surface_type,
 				float _moving_time, bool is_locked);
-	void update(Map& map, const std::vector<Player*> players);
+
+	virtual void update(Map& map, const std::vector<Player*> players);
+
 	uint8_t getState() const;
-	void interact(Key& key);
+
+	virtual void interact(Key& key);
+
 	bool collidesWith(const Collider& other_collider);
-	~ManualDoor();
-private:
+
+	virtual ~ManualDoor();
+
+protected:
 	bool isPlayerBlockingDoor(const std::vector<Player*> players);
-	void _updateElapsedFraction();
+	virtual void _updateElapsedFraction();
 };
 
 #endif
