@@ -7,6 +7,7 @@
 
 #include <QRect>
 #include "mainwindow.h"
+#include <fstream>
 
 #define INVALID_FORMAT "Invalid file format, please use .Yaml"
 
@@ -24,9 +25,22 @@ MapParser::MapParser() {
 void MapParser::exportMap(const Map& exported, std::string path) const{
     YAML::Node file;
     std::list<MapElement> list = exported.getElements();
+    file["map_name"] = exported.getName();
+    file["max_players"] = exported.getNumberOfPlayers();
+
+
+    std::ofstream out(path);
+    out << file;
+    /*
+    exported.getY();
+    exported.getX();
     for(auto& i : list) {
         printf("%i /", i.id);
     }
+    */
+}
+void exportstructures() {
+
 }
 
 Map MapParser::loadMap(std::string path) {
