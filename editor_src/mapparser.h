@@ -3,6 +3,7 @@
 
 #include "map.h"
 #include "mapelement.h"
+#include "iconscontainer.h"
 #include <string>
 #include <yaml-cpp/yaml.h>
 #include <QRect>
@@ -22,14 +23,15 @@ private:
     std::list<MapElement> elements;
 
     void loadSize();
-
     void loadName();
-
     void loadElements();
-
+    void loadPlayers();
     void loadMatrix();
-
     QRect calculateRect(int x, int y);
+    Editor_icon getID(const std::string& key);
+    void loadItems();
+
+    void loadItem(const YAML::Node &item, const std::string& keyName);
 };
 
 #endif // MAPPARSER_H
