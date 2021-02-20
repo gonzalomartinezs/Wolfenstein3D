@@ -88,13 +88,15 @@ void Game::getInstructions() {
 }
 
 void Game::update() {
+    std::vector<Collider> colliders;
     for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i]->updatePlayer(this->map, this->items, this->players,
                                         this->doors);
+        colliders.push_back(this->players[i]->getCollider());
     }
 
     for (size_t i = 0; i < this->doors.size(); ++i) {
-        this->doors[i].update(this->map, this->players);
+        this->doors[i].update(this->map, colliders);
     }
 
     /*

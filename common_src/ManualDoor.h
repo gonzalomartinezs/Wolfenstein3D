@@ -8,8 +8,6 @@
 #include "RectCollider.h"
 #include "../server_src/Key.h"
 
-class Player;
-
 class ManualDoor : public Positionable {
 protected:
 	const int dir_x, dir_y;
@@ -25,7 +23,7 @@ public:
 	ManualDoor(int _x, int _y, int _dir_x, int _dir_y, int _surface_type,
 				float _moving_time, bool is_locked);
 
-	virtual void update(Map& map, const std::vector<Player*> players);
+	virtual void update(Map& map, const std::vector<Collider>& players);
 
 	virtual void update(int new_state);
 
@@ -50,7 +48,7 @@ public:
 	virtual ~ManualDoor();
 
 protected:
-	bool isPlayerBlockingDoor(const std::vector<Player*> players);
+	bool isPlayerBlockingDoor(const std::vector<Collider>& players);
 	virtual void _updateElapsedFraction();
 };
 

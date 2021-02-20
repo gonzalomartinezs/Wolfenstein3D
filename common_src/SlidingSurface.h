@@ -16,7 +16,7 @@ public:
                     int _surface_type, float _moving_time, bool is_locked,
                     int opened_time);
 
-    void update(Map& map, const std::vector<Player*> players) override;
+    void update(Map& map, const std::vector<Collider>& players) override;
 
     void interact(Key& key) override;
 

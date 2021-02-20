@@ -9,7 +9,7 @@ SlidingSurface::SlidingSurface(int _x, int _y, int _dir_x, int _dir_y,
                         _moving_time, is_locked),
                 opened_time(_opened_time) {}
 
-void SlidingSurface::update(Map& map, const std::vector<Player*> players) {
+void SlidingSurface::update(Map& map, const std::vector<Collider>& players) {
     _updateElapsedFraction();
 
     if (this->state == SLIDER_OPENED && elapsed_fraction > 1) {

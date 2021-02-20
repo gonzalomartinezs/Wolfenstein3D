@@ -18,7 +18,7 @@ ManualDoor::ManualDoor(int _x, int _y, int _dir_x, int _dir_y,
 					SIZE + ((2 * EXTRA_SIZE) * this->dir_x),
 					SIZE + ((2 * EXTRA_SIZE) * this->dir_y)) {}
 
-void ManualDoor::update(Map& map, const std::vector<Player*> players) {
+void ManualDoor::update(Map& map, const std::vector<Collider>& players) {
 	_updateElapsedFraction();
 
 	if (this->state == SLIDER_CLOSING) {
@@ -103,10 +103,10 @@ bool ManualDoor::collidesWith(const Collider& other_collider) {
 	return collider.collidesWith(other_collider);
 }
 
-bool ManualDoor::isPlayerBlockingDoor(const std::vector<Player*> players) {
+bool ManualDoor::isPlayerBlockingDoor(const std::vector<Collider>& players) {
 	RectCollider hit_collider(this->x, this->y, SIZE, SIZE);
 	for (size_t i = 0; i < players.size(); ++i) {
-        if (hit_collider.collidesWith(players[i]->getCollider())) {
+        if (hit_collider.collidesWith(players[i])) {
             return true;
         }
     }
