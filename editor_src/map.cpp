@@ -68,3 +68,12 @@ void Map::setName (const std::string& inName) {
 void Map::resizeMap(int _x, int _y) {
     x = _x, y = _y;
  }
+
+unsigned Map::getNumberOfPlayers() const{
+    unsigned i = 0;
+    for(auto &kv : this->matrix){
+        if( inRange ( Coordinate (kv.second.calculateX(), kv.second.calculateY() ) ) )
+            if(kv.second.id == Spawn) i++;
+    }
+    return i;
+}

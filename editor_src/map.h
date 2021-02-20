@@ -18,6 +18,7 @@ public:
     bool isEmpty(const Coordinate& coor)const;
     unsigned getX() const;
     unsigned getY() const;
+    unsigned getNumberOfPlayers()const;
     const MapElement& get(const Coordinate& coor)const;
     const MapElement& get(const QPoint& point) const;
     std::list<MapElement> getElements() const;

@@ -37,7 +37,6 @@ private:
     Map map;
     QRect focused;
     const IconsContainer& icons;
-
 };
 
 #endif // MAPHANDLER_H

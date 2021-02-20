@@ -21,7 +21,7 @@ enum Editor_icon {
     Jewelry,
     Key,
     Machinegun,
-    Pistol,
+    //Pistol,
     Rpg,
     Slider,
     Spawn,
