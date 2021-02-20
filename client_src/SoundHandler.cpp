@@ -4,14 +4,15 @@
 #include "sound/SoundID.h"
 #include "textures/TextureID.h"
 #include "../common_src/GameConstants.h"
+#include "../common_src/Doors.h"
 
 #define FOREVER -1
 #define LIMIT_DISTANCE 7
 
 enum PlayerInfo {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
-SoundHandler::SoundHandler(SoundsContainer &sounds, std::vector<SlidingSurface> sliders):
-                                        sounds(sounds), sliders(sliders){}
+SoundHandler::SoundHandler(SoundsContainer &sounds, Map &map)
+        : sounds(sounds), doors(map){}
 
 void SoundHandler::startBackMusic() {
     Music& music = this->sounds.getMusic(BackMusic);
@@ -22,11 +23,11 @@ void SoundHandler::startBackMusic() {
 void SoundHandler::loadGameSfx(std::vector<int> &player_info,
                                DirectedPositionable &player_pos,
                                std::vector<DirectedPositionable> &positionables,
-                               std::vector<std::pair<int, int>> &sliders,
+                               std::vector<int> &doors_states,
                                std::vector<std::pair<int, float>> &sounds) {
     _loadWeaponSfx(player_info);
     _loadMovingObjectsSfx(player_pos, positionables);
-    _loadSlidersSfx(player_pos, sliders);
+    _loadSlidersSfx(player_pos, doors_states);
     _loadRemainingSfx(sounds);
 }
 
@@ -77,18 +78,17 @@ void SoundHandler::_loadObjectSfx(DirectedPositionable &player_pos,
 
 // Reproduce los sonidos de los sliders cambiando de estado.
 void SoundHandler::_loadSlidersSfx(DirectedPositionable &player_pos,
-                                   std::vector<std::pair<int, int>> &sliders_changes) {
-    for (int i=0; i<sliders_changes.size(); i++) {
-        if (sliders_changes[i].second != sliders[i].getState()){
-            sliders[i].update(sliders_changes[i].second);
-
-            if (sliders[i].isOpening() || sliders[i].isClosing()) {
-                float distance = sqrt(pow(sliders[i].getX()-player_pos.getX(),2) +
-                                      pow(sliders[i].getY()-player_pos.getY(),2));
+                                   std::vector<int> &doors_states) {
+    for (int i=0; i < doors_states.size(); i++) {
+        if (doors_states[i] != doors[i].getState()){
+            doors[i].update(doors_states[i]);
+            if (doors[i].isOpening() || doors[i].isClosing()) {
+                float distance = sqrt(pow(doors[i].getX()-player_pos.getX(),2) +
+                                      pow(doors[i].getY()-player_pos.getY(),2));
 
                 if (distance < LIMIT_DISTANCE){
                     SoundID id;
-                    if(sliders[i].getSurfaceType() == DOOR) id = DoorMoving;
+                    if(doors[i].getSurfaceType() == DOOR) id = DoorMoving;
                     else id = PassageMoving;
                     SoundEffect& sfx = this->sounds.getSFX(id);
                     sfx.setVolume(1-distance/(float)LIMIT_DISTANCE);
