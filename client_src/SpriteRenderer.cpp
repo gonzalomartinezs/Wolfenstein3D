@@ -19,7 +19,7 @@ void SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView vi
                             const std::vector<float> &wall_dist) {
     if (!initialized) {
         selector.initializePlayers(directed_objects);
-        initialized = true;
+        initialized = (!directed_objects.empty());
     }
     selector.updatePlayers(directed_objects);
     std::vector<Positionable> directed_sprites;

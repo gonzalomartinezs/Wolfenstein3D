@@ -15,7 +15,12 @@ Knife::Knife(const Configuration& config) : Weapon(KNIFE),
 }
 
 void Knife::startShooting() {
-    this->weaponIsShooting = true;
+    if (this->firstStab == false && this->stabTimer.getTime()/1000 > this->TIME_BETWEEN_STABS) {
+        this->weaponIsShooting = true;
+    } else if (this->firstStab == true) {
+        this->weaponIsShooting = true;
+    }
+
 }
 
 void Knife::_stab(std::vector<Player*> &players, int shootingPlayerNumber,
@@ -44,17 +49,10 @@ void Knife::_stab(std::vector<Player*> &players, int shootingPlayerNumber,
 
 void Knife::fireTheGun(std::vector<Player*> &players,
                         int shootingPlayerNumber, const Map &map) {
-    if (this->firstStab == true) {
-        this->_stab(players, shootingPlayerNumber, map);  /* First stab */
-        this->firstStab = false;
-        this->stabTimer.start();
-
-    } else if ((this->stabTimer.getTime()/1000 > this->TIME_BETWEEN_STABS)) {
-        this->_stab(players, shootingPlayerNumber, map);
-        this->stabTimer.start();
-    }
-
+    this->_stab(players, shootingPlayerNumber, map);
+    this->stabTimer.start();
     this->weaponIsShooting = false;
+    this->firstStab = false;
 }
 
 bool Knife::_isInTheKnifeRange(uint8_t *thisPlayerInfo,

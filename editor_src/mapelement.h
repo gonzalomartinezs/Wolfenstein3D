@@ -8,6 +8,7 @@
 class MapElement {
 public:
     MapElement();
+    MapElement(const Editor_icon& id, const QRect& rect);
     Editor_icon id;
     QRect rect;
     MapElement(MapElement &in);

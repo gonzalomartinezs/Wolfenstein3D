@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     bool quit = false;
 
     try {
-        ProtectedQueue<DrawingInfo> drawing_info;
+        ProtectedQueue<UI_Info> drawing_info;
         BlockingQueue<int> instructions;
 
         Window window("Wolfenstein 3D", WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -57,11 +57,12 @@ int main(int argc, char *argv[]) {
         PlayerView view(0,1);
         std::vector<Positionable> static_objects;
         std::vector<DirectedPositionable> directed_objects;
-        std::vector<std::pair<int,int>> sliders_changes;
+        std::vector<std::pair<int,int>> sliders;
+        std::vector<std::pair<int,float>> game_sounds;
 
-        DrawingInfo initial_info(player, view, std::vector<int>(7, 0),
-                                 static_objects,
-                                 directed_objects, sliders_changes, false);
+        UI_Info initial_info(player, view, std::vector<int>(7, 0),
+                             static_objects, directed_objects, sliders,
+                             game_sounds, false);
         GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;

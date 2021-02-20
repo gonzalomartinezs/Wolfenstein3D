@@ -6,7 +6,6 @@
 
 MessageBox::MessageBox(QWidget *parent) : QMessageBox(parent) {
     this->setText( "-" );
-
 }
 
 void MessageBox::showYamlError() {

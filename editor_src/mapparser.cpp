@@ -5,7 +5,14 @@
 #include "coordinate.h"
 #include "InvalidFileException.h"
 
+#include <QRect>
+#include "mainwindow.h"
+
 #define INVALID_FORMAT "Invalid file format, please use .Yaml"
+
+#define WALL0 1
+#define DOOR 2
+#define SLIDER 5
 
 MapParser::MapParser() {
 }
@@ -56,7 +63,30 @@ void MapParser::loadName() {
 }
 
 void MapParser::loadElements() {
-    // xd, xd xd xd. la verdadera paja.
+    loadMatrix();
+}
+QRect MapParser::calculateRect(int _x, int _y ) {
+    return QRect(QPoint(_x*ITEMSIZE, _y*ITEMSIZE),
+                 QSize(ITEMSIZE, ITEMSIZE));
+}
+
+void MapParser::loadMatrix() {
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
+            int element = this->mapFile["map"][i][j].as<int>();
+            switch (element) {
+                case DOOR :
+                    elements.emplace_back(MapElement(Door,calculateRect(j,i)));
+                    break;
+                case WALL0 :
+                    elements.emplace_back(MapElement(Wall0,calculateRect(j,i)));
+                    break;
+                case SLIDER:
+                    elements.emplace_back(MapElement(Slider,calculateRect(j,i)));
+                    break;
+            }
+        }
+    }
 }
 
 

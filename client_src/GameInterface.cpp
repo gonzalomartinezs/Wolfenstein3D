@@ -2,22 +2,28 @@
 #include "GameInterface.h"
 
 GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
-                             ProtectedQueue<DrawingInfo> &queue,
-                             DrawingInfo initial_info, int refresh_rate):
+                             ProtectedQueue<UI_Info> &queue,
+                             UI_Info initial_info, int refresh_rate):
                         ui_handler(ui_handler), sound_handler(sound_handler),
                         queue(queue), keep_running(true),refresh_rate(refresh_rate),
                         latest_info(initial_info){
-    this->sound_handler.startBackMusic();
+    //this->sound_handler.startBackMusic();
 }
 
 
 void GameInterface::run() {
     while(keep_running){
-        DrawingInfo new_info = this->latest_info;
+        bool important_found = false;
+        UI_Info new_info = this->latest_info;
+        UI_Info aux = this->latest_info;
         while(!this->queue.isEmpty()){
-            new_info = this->queue.pop();
-            if (new_info.isImportant()) break;
+            aux = this->queue.pop();
+            if (aux.isImportant()) {
+                new_info = aux;
+                important_found = true;
+            }
         }
+        if (!important_found) new_info = aux;
         _updateScreen(new_info);
     }
 }
@@ -33,7 +39,7 @@ bool GameInterface::finished() {
 // ------------------------- Metodos privados --------------------------------//
 // Refresca la pantalla gradualmente tras un movimiento de camara o del
 // jugador, de acuerdo a refresh_rate.
-void GameInterface::_updateScreen(DrawingInfo new_info) {
+void GameInterface::_updateScreen(UI_Info new_info) {
     DirectedPositionable old_pos = latest_info.getPlayerPos();
     DirectedPositionable new_pos = new_info.getPlayerPos();
     PlayerView old_view = latest_info.getCameraPlanes();
@@ -66,13 +72,14 @@ void GameInterface::_updateScreen(DrawingInfo new_info) {
 
         ui_handler.raycast(old_pos, old_view, new_info.getStaticObjects(),
                            new_info.getDirectedObjects(),
-                           new_info.getSlidersChanges());
+                           new_info.getSliders());
         ui_handler.loadPlayerHUD(new_info.getPlayerInfo());
         ui_handler.render();
     }
     sound_handler.loadGameSfx(new_info.getPlayerInfo(), new_pos,
                               new_info.getDirectedObjects(),
-                              new_info.getSlidersChanges());
+                              new_info.getSliders(),
+                              new_info.getSounds());
     this->latest_info = new_info;
 }
 

@@ -73,18 +73,20 @@ float SpriteSelector::_calculateAngle(const DirectedPositionable &sprite,
 }
 
 Texture *SpriteSelector::selectTexture(Positionable &positionable) {
-    if (positionable.getTexture() > Dog_0) {
+    TextureID tex_id = positionable.getTexture();
+    if (tex_id > Dog_0) {
         int i = 0;
         for(auto& player: players) {
             if (player.distanceTo(positionable) < 0.01) break;
             i++;
         }
-        dynamic_tex[i].updateSet(tex.getDynamic(positionable.getTexture()));
+        TextureSet* new_set = tex.getDynamic(tex_id);
+        dynamic_tex[i].updateSet(new_set);
         int state = (players[i].distanceTo(latest_players[i]) > 0.01) ? MOVED: NOT_MOVED;
         return dynamic_tex[i].getTexture(state);
     //} else if (positionable.getTexture() > Missile_0) {
     } else {
-        return tex.getStatic(positionable.getTexture());
+        return tex.getStatic(tex_id);
     }
 }
 

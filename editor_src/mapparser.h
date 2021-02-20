@@ -5,6 +5,7 @@
 #include "mapelement.h"
 #include <string>
 #include <yaml-cpp/yaml.h>
+#include <QRect>
 
 class MapParser {
 
@@ -25,6 +26,10 @@ private:
     void loadName();
 
     void loadElements();
+
+    void loadMatrix();
+
+    QRect calculateRect(int x, int y);
 };
 
 #endif // MAPPARSER_H

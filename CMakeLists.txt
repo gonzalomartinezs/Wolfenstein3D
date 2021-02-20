@@ -40,7 +40,7 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Exceptions/ErrorMap.h common_src/Exceptions/ErrorMap.cpp
         common_src/Timer.cpp
         client_src/SpriteRenderer.cpp client_src/SpriteRenderer.h
-        client_src/DrawingInfo.cpp client_src/DrawingInfo.h
+        client_src/UI_Info.cpp client_src/UI_Info.h
         client_src/GameInterface.cpp client_src/GameInterface.h
         common_src/Thread.cpp
         common_src/Exceptions/WolfensteinException.cpp
@@ -94,6 +94,7 @@ add_executable(server server_src/server_main.cpp
         server_src/Weapons/Pistol.cpp server_src/Weapons/ChainGun.cpp
         server_src/Weapons/MachineGun.cpp server_src/Weapons/Rocket.cpp
         server_src/Key.cpp
+        server_src/Sound.cpp
         common_src/Exceptions/ConfigurationException.cpp)
 
 target_compile_options(server PRIVATE -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -std=c++11 -DDEBUG -fno-inline)
