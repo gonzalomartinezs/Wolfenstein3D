@@ -79,9 +79,10 @@ void Player::lookForItem(Items& items, const Collider& collider) {
 		if (items[i]->collidesWith(collider)) {
             try {
                 items[i]->equipTo(this->action);
+//                Player::makeSound(PickItemSFX);
                 items.remove(i);
             } catch (const std::exception& e) {
-                std::cout << e.what() << std::endl;
+                std::cerr << e.what() << std::endl;
             }
         }
 	}
@@ -93,7 +94,7 @@ void Player::lookForDoor(Doors& doors, const Collider& collider) {
             try {
                 this->action.interactWith(doors[i]);
             } catch (const std::exception& e) {
-                std::cout << e.what() << std::endl;
+                std::cerr << e.what() << std::endl;
             }
             break;
         }
