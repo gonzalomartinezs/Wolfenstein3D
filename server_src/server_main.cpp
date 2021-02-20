@@ -33,9 +33,9 @@ int main(int argc, char const *argv[]) {
 		manager.stop();
 		main_thread.join();
 	} catch (const std::exception& e) {
-		printf("%s", e.what());
+		std::cerr << e.what() << std::endl;
 	} catch (...) {
-		printf("Unkown error.\n");
+		std::cerr << "Unknown error." << std::endl;
 	}
 
 	return 0;

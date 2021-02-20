@@ -104,22 +104,23 @@ void Weapons::fireTheGun(std::vector<Player*>& players,
                                             	map);
 }
 
-void Weapons::reset(Items* items, float x, float y) {
+void Weapons::reset(Items* items, RandomPosition& rd_pos) {
     this->bullets = this->initial_bullets;
     this->current_weapon = 1;
 
     while (this->weapons.size() > 2) {
         try {
-            //Calcular posicion x, y
-            items->push_back(weapons.back()->getWeaponItem(x, y));
+            items->push_back(weapons.back()->\
+                            getWeaponItem(rd_pos.getX(), rd_pos.getY()));
             delete this->weapons.back();
             this->weapons.pop_back();
         } catch (const std::exception& e) {
-            std::cout << e.what() << std::endl;
+            std::cerr << e.what() << std::endl;
         }
     }
 
-    items->push_back(new BulletItem(x, y, this->bullet_texture,
+    items->push_back(new BulletItem(rd_pos.getX(), rd_pos.getY(),
+                                    this->bullet_texture,
                                     LOST_BULLETS, this->bullet_radius,
                                     this->max_bullets));
 }

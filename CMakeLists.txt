@@ -95,7 +95,8 @@ add_executable(server server_src/server_main.cpp
         server_src/Weapons/MachineGun.cpp server_src/Weapons/Rocket.cpp
         server_src/Key.cpp
         server_src/Sound.cpp
-        common_src/Exceptions/ConfigurationException.cpp)
+        common_src/Exceptions/ConfigurationException.cpp
+        server_src/RandomPosition.cpp)
 
 target_compile_options(server PRIVATE -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -std=c++11 -DDEBUG -fno-inline)
 
