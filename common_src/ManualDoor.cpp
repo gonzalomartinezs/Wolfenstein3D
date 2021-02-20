@@ -39,6 +39,37 @@ void ManualDoor::update(Map& map, const std::vector<Player*> players) {
 
 }
 
+void ManualDoor::update(int new_state) {
+	if (state == new_state){
+        _updateElapsedFraction();
+        if (!isClosed() && elapsed_fraction > 1){
+            if (isClosing()) new_state = surface_type;
+            else if (isOpening()) new_state = SLIDER_OPENED;
+            else if (isOpened()) new_state = SLIDER_CLOSING;
+        }
+    }
+    if (state != new_state) {
+        state = new_state;
+        if (!isClosed()) timer.start();
+    }
+}
+
+bool ManualDoor::isClosed() const {
+	return (this->state == this->surface_type);
+}
+
+bool ManualDoor::isClosing() const {
+	return (this->state == SLIDER_CLOSING);
+}
+
+bool ManualDoor::isOpened() const {
+	return (this->state == SLIDER_OPENED);
+}
+
+bool ManualDoor::isOpening() const {
+	return (this->state == SLIDER_OPENING);
+}
+
 uint8_t ManualDoor::getState() const {
 	return this->state;
 }

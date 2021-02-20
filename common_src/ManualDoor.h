@@ -27,7 +27,17 @@ public:
 
 	virtual void update(Map& map, const std::vector<Player*> players);
 
+	virtual void update(int new_state);
+
 	uint8_t getState() const;
+
+	bool isClosed() const;
+
+	bool isClosing() const;
+
+	bool isOpened() const;
+
+	bool isOpening() const;
 
 	virtual void interact(Key& key);
 
