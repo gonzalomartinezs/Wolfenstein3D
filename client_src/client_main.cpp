@@ -27,11 +27,11 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    log(); //  genera la nueva pestaña.
+    //log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
-        ProtectedQueue<DrawingInfo> drawing_info;
+        ProtectedQueue<UI_Info> drawing_info;
         BlockingQueue<int> instructions;
 
         Window window("Wolfenstein 3D", WINDOW_WIDTH, WINDOW_HEIGHT,
@@ -40,8 +40,9 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
         SoundsContainer sounds;
 
-        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        client.lobbyInteraction(log.getName());
+        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
+        client.lobbyInteraction("asd");
         Map map(client.receiveMap());
 
         EventHandler event_handler(instructions);
@@ -59,9 +60,9 @@ int main(int argc, char *argv[]) {
         std::vector<DirectedPositionable> directed_objects;
         std::vector<std::pair<int,int>> sliders_changes;
 
-        DrawingInfo initial_info(player, view, std::vector<int>(7, 0),
-                                 static_objects,
-                                 directed_objects, sliders_changes, false);
+        UI_Info initial_info(player, view, std::vector<int>(7, 0),
+                             static_objects,
+                             directed_objects, sliders_changes, false);
         GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
 
         int flag = IS_NOT_MOVING;

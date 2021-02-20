@@ -8,7 +8,7 @@
 #include "../common_src/SlidingSurface.h"
 #include "../common_src/DirectedPositionable.h"
 
-class DrawingInfo {
+class UI_Info {
 private:
     DirectedPositionable player_pos;
     PlayerView view;
@@ -19,12 +19,12 @@ private:
     bool important;
 
 public:
-    // Crea un DrawingInfo listo para ser utilizado.
-    DrawingInfo(DirectedPositionable player_pos, PlayerView view,
-                std::vector<int> player_info, std::vector<Positionable> objects,
-                std::vector<DirectedPositionable> directed_objects,
-                std::vector<std::pair<int, int>> sliders_changes,
-                bool important);
+    // Crea un UI_Info listo para ser utilizado.
+    UI_Info(DirectedPositionable player_pos, PlayerView view,
+            std::vector<int> player_info, std::vector<Positionable> objects,
+            std::vector<DirectedPositionable> directed_objects,
+            std::vector<std::pair<int, int>> sliders_changes,
+            bool important);
 
     // Retorna un arreglo con los valores de vidas, hp, balas,... del jugador.
     std::vector<int>& getPlayerInfo();
@@ -42,7 +42,7 @@ public:
     // Retorna un booleano indicando si el paqeute es importante o no.
     bool isImportant();
 
-    ~DrawingInfo(){}
+    ~UI_Info(){}
 };
 
 

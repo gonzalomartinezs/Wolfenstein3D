@@ -31,7 +31,7 @@
 
 Client::Client(const std::string &host, const std::string &service,
                BlockingQueue<int> &instructions,
-               ProtectedQueue<DrawingInfo> &drawing_info):
+               ProtectedQueue<UI_Info> &drawing_info):
         socket(host.c_str(), service.c_str(), 0),
         peer(socket.connect()), instructions(instructions),
         drawing_info(drawing_info), is_connected(true) {}
@@ -118,8 +118,8 @@ ssize_t Client::receiveInformation() {
                                        directed_objects,coordinates,
                                        already_parsed);
 
-        DrawingInfo new_info(player, view, player_info, objects,
-                             directed_objects, sliders_states, important);
+        UI_Info new_info(player, view, player_info, objects,
+                         directed_objects, sliders_states, important);
         this->drawing_info.push(new_info);
     }
     return 0;

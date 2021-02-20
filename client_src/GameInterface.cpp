@@ -2,8 +2,8 @@
 #include "GameInterface.h"
 
 GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
-                             ProtectedQueue<DrawingInfo> &queue,
-                             DrawingInfo initial_info, int refresh_rate):
+                             ProtectedQueue<UI_Info> &queue,
+                             UI_Info initial_info, int refresh_rate):
                         ui_handler(ui_handler), sound_handler(sound_handler),
                         queue(queue), keep_running(true),refresh_rate(refresh_rate),
                         latest_info(initial_info){
@@ -14,8 +14,8 @@ GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler
 void GameInterface::run() {
     while(keep_running){
         bool important_found = false;
-        DrawingInfo new_info = this->latest_info;
-        DrawingInfo aux = this->latest_info;
+        UI_Info new_info = this->latest_info;
+        UI_Info aux = this->latest_info;
         while(!this->queue.isEmpty()){
             aux = this->queue.pop();
             if (aux.isImportant()) {
@@ -39,7 +39,7 @@ bool GameInterface::finished() {
 // ------------------------- Metodos privados --------------------------------//
 // Refresca la pantalla gradualmente tras un movimiento de camara o del
 // jugador, de acuerdo a refresh_rate.
-void GameInterface::_updateScreen(DrawingInfo new_info) {
+void GameInterface::_updateScreen(UI_Info new_info) {
     DirectedPositionable old_pos = latest_info.getPlayerPos();
     DirectedPositionable new_pos = new_info.getPlayerPos();
     PlayerView old_view = latest_info.getCameraPlanes();
