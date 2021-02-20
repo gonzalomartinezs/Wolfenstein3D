@@ -15,6 +15,7 @@
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
 #include "../common_src/Timer.h"
+#include "../common_src/Doors.h"
 
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 200
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
         Client client(log.getHost(), log.getPort(), instructions, drawing_info);
         client.lobbyInteraction(log.getName());
         Map map(client.receiveMap());
+        Doors doors(map);
 
         EventHandler event_handler(instructions);
         Raycaster raycaster(map, WINDOW_WIDTH / 32, (-WINDOW_HEIGHT) / 18,
@@ -51,17 +53,17 @@ int main(int argc, char *argv[]) {
         UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
                               "../client_src/fonts/Vermin Vibes 1989.ttf",
                               WINDOW_WIDTH, WINDOW_HEIGHT);
-        SoundHandler sound_handler(sounds, map.getSlidingSurfaces());
+        SoundHandler sound_handler(sounds, map);
 
         DirectedPositionable player(2, 2, -1, 0, None);
         PlayerView view(0,1);
         std::vector<Positionable> static_objects;
         std::vector<DirectedPositionable> directed_objects;
-        std::vector<std::pair<int,int>> sliders;
+        std::vector<int> door_states;
         std::vector<std::pair<int,float>> game_sounds;
 
         UI_Info initial_info(player, view, std::vector<int>(7, 0),
-                             static_objects, directed_objects, sliders,
+                             static_objects, directed_objects, door_states,
                              game_sounds, false);
         GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
 
