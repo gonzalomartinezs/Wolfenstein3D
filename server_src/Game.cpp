@@ -27,7 +27,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
     Configuration config_stats(config, KEY_PLAYER);
 
     for (size_t i = 0; i < this->clients.size(); ++i) {
-        std::string player_number = "player_" + std::to_string(i + 1);
+        std::string player_number = "player_" + std::to_string(i);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Player(config_stats, config_player, i,
                                 this->clients[i]->getName(), this->sounds));
@@ -35,7 +35,7 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
 
     for (size_t i = 0; i < this->bots_amount; ++i) {
         std::string player_number = "player_" +
-                                    std::to_string(this->clients.size() + i + 1);
+                                    std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Bot(config_stats, config_player,
                                     this->clients.size() + i, "Bot_" +
