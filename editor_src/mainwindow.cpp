@@ -108,7 +108,7 @@ void MainWindow::loadFile(QString& path) {
     std::list<MapElement> elements = map.getElements();
     mapHandler =  new MapHandler (container,
                                   nameLabel->text().toStdString()
-                                    ,map.getX(), map.getX(), this );
+                                    ,map.getX(), map.getY(), this );
     mapHandler->loadElements(elements);
     mapScrollArea->setWidget(mapHandler);
 }

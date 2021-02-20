@@ -10,8 +10,8 @@
 
 #define INVALID_FORMAT "Invalid file format, please use .Yaml"
 
-#define DOOR 1
-#define WALL0 2
+#define WALL0 1
+#define DOOR 2
 #define SLIDER 5
 
 MapParser::MapParser() {
@@ -64,7 +64,6 @@ void MapParser::loadName() {
 
 void MapParser::loadElements() {
     loadMatrix();
-
 }
 QRect MapParser::calculateRect(int _x, int _y ) {
     return QRect(QPoint(_x*ITEMSIZE, _y*ITEMSIZE),
@@ -72,8 +71,8 @@ QRect MapParser::calculateRect(int _x, int _y ) {
 }
 
 void MapParser::loadMatrix() {
-    for (int i = 0; i < y; ++i) {
-        for (int j = 0; j < x; ++j) {
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
             int element = this->mapFile["map"][i][j].as<int>();
             switch (element) {
                 case DOOR :
