@@ -20,25 +20,26 @@ const double TICK_DURATION = 1/128.f; // miliseconds que tarda en
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map) : clients(_clients),
         map(config_map), items(Configuration(config, KEY_ITEMS),
-        Configuration(config_map, KEY_ITEMS)), doors(this->map),
+        Configuration(config_map, KEY_ITEMS), this->rockets), doors(this->map),
     bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
     this->isRunning = true;
 
     Configuration config_stats(config, KEY_PLAYER);
 
     for (size_t i = 0; i < this->clients.size(); ++i) {
-        std::string player_number = "player_" + std::to_string(i + 1);
+        std::string player_number = "player_" + std::to_string(i);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Player(config_stats, config_player, i,
-                                    this->clients[i]->getName(), this->sounds));
+                                this->clients[i]->getName(), this->sounds));
     }
 
     for (size_t i = 0; i < this->bots_amount; ++i) {
         std::string player_number = "player_" +
-                                    std::to_string(this->clients.size() + i + 1);
+                                    std::to_string(this->clients.size() + i);
         Configuration config_player(config_map, player_number);
         this->players.push_back(new Bot(config_stats, config_player,
-                                        this->clients.size() + i, "Bot_" + std::to_string(i), this->sounds));
+                                    this->clients.size() + i, "Bot_" +
+                                    std::to_string(i), this->sounds));
     }
 }
 
@@ -94,6 +95,12 @@ void Game::update() {
     for (size_t i = 0; i < this->doors.size(); ++i) {
         this->doors[i].update(this->map, this->players);
     }
+
+    /*
+    for (size_t i = 0; i < this->rockets.size(); ++i) {
+        this->rockets[i].update(this->players);
+    }
+    */
 }
 
 void Game::sendUpdate() {
@@ -137,12 +144,12 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
 }
 
 void Game::createLeaderBoard() {
-    uint8_t endGameChar = END_GAME_CHAR;
-    uint8_t msg[MAX_MSG_SIZE];
-    uint8_t msgLen;
-    LeaderBoard leaderBoard;
+//    uint8_t endGameChar = END_GAME_CHAR;
+//    uint8_t msg[MAX_MSG_SIZE];
+//    uint8_t msgLen;
+//    LeaderBoard leaderBoard;
 
-    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
+//    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
 
     /*for (size_t i = 0; i < this->clients.size(); i++) {
         this->clients[i]->push(&endGameChar, 1);

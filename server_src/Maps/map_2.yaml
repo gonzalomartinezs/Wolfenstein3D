@@ -13,13 +13,13 @@ map:
 
 #Players
 #(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
-player_1:
+player_0:
   pos_x: 2.0
   pos_y: 2.0
   dir_x: 1
   dir_y: 0
 
-player_2:
+player_1:
   pos_x: 13.0
   pos_y: 2.0
   dir_x: 1

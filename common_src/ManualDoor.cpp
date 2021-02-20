@@ -19,21 +19,55 @@ ManualDoor::ManualDoor(int _x, int _y, int _dir_x, int _dir_y,
 					SIZE + ((2 * EXTRA_SIZE) * this->dir_y)) {}
 
 void ManualDoor::update(Map& map, const std::vector<Player*> players) {
-	ManualDoor::_updateElapsedFraction();
+	_updateElapsedFraction();
 
 	if (this->state == SLIDER_CLOSING) {
-		if (!ManualDoor::isPlayerBlockingDoor(players)) {
-			if (elapsed_fraction > 1) {
-				this->state = surface_type;
-			}
-			map.set(this->x, this->y, this->surface_type);
-		} else {
-			this->state = SLIDER_OPENED;
-		}
-	} else if (this->state == SLIDER_OPENING && elapsed_fraction > 1) {
-		this->state = SLIDER_OPENED;
-		map.set(this->x, this->y, SLIDER_OPENED);
-	}
+        if (!ManualDoor::isPlayerBlockingDoor(players)) {
+            if (elapsed_fraction > 1) {
+                this->state = surface_type;
+            }
+
+            map.set(this->x, this->y, this->surface_type);
+        } else {
+            this->state = SLIDER_OPENED;
+        }
+    } else if (this->state == SLIDER_OPENING && elapsed_fraction > 1) {
+        this->state = SLIDER_OPENED;
+        map.set(this->x, this->y, SLIDER_OPENED);
+        timer.start();
+    }
+
+}
+
+void ManualDoor::update(int new_state) {
+	if (state == new_state){
+        _updateElapsedFraction();
+        if (!isClosed() && elapsed_fraction > 1){
+            if (isClosing()) new_state = surface_type;
+            else if (isOpening()) new_state = SLIDER_OPENED;
+            else if (isOpened()) new_state = SLIDER_CLOSING;
+        }
+    }
+    if (state != new_state) {
+        state = new_state;
+        if (!isClosed()) timer.start();
+    }
+}
+
+bool ManualDoor::isClosed() const {
+	return (this->state == this->surface_type);
+}
+
+bool ManualDoor::isClosing() const {
+	return (this->state == SLIDER_CLOSING);
+}
+
+bool ManualDoor::isOpened() const {
+	return (this->state == SLIDER_OPENED);
+}
+
+bool ManualDoor::isOpening() const {
+	return (this->state == SLIDER_OPENING);
 }
 
 uint8_t ManualDoor::getState() const {
@@ -45,14 +79,12 @@ void ManualDoor::interact(Key& key) {
 		this->state = SLIDER_CLOSING;
 		timer.start();
 	} else if (this->state == surface_type) {
-		if (locked) {
-			if (key.has()) {
-				this->state = SLIDER_OPENING;
-				timer.start();
-				locked = false;
-				key.used();
-			}
-		} else {
+		if (locked && key.has()) {
+			this->state = SLIDER_OPENING;
+			timer.start();
+			locked = false;
+			key.used();
+		} else if (!locked) {
 			this->state = SLIDER_OPENING;
 			timer.start();
 		}

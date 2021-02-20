@@ -41,7 +41,8 @@ static const std::vector<std::string> keys = {KEY_CROSS, KEY_CUP, KEY_CHEST,
 
 static Item* initializeItem(const Configuration& config, 
 							const Configuration& config_map,
-							const std::string& key) {
+							const std::string& key,
+							std::vector<Rocket>& rockets) {
 	Item* item;
 
 	if (key == KEY_CROSS || key == KEY_CUP || key == KEY_CHEST ||
@@ -68,7 +69,7 @@ static Item* initializeItem(const Configuration& config,
 							config_map.getFloat(KEY_POS_Y));
 	} else if (key == KEY_ROCKET_LAUNCHER) {
 		item = new RocketLauncherItem(config, config_map.getFloat(KEY_POS_X),
-							config_map.getFloat(KEY_POS_Y));
+							config_map.getFloat(KEY_POS_Y), rockets);
 	} else {
 		throw ItemsException("Key '%s' is not a valid item key.",
 							key.c_str());
@@ -79,7 +80,8 @@ static Item* initializeItem(const Configuration& config,
 
 void Items::initialize(const Configuration& config,
 						const Configuration& config_map,
-						const std::string& key) {
+						const std::string& key,
+						std::vector<Rocket>& rockets) {
 	std::string item_cant = "cant_" + key;
 
 	size_t n = config_map.getInt(item_cant);
@@ -87,17 +89,19 @@ void Items::initialize(const Configuration& config,
 	for (size_t i = 0; i < n; ++i) {
 		std::string item_number = key + "_" + std::to_string(i);
 		Configuration config_item(config_map, item_number);
-		this->items.push_back(initializeItem(config, config_item, key));
+		this->items.push_back(initializeItem(config, config_item,
+											key, rockets));
 	}
 }
 
-Items::Items(const Configuration& config, const Configuration& config_map) {
+Items::Items(const Configuration& config, const Configuration& config_map,
+			std::vector<Rocket>& rockets) {
 	for (size_t i = 0; i < keys.size(); ++i) {
 		if (config_map.hasKey(keys[i])) {
 			Configuration sub_config(config, keys[i]);
 			Configuration sub_config_map(config_map, keys[i]);
 
-			Items::initialize(sub_config, sub_config_map, keys[i]);
+			Items::initialize(sub_config, sub_config_map, keys[i], rockets);
 		}
 	}
 }

@@ -4,6 +4,7 @@
 #include "../../common_src/Map.h"
 #include "../../common_src/Configuration.h"
 #include "../../client_src/textures/TextureID.h"
+#include "../RandomPosition.h"
 #include <vector>
 
 class Weapon;
@@ -33,7 +34,7 @@ public:
 	void fireTheGun(std::vector<Player*>& players,
                     int shooting_player_number, const Map& map);
 	bool hasBullets() const;
-	void reset(Items* items, float x, float y);
+	void reset(Items* items, RandomPosition& rd_pos);
 	uint8_t getWeaponID() const;
 	int getBullets() const;
 	~Weapons();
