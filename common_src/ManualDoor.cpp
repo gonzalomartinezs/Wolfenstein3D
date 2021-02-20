@@ -74,6 +74,10 @@ uint8_t ManualDoor::getState() const {
 	return this->state;
 }
 
+float ManualDoor::getElapsedFraction() const {
+    return this->elapsed_fraction;
+}
+
 void ManualDoor::interact(Key& key) {	
 	if (this->state == SLIDER_OPENED) {
 		this->state = SLIDER_CLOSING;
@@ -115,3 +119,4 @@ void ManualDoor::_updateElapsedFraction() {
 }
 
 ManualDoor::~ManualDoor() {}
+
