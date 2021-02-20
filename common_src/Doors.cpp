@@ -38,18 +38,12 @@ size_t Doors::size() const {
 }
 
 void Doors::loadDoorsInfo(uint8_t* msg, uint8_t &currentByte) {
-    uint8_t size, state;
-
-    size = static_cast<uint8_t>(this->doors.size());
+    uint8_t size = static_cast<uint8_t>(this->doors.size());
     memcpy(msg + currentByte, &size, sizeof(uint8_t));
     currentByte += sizeof(uint8_t);
 
     for (size_t i = 0; i < this->doors.size(); i++) {
-    	uint8_t id = static_cast<uint8_t>(i);
-        memcpy(msg + currentByte, &id, sizeof(uint8_t));
-        currentByte += sizeof(uint8_t);
-
-        state = this->doors[i]->getState();
+        uint8_t state = this->doors[i]->getState();
         memcpy(msg + currentByte, &state, sizeof(uint8_t));
         currentByte += sizeof(uint8_t);
     }
