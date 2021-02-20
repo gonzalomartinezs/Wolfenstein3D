@@ -58,10 +58,14 @@ private:
     void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                              std::vector<float> &coordinates,
                              uint8_t *bytes_received, int &already_parsed);
-    void _assignObjectsCoordenates(uint8_t *bytes_received,
-                                   std::vector<Positionable> &objects,
-                                   std::vector<float> &coordinates,
-                                   int &already_parsed);
+    void _assignItemsCoordenates(uint8_t *bytes_received,
+                                 std::vector<Positionable> &objects,
+                                 std::vector<float> &coordinates,
+                                 int &already_parsed);
+    void _assignSounds(uint8_t *bytes_received,
+                       std::vector<std::pair<int, float>> &sounds,
+                       bool &important,
+                       int &already_parsed);
     void _assignSlidersStates(uint8_t *bytes_received,
                               std::vector<std::pair<int,int>>& sliders_states,
                               int& already_parsed);

@@ -20,7 +20,8 @@
 #define OBJECTS_ATTRIBUTES 3
 #define OBJECTS_SIZE (2 * sizeof(float) + 1)
 
-#define SLIDERS_DATA 2
+#define SOUND_SIZE (sizeof(float) + 1)
+
 #define SLIDERS_SIZE 2
 
 #define OTHER_PLAYERS_COORDS 5
@@ -102,24 +103,26 @@ ssize_t Client::receiveInformation() {
         this->peer.recv(&bytes_to_receive, 1);
         this->peer.recv(bytes_received, bytes_to_receive);
         DirectedPositionable player(0, 0, 0, 0, None);
-        int already_parsed = 0;
         PlayerView view;
+
+        int already_parsed = 0;
         std::vector<float> coordinates;
         std::vector<int> player_info;
         std::vector<Positionable> objects;
         std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
         std::vector<std::pair<int,int>> sliders_states;
+        std::vector<std::pair<int,float>> sounds;
 
         _assignPlayerInfo(player_info, bytes_received, important,already_parsed);
         _assignPlayerCoordenates(player, view, coordinates, bytes_received,already_parsed);
-        _assignObjectsCoordenates(bytes_received, objects, coordinates,already_parsed);
+        _assignItemsCoordenates(bytes_received, objects, coordinates,already_parsed);
+        _assignSounds(bytes_received, sounds, important, already_parsed);
         _assignSlidersStates(bytes_received, sliders_states, already_parsed);
-        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,
-                                       directed_objects,coordinates,
-                                       already_parsed);
+        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
+                                       coordinates,already_parsed);
 
-        UI_Info new_info(player, view, player_info, objects,
-                         directed_objects, sliders_states, important);
+        UI_Info new_info(player, view, player_info, objects, directed_objects,
+                         sliders_states, sounds, important);
         this->drawing_info.push(new_info);
     }
     return 0;
@@ -154,7 +157,7 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
                 UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo
         info.push_back(received_int);
     }
-    important = (info[IS_SHOOTING] != 0);
+    important = (important || info[IS_SHOOTING] != 0);
     already_parsed += PLAYER_INFO_SIZE;
 }
 
@@ -179,10 +182,10 @@ Client::_assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
 }
 
 // Asigna las coordenadas de los objetos del mapa.
-void Client::_assignObjectsCoordenates(uint8_t *bytes_received,
-                                       std::vector<Positionable> &objects,
-                                       std::vector<float> &coordinates,
-                                       int &already_parsed) {
+void Client::_assignItemsCoordenates(uint8_t *bytes_received,
+                                     std::vector<Positionable> &objects,
+                                     std::vector<float> &coordinates,
+                                     int &already_parsed) {
     float received;
     uint8_t texture, objects_parsed;
     memcpy(&objects_parsed, bytes_received + already_parsed, 1);
@@ -204,6 +207,26 @@ void Client::_assignObjectsCoordenates(uint8_t *bytes_received,
     coordinates.clear();
     already_parsed += (objects_parsed * OBJECTS_SIZE) + 1;
 }
+
+// Parsea los sonidos del juego.
+void Client::_assignSounds(uint8_t *bytes_received,
+                           std::vector<std::pair<int, float>> &sounds,
+                           bool &important,
+                           int &already_parsed) {
+    uint8_t sounds_amount, sound_id;
+    float distance;
+    memcpy(&sounds_amount, bytes_received + already_parsed, 1);
+
+    for (int i=0; i<sounds_amount; i++) {
+        memcpy(&sound_id, bytes_received + already_parsed + i*SOUND_SIZE + 1, 1);
+        memcpy(&distance, bytes_received + already_parsed + i*SOUND_SIZE + 2, sizeof(float));
+        sounds.emplace_back(sound_id, distance);
+    }
+    already_parsed += (sounds_amount * SOUND_SIZE) + 1;
+    important = (important || sounds_amount!=0);
+}
+
+
 
 // Parsea los estados de las puertas.
 void Client::_assignSlidersStates(uint8_t *bytes_received,
@@ -391,6 +414,5 @@ void Client::_joinGame() {
     uint_choice = (uint8_t) choice;
     this->peer.send(&uint_choice, sizeof(uint8_t));
 }
-
 
 
