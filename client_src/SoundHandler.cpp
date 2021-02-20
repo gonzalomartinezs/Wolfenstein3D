@@ -25,7 +25,7 @@ void SoundHandler::loadGameSfx(std::vector<int> &player_info,
                                std::vector<std::pair<int, int>> &sliders) {
     _loadWeaponSfx(player_info);
     _loadMovingObjectsSfx(player_pos, positionables);
-//    _loadSlidersSfx(player_pos, sliders);
+    _loadSlidersSfx(player_pos, sliders);
 }
 
 SoundHandler::~SoundHandler() {}

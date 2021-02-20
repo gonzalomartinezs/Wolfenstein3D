@@ -7,17 +7,23 @@ GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler
                         ui_handler(ui_handler), sound_handler(sound_handler),
                         queue(queue), keep_running(true),refresh_rate(refresh_rate),
                         latest_info(initial_info){
-    this->sound_handler.startBackMusic();
+    //this->sound_handler.startBackMusic();
 }
 
 
 void GameInterface::run() {
     while(keep_running){
+        bool important_found = false;
         DrawingInfo new_info = this->latest_info;
+        DrawingInfo aux = this->latest_info;
         while(!this->queue.isEmpty()){
-            new_info = this->queue.pop();
-            if (new_info.isImportant()) break;
+            aux = this->queue.pop();
+            if (aux.isImportant()) {
+                new_info = aux;
+                important_found = true;
+            }
         }
+        if (!important_found) new_info = aux;
         _updateScreen(new_info);
     }
 }
