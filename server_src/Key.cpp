@@ -1,6 +1,7 @@
 #include "Key.h"
 #include "Exceptions/GameException.h"
 #include "../common_src/KeyItem.h"
+#include <iostream>
 
 #define KEY_TEXTURE "texture"
 #define KEY_RADIUS "radius"
@@ -14,6 +15,15 @@ void Key::equip() {
 											" already has one.");
 
 	this->available = true;
+}
+
+void Key::open(ManualDoor& door) {
+	try {
+		door.interact(this->available);
+	} catch (const std::exception& e) {
+		std::cerr << e.what() << std::endl;
+		this->available = false;
+	}
 }
 
 bool Key::has() const {

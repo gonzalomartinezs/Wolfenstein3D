@@ -1,6 +1,7 @@
 #include "SlidingSurface.h"
 #include "GameConstants.h"
 #include "../server_src/PlayerActions.h"
+#include "../server_src/Exceptions/GameException.h"
 
 SlidingSurface::SlidingSurface(int _x, int _y, int _dir_x, int _dir_y,
                     int _surface_type, float _moving_time, bool is_locked,
@@ -29,13 +30,13 @@ void SlidingSurface::update(Map& map, const std::vector<Collider>& players) {
     }
 }
 
-void SlidingSurface::interact(Key& key) {
+void SlidingSurface::interact(bool has_key) {
     if (this->state == this->surface_type) {
-        if (locked && key.has()) {
+        if (locked && has_key) {
             this->state = SLIDER_OPENING;
             this->timer.start();
             locked = false;
-            key.used();
+            throw GameException("Key used.");
         } else if (!locked) {
             this->state = SLIDER_OPENING;
             this->timer.start();

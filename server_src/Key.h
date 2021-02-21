@@ -3,6 +3,7 @@
 
 #include "../client_src/textures/TextureID.h"
 #include "../common_src/Configuration.h"
+#include "../common_src/ManualDoor.h"
 
 class Item;
 
@@ -14,6 +15,7 @@ private:
 public:
 	Key(const Configuration& config);
 	void equip();
+	void open(ManualDoor& door);
 	bool has() const;
 	Item* getItem(float x, float y) const;
 	void used();
