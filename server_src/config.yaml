@@ -40,6 +40,7 @@ player:
     knife:
       time_between_stabs: 1
       range: 0.5
+  bot_path: "../server_src/Bots/Destripador.lua"
 
 #Items
 items:
