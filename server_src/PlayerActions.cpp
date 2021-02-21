@@ -136,8 +136,8 @@ void PlayerActions::useBullets(uint8_t bulletsAmount) {
     this->weapons.useBullets(bulletsAmount);
 }
 
-bool PlayerActions::hasBullets() {
-    return this->weapons.hasBullets();
+bool PlayerActions::hasBullets(uint8_t bulletsAmount) {
+    return this->weapons.hasBullets(bulletsAmount);
 }
 
 void PlayerActions::getHUDInfo(uint8_t* msg) {

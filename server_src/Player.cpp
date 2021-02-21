@@ -185,8 +185,8 @@ void Player::useBullets(uint8_t bulletsAmount) {
     this->action.useBullets(bulletsAmount);
 }
 
-bool Player::hasBullets() {
-    return this->action.hasBullets();
+bool Player::hasBullets(uint8_t bulletsAmount) {
+    return this->action.hasBullets(bulletsAmount);
 }
 
 std::string Player::getName() {

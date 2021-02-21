@@ -58,7 +58,7 @@ public:
     void increaseBulletCounter(uint8_t bulletsAmount);
     void increaseKillCounter();
     void useBullets(uint8_t bulletsAmount);
-    bool hasBullets();
+    bool hasBullets(uint8_t bulletsAmount);
 
     std::string getName();
     int getKills();

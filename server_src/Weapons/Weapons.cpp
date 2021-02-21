@@ -125,8 +125,8 @@ void Weapons::reset(Items* items, RandomPosition& rd_pos) {
                                     this->max_bullets));
 }
 
-bool Weapons::hasBullets() const {
-    return (this->bullets > 0);
+bool Weapons::hasBullets(uint8_t bulletsAmount) const {
+    return (this->bullets >= bulletsAmount);
 }
 
 uint8_t Weapons::getWeaponID() const {

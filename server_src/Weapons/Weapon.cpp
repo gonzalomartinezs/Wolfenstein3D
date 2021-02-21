@@ -105,7 +105,7 @@ void Weapon::shoot(std::vector<Player*>& players,
     uint8_t thisPlayerInfo[POSITION_DATA_SIZE];
     players[shootingPlayerNumber]->getPositionData(thisPlayerInfo);
 
-    if (players[shootingPlayerNumber]->hasBullets()) {
+    if (players[shootingPlayerNumber]->hasBullets(BULLETS_PER_SHOT)) {
         players[shootingPlayerNumber]->increaseBulletCounter(BULLETS_PER_SHOT);
         players[shootingPlayerNumber]->useBullets(BULLETS_PER_SHOT);
 

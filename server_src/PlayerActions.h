@@ -63,7 +63,7 @@ public:
     void increaseBulletCounter(uint8_t bulletsAmount);
     void increaseKillCounter();
     void useBullets(uint8_t bulletsAmount);
-    bool hasBullets();
+    bool hasBullets(uint8_t bulletsAmount);
 
     /* Escribe los primeros 12 bytes del buffer con la informacion del HUD del
      * jugador de la siguiente manera (respetando el tamanio en bytes de cada variable):
