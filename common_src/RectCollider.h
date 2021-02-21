@@ -9,6 +9,7 @@ private:
 	float width, height;
 public:
 	RectCollider(float _x, float _y, float _width, float _height);
+	// Devuelve true si colisiona, false en caso contrario
 	bool collidesWith(const Collider& collider);
 	~RectCollider();
 };

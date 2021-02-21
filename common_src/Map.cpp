@@ -52,28 +52,7 @@ long Map::get_n_col() const{
 void Map::set(int x, int y, int value) {
     map[x][y] = value;
 }
-/*
-std::vector<SlidingSurface> Map::getSlidingSurfaces() const {
-    std::vector<SlidingSurface> surfaces;
-    int counter = 0;
-    for (int i=0; i<n_row; i++){
-        for (int j=0; j<n_col; j++){
-            if (map[i][j] == DOOR_CLOSED){
-                surfaces.emplace_back(counter, i, j, DOOR,
-                                    TIME_BEFORE_CLOSING_DOOR,
-                                    MOVING_DOOR_TIME, map[i][j]);
-                counter++;
-            } else if (map[i][j] == PASSAGE_CLOSED){
-                surfaces.emplace_back(counter, i, j, PASSAGE,
-                                    TIME_BEFORE_CLOSING_PASSAGE,
-                                    MOVING_PASSAGE_TIME, map[i][j]);
-                counter++;
-            }
-        }
-    }
-    return surfaces;
-}
-*/
+
 Map::~Map() {
 	for (int i = 0; i < n_row; ++i) {
 		delete[] map[i];

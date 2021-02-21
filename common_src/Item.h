@@ -19,6 +19,7 @@ public:
 	Item(float _x, float _y, TextureID _texture, int _value, float radius);
 	virtual int operator+(int other_value) const;
 	virtual void equipTo(PlayerActions& action) = 0;
+	// Devuelve true si collisiona con other, false en caso contrario
 	bool collidesWith(const Collider& other) const;
 	virtual ~Item();
 };

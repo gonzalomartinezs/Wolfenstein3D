@@ -44,29 +44,47 @@ public:
            std::string name,
            std::vector<Sound>& sounds);
 
+    // Actualiza el estado del jugador
     void updatePlayer(const Map& map, Items& items,
                         std::vector<Player*>& players, Doors& doors);
 
+    // Asigna el siguiente estado del jugador
     void setState(uint8_t newState);
 
+    // Obtiene el estado actual
     virtual void getState(std::vector<Player*> &players,
                         int botNumber, const Map &map) {}
 
     void makeSound(SoundID sound);
+
+    // Devuelve true en caso de estar muerto, false en caso contrario
     bool isDead();
+
+    // Reduce `damage` la vida del jugador
     void receiveShot(uint8_t damage);
+    // Incrementa el contador de balas
     void increaseBulletCounter(uint8_t bulletsAmount);
+    // Incrementa el contador de jugadores matados
     void increaseKillCounter();
+    // Reduce `bulletsAmount` a las balas
     void useBullets(uint8_t bulletsAmount);
+    // Devuelve tru en caso de tener bulletsAmount o más,
+    // false en caso contrario
     bool hasBullets(uint8_t bulletsAmount);
 
+    // Obtiene el nombre del jugador
     std::string getName();
+    // Obtiene la cantidad de jugadores matados
     int getKills();
+    // Obtiene la puntuación del jugador
     int getScore();
+    // Obtiene la cantidad de balas disparadas
     int getBulletsFired();
 
+    // Obtiene el id del arma
     uint8_t getWeaponID() const;
 
+    // Obtiene el collisionador del jugador
     Collider getCollider() const;
 
     /* Escribe los primeros 16 bytes del buffer con la informacion de

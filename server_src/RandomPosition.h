@@ -12,6 +12,8 @@ private:
 public:
 	RandomPosition(const float _x, const float _y);
 
+	// Devuelven una nueva posición x, y con un offset respecto
+	// de los originales
 	float getX();
 	float getY();
 
