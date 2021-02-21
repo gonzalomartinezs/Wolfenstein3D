@@ -65,7 +65,7 @@ Player::Player(const Configuration& config_stats,
 void Player::lookForWallCollision(const Map& map, const Collider& collider) {
     for (int i = this->x-1; i <= this->x+1; ++i) {
         for (int j = this->y-1; j <= this->y+1; ++j) {
-            if (map.get(i, j) != WALKABLE) {
+            if (map.get(i, j) > WALKABLE) {
                 if (collider.collidesWith(i, j, WALL_SIZE, WALL_SIZE)) {
                     throw ErrorMap("Collision detected.");
                 }

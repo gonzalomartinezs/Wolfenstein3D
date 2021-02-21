@@ -2,8 +2,11 @@
 #define TEXTUREID_H
 
 enum TextureID{
-    None,
-    Wall,
+    Water = -1,
+    None = 0,
+    Wall_0,
+    Wall_1,
+    Barrel,
     AutoDoor,
     InvertedAutoDoor,
     LockedDoor,
