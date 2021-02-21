@@ -28,7 +28,7 @@ void RaycastingRenderer::render(float wall_dist, char hit_axis, int ray_number,
 
     int tex_x = _calculateTextureXCoordinate(player, ray_dir, wall_dist,
                                              hit_axis, ray_number);
-    if(tex_id == DOOR || tex_id == PASSAGE)
+    if(tex_id == AUTOMATIC_DOOR || tex_id == PASSAGE || tex_id == LOCKED_DOOR)
         _processSurfaceTexture(tex_x, tex_id, map_x, map_y, ray_dir, hit_axis);
 
     Texture* texture = textures.getStatic(TextureID(tex_id));
@@ -87,13 +87,16 @@ void RaycastingRenderer::_processSurfaceTexture(int &tex_x, int &tex_id, int map
         } else if(door.isClosing()){
             tex_x -= (1 - door.getElapsedFraction())*TEX_WIDTH;
         }
+        if (map.get(map_x, map_y) == LOCKED_DOOR) tex_id = int(LockedDoor);
+        else if (map.get(map_x, map_y) == AUTOMATIC_DOOR) tex_id = int(InvertedAutoDoor);
     } else {
         if (door.isOpening()){
             tex_x += door.getElapsedFraction()*TEX_WIDTH;
         } else if(door.isClosing()){
             tex_x += (1 - door.getElapsedFraction())*TEX_WIDTH;
         }
-        if(map.get(map_x, map_y) == DOOR) tex_id = int(InvertedDoor);
+        if (map.get(map_x, map_y) == AUTOMATIC_DOOR) tex_id = int(InvertedAutoDoor);
+        else if (map.get(map_x, map_y) == LOCKED_DOOR) tex_id = int(InvertedLockedDoor);
     }
     if(map.get(map_x, map_y) == PASSAGE) tex_id = int(Wall);
 }

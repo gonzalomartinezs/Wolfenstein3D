@@ -13,9 +13,9 @@ Doors::Doors(const Map& map) {
 			if (value > ID_WALL) {
 				int dir_x = 0, dir_y = 0;
 				Doors::_calculateDirection(map, i, j, &dir_x, &dir_y);
-				if (value == DOOR) {
+				if (value == LOCKED_DOOR) {
 					this->doors.push_back(new ManualDoor(i, j, dir_x, dir_y,
-										DOOR, MOVING_DOOR_TIME, true));
+										LOCKED_DOOR, MOVING_DOOR_TIME, true));
 				} else if (value == PASSAGE) {
 					this->doors.push_back(new ManualDoor(i, j, dir_x, dir_y,
 										PASSAGE, MOVING_PASSAGE_TIME, false));
