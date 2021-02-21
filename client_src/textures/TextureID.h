@@ -4,9 +4,10 @@
 enum TextureID{
     None,
     Wall,
-    Door,
-    InvertedDoor,
-    Barrel,
+    AutoDoor,
+    InvertedAutoDoor,
+    LockedDoor,
+    InvertedLockedDoor,
     BJ_0,
     BJ_1,
     BJ_2,

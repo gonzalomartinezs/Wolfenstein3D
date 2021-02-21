@@ -4,9 +4,10 @@
 #define WALKING_TIME 800
 
 #define WALL_PATH "../client_src/textures/img/sprites/rocky.bmp"
-#define DOOR_PATH "../client_src/textures/img/sprites/door.bmp"
-#define INVERTED_DOOR_PATH "../client_src/textures/img/sprites/inv_door.bmp"
-#define BARREL_PATH "../client_src/textures/img/sprites/barrel.bmp"
+#define AUTO_DOOR_PATH "../client_src/textures/img/sprites/door.bmp"
+#define INVERTED_AUTO_DOOR_PATH "../client_src/textures/img/sprites/inv_door.bmp"
+#define LOCKED_DOOR_PATH "../client_src/textures/img/sprites/locked_door.bmp"
+#define INVERTED_LOCKED_DOOR_PATH "../client_src/textures/img/sprites/inv_locked_door.bmp"
 
 #define BJ_0_PATH "../client_src/textures/img/miscellaneous/bj_0.bmp"
 #define BJ_1_PATH "../client_src/textures/img/miscellaneous/bj_1.bmp"
@@ -350,9 +351,10 @@ TexturesContainer::~TexturesContainer() {
 void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(None, nullptr);
     static_textures.emplace(Wall, new Texture(WALL_PATH, this->renderer));
-    static_textures.emplace(Door, new Texture(DOOR_PATH, this->renderer));
-    static_textures.emplace(InvertedDoor, new Texture(INVERTED_DOOR_PATH, this->renderer));
-    static_textures.emplace(Barrel, new Texture(BARREL_PATH, this->renderer));
+    static_textures.emplace(AutoDoor, new Texture(AUTO_DOOR_PATH, this->renderer));
+    static_textures.emplace(InvertedAutoDoor, new Texture(INVERTED_AUTO_DOOR_PATH, this->renderer));
+    static_textures.emplace(LockedDoor, new Texture(LOCKED_DOOR_PATH, this->renderer));
+    static_textures.emplace(InvertedLockedDoor, new Texture(INVERTED_LOCKED_DOOR_PATH, this->renderer));
 
     static_textures.emplace(BJ_0, new Texture(BJ_0_PATH, this->renderer));
     static_textures.emplace(BJ_1, new Texture(BJ_1_PATH, this->renderer));
