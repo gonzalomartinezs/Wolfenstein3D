@@ -10,7 +10,7 @@ class Player;
 
 class Rocket : public DirectedPositionable {
 private:
-    const float MOVE_SPEED, SIZE, MAX_DAMAGE, MAX_DAMAGE_DISTANCE;
+    float MOVE_SPEED, SIZE, MAX_DAMAGE, MAX_DAMAGE_DISTANCE;
     int shootingPlayerNumber;
     bool exploded;
 
@@ -22,7 +22,9 @@ public:
 
     void update(std::vector<Player*>& players, const Map& map);
 
-    bool hasExploded();
+    bool hasExploded() const;
+
+    void getPositionData(uint8_t *msg);
 
     /* Destructor */
     ~Rocket();
