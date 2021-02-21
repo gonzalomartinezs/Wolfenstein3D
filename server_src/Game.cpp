@@ -128,7 +128,7 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
 
     this->items.loadItemsInfo(msg, currentByte);
 
-    //this->loadSounds(msg, currentByte, clientNumber);
+    this->loadSounds(msg, currentByte, clientNumber);
 
     this->doors.loadDoorsInfo(msg, currentByte);
 
