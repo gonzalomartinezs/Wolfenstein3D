@@ -7,9 +7,13 @@
 class RocketLauncher : public Weapon {
 private:
     std::vector<Rocket>& rockets;
+    const float ROCKET_MOVE_SPEED, ROCKET_SIZE, ROCKET_MAX_DAMAGE,
+				ROCKET_MAX_DAMAGE_DISTANCE; 
 public:
     /* Constructor */
-    RocketLauncher(std::vector<Rocket>& rockets, float item_radius);
+    RocketLauncher(float rocket_move_speed, float rocket_size,
+    			float rocket_max_damage, float rocket_max_damage_distance,
+    			std::vector<Rocket>& rockets, float item_radius);
 
     void startShooting() override;
 

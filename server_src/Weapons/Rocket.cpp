@@ -1,22 +1,25 @@
 #include "Rocket.h"
 #include "../Player.h"
 
-#define ROCKET_SIZE 0.2 /* Leer del YAML ? */
+//#define ROCKET_SIZE 0.2 /* Leer del YAML ? */
 #define WALL_SIZE 1
 #define WALKABLE 0
-#define MAX_DAMAGE 100 /* Leer del YAML ? */
-#define MAX_DAMAGE_DISTANCE 3 /* Leer del YAML ? */
+//#define MAX_DAMAGE 100 /* Leer del YAML ? */
+//#define MAX_DAMAGE_DISTANCE 3 /* Leer del YAML ? */
 
-Rocket::Rocket(float pos_x, float pos_y, float dir_x, float dir_y, int shootingPlayerNumber) :
-                DirectedPositionable(pos_x, pos_y, dir_x, dir_y, Missile_0) {
-    this->moveSpeed = 0.02; /* Leer del YAML */
+Rocket::Rocket(float _move_speed, float _size, float _max_damage,
+            float _max_damage_distance, float pos_x, float pos_y,
+            float dir_x, float dir_y, int shootingPlayerNumber) :
+        DirectedPositionable(pos_x, pos_y, dir_x, dir_y, Missile_0),
+        MOVE_SPEED(_move_speed), SIZE(_size), MAX_DAMAGE(_max_damage),
+        MAX_DAMAGE_DISTANCE(_max_damage_distance) {
     this->shootingPlayerNumber = shootingPlayerNumber;
     this->exploded = false;
 }
 
 void Rocket::update(std::vector<Player*>& players, const Map& map) {
-    this->x += this->dir_x * this->moveSpeed;
-    this->y += this->dir_y * this->moveSpeed;
+    this->x += this->dir_x * this->MOVE_SPEED;
+    this->y += this->dir_y * this->MOVE_SPEED;
     if (_collided(players, map)) {
         _explode(players, map);
         this->exploded = true;
@@ -37,7 +40,7 @@ void Rocket::_explode(std::vector<Player*>& players, const Map& map) {
 }
 
 bool Rocket::_collided(std::vector<Player*>& players, const Map& map) {
-    Collider collider(this->x, this->y, ROCKET_SIZE);
+    Collider collider(this->x, this->y, SIZE);
     bool collided = (this->_lookForWallCollision(map, collider) || this->_lookForPlayerCollision(players, collider));
     return collided;
 }

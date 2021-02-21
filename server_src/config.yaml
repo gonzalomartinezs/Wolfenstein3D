@@ -7,6 +7,11 @@ weapons_general:
     bullets_per_burst: &machine_gun_bullets 5
   chain_gun:
     time_between_shots: &chain_gun_shots 1
+  rocket_launcher:
+    move_speed: &rpg_move_speed 0.02
+    size: &rpg_size 0.2
+    max_damage: &rpg_max_damage 100
+    max_damage_distance: &rpg_max_damage_distance 3
 
 max_health: &max_health_global 100
 
@@ -35,12 +40,6 @@ player:
     knife:
       time_between_stabs: 1
       range: 0.5
-    chain_gun:
-      time_between_shots: *chain_gun_shots
-    machine_gun:
-      time_between_shots: *machine_gun_shots
-      time_between_bursts: *machine_gun_bursts
-      bullets_per_burst: *machine_gun_bullets
 
 #Items
 items:
@@ -88,4 +87,10 @@ items:
     value: 3 #value = id
     radius: 0.3
     time_between_shots: *chain_gun_shots
-
+  rocket_launcher:
+    value: 4 #value = id
+    radius: 0.3
+    move_speed: *rpg_move_speed
+    size: *rpg_size
+    max_damage: *rpg_max_damage
+    max_damage_distance: *rpg_max_damage_distance
