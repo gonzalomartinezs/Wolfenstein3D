@@ -1,7 +1,6 @@
 #include "Rocket.h"
 #include "../Player.h"
 #include <cstring>
-#include <iostream>
 
 #define WALL_SIZE 1
 #define WALKABLE 0
@@ -23,11 +22,6 @@ void Rocket::update(std::vector<Player*>& players, const Map& map) {
         _explode(players, map);
         this->exploded = true;
     }
-
-    /*std::cout << "posX: " << this->x;
-    std::cout << ", posY: " << this->y;
-    std::cout << ", dir_x: " << this->dir_x;
-    std::cout << ", dir_y: " << this->dir_y << std::endl;*/
 }
 
 void Rocket::_explode(std::vector<Player*>& players, const Map& map) {
