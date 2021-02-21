@@ -8,10 +8,9 @@ RocketLauncherItem::RocketLauncherItem(const Configuration& config, float _x,
 						config.getFloat(KEY_RADIUS)), 
 					rockets(_rockets) {}
 
-RocketLauncherItem::RocketLauncherItem(float _x, float _y, TextureID _texture,
-								int _value, float _radius,
-								std::vector<Rocket>& _rockets) :
-								Item(_x, _y, _texture, _value, _radius),
+RocketLauncherItem::RocketLauncherItem(float _x, float _y, int _value,
+							float _radius, std::vector<Rocket>& _rockets) :
+							Item(_x, _y, RPGItem, _value, _radius),
 								rockets(_rockets) {}
 
 void RocketLauncherItem::equipTo(PlayerActions& action) {
@@ -20,7 +19,6 @@ void RocketLauncherItem::equipTo(PlayerActions& action) {
 	}
 
 //	action.equip(new RocketLauncher(this->rockets,
-//		 							this->texture,
 //	 								this->collider.getRadius()));
 }
 

@@ -17,7 +17,7 @@ private:
 	std::vector<Weapon*> weapons;
 	uint8_t current_weapon;
 	int initial_bullets, bullets, max_bullets;
-	TextureID bullet_texture;
+
 	float bullet_radius;
 
 public:

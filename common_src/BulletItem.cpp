@@ -8,9 +8,9 @@ BulletItem::BulletItem(const Configuration& config, float _x, float _y)
 						config.getFloat(KEY_RADIUS)),
 						MAX_BULLETS(config.getInt(KEY_MAX_BULLETS)) {}
 
-BulletItem::BulletItem(float _x, float _y, TextureID texture, int _value,
-						float _radius, int max_bullets)
-				: Item(_x, _y, texture, _value, _radius),
+BulletItem::BulletItem(float _x, float _y, int _value, float _radius,
+					int max_bullets)
+				: Item(_x, _y, Bullets, _value, _radius),
 						MAX_BULLETS(max_bullets) {}
 
 void BulletItem::equipTo(PlayerActions& action) {

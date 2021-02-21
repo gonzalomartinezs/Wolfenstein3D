@@ -20,7 +20,7 @@ public:
     /* Constructor */
     MachineGun(const float time_between_shots,
             const float time_between_bursts, const int bullets_per_burst,
-            TextureID texture, float item_radius);
+            float item_radius);
 
     void startShooting() override;
 

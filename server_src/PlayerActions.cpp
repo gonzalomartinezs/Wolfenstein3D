@@ -54,7 +54,6 @@ bool PlayerActions::hasKey() const {
 
 void PlayerActions::interactWith(ManualDoor& door) {
     this->key.open(door);
-//    door.interact(this->key);
 }
 
 void PlayerActions::die(Items* items, float x, float y) {

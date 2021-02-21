@@ -14,8 +14,7 @@ private:
 
 public:
     /* Constructor */
-    ChainGun(const float time_between_shots, TextureID texture,
-            float item_radius);
+    ChainGun(const float time_between_shots, float item_radius);
 
     void startShooting() override;
 

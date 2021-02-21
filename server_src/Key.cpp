@@ -3,11 +3,10 @@
 #include "../common_src/KeyItem.h"
 #include <iostream>
 
-#define KEY_TEXTURE "texture"
 #define KEY_RADIUS "radius"
 
 Key::Key(const Configuration& config) : 
-		item_texture(static_cast<TextureID>(config.getInt(KEY_TEXTURE))),
+		item_texture(KeyItem_),
 		item_radius(config.getFloat(KEY_RADIUS)) , available(false) {}
 
 void Key::equip() {
@@ -31,7 +30,7 @@ bool Key::has() const {
 }
 
 Item* Key::getItem(float x, float y) const {
-	return new KeyItem(x, y, this->item_texture, this->item_radius);
+	return new KeyItem(x, y, this->item_radius);
 }
 
 void Key::used() {

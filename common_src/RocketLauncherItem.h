@@ -10,8 +10,8 @@ private:
 public:
 	RocketLauncherItem(const Configuration& config, float _x, float _y,
 						std::vector<Rocket>& _rockets);
-	RocketLauncherItem(float _x, float _y, TextureID _texture,
-					int _value, float _radius, std::vector<Rocket>& _rockets);
+	RocketLauncherItem(float _x, float _y, int _value, float _radius,
+						std::vector<Rocket>& _rockets);
 	void equipTo(PlayerActions& action) override;
 	~RocketLauncherItem();
 };

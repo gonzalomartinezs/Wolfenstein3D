@@ -9,11 +9,12 @@ private:
     std::vector<Rocket>& rockets;
 public:
     /* Constructor */
-    RocketLauncher(std::vector<Rocket>& rockets, TextureID texture, float item_radius);
+    RocketLauncher(std::vector<Rocket>& rockets, float item_radius);
 
     void startShooting() override;
 
-    void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) override;
+    void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber,
+    				const Map& map) override;
 
     /* Destructor */
     ~RocketLauncher();
