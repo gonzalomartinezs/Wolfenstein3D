@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <cstring> //borrar
+#include <algorithm>
 
 #define END_GAME_CHAR 0
 #define NAME_TIME_TOLERANCE 500
@@ -87,8 +88,24 @@ void Game::getInstructions() {
     }
 }
 
+bool _rocketHasExploded(Rocket rocket) {
+    return rocket.hasExploded();
+}
+
 void Game::update() {
     std::vector<Collider> colliders;
+
+    /*this->rockets.erase(std::remove_if(
+            this->rockets.begin(),
+            this->rockets.end(),
+            _rocketHasExploded), this->rockets.end());*/
+
+    for (size_t i = 0; i < this->rockets.size(); ++i) {
+        if (this->rockets[i].hasExploded()) {
+            this->rockets.erase(this->rockets.begin() + i);
+        }
+    }
+
     for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i]->updatePlayer(this->map, this->items, this->players,
                                         this->doors);
@@ -99,11 +116,9 @@ void Game::update() {
         this->doors[i].update(this->map, colliders);
     }
 
-    /*
-    for (size_t i = 0; i < this->rockets.size(); ++i) {
-        this->rockets[i].update(this->players);
-    }
-    */
+    /*for (size_t i = 0; i < this->rockets.size(); ++i) {
+        this->rockets[i].update(this->players, this->map);
+    }*/
 }
 
 void Game::sendUpdate() {
