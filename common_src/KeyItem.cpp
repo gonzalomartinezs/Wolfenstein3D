@@ -5,10 +5,7 @@
 #define VALUE 0
 
 KeyItem::KeyItem(const Configuration& config, float _x, float _y) : 
-				Item(_x, _y,
-					static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-					VALUE,
-					config.getFloat(KEY_RADIUS)) {}
+			Item(_x, _y, KeyItem_, VALUE, config.getFloat(KEY_RADIUS)) {}
 
 KeyItem::KeyItem(float _x, float _y, TextureID _texture, int _radius) :
 				Item(_x, _y, _texture, VALUE, _radius) {}

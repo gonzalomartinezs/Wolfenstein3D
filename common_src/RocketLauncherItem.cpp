@@ -4,9 +4,7 @@
 
 RocketLauncherItem::RocketLauncherItem(const Configuration& config, float _x,
 									float _y, std::vector<Rocket>& _rockets) :
-					Item(_x, _y,
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
+					Item(_x, _y, RPGItem, config.getInt(KEY_VALUE),
 						config.getFloat(KEY_RADIUS)), 
 					rockets(_rockets) {}
 

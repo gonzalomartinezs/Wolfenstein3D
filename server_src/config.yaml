@@ -24,7 +24,6 @@ player:
   total_lives: 5
   #Key
   key:
-    texture: &key_texture 37
     radius: &key_radius 0.2
   #Initial weapons
   weapons:
@@ -32,7 +31,6 @@ player:
     bullet:
       initial_bullets: 100
       max_bullets: &max_bullets 100
-      texture: &bullet_texture 35
       radius: &bullet_radius 0.2
     knife:
       time_between_stabs: 1
@@ -48,56 +46,45 @@ player:
 items:
   #Treasure
   cross:
-    texture: 31
     value: 10
     radius: 0.5
   crown:
-    texture: 32
     value: 200
     radius: 0.5
   cup:
-    texture: 33
     value: 50
     radius: 0.5
   chest:
-    texture: 34
     value: 100
     radius: 0.5
   #Health recover
   food:
-    texture: 29
     value: 10
     radius: 0.4
     max_health: *max_health_global
   medical_kit:
-    texture: 36
     value: 20
     radius: 0.2
     max_health: *max_health_global
   blood:
-    texture: 27
     value: 1
     radius: 0.3
     max_health: 11
   #Otros
   key:
-    texture: *key_texture
     radius: *key_radius
   bullet:
-    texture: *bullet_texture
     value: 5
     radius: *bullet_radius
     max_bullets: *max_bullets
   #Weapons
   machine_gun:
-    texture: 24
     value: 2 #value = id
     radius: 0.3
     time_between_shots: *machine_gun_shots
     time_between_bursts: *machine_gun_bursts
     bullets_per_burst: *machine_gun_bullets
   chain_gun:
-    texture: 25
     value: 3 #value = id
     radius: 0.3
     time_between_shots: *chain_gun_shots

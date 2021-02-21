@@ -4,9 +4,7 @@
 #define KEY_MAX_BULLETS "max_bullets"
 
 BulletItem::BulletItem(const Configuration& config, float _x, float _y)
-				: Item(_x, _y,
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
+				: Item(_x, _y, Bullets, config.getInt(KEY_VALUE),
 						config.getFloat(KEY_RADIUS)),
 						MAX_BULLETS(config.getInt(KEY_MAX_BULLETS)) {}
 

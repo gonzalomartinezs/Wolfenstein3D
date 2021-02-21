@@ -8,9 +8,7 @@
 
 MachineGunItem::MachineGunItem(const Configuration& config, float _x,
 								float _y) :
-					Item(_x, _y,
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
+					Item(_x, _y, MachinegunItem, config.getInt(KEY_VALUE),
 						config.getFloat(KEY_RADIUS)),
 						TIME_BETWEEN_SHOTS(config.getFloat(KEY_SHOTS)),
                         TIME_BETWEEN_BURSTS(config.getFloat(KEY_BURSTS)),

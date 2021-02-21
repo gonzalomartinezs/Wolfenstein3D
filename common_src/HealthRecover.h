@@ -8,7 +8,8 @@ class HealthRecover : public Item {
 private:
 	const int MAX_HEALTH;
 public:
-	HealthRecover(const Configuration& config, float _x, float _y);
+	HealthRecover(const Configuration& config, float _x, float _y,
+				TextureID _texture);
 	int operator+(int health) const override;
 	void equipTo(PlayerActions& action) override;
 	~HealthRecover();

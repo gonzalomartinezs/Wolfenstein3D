@@ -3,10 +3,9 @@
 
 #define KEY_MAX_HEALTH "max_health"
 
-HealthRecover::HealthRecover(const Configuration& config, float _x, float _y)
-					: Item(_x, _y,
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
+HealthRecover::HealthRecover(const Configuration& config, float _x, float _y,
+							TextureID _texture)
+					: Item(_x, _y, _texture, config.getInt(KEY_VALUE),
 						config.getFloat(KEY_RADIUS)),
 						MAX_HEALTH(config.getInt(KEY_MAX_HEALTH)) {}
 
