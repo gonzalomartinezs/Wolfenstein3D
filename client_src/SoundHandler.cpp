@@ -88,8 +88,8 @@ void SoundHandler::_loadSlidersSfx(DirectedPositionable &player_pos,
 
                 if (distance < LIMIT_DISTANCE){
                     SoundID id;
-                    if(doors[i].getSurfaceType() == DOOR) id = DoorMoving;
-                    else id = PassageMoving;
+                    if(doors[i].getSurfaceType() == PASSAGE) id = PassageMoving;
+                    else id = DoorMoving;
                     SoundEffect& sfx = this->sounds.getSFX(id);
                     sfx.setVolume(1-distance/(float)LIMIT_DISTANCE);
                     sfx.play(0);

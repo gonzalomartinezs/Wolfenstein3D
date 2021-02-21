@@ -33,7 +33,7 @@ public:
 	void useBullets(uint8_t bullets_amount);
 	void fireTheGun(std::vector<Player*>& players,
                     int shooting_player_number, const Map& map);
-	bool hasBullets() const;
+	bool hasBullets(uint8_t bulletsAmount) const;
 	void reset(Items* items, RandomPosition& rd_pos);
 	uint8_t getWeaponID() const;
 	int getBullets() const;

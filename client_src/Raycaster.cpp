@@ -80,7 +80,7 @@ Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray
             hit_axis = 'y';
         }
         int current_cell = map.get(map_x, map_y);
-        if (current_cell >= DOOR_CLOSED) {
+        if (current_cell >= AUTOMATIC_DOOR) {
             float hit_x, hit_y;
             _calculateHitPoint(hit_x, hit_y, map_x, map_y, hit_axis, player, ray_dir);
             current_cell = _processSlidingPassage(hit_x, hit_y, map_x, map_y, ray_dir,
@@ -94,7 +94,7 @@ Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray
     } else {
         perp_wall_distance = (map_y - player.getY() + (1 - ray_dir_y_sign)/2) / ray_dir.y;
     }
-    if (map.get(map_x, map_y) == DOOR)
+    if (map.get(map_x, map_y) == AUTOMATIC_DOOR || map.get(map_x, map_y) == LOCKED_DOOR)
         return perp_wall_distance * (1 + 0.5 / perp_wall_distance);
     return perp_wall_distance;
 }
@@ -150,21 +150,22 @@ int Raycaster::_processSlidingPassage(float hit_x, float hit_y, int map_x, int m
     int ray_dir_y_sign = copysign(1, ray_dir.y);
 
     float fraction = 0;
-    if (map.get(map_x, map_y) == DOOR) fraction = 0.5;
+    int cell_id = map.get(map_x, map_y);
+    if (cell_id == AUTOMATIC_DOOR || cell_id == LOCKED_DOOR) fraction = 0.5;
 
     if (hit_axis == 'x'){
         float true_y_step = std::sqrt(delta_dist_x*delta_dist_x-1);
         float half_step_in_y = hit_y+(ray_dir_y_sign*true_y_step)*fraction;
         if (int(half_step_in_y)==map_y){
             float step_in = half_step_in_y-map_y;
-            if (_rayHitsDoor(step_in, doors[id])) return int(Door);
+            if (_rayHitsDoor(step_in, doors[id])) return cell_id;
         }
     } else {
         float true_x_step = std::sqrt(delta_dist_y*delta_dist_y-1);
         float half_step_in_x = hit_x+(ray_dir_x_sign*true_x_step)*fraction;
         if (int(half_step_in_x)==map_x){
             float step_in = half_step_in_x-map_x;
-            if (_rayHitsDoor(step_in, doors[id])) return int(Door);
+            if (_rayHitsDoor(step_in, doors[id])) return cell_id;
         }
     }
     return 0;

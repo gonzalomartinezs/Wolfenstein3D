@@ -49,3 +49,7 @@ MapElement::MapElement(const Editor_icon &id, const QRect& rect) {
     this->id = id;
     this->rect = rect;
 }
+
+bool MapElement::operator==( const MapElement &rhs) {
+    return (this->rect == rhs.rect);
+}

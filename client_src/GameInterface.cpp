@@ -18,7 +18,7 @@ void GameInterface::run() {
         UI_Info aux = this->latest_info;
         while(!this->queue.isEmpty()){
             aux = this->queue.pop();
-            if (aux.isImportant()) {
+            if (aux.isImportant() && !important_found) {
                 new_info = aux;
                 important_found = true;
             }

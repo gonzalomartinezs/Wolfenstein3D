@@ -4,9 +4,9 @@
 enum TextureID{
     None,
     Wall,
-    Door,
-    InvertedDoor,
-    Barrel,
+    AutoDoor,
+    InvertedAutoDoor,
+    LockedDoor,
     BJ_0,
     BJ_1,
     BJ_2,
@@ -23,6 +23,7 @@ enum TextureID{
     HasNotKey,
     HasKey,
     Background,
+    LB_Back,
     HUD,
     KnifeItem,
     PistolItem,
@@ -40,7 +41,7 @@ enum TextureID{
     Bullets,
     HealthKit,
     KeyItem_,
-//    Missile_0, // de acá para abajo son sprites dinamicos
+    Missile_0, // de acá para abajo son sprites dinamicos
 //    Missile_1,
 //    Missile_2,
 //    Missile_3,
@@ -102,7 +103,8 @@ enum TextureID{
     Pistol_Pl,
     MachineGun_Pl,
     ChainGun_Pl,
-    RPG_Pl
+    RPG_Pl,
+    InvertedLockedDoor
 };
 
 #endif //TEXTUREID_H
