@@ -8,20 +8,17 @@
 
 MachineGunItem::MachineGunItem(const Configuration& config, float _x,
 								float _y) :
-					Item(_x, _y,
-						static_cast<TextureID>(config.getInt(KEY_TEXTURE)),
-						config.getInt(KEY_VALUE),
+					Item(_x, _y, MachinegunItem, MACHINE_GUN,
 						config.getFloat(KEY_RADIUS)),
 						TIME_BETWEEN_SHOTS(config.getFloat(KEY_SHOTS)),
                         TIME_BETWEEN_BURSTS(config.getFloat(KEY_BURSTS)),
                         BULLETS_PER_BURST(config.getInt(KEY_BULLETS)) {}
 
-MachineGunItem::MachineGunItem(float _x, float _y, TextureID texture,
-						int id, float radius,
+MachineGunItem::MachineGunItem(float _x, float _y, float radius,
 						float time_between_shots,
 						float time_between_bursts,
 						int bullets_per_burst) :
- 					Item(_x, _y, texture, id, radius),
+ 					Item(_x, _y, MachinegunItem, MACHINE_GUN, radius),
  						TIME_BETWEEN_SHOTS(time_between_shots),
                         TIME_BETWEEN_BURSTS(time_between_bursts),
                         BULLETS_PER_BURST(bullets_per_burst) {}
@@ -34,7 +31,7 @@ void MachineGunItem::equipTo(PlayerActions& action) {
 	action.equip(new MachineGun(this->TIME_BETWEEN_SHOTS,
 								this->TIME_BETWEEN_BURSTS,
 								this->BULLETS_PER_BURST,
-								this->texture, this->collider.getRadius()));
+								this->collider.getRadius()));
 }
 
 MachineGunItem::~MachineGunItem() {}

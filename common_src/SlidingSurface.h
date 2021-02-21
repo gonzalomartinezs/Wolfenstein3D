@@ -18,7 +18,7 @@ public:
 
     void update(Map& map, const std::vector<Collider>& players) override;
 
-    void interact(Key& key) override;
+    void interact(bool has_key) override;
 
     // Libera los recursos uilizados por la puerta
     ~SlidingSurface();

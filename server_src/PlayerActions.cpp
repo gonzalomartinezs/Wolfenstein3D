@@ -3,7 +3,6 @@
 #include "../common_src/Treasure.h"
 #include "../common_src/BulletItem.h"
 #include "../common_src/Items.h"
-#include "Key.h"
 #include "Exceptions/GameException.h"
 #include <cstring>
 
@@ -54,7 +53,7 @@ bool PlayerActions::hasKey() const {
 }
 
 void PlayerActions::interactWith(ManualDoor& door) {
-    door.interact(this->key);
+    this->key.open(door);
 }
 
 void PlayerActions::die(Items* items, float x, float y) {

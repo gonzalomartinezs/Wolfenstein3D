@@ -1,7 +1,7 @@
 #include "ManualDoor.h"
-
 #include "GameConstants.h"
 #include "../server_src/Player.h"
+#include "../server_src/Exceptions/GameException.h"
 
 #define SIZE 1
 #define EXTRA_SIZE 0.7f
@@ -82,16 +82,16 @@ int ManualDoor::getSurfaceType() const {
     return this->surface_type;
 }
 
-void ManualDoor::interact(Key& key) {	
+void ManualDoor::interact(bool has_key) {	
 	if (this->state == SLIDER_OPENED) {
 		this->state = SLIDER_CLOSING;
 		timer.start();
 	} else if (this->state == surface_type) {
-		if (locked && key.has()) {
+		if (locked && has_key) {
 			this->state = SLIDER_OPENING;
 			timer.start();
 			locked = false;
-			key.used();
+            throw GameException("Key used.");
 		} else if (!locked) {
 			this->state = SLIDER_OPENING;
 			timer.start();

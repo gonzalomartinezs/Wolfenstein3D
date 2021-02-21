@@ -16,6 +16,7 @@ public:
     MapElement(MapElement &&in);
 
     MapElement(const MapElement &in);
+    bool operator==( const MapElement& rhs);
 
     MapElement& operator=(const MapElement& in);
     Editor_icon getId()const;

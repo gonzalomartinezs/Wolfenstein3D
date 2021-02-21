@@ -6,7 +6,6 @@
 #include "Positionable.h"
 #include "Collider.h"
 #include "RectCollider.h"
-#include "../server_src/Key.h"
 
 class ManualDoor : public Positionable {
 protected:
@@ -41,7 +40,7 @@ public:
 
 	int getSurfaceType() const;
 
-	virtual void interact(Key& key);
+	virtual void interact(bool has_key);
 
 	bool collidesWith(const Collider& other_collider);
 

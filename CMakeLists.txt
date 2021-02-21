@@ -25,7 +25,9 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Peer.h common_src/Peer.cpp
         common_src/DirectedPositionable.h common_src/DirectedPositionable.cpp
         common_src/Map.h common_src/Map.cpp
-        common_src/SlidingSurface.cpp common_src/Collider.cpp
+        common_src/SlidingSurface.cpp common_src/Collider.cpp common_src/RectCollider.cpp
+        common_src/ManualDoor.cpp common_src/Doors.cpp
+        server_src/Exceptions/GameException.cpp
         common_src/GameConstants.h
         client_src/textures/TexturesContainer.h client_src/textures/TexturesContainer.cpp
         client_src/textures/Texture.h client_src/textures/Texture.cpp
@@ -93,6 +95,7 @@ add_executable(server server_src/server_main.cpp
         server_src/Weapons/Weapon.cpp server_src/Weapons/Knife.cpp
         server_src/Weapons/Pistol.cpp server_src/Weapons/ChainGun.cpp
         server_src/Weapons/MachineGun.cpp server_src/Weapons/Rocket.cpp
+        server_src/Weapons/RocketLauncher.cpp
         server_src/Key.cpp
         server_src/Sound.cpp
         common_src/Exceptions/ConfigurationException.cpp

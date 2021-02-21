@@ -34,20 +34,7 @@ Weapons::Weapons(const Configuration& config) :
     this->bullets = this->initial_bullets;
 
     this->max_bullets = config_bullet.getInt(KEY_MAX_BULLETS);
-    this->bullet_texture = static_cast<TextureID>(
-                                    config_bullet.getInt(KEY_BULLET_TEXTURE));
     this->bullet_radius = config_bullet.getFloat(KEY_BULLET_RADIUS);
-
-    //Solo para test
-/*    Configuration config_chain_gun(config, KEY_CHAIN_GUN);
-	this->weapons.push_back(
-                    new ChainGun(config_chain_gun.getFloat(KEY_SHOTS)));
-
-    Configuration config_machine_gun(config, KEY_MACHINE_GUN);
-	this->weapons.push_back(new MachineGun(
-                                    config_machine_gun.getFloat(KEY_SHOTS),
-                                    config_machine_gun.getFloat(KEY_BURSTS),
-                                    config_machine_gun.getInt(KEY_BULLETS)));*/
 }
 
 bool Weapons::hasWeapon(int id) const {
@@ -120,7 +107,6 @@ void Weapons::reset(Items* items, RandomPosition& rd_pos) {
     }
 
     items->push_back(new BulletItem(rd_pos.getX(), rd_pos.getY(),
-                                    this->bullet_texture,
                                     LOST_BULLETS, this->bullet_radius,
                                     this->max_bullets));
 }

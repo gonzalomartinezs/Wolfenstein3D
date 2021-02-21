@@ -39,6 +39,18 @@ static const std::vector<std::string> keys = {KEY_CROSS, KEY_CUP, KEY_CHEST,
 											KEY_MACHINE_GUN, KEY_CHAIN_GUN,
 											KEY_ROCKET_LAUNCHER};
 
+static TextureID getTexture(const std::string& key) {
+	if (key == KEY_CROSS) return Cross;
+	if (key == KEY_CROWN) return Crown;
+	if (key == KEY_CUP) return Cup;
+	if (key == KEY_CHEST) return Jewelry;
+	
+	if (key == KEY_FOOD) return Food_0;
+	if (key == KEY_MEDICAL_KIT) return HealthKit;
+
+	return Blood_1;
+}
+
 static Item* initializeItem(const Configuration& config, 
 							const Configuration& config_map,
 							const std::string& key,
@@ -48,10 +60,11 @@ static Item* initializeItem(const Configuration& config,
 	if (key == KEY_CROSS || key == KEY_CUP || key == KEY_CHEST ||
 		key == KEY_CROWN) {
 		item = new Treasure(config, config_map.getFloat(KEY_POS_X),
-							config_map.getFloat(KEY_POS_Y));
+							config_map.getFloat(KEY_POS_Y),
+							getTexture(key));
 	} else if (key == KEY_FOOD || key == KEY_MEDICAL_KIT) {
 		item = new HealthRecover(config, config_map.getFloat(KEY_POS_X),
-							config_map.getFloat(KEY_POS_Y));
+							config_map.getFloat(KEY_POS_Y), getTexture(key));
 	} else if (key == KEY_BLOOD) {
 		item = new Blood(config, config_map.getFloat(KEY_POS_X),
 							config_map.getFloat(KEY_POS_Y));

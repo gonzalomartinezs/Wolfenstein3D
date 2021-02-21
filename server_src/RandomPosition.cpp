@@ -1,7 +1,7 @@
 #include "RandomPosition.h"
 
 #define RANGE 10
-#define FRACTION 10
+#define FRACTION 10.0f
 
 RandomPosition::RandomPosition(const float _x, const float _y) :
 					x(_x), y(_y), range_x((int(_x) - _x)),

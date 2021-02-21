@@ -6,8 +6,8 @@
 MachineGun::MachineGun(const float time_between_shots,
                     const float time_between_bursts,
                     const int bullets_per_burst,
-                    TextureID texture, float item_radius) :
-                    Weapon(MACHINE_GUN, texture, item_radius),
+                    float item_radius) :
+                    Weapon(MACHINE_GUN, item_radius),
                     lastShotDelay(-1), burstBulletCounter(0),
                     isInBurstRecover(false),
                     TIME_BETWEEN_SHOTS(time_between_shots),
@@ -56,9 +56,9 @@ void MachineGun::fireTheGun(std::vector<Player*> &players,
 }
 
 Item* MachineGun::getWeaponItem(float x, float y) {
-    return new MachineGunItem(x, y, this->texture, this->id,
-                        this->item_radius, this->TIME_BETWEEN_SHOTS,
-                        this->TIME_BETWEEN_BURSTS, this->BULLETS_PER_BURST);
+    return new MachineGunItem(x, y, this->item_radius,
+                        this->TIME_BETWEEN_SHOTS, this->TIME_BETWEEN_BURSTS,
+                        this->BULLETS_PER_BURST);
 }
 
 MachineGun::~MachineGun() {}
