@@ -1,6 +1,22 @@
-#ifndef WOLFENSTEIN3D_ROCKETLAUNCHER_H
-#define WOLFENSTEIN3D_ROCKETLAUNCHER_H
+#ifndef WOLFENSTEIN3D_ROCKETLAUNCHER_H_
+#define WOLFENSTEIN3D_ROCKETLAUNCHER_H_
 
-class RocketLauncher {};
+#include "Weapon.h"
+#include "Rocket.h"
 
-#endif //WOLFENSTEIN3D_ROCKETLAUNCHER_H
+class RocketLauncher : public Weapon {
+private:
+    std::vector<Rocket>& rockets;
+public:
+    /* Constructor */
+    RocketLauncher(std::vector<Rocket>& rockets, TextureID texture, float item_radius);
+
+    void startShooting() override;
+
+    void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber, const Map& map) override;
+
+    /* Destructor */
+    ~RocketLauncher();
+};
+
+#endif //WOLFENSTEIN3D_ROCKETLAUNCHER_H_
