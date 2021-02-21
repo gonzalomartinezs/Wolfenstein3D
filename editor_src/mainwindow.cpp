@@ -82,6 +82,7 @@ void MainWindow::connectEvents() {
 
 void MainWindow::resizeMap() {
     mapHandler->resizeMap( spinX->value(), spinY->value() );
+    //mapHandler->setName
 }
 
 void MainWindow::openFile() {
@@ -116,8 +117,9 @@ void MainWindow::loadFile(QString& path) {
 void MainWindow::saveFileAs() {
     MapParser parser;
     QString path = QFileDialog::getSaveFileName(this);
-    //meter return si no puede xD.
-    parser.exportMap(mapHandler->getMap(), path.toStdString() );
+    if ( !path.isEmpty() ) {
+        parser.exportMap(mapHandler->getMap(), path.toStdString() );
+    }
 }
 
 void MainWindow::restart() {
