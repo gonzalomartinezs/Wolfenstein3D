@@ -376,42 +376,6 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(Background,new Texture(BACKGROUND, this->renderer, this->window_surface));
     static_textures.emplace(HUD, new Texture(PL_HUD, this->renderer, this->window_surface));
 
-    static_textures.emplace(Guard_0, new Texture(GUARD_0_0, this->renderer));
-    static_textures.emplace(Guard_1, new Texture(GUARD_1_0, this->renderer));
-    static_textures.emplace(Guard_2, new Texture(GUARD_2_0, this->renderer));
-    static_textures.emplace(Guard_3, new Texture(GUARD_3_0, this->renderer));
-    static_textures.emplace(Guard_4, new Texture(GUARD_4_0, this->renderer));
-    static_textures.emplace(Guard_5, new Texture(GUARD_5_0, this->renderer));
-    static_textures.emplace(Guard_6, new Texture(GUARD_6_0, this->renderer));
-    static_textures.emplace(Guard_7, new Texture(GUARD_7_0, this->renderer));
-
-    static_textures.emplace(SS_0, new Texture(SS_0_0, this->renderer));
-    static_textures.emplace(SS_1, new Texture(SS_1_0, this->renderer));
-    static_textures.emplace(SS_2, new Texture(SS_2_0, this->renderer));
-    static_textures.emplace(SS_3, new Texture(SS_3_0, this->renderer));
-    static_textures.emplace(SS_4, new Texture(SS_4_0, this->renderer));
-    static_textures.emplace(SS_5, new Texture(SS_5_0, this->renderer));
-    static_textures.emplace(SS_6, new Texture(SS_6_0, this->renderer));
-    static_textures.emplace(SS_7, new Texture(SS_7_0, this->renderer));
-
-    static_textures.emplace(Officer_0, new Texture(OFFICER_0_0, this->renderer));
-    static_textures.emplace(Officer_1, new Texture(OFFICER_1_0, this->renderer));
-    static_textures.emplace(Officer_2, new Texture(OFFICER_2_0, this->renderer));
-    static_textures.emplace(Officer_3, new Texture(OFFICER_3_0, this->renderer));
-    static_textures.emplace(Officer_4, new Texture(OFFICER_4_0, this->renderer));
-    static_textures.emplace(Officer_5, new Texture(OFFICER_5_0, this->renderer));
-    static_textures.emplace(Officer_6, new Texture(OFFICER_6_0, this->renderer));
-    static_textures.emplace(Officer_7, new Texture(OFFICER_7_0, this->renderer));
-
-    static_textures.emplace(Mutant_0, new Texture(MUTANT_0_0, this->renderer));
-    static_textures.emplace(Mutant_1, new Texture(MUTANT_1_0, this->renderer));
-    static_textures.emplace(Mutant_2, new Texture(MUTANT_2_0, this->renderer));
-    static_textures.emplace(Mutant_3, new Texture(MUTANT_3_0, this->renderer));
-    static_textures.emplace(Mutant_4, new Texture(MUTANT_4_0, this->renderer));
-    static_textures.emplace(Mutant_5, new Texture(MUTANT_5_0, this->renderer));
-    static_textures.emplace(Mutant_6, new Texture(MUTANT_6_0, this->renderer));
-    static_textures.emplace(Mutant_7, new Texture(MUTANT_7_0, this->renderer));
-
 //    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
 //    static_textures.emplace(Missile_1, new Texture(MISSILE_1, this->renderer));
 //    static_textures.emplace(Missile_2, new Texture(MISSILE_2, this->renderer));

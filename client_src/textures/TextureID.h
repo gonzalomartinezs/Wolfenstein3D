@@ -7,7 +7,6 @@ enum TextureID{
     AutoDoor,
     InvertedAutoDoor,
     LockedDoor,
-    InvertedLockedDoor,
     BJ_0,
     BJ_1,
     BJ_2,
@@ -103,7 +102,8 @@ enum TextureID{
     Pistol_Pl,
     MachineGun_Pl,
     ChainGun_Pl,
-    RPG_Pl
+    RPG_Pl,
+    InvertedLockedDoor
 };
 
 #endif //TEXTUREID_H

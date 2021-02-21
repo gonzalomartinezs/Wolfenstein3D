@@ -74,7 +74,7 @@ float SpriteSelector::_calculateAngle(const DirectedPositionable &sprite,
 
 Texture *SpriteSelector::selectTexture(Positionable &positionable) {
     TextureID tex_id = positionable.getTexture();
-    if (tex_id > Dog_0) {
+    if (tex_id >= Dog_0) {
         int i = 0;
         for(auto& player: players) {
             if (player.distanceTo(positionable) < 0.01) break;
