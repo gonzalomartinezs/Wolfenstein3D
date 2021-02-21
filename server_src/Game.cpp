@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
-#include <cstring> //borrar
+#include <cstring>
 #include <algorithm>
 
 #define END_GAME_CHAR 0
@@ -126,7 +126,6 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
-//    uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
     uint8_t currentByte = 1;
 
     this->players[clientNumber]->getHUDData(msg + currentByte);
