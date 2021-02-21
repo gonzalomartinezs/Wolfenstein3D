@@ -8,7 +8,7 @@ weapons_general:
   chain_gun:
     time_between_shots: &chain_gun_shots 1
   rocket_launcher:
-    move_speed: &rpg_move_speed 0.02
+    move_speed: &rpg_move_speed 2.5
     size: &rpg_size 0.2
     max_damage: &rpg_max_damage 100
     max_damage_distance: &rpg_max_damage_distance 3
@@ -18,8 +18,8 @@ max_health: &max_health_global 100
 #Player stats
 player:
   #Speed
-  move_speed: 0.02
-  rot_speed: 0.02
+  move_speed: 2.5
+  rot_speed: 2.5
   #Collider
   size: 0.2
   #Initial stats
