@@ -5,13 +5,13 @@
 #define KEY_SHOTS "time_between_shots"
 
 ChainGunItem::ChainGunItem(const Configuration& config, float _x, float _y) :
-					Item(_x, _y, ChaingunItem, config.getInt(KEY_VALUE),
+					Item(_x, _y, ChaingunItem, CHAIN_GUN,
 						config.getFloat(KEY_RADIUS)), 
 					TIME_BETWEEN_SHOTS(config.getFloat(KEY_SHOTS)) {}
 
-ChainGunItem::ChainGunItem(float _x, float _y, int _value,
-							float _radius, float time_between_shots) :
-					Item(_x, _y, ChaingunItem, _value,_radius),
+ChainGunItem::ChainGunItem(float _x, float _y, float _radius,
+						float time_between_shots) :
+					Item(_x, _y, ChaingunItem, CHAIN_GUN, _radius),
 					TIME_BETWEEN_SHOTS(time_between_shots) {}
 
 void ChainGunItem::equipTo(PlayerActions& action) {

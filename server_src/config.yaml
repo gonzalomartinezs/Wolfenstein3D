@@ -78,17 +78,14 @@ items:
     max_bullets: *max_bullets
   #Weapons
   machine_gun:
-    value: 2 #value = id
     radius: 0.3
     time_between_shots: *machine_gun_shots
     time_between_bursts: *machine_gun_bursts
     bullets_per_burst: *machine_gun_bullets
   chain_gun:
-    value: 3 #value = id
     radius: 0.3
     time_between_shots: *chain_gun_shots
   rocket_launcher:
-    value: 4 #value = id
     radius: 0.3
     move_speed: *rpg_move_speed
     size: *rpg_size

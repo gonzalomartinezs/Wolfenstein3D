@@ -1,4 +1,5 @@
 #include "RocketLauncher.h"
+#include "../../common_src/RocketLauncherItem.h"
 
 #define BULLETS_PER_ROCKET 5
 
@@ -31,6 +32,13 @@ void RocketLauncher::fireTheGun(std::vector<Player*>& players,
                                   shootingPlayerNumber);
     }
     this->weaponIsShooting = false;
+}
+
+Item* RocketLauncher::getWeaponItem(float x, float y) {
+    return new RocketLauncherItem(x, y, this->item_radius, this->rockets,
+                                this->ROCKET_MOVE_SPEED, this->ROCKET_SIZE,
+                                this->ROCKET_MAX_DAMAGE,
+                                this->ROCKET_MAX_DAMAGE_DISTANCE);
 }
 
 RocketLauncher::~RocketLauncher() {}

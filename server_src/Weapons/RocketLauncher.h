@@ -20,6 +20,8 @@ public:
     void fireTheGun(std::vector<Player*>& players, int shootingPlayerNumber,
     				const Map& map) override;
 
+	Item* getWeaponItem(float x, float y) override;
+
     /* Destructor */
     ~RocketLauncher();
 };

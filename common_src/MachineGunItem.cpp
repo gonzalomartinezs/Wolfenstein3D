@@ -8,17 +8,17 @@
 
 MachineGunItem::MachineGunItem(const Configuration& config, float _x,
 								float _y) :
-					Item(_x, _y, MachinegunItem, config.getInt(KEY_VALUE),
+					Item(_x, _y, MachinegunItem, MACHINE_GUN,
 						config.getFloat(KEY_RADIUS)),
 						TIME_BETWEEN_SHOTS(config.getFloat(KEY_SHOTS)),
                         TIME_BETWEEN_BURSTS(config.getFloat(KEY_BURSTS)),
                         BULLETS_PER_BURST(config.getInt(KEY_BULLETS)) {}
 
-MachineGunItem::MachineGunItem(float _x, float _y, int id, float radius,
+MachineGunItem::MachineGunItem(float _x, float _y, float radius,
 						float time_between_shots,
 						float time_between_bursts,
 						int bullets_per_burst) :
- 					Item(_x, _y, MachinegunItem, id, radius),
+ 					Item(_x, _y, MachinegunItem, MACHINE_GUN, radius),
  						TIME_BETWEEN_SHOTS(time_between_shots),
                         TIME_BETWEEN_BURSTS(time_between_bursts),
                         BULLETS_PER_BURST(bullets_per_burst) {}

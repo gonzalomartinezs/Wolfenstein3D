@@ -56,9 +56,9 @@ void MachineGun::fireTheGun(std::vector<Player*> &players,
 }
 
 Item* MachineGun::getWeaponItem(float x, float y) {
-    return new MachineGunItem(x, y, this->id,
-                        this->item_radius, this->TIME_BETWEEN_SHOTS,
-                        this->TIME_BETWEEN_BURSTS, this->BULLETS_PER_BURST);
+    return new MachineGunItem(x, y, this->item_radius,
+                        this->TIME_BETWEEN_SHOTS, this->TIME_BETWEEN_BURSTS,
+                        this->BULLETS_PER_BURST);
 }
 
 MachineGun::~MachineGun() {}

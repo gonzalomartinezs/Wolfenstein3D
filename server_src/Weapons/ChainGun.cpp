@@ -33,7 +33,7 @@ void ChainGun::fireTheGun(std::vector<Player*> &players,
 }
 
 Item* ChainGun::getWeaponItem(float x, float y) {
-    return new ChainGunItem(x, y, this->id, this->item_radius,
+    return new ChainGunItem(x, y, this->item_radius,
                             this->TIME_BETWEEN_SHOTS);
 }
 
