@@ -23,6 +23,7 @@ enum TextureID{
     HasNotKey,
     HasKey,
     Background,
+    LB_Back,
     HUD,
     KnifeItem,
     PistolItem,
@@ -40,7 +41,7 @@ enum TextureID{
     Bullets,
     HealthKit,
     KeyItem_,
-//    Missile_0, // de acá para abajo son sprites dinamicos
+    Missile_0, // de acá para abajo son sprites dinamicos
 //    Missile_1,
 //    Missile_2,
 //    Missile_3,
