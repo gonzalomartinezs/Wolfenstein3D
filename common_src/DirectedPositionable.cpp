@@ -16,6 +16,7 @@ DirectedPositionable& DirectedPositionable::operator=(const
     this->y = other.y;
     this->dir_x = other.dir_x;
     this->dir_y = other.dir_y;
+    this->texture = other.texture;
     return *this;
 }
 
