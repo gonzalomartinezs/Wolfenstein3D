@@ -97,6 +97,10 @@ void PlayerActions::nextWeapon() {
     this->weapons.nextWeapon();
 }
 
+void PlayerActions::setWeapon(uint8_t id) {
+    this->weapons.setWeapon(id);
+}
+
 void PlayerActions::prevWeapon() {
     this->weapons.prevWeapon();
 }

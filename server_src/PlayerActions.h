@@ -54,6 +54,7 @@ public:
 
 	void nextWeapon();
 	void prevWeapon();
+	void setWeapon(uint8_t id);
 
 	bool isShooting() const;
 	void fireTheGun(std::vector<Player*>& players,

@@ -3,6 +3,7 @@
 #include <iostream> //borrar
 
 #define KEY_PATH "bot_path"
+#define POS_KNIFE 0
 
 Bot::Bot(const Configuration& config_stats,
          const Configuration& config_map,
@@ -10,6 +11,7 @@ Bot::Bot(const Configuration& config_stats,
          std::string botName,
          std::vector<Sound>& sounds) :
          Player(config_stats, config_map, _player_number, botName, sounds) {
+    this->action.setWeapon(POS_KNIFE);
     this->L = luaL_newstate();
     luaL_openlibs(this->L);
     luaL_loadfile(this->L, config_stats.getString(KEY_PATH).c_str());
@@ -26,6 +28,7 @@ void Bot::getState(std::vector<Player*> &players, int botNumber,
     newState = static_cast<uint8_t>(lua_tonumber(this->L, -1));
     lua_pop(this->L, 1);
     this->setState(newState);
+    this->action.setWeapon(POS_KNIFE);
 }
 
 void Bot::_pushMap(const Map& map){
