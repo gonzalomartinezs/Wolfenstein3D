@@ -100,12 +100,6 @@ void Game::update() {
             this->rockets.end(),
             _rocketHasExploded), this->rockets.end());*/
 
-    for (size_t i = 0; i < this->rockets.size(); ++i) {
-        if (this->rockets[i].hasExploded()) {
-            this->rockets.erase(this->rockets.begin() + i);
-        }
-    }
-
     for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i]->updatePlayer(this->map, this->items, this->players,
                                         this->doors);
