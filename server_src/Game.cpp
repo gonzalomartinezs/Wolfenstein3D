@@ -5,12 +5,10 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
-#include <cstring> //borrar
+#include <cstring>
 #include <algorithm>
 
 #define END_GAME_CHAR 0
-#define NAME_TIME_TOLERANCE 500
-#define SLEEP_TIME_MILLIS 50
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
@@ -88,17 +86,17 @@ void Game::getInstructions() {
     }
 }
 
-bool _rocketHasExploded(Rocket rocket) {
+bool _rocketHasExploded(const Rocket& rocket) {
     return rocket.hasExploded();
 }
 
 void Game::update() {
     std::vector<Collider> colliders;
 
-    /*this->rockets.erase(std::remove_if(
+    this->rockets.erase(std::remove_if(
             this->rockets.begin(),
             this->rockets.end(),
-            _rocketHasExploded), this->rockets.end());*/
+            _rocketHasExploded), this->rockets.end());
 
     for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i]->updatePlayer(this->map, this->items, this->players,
@@ -110,9 +108,9 @@ void Game::update() {
         this->doors[i].update(this->map, colliders);
     }
 
-    /*for (size_t i = 0; i < this->rockets.size(); ++i) {
+    for (size_t i = 0; i < this->rockets.size(); ++i) {
         this->rockets[i].update(this->players, this->map);
-    }*/
+    }
 }
 
 void Game::sendUpdate() {
@@ -126,7 +124,6 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
-//    uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
     uint8_t currentByte = 1;
 
     this->players[clientNumber]->getHUDData(msg + currentByte);
@@ -153,6 +150,11 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
             currentByte += sizeof(uint8_t);
         }
     }
+
+    /*for (size_t i = 0; i < this->rockets.size(); ++i) {
+        this->rockets[i].getPositionData(msg);
+        currentByte += POS_DATA_SIZE;
+    }*/
 
     msg[0] = currentByte - 1;
     return currentByte;

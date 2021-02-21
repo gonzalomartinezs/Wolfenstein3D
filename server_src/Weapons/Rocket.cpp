@@ -1,11 +1,9 @@
 #include "Rocket.h"
 #include "../Player.h"
+#include <cstring>
 
-//#define ROCKET_SIZE 0.2 /* Leer del YAML ? */
 #define WALL_SIZE 1
 #define WALKABLE 0
-//#define MAX_DAMAGE 100 /* Leer del YAML ? */
-//#define MAX_DAMAGE_DISTANCE 3 /* Leer del YAML ? */
 
 Rocket::Rocket(float _move_speed, float _size, float _max_damage,
             float _max_damage_distance, float pos_x, float pos_y,
@@ -30,7 +28,7 @@ void Rocket::_explode(std::vector<Player*>& players, const Map& map) {
     for (size_t i = 0; i < players.size(); ++i) {
         float distance = this->distanceTo(*players[i]);
         uint8_t damage = _calculateDamage(distance);
-        if (distance >= MAX_DAMAGE_DISTANCE) {
+        if (distance <= MAX_DAMAGE_DISTANCE) {
             players[i]->receiveShot(damage);
             if (players[i]->isDead()) {
                 players[this->shootingPlayerNumber]->increaseKillCounter();
@@ -80,7 +78,14 @@ uint8_t Rocket::_calculateDamage(float distance) {
     return static_cast<uint8_t>(damageDealt);
 }
 
-bool Rocket::hasExploded() {
+void Rocket::getPositionData(uint8_t *msg) {
+    memcpy(msg, &this->x, sizeof(float));
+    memcpy(msg + sizeof(float), &this->y, sizeof(float));
+    memcpy(msg + 2 * sizeof(float), &this->dir_x, sizeof(float));
+    memcpy(msg + 3 * sizeof(float), &this->dir_y, sizeof(float));
+}
+
+bool Rocket::hasExploded() const {
     return this->exploded;
 }
 
