@@ -54,7 +54,7 @@ void Game::execute() {
             /*std::cout << "Nuevo Tick" << std::endl;*/
             this->getInstructions();
             this->sendUpdate();
-            this->update();  // Fixed Step-Time
+            this->update(TICK_DURATION);  // Fixed Step-Time
 
             double lastTickTime = timeBetweenUpdates.getTime();
 
@@ -90,7 +90,7 @@ bool _rocketHasExploded(const Rocket& rocket) {
     return rocket.hasExploded();
 }
 
-void Game::update() {
+void Game::update(double timeSlice) {
     std::vector<Collider> colliders;
 
     this->rockets.erase(std::remove_if(
@@ -100,7 +100,7 @@ void Game::update() {
 
     for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i]->updatePlayer(this->map, this->items, this->players,
-                                        this->doors);
+                                        this->doors, timeSlice);
         colliders.push_back(this->players[i]->getCollider());
     }
 
@@ -109,7 +109,7 @@ void Game::update() {
     }
 
     for (size_t i = 0; i < this->rockets.size(); ++i) {
-        this->rockets[i].update(this->players, this->map);
+        this->rockets[i].update(this->players, this->map, timeSlice);
     }
 }
 

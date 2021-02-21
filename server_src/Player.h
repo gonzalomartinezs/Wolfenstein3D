@@ -46,7 +46,7 @@ public:
 
     // Actualiza el estado del jugador
     void updatePlayer(const Map& map, Items& items,
-                        std::vector<Player*>& players, Doors& doors);
+                        std::vector<Player*>& players, Doors& doors, double timeSlice);
 
     // Asigna el siguiente estado del jugador
     void setState(uint8_t newState);
@@ -106,12 +106,12 @@ private:
     void lookForItem(Items& items, const Collider& collider);
     void lookForWallCollision(const Map& map, const Collider& collider);
     void lookForDoor(Doors& doors, const Collider& collider);
-    void _move();
+    void _move(double timeSlice);
     void _respawn(Items& items);
-    void _moveForwards();
-    void _moveBackwards();
-    void _turnLeft();
-    void _turnRight();
+    void _moveForwards(double timeSlice);
+    void _moveBackwards(double timeSlice);
+    void _turnLeft(double timeSlice);
+    void _turnRight(double timeSlice);
 };
 
 #endif  // WOLFENSTEIN3D_PLAYER_H_

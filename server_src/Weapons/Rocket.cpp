@@ -15,9 +15,9 @@ Rocket::Rocket(float _move_speed, float _size, float _max_damage,
     this->exploded = false;
 }
 
-void Rocket::update(std::vector<Player*>& players, const Map& map) {
-    this->x += this->dir_x * this->MOVE_SPEED;
-    this->y += this->dir_y * this->MOVE_SPEED;
+void Rocket::update(std::vector<Player*>& players, const Map& map, double timeSlice) {
+    this->x += this->dir_x * this->MOVE_SPEED * timeSlice;
+    this->y += this->dir_y * this->MOVE_SPEED * timeSlice;
     if (_collided(players, map)) {
         _explode(players, map);
         this->exploded = true;

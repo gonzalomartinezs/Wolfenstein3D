@@ -102,11 +102,11 @@ void Player::lookForDoor(Doors& doors, const Collider& collider) {
 }
 
 void Player::updatePlayer(const Map& map, Items& items,
-                        std::vector<Player*>& players, Doors& doors) {
+                        std::vector<Player*>& players, Doors& doors, double timeSlice) {
     float old_x = this->x, old_y = this->y;
 
     try {
-        Player::_move();
+        Player::_move(timeSlice);
     } catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
@@ -209,54 +209,48 @@ uint8_t Player::getWeaponID() const {
     return this->action.getWeaponID();
 }
 
-void Player::_moveForwards() {
-    this->x += this->dir_x * this->moveSpeed;
-    this->y += this->dir_y * this->moveSpeed;
+void Player::_moveForwards(double timeSlice) {
+    this->x += this->dir_x * this->moveSpeed * static_cast<float>(timeSlice);
+    this->y += this->dir_y * this->moveSpeed * static_cast<float>(timeSlice);
 }
 
-void Player::_moveBackwards() {
-    this->x -= this->dir_x * this->moveSpeed;
-    this->y -= this->dir_y * this->moveSpeed;
+void Player::_moveBackwards(double timeSlice) {
+    this->x -= this->dir_x * this->moveSpeed * static_cast<float>(timeSlice);
+    this->y -= this->dir_y * this->moveSpeed * static_cast<float>(timeSlice);
 }
 
-void Player::_turnLeft() {
+void Player::_turnLeft(double timeSlice) {
+    float step = this->rotSpeed * static_cast<float>(timeSlice);
     float oldDirX = this->dir_x;
-    this->dir_x = (this->dir_x * cos(this->rotSpeed) -
-                    this->dir_y * sin(this->rotSpeed));
-    this->dir_y = (oldDirX * sin(this->rotSpeed) +
-                    this->dir_y * cos(this->rotSpeed));
+    this->dir_x = (this->dir_x * cos(step) - this->dir_y * sin(step));
+    this->dir_y = (oldDirX * sin(step) + this->dir_y * cos(step));
 
     float oldPlaneX = this->camPlaneX;
-    this->camPlaneX = this->camPlaneX * cos(this->rotSpeed) -
-                        this->camPlaneY * sin(this->rotSpeed);
-    this->camPlaneY = oldPlaneX * sin(this->rotSpeed) +
-                        this->camPlaneY * cos(this->rotSpeed);
+    this->camPlaneX = this->camPlaneX * cos(step) - this->camPlaneY * sin(step);
+    this->camPlaneY = oldPlaneX * sin(step) + this->camPlaneY * cos(step);
 }
 
-void Player::_turnRight() {
+void Player::_turnRight(double timeSlice) {
+    float step = this->rotSpeed * static_cast<float>(timeSlice);
     float oldDirX = this->dir_x;
-    this->dir_x = (this->dir_x * cos(-this->rotSpeed) -
-                    this->dir_y * sin(-this->rotSpeed));
-    this->dir_y = (oldDirX * sin(-this->rotSpeed) +
-                    this->dir_y * cos(-this->rotSpeed));
+    this->dir_x = (this->dir_x * cos(-step) - this->dir_y * sin(-step));
+    this->dir_y = (oldDirX * sin(-step) + this->dir_y * cos(-step));
 
     float oldPlaneX = this->camPlaneX;
-    this->camPlaneX = (this->camPlaneX * cos(-this->rotSpeed) -
-                        this->camPlaneY * sin(-this->rotSpeed));
-    this->camPlaneY = (oldPlaneX * sin(-this->rotSpeed) +
-                        this->camPlaneY * cos(-this->rotSpeed));
+    this->camPlaneX = (this->camPlaneX * cos(-step) -  this->camPlaneY * sin(-step));
+    this->camPlaneY = (oldPlaneX * sin(-step) + this->camPlaneY * cos(-step));
 }
 
-void Player::_move() {
+void Player::_move(double timeSlice) {
     if (this->state != ISNOTMOVING) {
         if (this->state == ISMOVINGFORWARDS) {
-            this->_moveForwards();
+            this->_moveForwards(timeSlice);
         } else if (this->state == ISMOVINGBACKWARDS) {
-            this->_moveBackwards();
+            this->_moveBackwards(timeSlice);
         } else if (this->state == ISTURNINGLEFT) {
-            this->_turnLeft();
+            this->_turnLeft(timeSlice);
         } else if (this->state == ISTURNINGRIGHT) {
-            this->_turnRight();
+            this->_turnRight(timeSlice);
         } else {
             throw GameException("Player has an invalid state!");
         }

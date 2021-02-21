@@ -21,7 +21,7 @@ public:
         float dir_x, float dir_y, int shootingPlayerNumber);
 
     /* Actualiza el estado del Rocket (Step-Time) */
-    void update(std::vector<Player*>& players, const Map& map);
+    void update(std::vector<Player*>& players, const Map& map, double timeSlice);
 
     /* Devuelve true si el Rocket explotó */
     bool hasExploded() const;

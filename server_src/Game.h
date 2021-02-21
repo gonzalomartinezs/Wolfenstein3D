@@ -41,7 +41,7 @@ public:
  private:
     void getInstructions();
 
-    void update();
+    void update(double timeSlice);
 
     void sendUpdate();
 
