@@ -51,10 +51,9 @@ void Game::execute() {
         while (this->isRunning) {
             timeBetweenUpdates.start();
 
-            /*std::cout << "Nuevo Tick" << std::endl;*/
             this->getInstructions();
             this->sendUpdate();
-            this->update(TICK_DURATION);  // Fixed Step-Time
+            this->update(TICK_DURATION);
 
             double lastTickTime = timeBetweenUpdates.getTime();
 
