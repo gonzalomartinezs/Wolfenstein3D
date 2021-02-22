@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include "GameInterface.h"
 #include "../common_src/GameConstants.h"
 
@@ -32,7 +33,7 @@ void GameInterface::run() {
 void GameInterface::showLeaderboard(std::vector<std::string> &names,
                                     std::vector<int> &values) {
     ui_handler.clearScreen();
-    usleep(LEADERBOARD_SLEEP_TIME_1);
+    ui_handler.render();
     sound_handler.startLeaderBoardMusic();
     std::thread leaderboard_sound(&SoundHandler::loadLeaderBoardSfx, &sound_handler);
     ui_handler.loadLeaderboard(names, values);
