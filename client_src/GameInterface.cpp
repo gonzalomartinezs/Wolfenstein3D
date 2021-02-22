@@ -1,5 +1,6 @@
 #include <iostream>
 #include "GameInterface.h"
+#include "../common_src/GameConstants.h"
 
 GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
                              ProtectedQueue<UI_Info> &queue,
@@ -30,6 +31,8 @@ void GameInterface::run() {
 
 void GameInterface::showLeaderboard(std::vector<std::string> &names,
                                     std::vector<int> &values) {
+    ui_handler.clearScreen();
+    usleep(LEADERBOARD_SLEEP_TIME_1);
     sound_handler.startLeaderBoardMusic();
     std::thread leaderboard_sound(&SoundHandler::loadLeaderBoardSfx, &sound_handler);
     ui_handler.loadLeaderboard(names, values);

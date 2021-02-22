@@ -79,7 +79,6 @@ void UI_Handler::loadPlayerHUD(std::vector<int> &player_info) {
 
 void UI_Handler::loadLeaderboard(std::vector<std::string> &names,
                                  std::vector<int> &values) {
-    clearScreen();
     leaderboard.render(names, values);
 }
 

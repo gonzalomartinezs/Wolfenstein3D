@@ -126,8 +126,10 @@ ssize_t Client::receiveInformation() {
                              doors_states, sounds, important);
 
             this->drawing_info.push(new_info);
-
-        } else playing = false;
+        } else {
+            this->playing = false;
+            this->instructions.doneAdding();
+        }
     }
     return 0;
 }
@@ -146,7 +148,8 @@ void Client::loadLeaderboard(GameInterface &interface) {
     std::vector<uint8_t> received(bytes_to_receive);
     std::vector<std::string> names;
     std::vector<int> values;
-    
+    this->peer.recv(received.data(), bytes_to_receive);
+
     for (int i = 0; i < LEADERBOARD_ELEMENTS; i++) {
         name_len = received[current_byte];
         current_byte++;
