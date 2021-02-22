@@ -13,12 +13,13 @@ class MapHandler : public QWidget {
 
 
 public:
-    void resizeMap( int x, int y);
+    void resizeMap( int x, int y, std::string name = "NoName");
 
-    explicit MapHandler(const IconsContainer& container,const std::string& name = "-",
+    explicit MapHandler(const IconsContainer& container,const std::string& name = "NoName",
                         unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
     const Map& getMap();
     void loadElements(std::list<MapElement>& in);
+
 
 signals:
     void showOccupiedPosition ();

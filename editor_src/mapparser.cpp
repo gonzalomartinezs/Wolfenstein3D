@@ -12,8 +12,10 @@
 #define INVALID_FORMAT "Invalid file format, please use .Yaml"
 
 #define WALL0 1
-#define DOOR 2
-#define SLIDER 5
+#define DOOR 12
+#define LOCKED_DOOR 10
+#define SLIDER 11
+#define WALL1 2
 
 
 
@@ -56,7 +58,8 @@ void MapParser::exportStructures(const Map& exported) {
             Coordinate cor = calculateCoor(i.getRect());
             int aux;
             if(i.getId() == Wall0) aux = WALL0;
-            if(i.getId() == Wall1) aux = WALL0;
+            if(i.getId() == Wall1) aux = WALL1;
+            if(i.getId() == LockedDoor) aux = LOCKED_DOOR;
             if(i.getId() == Door)  aux = DOOR;
             if(i.getId() == Slider) aux = SLIDER;
             matrix[cor.getY()][cor.getX()] = aux;
@@ -160,6 +163,12 @@ void MapParser::loadMatrix() {
                 case WALL0 :
                     elements.emplace_back(MapElement(Wall0, calculateRect(j, i)));
                     break;
+                case LOCKED_DOOR :
+                    elements.emplace_back(MapElement(LockedDoor, calculateRect(j, i)));
+                    break;
+                case WALL1 :
+                    elements.emplace_back(MapElement(Wall1, calculateRect(j, i)));
+                    break;
                 case SLIDER:
                     elements.emplace_back(MapElement(Slider, calculateRect(j, i)));
                     break;
@@ -168,8 +177,7 @@ void MapParser::loadMatrix() {
     }
 }
 
-Editor_icon MapParser::getID(const std::string &key) {
-    if (key == "barrel") return Barrel;
+Editor_icon MapParser::getID (const std::string &key) {
     if (key == "cross") return Cross;
     if (key =="chest") return Jewelry;
     if (key =="crown") return Crown;
@@ -185,20 +193,20 @@ Editor_icon MapParser::getID(const std::string &key) {
     return Wall1; // default ??
 }
 
-bool MapParser::isStructure(const Editor_icon &id) const {
+bool MapParser::isStructure (const Editor_icon &id) const {
     if ( id ==Wall0 || id == Wall1 || id == Slider
-           || id == Door) return true;
+           || id == Door || id == LockedDoor) return true;
     return false;
 }
 
-Coordinate MapParser::calculateCoor(const QRect &rect) const {
+Coordinate MapParser::calculateCoor (const QRect &rect) const {
     rect.x();
     rect.y(); //error puede estar aca.
     Coordinate coor( rect.x()/ITEMSIZE, rect.y()/ITEMSIZE);
     return coor;
 }
 
-void MapParser::exportPlayers(const Map& exported) {
+void MapParser::exportPlayers (const Map& exported) {
 
     std::list<MapElement> list = exported.getElements();
 
@@ -219,7 +227,7 @@ void MapParser::exportPlayers(const Map& exported) {
     }
 }
 
-void MapParser::exportItems(const Map& exported) {
+void MapParser::exportItems (const Map& exported) {
     std::list<MapElement> list = exported.getElements();
     emitter << YAML::Key << "items";
     emitter << YAML::Value << YAML::BeginMap; //1
@@ -246,7 +254,7 @@ void MapParser::exportItems(const Map& exported) {
     emitter << YAML::EndMap; //1
 };
 
-std::string MapParser::getItemName(Editor_icon in) {
+std::string MapParser::getItemName (Editor_icon in) {
 
     switch (in) {
         case Blood:
@@ -290,7 +298,8 @@ std::string MapParser::getItemName(Editor_icon in) {
     }
 }
 
-std::list<MapElement> MapParser::getItems(Editor_icon in, std::list<MapElement>& list) {
+std::list<MapElement> MapParser::getItems (Editor_icon in,
+                                          std::list<MapElement>& list) {
     std::list<MapElement> r;
     for (auto i : list) {
         if(i.getId() == in) {
