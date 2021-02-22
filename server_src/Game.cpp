@@ -154,10 +154,16 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
         }
     }
 
-    /*for (size_t i = 0; i < this->rockets.size(); ++i) {
-        this->rockets[i].getPositionData(msg);
+    for (size_t i = 0; i < this->rockets.size(); ++i) {
+        this->rockets[i].getPositionData(msg + currentByte);
         currentByte += POS_DATA_SIZE;
-    }*/
+
+        uint8_t texture = this->rockets[i].getTexture();
+
+        memcpy(msg + currentByte, &texture, sizeof(uint8_t));
+        currentByte += sizeof(uint8_t);
+
+    }
 
     msg[0] = currentByte - 1;
     return currentByte;
