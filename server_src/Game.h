@@ -47,7 +47,7 @@ public:
 
     void sendUpdate();
 
-    int createMsg(uint8_t* msg, size_t clientNumber);
+    int createMsg(uint8_t* msg, size_t clientNumber, bool hasLost);
 
     void createLeaderBoard();
 

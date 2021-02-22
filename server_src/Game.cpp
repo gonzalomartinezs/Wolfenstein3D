@@ -141,27 +141,27 @@ void Game::sendUpdate() {
     /* Enviar update a los clientes */
     uint8_t msg[MAX_MSG_SIZE];
     for (size_t i = 0; i < this->clients.size(); i++) {
-        if (players[i]->hasLost() == false) {
-            int bytesToSend = this->createMsg(msg, i);
+        if (this->players[i]->hasLost() == false) {
+            int bytesToSend = this->createMsg(msg, i, this->players[i]->hasLost());
             this->clients[i]->push(msg, bytesToSend);
 
         } else {
-            int bytesToSend = this->createMsg(msg, getFirstStillPlayingPlayer());
+            int bytesToSend = this->createMsg(msg, getFirstStillPlayingPlayer(),
+                                              this->players[i]->hasLost());
             this->clients[i]->push(msg, bytesToSend);
         }
     }
     this->sounds.clear();
 }
 
-int Game::createMsg(uint8_t* msg, size_t clientNumber) {
+int Game::createMsg(uint8_t* msg, size_t clientNumber, bool hasLost) {
     uint8_t currentByte = 1;
 
     this->players[clientNumber]->getHUDData(msg + currentByte);
     currentByte += HUD_INFO_SIZE;
 
-    uint8_t hasLost = this->players[clientNumber]->hasLost();
-    memcpy(msg + currentByte, &hasLost, sizeof(uint8_t));
-    currentByte += sizeof(uint8_t);
+    memcpy(msg + currentByte, &hasLost, sizeof(bool));
+    currentByte += sizeof(bool);
 
     this->players[clientNumber]->getPositionDataWithPlane(msg + currentByte);
     currentByte += POS_DATA_PLANE_SIZE;
