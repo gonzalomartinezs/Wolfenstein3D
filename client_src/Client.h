@@ -13,6 +13,7 @@
 #include "../common_src/BlockingQueue.h"
 #include "../common_src/ProtectedQueue.h"
 #include "../common_src/DirectedPositionable.h"
+#include "GameInterface.h"
 
 class Client {
 private:
@@ -20,7 +21,7 @@ private:
     Peer peer;
     BlockingQueue<int>& instructions;
     ProtectedQueue<UI_Info>& drawing_info;
-    std::atomic<bool> is_connected;
+    std::atomic<bool> playing;
 
 public:
     // Crea un cliente listo para ser utilizado
@@ -35,7 +36,7 @@ public:
     std::vector<std::vector<int>> receiveMap();
 
     // Lleva a cabo la interaccion de seleccion de partida con el servidor.
-    void lobbyInteraction(std::string username);
+    void lobbyInteraction(const std::string& username);
 
     // Envia al servidor la proxima instruccion contenida en 'instructions',
     // hasta que surja un error o se corte la conexion.
@@ -43,6 +44,11 @@ public:
 
     // Recibe informacion del servidor y la escribe en el archivo 'file'.
     ssize_t receiveInformation();
+
+    // Retorna un booleano indicando si el jugador se encuentra jugando o no.
+    bool isPlaying() const;
+
+    void loadLeaderboard(GameInterface& interface);
 
     // Realiza un shutdown del cliente y marca la cola bloqueante.
     void shutdown();
@@ -53,23 +59,23 @@ public:
 private:
     void _createGame();
     void _joinGame();
-    void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
+    static void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
                            bool &important, int &already_parsed);
-    void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
+    static void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                              std::vector<float> &coordinates,
                              uint8_t *bytes_received, int &already_parsed);
-    void _assignItemsCoordenates(uint8_t *bytes_received,
+    static void _assignItemsCoordenates(uint8_t *bytes_received,
                                  std::vector<Positionable> &objects,
                                  std::vector<float> &coordinates,
                                  int &already_parsed);
-    void _assignSounds(uint8_t *bytes_received,
+    static void _assignSounds(uint8_t *bytes_received,
                        std::vector<std::pair<int, float>> &sounds,
                        bool &important,
                        int &already_parsed);
-    void _assignSlidersStates(uint8_t *bytes_received,
+    static void _assignSlidersStates(uint8_t *bytes_received,
                               std::vector<int> &sliders_states,
                               int& already_parsed);
-    void _assignOtherPlayersCoordenates(uint8_t *bytes_received,
+    static void _assignOtherPlayersCoordenates(uint8_t *bytes_received,
                                         uint8_t bytes_to_receive,
                                         std::vector<DirectedPositionable> &players,
                                         std::vector<float> &coordinates,

@@ -35,7 +35,7 @@ Client::Client(const std::string &host, const std::string &service,
                ProtectedQueue<UI_Info> &drawing_info):
         socket(host.c_str(), service.c_str(), 0),
         peer(socket.connect()), instructions(instructions),
-        drawing_info(drawing_info), is_connected(true) {}
+        drawing_info(drawing_info), playing(true) {}
 
 
 std::vector<std::vector<int>> Client::receiveMap() {
@@ -58,7 +58,7 @@ std::vector<std::vector<int>> Client::receiveMap() {
 void Client::sendInstruction() {
     try{
         ssize_t sent = 0;
-        while (is_connected && sent >= 0 && !instructions.isWorking()){
+        while (playing && sent >= 0 && !instructions.isWorking()){
             uint8_t instruction = this->instructions.pop();
             sent = this->peer.send(&instruction, sizeof(uint8_t));
         }
@@ -67,7 +67,7 @@ void Client::sendInstruction() {
     }
 }
 
-void Client::lobbyInteraction(std::string username) {
+void Client::lobbyInteraction(const std::string& username) {
     int choice;
     uint8_t uint_choice, name_len;
     uint8_t bytes_sent[MAX_MESSAGE_SIZE];
@@ -94,54 +94,88 @@ void Client::lobbyInteraction(std::string username) {
 }
 
 ssize_t Client::receiveInformation() {
-    while(is_connected){
+    while(playing){
         uint8_t bytes_to_receive;
         uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
         memset(bytes_received, 0, MAX_MESSAGE_SIZE);
         bool important = false;
 
         this->peer.recv(&bytes_to_receive, 1);
-        this->peer.recv(bytes_received, bytes_to_receive);
-        DirectedPositionable player(0, 0, 0, 0, None);
-        PlayerView view;
+        if (bytes_to_receive > 0) {
+            this->peer.recv(bytes_received, bytes_to_receive);
+            DirectedPositionable player(0, 0, 0, 0, None);
+            PlayerView view;
 
-        int already_parsed = 0;
-        std::vector<float> coordinates;
-        std::vector<int> player_info;
-        std::vector<Positionable> objects;
-        std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
-        std::vector<int> doors_states;
-        std::vector<std::pair<int,float>> sounds;
+            int already_parsed = 0;
+            std::vector<float> coordinates;
+            std::vector<int> player_info;
+            std::vector<Positionable> objects;
+            std::vector<DirectedPositionable> directed_objects; // jugadores y objetos moviles
+            std::vector<int> doors_states;
+            std::vector<std::pair<int, float>> sounds;
 
-        _assignPlayerInfo(player_info, bytes_received, important,already_parsed);
-        _assignPlayerCoordenates(player, view, coordinates, bytes_received,already_parsed);
-        _assignItemsCoordenates(bytes_received, objects, coordinates,already_parsed);
-        _assignSounds(bytes_received, sounds, important, already_parsed);
-        _assignSlidersStates(bytes_received, doors_states, already_parsed);
-        _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
-                                       coordinates,already_parsed);
+            _assignPlayerInfo(player_info, bytes_received, important,already_parsed);
+            _assignPlayerCoordenates(player, view, coordinates, bytes_received, already_parsed);
+            _assignItemsCoordenates(bytes_received, objects, coordinates, already_parsed);
+            _assignSounds(bytes_received, sounds, important, already_parsed);
+            _assignSlidersStates(bytes_received, doors_states, already_parsed);
+            _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
+                                           coordinates,already_parsed);
 
-        UI_Info new_info(player, view, player_info, objects, directed_objects,
-                         doors_states, sounds, important);
-        this->drawing_info.push(new_info);
+            UI_Info new_info(player, view, player_info, objects, directed_objects,
+                             doors_states, sounds, important);
+
+            this->drawing_info.push(new_info);
+
+        } else playing = false;
     }
     return 0;
 }
 
+bool Client::isPlaying() const {
+    return playing;
+}
+
+
+void Client::loadLeaderboard(GameInterface &interface) {
+    int number, current_byte = 0;
+    uint8_t bytes_to_receive, name_len;
+    std::string name;
+
+    this->peer.recv(&bytes_to_receive, 1);
+    std::vector<uint8_t> received(bytes_to_receive);
+    std::vector<std::string> names;
+    std::vector<int> values;
+    
+    for (int i = 0; i < LEADERBOARD_ELEMENTS; i++) {
+        name_len = received[current_byte];
+        current_byte++;
+
+        name = std::string(reinterpret_cast<const char*>(received.data() + current_byte),
+                           static_cast<size_t>(name_len));
+        current_byte += name_len;
+
+        memcpy(&number, received.data() + current_byte, sizeof(int));
+        current_byte += sizeof(int);
+
+        names.push_back(name);
+        values.push_back(number);
+    }
+    interface.showLeaderboard(names, values);
+}
 
 void Client::shutdown() {
-    this->is_connected = false;
+    this->playing = false;
     this->socket.stop();
     this->instructions.doneAdding();
 }
 
 Client::~Client() {
-    if (is_connected) shutdown();
+    if (playing) shutdown();
 }
 
 
 //-------------------------- Metodos privados --------------------------------//
-
 
 // Asigna la informacion del jugador (vida, balas, arma, ...) a sus atributos
 void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
@@ -413,5 +447,6 @@ void Client::_joinGame() {
     uint_choice = (uint8_t) choice;
     this->peer.send(&uint_choice, sizeof(uint8_t));
 }
+
 
 
