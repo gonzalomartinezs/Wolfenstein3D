@@ -56,9 +56,9 @@ void ClientWindow::connectEvents() {
     connect (optionCreateButton, &QPushButton::clicked,
              this, &ClientWindow::createMatchMenu);
     connect (selectMatchButton, &QPushButton::clicked,
-             this, &ClientWindow::gameLoop);
+             this, &ClientWindow::joinMatch);
     connect (selectMapButton, &QPushButton::clicked,
-             this, &ClientWindow::gameLoop );
+             this, &ClientWindow::createMatch );
 }
 
 ClientWindow::~ClientWindow() {
