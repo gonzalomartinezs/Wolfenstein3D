@@ -11,7 +11,7 @@ enum HUD_Order {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, const std::string& font_path, int width,
-                       int height) : renderer(renderer), tex(tex),
+                       int height) : renderer(renderer), tex(tex), raycaster(raycaster),
                        leaderboard(renderer, tex, font_path, height, width){
     int cell_height = (4*height)/18;
     int cell_y_pos = (14*height)/18;
@@ -35,17 +35,11 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
     }
 }
 
-UI_Handler::UI_Handler(SDL_Renderer *renderer, TexturesContainer &tex,
-                       const std::string &font_path, int width, int height): renderer(renderer), tex(tex),
-                                                                             leaderboard(renderer, tex, font_path, height, width) {
-
-}
-
 void UI_Handler::raycast(DirectedPositionable &player_pos, PlayerView &view,
                          std::vector<Positionable> &objects,
                          std::vector<DirectedPositionable> &directed_objects,
                          std::vector<int> &doors_states) {
-    //this->raycaster.draw(player_pos, view, objects, directed_objects, doors_states);
+    this->raycaster.draw(player_pos, view, objects, directed_objects, doors_states);
 }
 
 void UI_Handler::render() {

@@ -22,7 +22,7 @@ struct HUDElements{
 class UI_Handler {
 private:
     SDL_Renderer* renderer;
-   // Raycaster& raycaster;
+    Raycaster& raycaster;
     TexturesContainer& tex;
     HUDElements elements;
     LeaderboardRenderer leaderboard;
@@ -32,10 +32,6 @@ private:
 public:
     // Crea un UI_Handler listo para ser utilizado.
     UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
-               TexturesContainer &tex, const std::string& font_path, int width,
-               int height);
-
-    UI_Handler(SDL_Renderer *renderer,
                TexturesContainer &tex, const std::string& font_path, int width,
                int height);
 
@@ -65,8 +61,6 @@ public:
     // Libera los recursos utilzador por el UI_Handler
     ~UI_Handler(){}
 
-private:
-    void _renderLeaderboard(bool *keep_rendering);
 };
 
 
