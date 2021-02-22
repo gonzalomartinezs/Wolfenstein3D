@@ -1,5 +1,5 @@
 port: 8080
-
+tick_rate: 128
 weapons_general:
   machine_gun:
     time_between_shots: &machine_gun_shots 0.1
@@ -7,14 +7,19 @@ weapons_general:
     bullets_per_burst: &machine_gun_bullets 5
   chain_gun:
     time_between_shots: &chain_gun_shots 1
+  rocket_launcher:
+    move_speed: &rpg_move_speed 2.5
+    size: &rpg_size 0.2
+    max_damage: &rpg_max_damage 100
+    max_damage_distance: &rpg_max_damage_distance 3
 
 max_health: &max_health_global 100
 
 #Player stats
 player:
   #Speed
-  move_speed: 0.02
-  rot_speed: 0.02
+  move_speed: 2.5
+  rot_speed: 2.5
   #Collider
   size: 0.2
   #Initial stats
@@ -24,7 +29,6 @@ player:
   total_lives: 5
   #Key
   key:
-    texture: &key_texture 37
     radius: &key_radius 0.2
   #Initial weapons
   weapons:
@@ -32,73 +36,59 @@ player:
     bullet:
       initial_bullets: 100
       max_bullets: &max_bullets 100
-      texture: &bullet_texture 35
       radius: &bullet_radius 0.2
     knife:
       time_between_stabs: 1
       range: 0.5
-    chain_gun:
-      time_between_shots: *chain_gun_shots
-    machine_gun:
-      time_between_shots: *machine_gun_shots
-      time_between_bursts: *machine_gun_bursts
-      bullets_per_burst: *machine_gun_bullets
+  bot_path: "../server_src/Bots/Destripador.lua"
 
 #Items
 items:
   #Treasure
   cross:
-    texture: 31
     value: 10
     radius: 0.5
   crown:
-    texture: 32
     value: 200
     radius: 0.5
   cup:
-    texture: 33
     value: 50
     radius: 0.5
   chest:
-    texture: 34
     value: 100
     radius: 0.5
   #Health recover
   food:
-    texture: 29
     value: 10
     radius: 0.4
     max_health: *max_health_global
   medical_kit:
-    texture: 36
     value: 20
     radius: 0.2
     max_health: *max_health_global
   blood:
-    texture: 27
     value: 1
     radius: 0.3
     max_health: 11
   #Otros
   key:
-    texture: *key_texture
     radius: *key_radius
   bullet:
-    texture: *bullet_texture
     value: 5
     radius: *bullet_radius
     max_bullets: *max_bullets
   #Weapons
   machine_gun:
-    texture: 24
-    value: 2 #value = id
     radius: 0.3
     time_between_shots: *machine_gun_shots
     time_between_bursts: *machine_gun_bursts
     bullets_per_burst: *machine_gun_bullets
   chain_gun:
-    texture: 25
-    value: 3 #value = id
     radius: 0.3
     time_between_shots: *chain_gun_shots
-
+  rocket_launcher:
+    radius: 0.3
+    move_speed: *rpg_move_speed
+    size: *rpg_size
+    max_damage: *rpg_max_damage
+    max_damage_distance: *rpg_max_damage_distance

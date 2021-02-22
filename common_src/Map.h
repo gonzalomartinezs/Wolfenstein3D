@@ -5,7 +5,6 @@
 #include <utility>
 #include <vector>
 #include "Configuration.h"
-//#include "SlidingSurface.h"
 
 class Map {
 private:
@@ -16,15 +15,20 @@ public:
     explicit Map(const std::vector<std::vector<int>>& initial_map);
     Map(Map& other) = delete;
     Map& operator=(const Map& other) = delete;
+
+    // Obtiene el valor en la posición x, y de map
 	int get(int x, int y) const;
+
+    // Devuelve el valor de n_row y n_col respectivamente
     long int get_n_row() const;
     long int get_n_col() const;
-    // Modifica una celda del mapa;
+
+    // Modifica una celda del mapa
     void set(int x, int y, int value);
-    // Retorna las puertas y pasadizos en el mapa.
-//    std::vector<SlidingSurface> getSlidingSurfaces() const;
+
 	~Map();
 private:
+    // Devuelve true si está fuera del rango, falso encaso contrario
 	bool outOfRange(int x, int y) const;
 };
 

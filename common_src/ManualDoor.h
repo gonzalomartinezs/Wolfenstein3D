@@ -6,7 +6,6 @@
 #include "Positionable.h"
 #include "Collider.h"
 #include "RectCollider.h"
-#include "../server_src/Key.h"
 
 class ManualDoor : public Positionable {
 protected:
@@ -23,10 +22,13 @@ public:
 	ManualDoor(int _x, int _y, int _dir_x, int _dir_y, int _surface_type,
 				float _moving_time, bool is_locked);
 
+	// Actualiza el estado de la puerta del lado del servidor
 	virtual void update(Map& map, const std::vector<Collider>& players);
 
+	// Actualiza el estado de la puerta del lado del cliente
 	virtual void update(int new_state);
 
+	// Obtiene el estado actual
 	uint8_t getState() const;
 
 	bool isClosed() const;
@@ -41,14 +43,20 @@ public:
 
 	int getSurfaceType() const;
 
-	virtual void interact(Key& key);
+	// Abre o cierra la puerta dependiendo del tipo de puerta y si necesita
+	// llave o no (has_key)
+	virtual void interact(bool has_key);
 
+	// Devuelve true si colisiona con other_collider, false en caso contrario
 	bool collidesWith(const Collider& other_collider);
 
 	virtual ~ManualDoor();
 
 protected:
+	// Devuelve true en caso de que un jugador obstruya la pared, false
+	// en caso contrario
 	bool isPlayerBlockingDoor(const std::vector<Collider>& players);
+	// Actualiza el valor de elapsed_fraction
 	virtual void _updateElapsedFraction();
 };
 

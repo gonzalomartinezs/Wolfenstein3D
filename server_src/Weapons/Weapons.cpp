@@ -5,6 +5,7 @@
 #include "ChainGun.h"
 #include "MachineGun.h"
 #include "../../common_src/BulletItem.h"
+#include "../Exceptions/GameException.h"
 
 #define KEY_INITIAL_WEAPON "initial_weapon"
 #define KEY_KNIFE "knife"
@@ -24,7 +25,8 @@
 #define LOST_BULLETS 10
 
 Weapons::Weapons(const Configuration& config) :
-				current_weapon(config.getInt(KEY_INITIAL_WEAPON)) {
+				current_weapon(config.getInt(KEY_INITIAL_WEAPON)),
+                last_weapon(this->current_weapon) {
 	this->weapons.push_back(new Knife(Configuration(config, KEY_KNIFE)));
 	this->weapons.push_back(new Pistol());
 
@@ -34,20 +36,7 @@ Weapons::Weapons(const Configuration& config) :
     this->bullets = this->initial_bullets;
 
     this->max_bullets = config_bullet.getInt(KEY_MAX_BULLETS);
-    this->bullet_texture = static_cast<TextureID>(
-                                    config_bullet.getInt(KEY_BULLET_TEXTURE));
     this->bullet_radius = config_bullet.getFloat(KEY_BULLET_RADIUS);
-
-    //Solo para test
-/*    Configuration config_chain_gun(config, KEY_CHAIN_GUN);
-	this->weapons.push_back(
-                    new ChainGun(config_chain_gun.getFloat(KEY_SHOTS)));
-
-    Configuration config_machine_gun(config, KEY_MACHINE_GUN);
-	this->weapons.push_back(new MachineGun(
-                                    config_machine_gun.getFloat(KEY_SHOTS),
-                                    config_machine_gun.getFloat(KEY_BURSTS),
-                                    config_machine_gun.getInt(KEY_BULLETS)));*/
 }
 
 bool Weapons::hasWeapon(int id) const {
@@ -63,22 +52,36 @@ void Weapons::equip(Weapon* weapon) {
 }
 
 void Weapons::equip(BulletItem* bullet) {
+    if (this->bullets == 0) {
+        this->current_weapon = this->last_weapon;
+    }
+
     this->bullets = (*bullet) + this->bullets;
 }
 
 void Weapons::nextWeapon() {
-    ++(this->current_weapon);
-    if (this->current_weapon >= this->weapons.size()) {
-        this->current_weapon = 0;
+    if (this->bullets > 0) {
+        ++(this->current_weapon);
+        if (this->current_weapon >= this->weapons.size()) {
+            this->current_weapon = 0;
+        }
     }
 }
 
 void Weapons::prevWeapon() {
-    if (this->current_weapon == 0) {
-        this->current_weapon = this->weapons.size()-1;
-    } else {
-        --(this->current_weapon);
+    if (this->bullets > 0) {
+        if (this->current_weapon == 0) {
+            this->current_weapon = this->weapons.size()-1;
+        } else {
+            --(this->current_weapon);
+        }
     }
+}
+
+void Weapons::setWeapon(uint8_t id) {
+    if (id >= this->weapons.size()) throw GameException("Wrong weapon ID.");
+
+    this->current_weapon = id;
 }
 
 void Weapons::startShooting() {
@@ -95,6 +98,11 @@ bool Weapons::isShooting() const {
 
 void Weapons::useBullets(uint8_t bullets_amount) {
     this->bullets -= bullets_amount;
+    if (this->bullets == 0) {
+        this->weapons[this->current_weapon]->stopShooting();
+        this->last_weapon = this->current_weapon;
+        this->current_weapon = 0;
+    }
 }
 
 void Weapons::fireTheGun(std::vector<Player*>& players,
@@ -120,7 +128,6 @@ void Weapons::reset(Items* items, RandomPosition& rd_pos) {
     }
 
     items->push_back(new BulletItem(rd_pos.getX(), rd_pos.getY(),
-                                    this->bullet_texture,
                                     LOST_BULLETS, this->bullet_radius,
                                     this->max_bullets));
 }

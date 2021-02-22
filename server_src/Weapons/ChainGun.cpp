@@ -3,9 +3,8 @@
 
 #include <vector>
 
-ChainGun::ChainGun(const float time_between_shots, TextureID texture,
-                    float item_radius) :
-                    Weapon(CHAIN_GUN, texture, item_radius),
+ChainGun::ChainGun(const float time_between_shots, float item_radius) :
+                    Weapon(CHAIN_GUN, item_radius),
                     lastShotDelay(-1),
                     TIME_BETWEEN_SHOTS(time_between_shots) {}
 
@@ -34,7 +33,7 @@ void ChainGun::fireTheGun(std::vector<Player*> &players,
 }
 
 Item* ChainGun::getWeaponItem(float x, float y) {
-    return new ChainGunItem(x, y, this->texture, this->id, this->item_radius,
+    return new ChainGunItem(x, y, this->item_radius,
                             this->TIME_BETWEEN_SHOTS);
 }
 

@@ -2,16 +2,19 @@
 #include <vector>
 #include <iostream> //borrar
 
+#define KEY_PATH "bot_path"
+#define POS_KNIFE 0
+
 Bot::Bot(const Configuration& config_stats,
          const Configuration& config_map,
          const uint8_t _player_number,
          std::string botName,
          std::vector<Sound>& sounds) :
          Player(config_stats, config_map, _player_number, botName, sounds) {
-    const char filePath[] = "../server_src/Bots/Destripador.lua";
+    this->action.setWeapon(POS_KNIFE);
     this->L = luaL_newstate();
     luaL_openlibs(this->L);
-    luaL_loadfile(this->L, filePath);
+    luaL_loadfile(this->L, config_stats.getString(KEY_PATH).c_str());
     lua_pcall(this->L, 0, LUA_MULTRET, 0);
 }
 
@@ -25,6 +28,7 @@ void Bot::getState(std::vector<Player*> &players, int botNumber,
     newState = static_cast<uint8_t>(lua_tonumber(this->L, -1));
     lua_pop(this->L, 1);
     this->setState(newState);
+    this->action.setWeapon(POS_KNIFE);
 }
 
 void Bot::_pushMap(const Map& map){

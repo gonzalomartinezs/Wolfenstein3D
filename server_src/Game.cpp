@@ -5,25 +5,22 @@
 #include <unistd.h>
 #include <string>
 #include <vector>
-#include <cstring> //borrar
+#include <cstring>
 #include <algorithm>
 
 #define END_GAME_CHAR 0
-#define NAME_TIME_TOLERANCE 500
-#define SLEEP_TIME_MILLIS 50
 #define MAX_MSG_SIZE 256
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
 #define KEY_MAX_PLAYERS "max_players"
-
-const double TICK_DURATION = 1/128.f; // miliseconds que tarda en
-                                      // actualizarse el juego
+#define KEY_TICK_RATE "tick_rate"
 
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map) : clients(_clients),
         map(config_map), items(Configuration(config, KEY_ITEMS),
         Configuration(config_map, KEY_ITEMS), this->rockets), doors(this->map),
-    bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
+        bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()),
+        TICK_RATE(1/config.getFloat(KEY_TICK_RATE)){
     this->isRunning = true;
 
     Configuration config_stats(config, KEY_PLAYER);
@@ -53,15 +50,14 @@ void Game::execute() {
         while (this->isRunning) {
             timeBetweenUpdates.start();
 
-            /*std::cout << "Nuevo Tick" << std::endl;*/
             this->getInstructions();
             this->sendUpdate();
-            this->update();  // Fixed Step-Time
+            this->update(this->TICK_RATE);
 
             double lastTickTime = timeBetweenUpdates.getTime();
 
-            if (lastTickTime < TICK_DURATION * 1000) {
-                usleep((TICK_DURATION * 1000 - lastTickTime) * 1000);
+            if (lastTickTime < this->TICK_RATE * 1000) {
+                usleep((this->TICK_RATE * 1000 - lastTickTime) * 1000);
             }
         }
     } catch (std::exception& e) {
@@ -88,21 +84,21 @@ void Game::getInstructions() {
     }
 }
 
-bool _rocketHasExploded(Rocket rocket) {
+bool _rocketHasExploded(const Rocket& rocket) {
     return rocket.hasExploded();
 }
 
-void Game::update() {
+void Game::update(double timeSlice) {
     std::vector<Collider> colliders;
 
-    /*this->rockets.erase(std::remove_if(
+    this->rockets.erase(std::remove_if(
             this->rockets.begin(),
             this->rockets.end(),
-            _rocketHasExploded), this->rockets.end());*/
+            _rocketHasExploded), this->rockets.end());
 
     for (size_t i = 0; i < this->players.size(); i++) {
         this->players[i]->updatePlayer(this->map, this->items, this->players,
-                                        this->doors);
+                                        this->doors, timeSlice);
         colliders.push_back(this->players[i]->getCollider());
     }
 
@@ -110,9 +106,9 @@ void Game::update() {
         this->doors[i].update(this->map, colliders);
     }
 
-    /*for (size_t i = 0; i < this->rockets.size(); ++i) {
-        this->rockets[i].update(this->players, this->map);
-    }*/
+    for (size_t i = 0; i < this->rockets.size(); ++i) {
+        this->rockets[i].update(this->players, this->map, timeSlice);
+    }
 }
 
 void Game::sendUpdate() {
@@ -126,7 +122,6 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber) {
-//    uint8_t texture = Guard_0; //Harcodeado, despeus hacerlo bien
     uint8_t currentByte = 1;
 
     this->players[clientNumber]->getHUDData(msg + currentByte);
@@ -153,6 +148,11 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
             currentByte += sizeof(uint8_t);
         }
     }
+
+    /*for (size_t i = 0; i < this->rockets.size(); ++i) {
+        this->rockets[i].getPositionData(msg);
+        currentByte += POS_DATA_SIZE;
+    }*/
 
     msg[0] = currentByte - 1;
     return currentByte;

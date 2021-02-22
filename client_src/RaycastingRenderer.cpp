@@ -98,5 +98,5 @@ void RaycastingRenderer::_processSurfaceTexture(int &tex_x, int &tex_id, int map
         if (map.get(map_x, map_y) == AUTOMATIC_DOOR) tex_id = int(InvertedAutoDoor);
         else if (map.get(map_x, map_y) == LOCKED_DOOR) tex_id = int(InvertedLockedDoor);
     }
-    if(map.get(map_x, map_y) == PASSAGE) tex_id = int(Wall);
+    if(map.get(map_x, map_y) == PASSAGE) tex_id = int(Wall_1);
 }

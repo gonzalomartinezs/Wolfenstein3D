@@ -15,9 +15,9 @@ class Items;
 class Weapons {
 private:
 	std::vector<Weapon*> weapons;
-	uint8_t current_weapon;
+	uint8_t current_weapon, last_weapon;
 	int initial_bullets, bullets, max_bullets;
-	TextureID bullet_texture;
+
 	float bullet_radius;
 
 public:
@@ -27,6 +27,8 @@ public:
 	void equip(BulletItem* bullet);
 	void nextWeapon();
 	void prevWeapon();
+	void setWeapon(uint8_t id);
+
 	void startShooting();
 	void stopShooting();
 	bool isShooting() const;

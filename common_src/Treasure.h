@@ -6,7 +6,8 @@
 
 class Treasure : public Item {
 public:
-	Treasure(const Configuration& config, float _x, float _y);
+	Treasure(const Configuration& config, float _x, float _y,
+			TextureID _texture);
 	void equipTo(PlayerActions& action) override;
 	~Treasure();
 };

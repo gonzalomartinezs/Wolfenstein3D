@@ -16,14 +16,13 @@ protected:
     std::random_device rd;
     uint8_t id;
 
-    TextureID texture;
     const float item_radius;
 
 public:
     /* Constructor */
     explicit Weapon(uint8_t _id);
 
-    Weapon(uint8_t _id, TextureID _texture, float radius);
+    Weapon(uint8_t _id, float radius);
 
     virtual void fireTheGun(std::vector<Player*>& players,
                             int shootingPlayerNumber, const Map& map) = 0;

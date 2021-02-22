@@ -25,6 +25,7 @@ private:
     Items items;
     Doors doors;
     const size_t bots_amount;
+    double TICK_RATE;
 
 public:
     /* Constructor */
@@ -41,7 +42,7 @@ public:
  private:
     void getInstructions();
 
-    void update();
+    void update(double timeSlice);
 
     void sendUpdate();
 

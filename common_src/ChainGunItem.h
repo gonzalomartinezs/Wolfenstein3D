@@ -9,8 +9,7 @@ private:
 	const float TIME_BETWEEN_SHOTS;
 public:
 	ChainGunItem(const Configuration& config, float _x, float _y);
-	ChainGunItem(float _x, float _y, TextureID texture, int _value,
-				float _radius, float time_between_shots);
+	ChainGunItem(float _x, float _y, float _radius, float time_between_shots);
 	void equipTo(PlayerActions& action) override;
 	~ChainGunItem();
 };
