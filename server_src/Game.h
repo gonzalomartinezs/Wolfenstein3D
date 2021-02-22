@@ -1,5 +1,5 @@
-#ifndef WOLFENSTEIN3D_GAME_H
-#define WOLFENSTEIN3D_GAME_H
+#ifndef WOLFENSTEIN3D_GAME_H_
+#define WOLFENSTEIN3D_GAME_H_
 
 #include <atomic>
 #include <vector>
@@ -76,4 +76,4 @@ public:
     size_t livePlayersCounter();
 };
 
-#endif  // WOLFENSTEIN3D_GAME_H
+#endif  // WOLFENSTEIN3D_GAME_H_
