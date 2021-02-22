@@ -66,6 +66,7 @@ private:
     void _joinGame();
     static void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
                            bool &important, int &already_parsed);
+    static void _assignPlayerState(bool& not_playing, uint8_t *bytes_received, int &already_parsed);
     static void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                              std::vector<float> &coordinates,
                              uint8_t *bytes_received, int &already_parsed);

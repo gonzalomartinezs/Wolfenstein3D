@@ -14,6 +14,8 @@
 #define INT_ATTRIBUTES 2  // ammo, score
 #define PLAYER_INFO_SIZE (5 + 2 * sizeof(int)) // lives, hp, key, weapon, ammo(int), score(int)
 
+#define PLAYING 0
+
 #define PLAYER_COORDS 6
 #define PLAYER_COORDS_SIZE (6 * sizeof(float))
 
@@ -107,6 +109,7 @@ ssize_t Client::receiveInformation() {
             PlayerView view;
 
             int already_parsed = 0;
+            bool not_playing;
             std::vector<float> coordinates;
             std::vector<int> player_info;
             std::vector<Positionable> objects;
@@ -115,6 +118,7 @@ ssize_t Client::receiveInformation() {
             std::vector<std::pair<int, float>> sounds;
 
             _assignPlayerInfo(player_info, bytes_received, important,already_parsed);
+            _assignPlayerState(not_playing, bytes_received, already_parsed);
             _assignPlayerCoordenates(player, view, coordinates, bytes_received, already_parsed);
             _assignItemsCoordenates(bytes_received, objects, coordinates, already_parsed);
             _assignSounds(bytes_received, sounds, important, already_parsed);
@@ -122,8 +126,13 @@ ssize_t Client::receiveInformation() {
             _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
                                            coordinates,already_parsed);
 
-            UI_Info new_info(player, view, player_info, objects, directed_objects,
-                             doors_states, sounds, important);
+            if (not_playing) {
+                std::cout << "mraibo" << std::endl;
+            }
+
+            UI_Info new_info(player, view, player_info, objects,
+                             directed_objects, doors_states, not_playing,
+                             sounds, important);
 
             this->drawing_info.push(new_info);
         } else {
@@ -201,6 +210,15 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
     }
     important = (important || info[IS_SHOOTING] != 0);
     already_parsed += PLAYER_INFO_SIZE;
+}
+
+// Parsea el booleano que indica si el jugador se encuentra jugando o no,
+void Client::_assignPlayerState(bool &not_playing, uint8_t *bytes_received,
+                                int &already_parsed) {
+    uint8_t state;
+    memcpy(&state, bytes_received + already_parsed, sizeof(uint8_t));
+    not_playing = (state != PLAYING);
+    already_parsed += sizeof(uint8_t);
 }
 
 // Asigna las coordenadas recibidas a los atributos del jugador
@@ -455,6 +473,7 @@ void Client::_joinGame() {
     uint_choice = (uint8_t) choice;
     this->peer.send(&uint_choice, sizeof(uint8_t));
 }
+
 
 
 
