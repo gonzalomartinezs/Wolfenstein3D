@@ -13,6 +13,11 @@ ClientWindow::ClientWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ClientWindow) {
     ui->setupUi(this);
+    QPixmap bkgnd("../client_src/clientWindow/background.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
     this->setWindowTitle("Wolfenstein 3D");
     this->linkToUI();
     this->initWidgets();
@@ -46,9 +51,6 @@ void ClientWindow::linkToUI() {
 
 void ClientWindow::initWidgets() {
     stack->setCurrentWidget(loginPage);
-    for (int i = 0; i < 20; ++i) {
-        matchList.addItem(i,"xd");
-    }
 }
 
 void ClientWindow::connectEvents() {
