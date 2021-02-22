@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "Client.h"
 #include "../common_src/GameConstants.h"
+#include "clientWindow/StringList.h"
 
 #define NEW_GAME 0
 #define JOIN_GAME 1
@@ -67,6 +68,26 @@ void Client::sendInstruction() {
     } catch (WolfensteinException& e){
         std::cerr << "Failed to send instructions to the server.\n";
     }
+}
+
+void Client::sendName(const std::string& username) {
+    uint8_t  name_len;
+    uint8_t bytes_sent[MAX_MESSAGE_SIZE];
+    memset(bytes_sent, 0, MAX_MESSAGE_SIZE);
+
+    name_len = username.size();
+    this->peer.send(&name_len, 1);
+    memcpy(bytes_sent, username.c_str(), name_len);
+    this->peer.send(bytes_sent, name_len);
+}
+
+void Client::sendJoinGameChoice(){
+    uint8_t uint_choice = (uint8_t)JOIN_GAME;
+    this->peer.send(&uint_choice, sizeof(uint8_t));
+}
+void Client::sendNewGameChoice(){
+    uint8_t uint_choice = (uint8_t)NEW_GAME;
+    this->peer.send(&uint_choice, sizeof(uint8_t));
 }
 
 void Client::lobbyInteraction(const std::string& username) {
@@ -336,44 +357,44 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
     coordinates.clear();
 }
 
+void Client::getMaps(StringList& _maps) {
 
+    uint8_t maps_to_receive, string_length, max_players;
+    uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
+    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
 
+    std::vector<std::string> map_names;
+    std::vector<int> players_amounts;
 
+    this->peer.recv(&maps_to_receive, 1);
 
+    for (int i=0; i<maps_to_receive; i++){
+        this->peer.recv(&string_length, 1);
+        this->peer.recv(bytes_received, string_length);
+        this->peer.recv(&max_players, 1);
 
+        std::ostringstream convert;
+        for (int j = 0; j < string_length; j++) {
+            convert << (char)bytes_received[j];
+        }
+        std::string map_name = convert.str();
 
+        map_names.push_back(map_name);
+        players_amounts.push_back(int(max_players));
+    }
 
+    for (int i = 0; i < maps_to_receive; i++) {
+        _maps.addItem(i, map_names[i]
+                        + "(" + std::to_string(players_amounts[i]) + " pjs" +")");
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Client::sendMapChoice(uint8_t choice){
+    this->peer.send(&choice, sizeof(uint8_t));
+    choice = (uint8_t) 'p'; //ver esto, meter un sleep?
+    sleep(1); //OJO VER ESTE SLEEP
+    this->peer.send(&choice, sizeof(uint8_t));
+}
 
 void Client::_createGame() {
     int choice;
@@ -472,6 +493,46 @@ void Client::_joinGame() {
     std::cout << "Conectando..." << std::endl;
     uint_choice = (uint8_t) choice;
     this->peer.send(&uint_choice, sizeof(uint8_t));
+}
+
+void Client::getGames(StringList &list) {
+
+    uint8_t games, game_id, string_length, actual_players, players_limit;
+    uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
+    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
+
+    std::vector<std::string> map_names;
+    std::vector<int> ids, connected_players, max_players;
+
+    this->peer.recv(&games, 1);
+
+    for (int i=0; i<games; i++) {
+        this->peer.recv(&game_id, 1);
+        this->peer.recv(&string_length, 1);
+        this->peer.recv(bytes_received, string_length);
+        this->peer.recv(&actual_players, 1);
+        this->peer.recv(&players_limit, 1);
+
+        std::ostringstream convert;
+        for (int j = 0; j < string_length; j++) {
+            convert << (char)bytes_received[j];
+        }
+        std::string map_name = convert.str();
+
+        map_names.push_back(map_name);
+        ids.push_back(int(game_id));
+        connected_players.push_back(int(actual_players));
+        max_players.push_back(int(players_limit));
+    }
+    for(int i = 0 ; i < games ; i++) {
+        list.addItem(ids[i], map_names[i] + " ("+ std::to_string(connected_players[i])
+        +"/"+ std::to_string(max_players[i])+ ")");
+    }
+
+}
+
+void Client::sendMatchChoice(uint8_t i) {
+    this->peer.send(&i, sizeof(uint8_t));
 }
 
 

@@ -14,6 +14,7 @@
 #include "../common_src/ProtectedQueue.h"
 #include "../common_src/DirectedPositionable.h"
 #include "GameInterface.h"
+#include "clientWindow/StringList.h"
 
 class Client {
 private:
@@ -87,6 +88,20 @@ private:
                                         std::vector<float> &coordinates,
                                         int &already_parsed);
 
+public:
+    void sendName(const std::string &username);
+
+    void sendJoinGameChoice();
+
+    void sendNewGameChoice();
+
+    void getMaps(StringList &_maps);
+
+    void sendMapChoice(uint8_t choice);
+
+    void getGames(StringList &list);
+
+    void sendMatchChoice(uint8_t i);
 };
 
 

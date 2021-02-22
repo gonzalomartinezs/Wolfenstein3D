@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <unistd.h>
+#include <QApplication>
 #include "Client.h"
 #include "Window.h"
 #include "Raycaster.h"
@@ -10,7 +11,6 @@
 #include "EventHandler.h"
 #include "GameInterface.h"
 #include "textures/TexturesContainer.h"
-#include "login/ClientLoginScreen.h"
 #include "sound/SoundsContainer.h"
 #include "../common_src/Configuration.h"
 #include "../common_src/Map.h"
@@ -21,6 +21,8 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
+#include "clientWindow/clientwindow.h"
+
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
 
@@ -28,8 +30,12 @@
 const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse el juego */
 
 int main(int argc, char *argv[]) {
-    ClientLoginScreen log;
-   // log(); //  genera la nueva pestaña.
+
+    QApplication a(argc, argv);
+    ClientWindow w;
+    w.show();
+    return a.exec();
+    /*
     bool quit = false;
 
     try {
@@ -109,4 +115,5 @@ int main(int argc, char *argv[]) {
         std::cout << "Unknown error.\n";
     }
     return  0;
+     */
 }
