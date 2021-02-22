@@ -28,7 +28,7 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-   // log(); //  genera la nueva pestaña.
+    log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
         SoundsContainer sounds;
 
-        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        Client client("localhost", "8080", instructions, drawing_info);
-        client.lobbyInteraction("asd");
+        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        //Client client("localhost", "8080", instructions, drawing_info);
+        client.lobbyInteraction(log.getName());
         Map map(client.receiveMap());
 
         EventHandler event_handler(instructions);
