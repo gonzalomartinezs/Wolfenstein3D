@@ -17,8 +17,8 @@
 #include "../common_src/Timer.h"
 #include "../common_src/Doors.h"
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 200
+#define WINDOW_WIDTH 1280
+#define WINDOW_HEIGHT 720
 
 #define REFRESH_RATE 10
 #define IS_NOT_MOVING 0
@@ -28,7 +28,7 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    log(); //  genera la nueva pestaña.
+   // log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -41,10 +41,10 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
         SoundsContainer sounds;
 
-        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        client.lobbyInteraction(log.getName());
+        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
+        client.lobbyInteraction("asd");
         Map map(client.receiveMap());
-        Doors doors(map);
 
         EventHandler event_handler(instructions);
         Raycaster raycaster(map, WINDOW_WIDTH / 32, (-WINDOW_HEIGHT) / 18,
@@ -75,24 +75,31 @@ int main(int argc, char *argv[]) {
         std::thread recv_thread(&Client::receiveInformation, &client);
 
         game_interface.start();
-
-        while (!quit) {
+        while (!quit && client.isPlaying() && i<1000) {
             time_between_updates.start();
-            directed_objects.clear();
             const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
             event_handler.run(quit, flag, keys);
-
             last_tick_time = time_between_updates.getTime();
-            if (last_tick_time < TICK_DURATION*1000){
+            if (last_tick_time < TICK_DURATION*1000) {
                 usleep((TICK_DURATION * 1000 - last_tick_time) * 1000);
             }
         }
-        client.shutdown();
         game_interface.stop();
+        game_interface.join();
         send_thread.join();
         recv_thread.join();
-        game_interface.join();
+
+        client.loadLeaderboard(game_interface);
+        SDL_Event event;
+        while(!quit) {
+            while (SDL_PollEvent(&event) != 0) {
+                if (event.type == SDL_QUIT) {
+                    quit = true;
+                }
+            }
+        }
+        client.shutdown();
     } catch(std::exception& e) {
         std::cerr << e.what() << std::endl;
     } catch(...) {
