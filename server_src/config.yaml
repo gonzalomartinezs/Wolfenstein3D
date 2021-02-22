@@ -28,7 +28,7 @@ player:
   #Cambiar por numero en caso de ser necesario/para tests.
   initial_health: *max_health_global
   initial_score: 0
-  total_lives: 5
+  total_lives: 3
   #Key
   key:
     radius: &key_radius 0.2

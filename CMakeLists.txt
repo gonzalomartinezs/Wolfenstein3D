@@ -4,6 +4,10 @@ project(WolfensteinClient)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lSDL2 -std=c++11 -pthread -lyaml-cpp -I/usr/include/lua5.3/ -llua5.3 -ggdb")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${WolfensteinClient_SOURCE_DIR}/cmake")
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
 find_package(PkgConfig)
 pkg_check_modules(YAMLCPP REQUIRED yaml-cpp>=0.5)
 
@@ -34,9 +38,6 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         client_src/textures/DynamicTexture.cpp
         client_src/Exceptions/TextureLoadingException.cpp
         client_src/Exceptions/FontLoadingException.cpp
-        client_src/login/ClientLoginScreen.h client_src/login/ClientLoginScreen.cpp
-        client_src/login/Login.h client_src/login/Login.cpp
-        client_src/login/ui_Login.h
         client_src/EventHandler.cpp client_src/EventHandler.h
         common_src/Positionable.cpp common_src/Positionable.h
         common_src/Exceptions/ErrorMap.h common_src/Exceptions/ErrorMap.cpp
@@ -51,12 +52,38 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Exceptions/ConfigurationException.cpp
         client_src/textures/FontTexture.cpp
         client_src/RaycastingRenderer.cpp
-        client_src/Exceptions/RaycastingException.cpp client_src/sound/Music.cpp client_src/sound/Music.h client_src/Exceptions/SoundLoadingException.cpp client_src/Exceptions/SoundLoadingException.h client_src/sound/SoundEffect.cpp client_src/sound/SoundEffect.h client_src/sound/SoundsContainer.cpp client_src/sound/SoundsContainer.h client_src/sound/SoundID.h client_src/SoundHandler.cpp client_src/SoundHandler.h client_src/textures/TextureSet.cpp client_src/textures/TextureSet.h client_src/SpriteSelector.cpp client_src/SpriteSelector.h)
+        client_src/Exceptions/RaycastingException.cpp
+        client_src/sound/Music.cpp
+        client_src/sound/Music.h
+        client_src/Exceptions/SoundLoadingException.cpp
+        client_src/Exceptions/SoundLoadingException.h
+        client_src/sound/SoundEffect.cpp
+        client_src/sound/SoundEffect.h
+        client_src/sound/SoundsContainer.cpp
+        client_src/sound/SoundsContainer.h
+        client_src/sound/SoundID.h
+        client_src/SoundHandler.cpp
+        client_src/SoundHandler.h
+        client_src/textures/TextureSet.cpp
+        client_src/textures/TextureSet.h
+        client_src/SpriteSelector.cpp
+        client_src/SpriteSelector.h
+        client_src/clientWindow/clientwindow.cpp
+        client_src/clientWindow/clientwindow.h
+        client_src/clientWindow/clientwindow.ui
+        client_src/clientWindow/ResolutionList.cpp
+        client_src/clientWindow/ResolutionList.h
+        client_src/clientWindow/StringList.cpp
+        client_src/clientWindow/StringList.h
+        client_src/clientWindow/Resolution.cpp
+        client_src/clientWindow/Resolution.h
+        client_src/LeaderboardRenderer.cpp
+        client_src/LeaderboardRenderer.h)
 
 add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp
         server_src/Bots/Destripador.lua
-        server_src/Player.cpp server_src/Sound.cpp
+        server_src/Player.cpp
         common_src/Collider.cpp common_src/RectCollider.cpp
         common_src/Timer.cpp
         server_src/ThClient.cpp
@@ -77,28 +104,31 @@ add_executable(server server_src/server_main.cpp
         common_src/Exceptions/ErrorMap.h common_src/Exceptions/ErrorMap.cpp
         common_src/ManualDoor.cpp common_src/Doors.cpp common_src/SlidingSurface.cpp
         common_src/GameConstants.h
-        common_src/Item.cpp
-        common_src/Items.cpp common_src/Exceptions/ItemsException.cpp
-        common_src/BulletItem.cpp common_src/BulletItem.h
-        common_src/MachineGunItem.cpp common_src/MachineGunItem.h
-        common_src/ChainGunItem.cpp common_src/ChainGunItem.h
-        common_src/Exceptions/ItemException.cpp common_src/Exceptions/ItemException.h
-        common_src/RocketLauncherItem.cpp common_src/RocketLauncherItem.h
-        common_src/Treasure.cpp
-        common_src/HealthRecover.cpp common_src/Exceptions/HealthRecoverException.cpp
-        common_src/Blood.cpp
-        common_src/KeyItem.cpp
+        server_src/Items/Item.cpp
+        server_src/Items/Items.cpp server_src/Exceptions/ItemsException.cpp
+        server_src/Items/BulletItem.cpp server_src/Items/BulletItem.h
+        server_src/Items/MachineGunItem.cpp server_src/Items/MachineGunItem.h
+        server_src/Items/ChainGunItem.cpp server_src/Items/ChainGunItem.h
+        server_src/Exceptions/ItemException.cpp server_src/Exceptions/ItemException.h
+        server_src/Items/RocketLauncherItem.cpp server_src/Items/RocketLauncherItem.h
+        server_src/Items/Treasure.cpp
+        server_src/Items/HealthRecover.cpp server_src/Exceptions/HealthRecoverException.cpp
+        server_src/Items/Blood.cpp
+        server_src/Items/KeyItem.cpp
         common_src/Exceptions/WolfensteinException.cpp
         common_src/Configuration.cpp
         server_src/PlayerActions.cpp server_src/LeaderBoard.cpp
         server_src/Weapons/Weapons.cpp
         server_src/Weapons/Weapon.cpp server_src/Weapons/Knife.cpp
         server_src/Weapons/Pistol.cpp server_src/Weapons/ChainGun.cpp
-        server_src/Weapons/MachineGun.cpp server_src/Weapons/Rocket.cpp
+        server_src/Weapons/MachineGun.cpp
         server_src/Weapons/RocketLauncher.cpp
         server_src/Key.cpp
         server_src/Sound.cpp
         common_src/Exceptions/ConfigurationException.cpp
+        server_src/Sound.cpp
+        server_src/Weapons/RocketLauncher.cpp
+        server_src/Weapons/Rocket.cpp
         server_src/RandomPosition.cpp)
 
 target_compile_options(server PRIVATE -Wall -Werror -pedantic -pedantic-errors -O0 -ggdb -std=c++11 -DDEBUG -fno-inline)
