@@ -15,7 +15,8 @@ void SpriteSelector::initializePlayers(std::vector<DirectedPositionable> &player
     this->latest_players = players;
     dynamic_tex.clear();
     for (auto& player: players) {
-        dynamic_tex.emplace_back(tex.getDynamic(player.getTexture()), false);
+        if(player.getTexture() >= Dog_0)
+            dynamic_tex.emplace_back(tex.getDynamic(player.getTexture()), false);
     }
 }
 

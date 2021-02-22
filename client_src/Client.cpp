@@ -134,10 +134,6 @@ ssize_t Client::receiveInformation() {
     return 0;
 }
 
-bool Client::isPlaying() const {
-    return playing;
-}
-
 
 void Client::loadLeaderboard(GameInterface &interface) {
     int number, current_byte = 0;
@@ -165,6 +161,15 @@ void Client::loadLeaderboard(GameInterface &interface) {
         values.push_back(number);
     }
     interface.showLeaderboard(names, values);
+}
+
+bool Client::isPlaying() const {
+    return playing;
+}
+
+void Client::stopInGameInteraction() {
+    this->playing = false;
+    this->instructions.doneAdding();
 }
 
 void Client::shutdown() {
@@ -450,6 +455,7 @@ void Client::_joinGame() {
     uint_choice = (uint8_t) choice;
     this->peer.send(&uint_choice, sizeof(uint8_t));
 }
+
 
 
 

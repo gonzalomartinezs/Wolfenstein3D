@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <unistd.h>
 #include "Client.h"
 #include "Window.h"
 #include "Raycaster.h"
@@ -28,7 +29,7 @@ const double TICK_DURATION = 1/256.f; /* miliseconds que tarda en actualizarse e
 
 int main(int argc, char *argv[]) {
     ClientLoginScreen log;
-    log(); //  genera la nueva pestaña.
+   // log(); //  genera la nueva pestaña.
     bool quit = false;
 
     try {
@@ -41,9 +42,9 @@ int main(int argc, char *argv[]) {
         TexturesContainer tex(window.getRenderer(), window.getSurface());
         SoundsContainer sounds;
 
-        Client client(log.getHost(), log.getPort(), instructions, drawing_info);
-        //Client client("localhost", "8080", instructions, drawing_info);
-        client.lobbyInteraction(log.getName());
+        //Client client(log.getHost(), log.getPort(), instructions, drawing_info);
+        Client client("localhost", "8080", instructions, drawing_info);
+        client.lobbyInteraction("Meci");
         Map map(client.receiveMap());
 
         EventHandler event_handler(instructions);
@@ -85,12 +86,14 @@ int main(int argc, char *argv[]) {
                 usleep((TICK_DURATION * 1000 - last_tick_time) * 1000);
             }
         }
+        if (quit) client.stopInGameInteraction();
+
         game_interface.stop();
         game_interface.join();
         send_thread.join();
         recv_thread.join();
 
-        client.loadLeaderboard(game_interface);
+        if (!quit) client.loadLeaderboard(game_interface);
         SDL_Event event;
         while(!quit) {
             while (SDL_PollEvent(&event) != 0) {

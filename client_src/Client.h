@@ -48,7 +48,12 @@ public:
     // Retorna un booleano indicando si el jugador se encuentra jugando o no.
     bool isPlaying() const;
 
+    // Carga el leaderboard con los resultados del juego.
     void loadLeaderboard(GameInterface& interface);
+
+    // Detiene el intercambio de datos entre el cliente y el servidor para
+    // la ejecucion del juego.
+    void stopInGameInteraction();
 
     // Realiza un shutdown del cliente y marca la cola bloqueante.
     void shutdown();
