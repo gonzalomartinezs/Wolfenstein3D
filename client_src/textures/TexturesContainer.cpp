@@ -27,6 +27,7 @@
 #define KEY_PATH "../client_src/textures/img/miscellaneous/has_key.bmp"
 #define NOT_KEY_PATH "../client_src/textures/img/miscellaneous/has_not_key.bmp"
 #define BACKGROUND "../client_src/textures/img/miscellaneous/back.png"
+#define LB_BACKGROUND "../client_src/textures/img/miscellaneous/lb_back.png"
 #define PL_HUD "../client_src/textures/img/miscellaneous/HUD_1.png"
 
 #define DOG_0_0 "../client_src/textures/img/sprites/Dog/dog_0_0.bmp"
@@ -378,6 +379,7 @@ void TexturesContainer::_loadStaticTextures() {
     static_textures.emplace(HasKey, new Texture(KEY_PATH, this->renderer));
     static_textures.emplace(HasNotKey, new Texture(NOT_KEY_PATH, this->renderer));
     static_textures.emplace(Background,new Texture(BACKGROUND, this->renderer, this->window_surface));
+    static_textures.emplace(LB_Back,new Texture(LB_BACKGROUND, this->renderer, this->window_surface));
     static_textures.emplace(HUD, new Texture(PL_HUD, this->renderer, this->window_surface));
 
 //    static_textures.emplace(Missile_0, new Texture(MISSILE_0, this->renderer));
