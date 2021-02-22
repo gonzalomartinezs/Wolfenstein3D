@@ -25,6 +25,7 @@ private:
     Items items;
     Doors doors;
     const size_t bots_amount;
+    double TICK_RATE;
 
 public:
     /* Constructor */

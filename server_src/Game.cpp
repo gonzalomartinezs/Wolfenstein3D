@@ -13,15 +13,14 @@
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
 #define KEY_MAX_PLAYERS "max_players"
-
-const double TICK_DURATION = 1/128.f; // miliseconds que tarda en
-                                      // actualizarse el juego
+#define KEY_TICK_RATE "tick_rate"
 
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map) : clients(_clients),
         map(config_map), items(Configuration(config, KEY_ITEMS),
         Configuration(config_map, KEY_ITEMS), this->rockets), doors(this->map),
-    bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()) {
+        bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()),
+        TICK_RATE(1/config.getFloat(KEY_TICK_RATE)){
     this->isRunning = true;
 
     Configuration config_stats(config, KEY_PLAYER);
@@ -53,12 +52,12 @@ void Game::execute() {
 
             this->getInstructions();
             this->sendUpdate();
-            this->update(TICK_DURATION);
+            this->update(this->TICK_RATE);
 
             double lastTickTime = timeBetweenUpdates.getTime();
 
-            if (lastTickTime < TICK_DURATION * 1000) {
-                usleep((TICK_DURATION * 1000 - lastTickTime) * 1000);
+            if (lastTickTime < this->TICK_RATE * 1000) {
+                usleep((this->TICK_RATE * 1000 - lastTickTime) * 1000);
             }
         }
     } catch (std::exception& e) {
