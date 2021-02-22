@@ -29,6 +29,7 @@ private slots:
     void createMatchMenu();
     void createMatch();
     void joinMatch();
+    void joinCreated();
 
 private:
     Ui::ClientWindow *ui;
@@ -63,6 +64,8 @@ private:
     QPushButton *selectMapButton;
 
 
+    QWidget *wantToJoin;
+    QPushButton *playButton;
 };
 
 #endif // CLIENTWINDOW_H

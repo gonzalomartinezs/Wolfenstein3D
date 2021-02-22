@@ -7,7 +7,7 @@
 ResolutionList::ResolutionList(QWidget *parent) : QListWidget(parent) {
     setViewMode(QListView::ListMode);
     setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
-    this->setMaximumSize(150,180);
+    this->setMaximumSize(90,180);
     addItem(Resolution(320, 240));
     addItem(Resolution(512, 384));
     addItem(Resolution(640, 480));

@@ -391,8 +391,10 @@ void Client::getMaps(StringList& _maps) {
 
 void Client::sendMapChoice(uint8_t choice){
     this->peer.send(&choice, sizeof(uint8_t));
-    choice = (uint8_t) 'p'; //ver esto, meter un sleep?
-    sleep(1); //OJO VER ESTE SLEEP
+
+}
+void Client::sendPlay() {
+    uint8_t choice = (uint8_t) 'p'; //ver esto, meter un sleep?
     this->peer.send(&choice, sizeof(uint8_t));
 }
 

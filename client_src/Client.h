@@ -102,6 +102,8 @@ public:
     void getGames(StringList &list);
 
     void sendMatchChoice(uint8_t i);
+
+    void sendPlay();
 };
 
 
