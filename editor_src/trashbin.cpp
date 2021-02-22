@@ -1,6 +1,5 @@
 #include "trashbin.h"
 
-#include "mainwindow.h"
 #include "itemList.h"
 #include "iconsPaths.h"
 #include <QDrag>

@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow {
     void restart();
 
  signals:
-    void showYamlError ();
+    void showYamlError();
 
  private:
     void initWidgets();
