@@ -1,0 +1,78 @@
+map_name: ElMapa
+max_players: 4
+length: 10
+width: 10
+map:
+  - [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 2, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+  - [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+player_0:
+  pos_x: 8.5
+  pos_y: 1.5
+  dir_x: 1
+  dir_y: 0
+player_1:
+  pos_x: 1.5
+  pos_y: 1.5
+  dir_x: 1
+  dir_y: 0
+player_2:
+  pos_x: 1.5
+  pos_y: 8.5
+  dir_x: 1
+  dir_y: 0
+player_3:
+  pos_x: 8.5
+  pos_y: 8.5
+  dir_x: 1
+  dir_y: 0
+items:
+  chain_gun:
+    cant_chain_gun: 4
+    chain_gun_0:
+      pos_x: 7.5
+      pos_y: 7.5
+    chain_gun_1:
+      pos_x: 2.5
+      pos_y: 7.5
+    chain_gun_2:
+      pos_x: 7.5
+      pos_y: 2.5
+    chain_gun_3:
+      pos_x: 2.5
+      pos_y: 2.5
+  medical_kit:
+    cant_medical_kit: 4
+    medical_kit_0:
+      pos_x: 6.5
+      pos_y: 3.5
+    medical_kit_1:
+      pos_x: 6.5
+      pos_y: 5.5
+    medical_kit_2:
+      pos_x: 2.5
+      pos_y: 5.5
+    medical_kit_3:
+      pos_x: 2.5
+      pos_y: 3.5
+  rocket_launcher:
+    cant_rocket_launcher: 4
+    rocket_launcher_0:
+      pos_x: 3.5
+      pos_y: 6.5
+    rocket_launcher_1:
+      pos_x: 5.5
+      pos_y: 2.5
+    rocket_launcher_2:
+      pos_x: 4.5
+      pos_y: 2.5
+    rocket_launcher_3:
+      pos_x: 5.5
+      pos_y: 6.5
