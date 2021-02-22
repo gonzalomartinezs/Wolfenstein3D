@@ -10,6 +10,7 @@
 
 #define END_GAME_CHAR 0
 #define MAX_MSG_SIZE 256
+#define EPSILON 0.02
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
 #define KEY_MAX_PLAYERS "max_players"
@@ -44,10 +45,12 @@ Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
 
 void Game::execute() {
     Timer timeBetweenUpdates;
+    Timer gameTimer;
     this->sendMap();
 
     try {
-        while (this->isRunning) {
+        gameTimer.start();
+        while (this->isRunning && gameTimer.getTime() < 10000) {
             timeBetweenUpdates.start();
 
             this->getInstructions();
@@ -66,7 +69,7 @@ void Game::execute() {
         std::cerr << "Unknown error in Game Loop :(" << std::endl;
     }
 
-    //this->createLeaderBoard();
+    this->createLeaderBoard();
 }
 
 void Game::getInstructions() {
@@ -159,18 +162,18 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
 }
 
 void Game::createLeaderBoard() {
-//    uint8_t endGameChar = END_GAME_CHAR;
-//    uint8_t msg[MAX_MSG_SIZE];
-//    uint8_t msgLen;
-//    LeaderBoard leaderBoard;
+    uint8_t endGameChar = END_GAME_CHAR;
+    uint8_t msg[MAX_MSG_SIZE];
+    uint8_t msgLen;
+    LeaderBoard leaderBoard;
 
-//    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
+    msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
 
-    /*for (size_t i = 0; i < this->clients.size(); i++) {
+    for (size_t i = 0; i < this->clients.size(); i++) {
         this->clients[i]->push(&endGameChar, 1);
         this->clients[i]->push(&msgLen, 1);
         this->clients[i]->push(msg, msgLen);
-    }*/
+    }
 }
 
 void Game::stop() {
