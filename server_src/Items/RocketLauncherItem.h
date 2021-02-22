@@ -2,7 +2,7 @@
 #define ROCKETLAUNCHERITEM_H
 
 #include "Item.h"
-#include "../server_src/Weapons/Rocket.h"
+#include "../Weapons/Rocket.h"
 
 class RocketLauncherItem : public Item {
 private:

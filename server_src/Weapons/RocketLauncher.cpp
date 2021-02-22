@@ -1,5 +1,5 @@
 #include "RocketLauncher.h"
-#include "../../common_src/RocketLauncherItem.h"
+#include "../Items/RocketLauncherItem.h"
 
 #define BULLETS_PER_ROCKET 5
 

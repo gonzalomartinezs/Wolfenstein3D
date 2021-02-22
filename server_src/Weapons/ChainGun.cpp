@@ -1,5 +1,5 @@
 #include "ChainGun.h"
-#include "../../common_src/ChainGunItem.h"
+#include "../Items/ChainGunItem.h"
 
 #include <vector>
 

@@ -1,9 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "Positionable.h"
-#include "Collider.h"
-#include "../server_src/PlayerActions.h"
+#include "../../common_src/Positionable.h"
+#include "../../common_src/Collider.h"
+#include "../PlayerActions.h"
 
 #define KEY_POS_X "pos_x"
 #define KEY_POS_Y "pos_y"

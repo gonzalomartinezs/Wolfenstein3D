@@ -1,6 +1,6 @@
 #include "MachineGunItem.h"
-#include "../server_src/Weapons/MachineGun.h"
-#include "Exceptions/ItemException.h"
+#include "../Weapons/MachineGun.h"
+#include "../../common_src/Exceptions/ItemException.h"
 
 #define KEY_SHOTS "time_between_shots"
 #define KEY_BURSTS "time_between_bursts"

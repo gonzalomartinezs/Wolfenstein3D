@@ -4,7 +4,7 @@
 #include "Pistol.h"
 #include "ChainGun.h"
 #include "MachineGun.h"
-#include "../../common_src/BulletItem.h"
+#include "../Items/BulletItem.h"
 #include "../Exceptions/GameException.h"
 
 #define KEY_INITIAL_WEAPON "initial_weapon"

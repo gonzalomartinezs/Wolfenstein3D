@@ -2,7 +2,7 @@
 #define HEALTHRECOVER_H
 
 #include "Item.h"
-#include "Configuration.h"
+#include "../../common_src/Configuration.h"
 
 class HealthRecover : public Item {
 private:

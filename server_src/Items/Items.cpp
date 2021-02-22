@@ -10,7 +10,7 @@
 #include <cstring>
 #include <string>
 
-#include "Exceptions/ItemsException.h"
+#include "../../common_src/Exceptions/ItemsException.h"
 
 //Treasures
 #define KEY_CROSS "cross"

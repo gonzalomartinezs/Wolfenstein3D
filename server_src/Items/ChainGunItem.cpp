@@ -1,6 +1,6 @@
 #include "ChainGunItem.h"
-#include "../server_src/Weapons/ChainGun.h"
-#include "Exceptions/ItemException.h"
+#include "../Weapons/ChainGun.h"
+#include "../../common_src/Exceptions/ItemException.h"
 
 #define KEY_SHOTS "time_between_shots"
 

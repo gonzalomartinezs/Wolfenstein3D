@@ -10,8 +10,8 @@
 #include "PlayerActions.h"
 #include "../common_src/Map.h"
 #include "../common_src/DirectedPositionable.h"
-#include "../common_src/Items.h"
-#include "../common_src/Item.h"
+#include "Items/Items.h"
+#include "Items/Item.h"
 #include "../common_src/Configuration.h"
 #include "../common_src/Doors.h"
 

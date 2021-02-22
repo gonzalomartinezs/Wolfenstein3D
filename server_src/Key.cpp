@@ -1,6 +1,6 @@
 #include "Key.h"
 #include "Exceptions/GameException.h"
-#include "../common_src/KeyItem.h"
+#include "Items/KeyItem.h"
 #include <iostream>
 
 #define KEY_RADIUS "radius"

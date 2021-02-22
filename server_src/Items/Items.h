@@ -5,8 +5,8 @@
 #include <string>
 
 #include "Item.h"
-#include "Configuration.h"
-#include "../server_src/Weapons/Rocket.h"
+#include "../../common_src/Configuration.h"
+#include "../Weapons/Rocket.h"
 
 class Items {
 private:

@@ -2,7 +2,7 @@
 #define BLOOD_H
 
 #include "HealthRecover.h"
-#include "Configuration.h"
+#include "../../common_src/Configuration.h"
 
 class Blood : public HealthRecover {
 private:

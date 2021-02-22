@@ -2,7 +2,7 @@
 #define TREASURE_H
 
 #include "Item.h"
-#include "Configuration.h"
+#include "../../common_src/Configuration.h"
 
 class Treasure : public Item {
 public:

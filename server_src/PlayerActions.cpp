@@ -1,8 +1,8 @@
 #include "PlayerActions.h"
-#include "../common_src/HealthRecover.h"
-#include "../common_src/Treasure.h"
-#include "../common_src/BulletItem.h"
-#include "../common_src/Items.h"
+#include "Items/HealthRecover.h"
+#include "Items/Treasure.h"
+#include "Items/BulletItem.h"
+#include "Items/Items.h"
 #include "Exceptions/GameException.h"
 #include <cstring>
 

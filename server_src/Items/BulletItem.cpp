@@ -1,5 +1,5 @@
 #include "BulletItem.h"
-#include "Exceptions/ItemException.h"
+#include "../../common_src/Exceptions/ItemException.h"
 
 #define KEY_MAX_BULLETS "max_bullets"
 

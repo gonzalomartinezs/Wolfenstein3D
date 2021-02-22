@@ -1,5 +1,5 @@
 #include "Blood.h"
-#include "Exceptions/HealthRecoverException.h"
+#include "../../common_src/Exceptions/HealthRecoverException.h"
 
 #define KEY_MAX_HEALTH "max_health"
 

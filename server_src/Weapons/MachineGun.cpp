@@ -1,5 +1,5 @@
 #include "MachineGun.h"
-#include "../../common_src/MachineGunItem.h"
+#include "../Items/MachineGunItem.h"
 
 #include <vector>
 
