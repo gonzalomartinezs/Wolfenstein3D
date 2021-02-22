@@ -27,6 +27,7 @@ private:
     Weapons weapons;
     int bulletsCounter;
     int killsCounter;
+    bool hasLost;
 
 public:
     /* Constructor */
@@ -44,6 +45,7 @@ public:
 
 	void die(Items* items, float x, float y);
 	bool isDead() const;
+	bool playerHasLost();
 
     int getKills();
     int getScore();

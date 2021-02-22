@@ -161,6 +161,10 @@ void Player::makeSound(SoundID sound) {
     this->sounds.emplace_back(this->x, this->y, sound);
 }
 
+bool Player::hasLost() {
+    return this->action.playerHasLost();
+}
+
 bool Player::isDead() {
     return this->action.isDead();
 }

@@ -22,6 +22,7 @@ PlayerActions::PlayerActions(const Configuration& config) :
     this->initialHealth = config.getInt(KEY_INITIAL_HEALTH);
     this->bulletsCounter = 0;
     this->killsCounter = 0;
+    this->hasLost = false;
 }
 
 void PlayerActions::use(HealthRecover* recover) {
@@ -66,11 +67,20 @@ void PlayerActions::die(Items* items, float x, float y) {
     }
 
     this->health = this->initialHealth;
-    this->lives--;
+
+    if (this->lives == 0) {
+        this->hasLost = true;
+    } else {
+        this->lives--;
+    }
 }
 
 bool PlayerActions::isDead() const {
 	return (this->health == 0);
+}
+
+bool PlayerActions::playerHasLost() {
+    return this->hasLost;
 }
 
 int PlayerActions::getKills() {

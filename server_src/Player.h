@@ -57,6 +57,8 @@ public:
 
     void makeSound(SoundID sound);
 
+    bool hasLost();
+
     // Devuelve true en caso de estar muerto, false en caso contrario
     bool isDead();
 
