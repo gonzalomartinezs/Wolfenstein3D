@@ -17,6 +17,7 @@ struct HUDElements{
     SDL_Rect ammo;
     SDL_Rect bj_face;
     SDL_Rect weapon_animation;
+    SDL_Rect death_message;
 };
 
 class UI_Handler {
@@ -40,7 +41,7 @@ public:
     void raycast(DirectedPositionable &player_pos, PlayerView &view,
                  std::vector<Positionable> &objects,
                  std::vector<DirectedPositionable> &directed_objects,
-                 std::vector<int> &doors_states);
+                 std::vector<int> &doors_states, bool not_playing);
 
     // Limpia el contenido de la ventana.
     void clearScreen();
@@ -54,6 +55,10 @@ public:
     // Muestra el leaderboard del juego por pantalla.
     void loadLeaderboard(std::vector<std::string> &names,
                          std::vector<int> &values);
+
+    // Muestra por pantalla un mensaje indicando que el jugador ha perdido
+    // todas sus vidas.
+    void loadDeathMessage();
 
     // Renderiza el contenido de la ventana.
     void render();

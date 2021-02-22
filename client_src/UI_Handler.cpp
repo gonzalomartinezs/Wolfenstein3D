@@ -2,10 +2,17 @@
 #include <thread>
 #include "UI_Handler.h"
 #include "../common_src/GameConstants.h"
-#define TTF_TEXTURES 4
+#define TTF_TEXTURES 5
 #define WEAPONS 5
 #define BJ_FACES 8
 #define TOTAL_HP 100
+
+#define SCORE 0
+#define LIVES 1
+#define HP_ 2
+#define AMMO 3
+#define DEATH_MESSAGE 4
+
 
 enum HUD_Order {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
@@ -24,11 +31,14 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
     this->elements.weapon = {(25*width)/32, cell_y_pos, (6*width)/32, cell_height};
     this->elements.ammo = {(28*width)/32, (9*height)/10, (3*width)/32, cell_height};
     this->elements.weapon_animation = {(10*width)/32, (7*height)/18, (12*width)/32, (7*height)/18};
+    this->elements.death_message = {0, height/144, width, height/16};
 
     SDL_Color color = {240, 250, 252};
     int font_size = width/16;
-    for(int i=0; i < TTF_TEXTURES; i++)
+    for(int i=0; i < TTF_TEXTURES-1; i++)
         this->font_textures.emplace_back(font_path, font_size, color, renderer, "0");
+
+    this->font_textures.emplace_back(font_path, font_size/2, color, renderer, "0");
 
     for(int i=0; i < WEAPONS; i++){
         this->dynamic.emplace_back(tex.getDynamic(TextureID(Knife_Pl+i)), false);
@@ -38,8 +48,9 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
 void UI_Handler::raycast(DirectedPositionable &player_pos, PlayerView &view,
                          std::vector<Positionable> &objects,
                          std::vector<DirectedPositionable> &directed_objects,
-                         std::vector<int> &doors_states) {
-    this->raycaster.draw(player_pos, view, objects, directed_objects, doors_states);
+                         std::vector<int> &doors_states, bool not_playing) {
+    this->raycaster.draw(player_pos, view, objects, directed_objects,
+                         doors_states, not_playing);
 }
 
 void UI_Handler::render() {
@@ -69,16 +80,21 @@ void UI_Handler::loadPlayerHUD(std::vector<int> &player_info) {
     tex.getStatic(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
     tex.getStatic(TextureID(int(HasNotKey) + player_info[Key]))->render(nullptr, &this->elements.key);
 
-    font_textures[0].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr, &this->elements.score);
-    font_textures[1].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr, &this->elements.lives);
-    font_textures[2].renderHorizontallyCentered(std::to_string(player_info[HP]), nullptr, &this->elements.hp);
+    font_textures[SCORE].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr, &this->elements.score);
+    font_textures[LIVES].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr, &this->elements.lives);
+    font_textures[HP_].renderHorizontallyCentered(std::to_string(player_info[HP]), nullptr, &this->elements.hp);
     if (player_info[Weapon] != 0)
-        font_textures[3].renderHorizontallyCentered(std::to_string(player_info[Ammo]), nullptr, &this->elements.ammo);
+        font_textures[AMMO].renderHorizontallyCentered(std::to_string(player_info[Ammo]), nullptr, &this->elements.ammo);
     // arreglar hardcodeo
 }
 
 void UI_Handler::loadLeaderboard(std::vector<std::string> &names,
                                  std::vector<int> &values) {
     leaderboard.render(names, values);
+}
+
+void UI_Handler::loadDeathMessage() {
+    std::string message = "You lost all your lives. Specting another player.";
+    font_textures[DEATH_MESSAGE].renderHorizontallyCentered(message, nullptr, &this->elements.death_message);
 }
 
