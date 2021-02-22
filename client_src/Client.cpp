@@ -35,8 +35,8 @@
 Client::Client(const std::string &host, const std::string &service,
                BlockingQueue<int> &instructions,
                ProtectedQueue<UI_Info> &drawing_info):
-        socket(host.c_str(), service.c_str(), 0),
-        peer(socket.connect()), instructions(instructions),
+        socket(host.c_str(), service.c_str(), 0, false),
+        peer(socket.getPeer()), instructions(instructions),
         drawing_info(drawing_info), playing(true) {}
 
 

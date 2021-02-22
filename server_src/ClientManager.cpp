@@ -9,9 +9,10 @@
 #define KEY_PORT "port"
 
 ClientManager::ClientManager(Configuration& config) : config(config),
-                socket(NULL, config.getString(KEY_PORT).c_str(), AI_PASSIVE),
+            socket(NULL, config.getString(KEY_PORT).c_str(),
+                    AI_PASSIVE, true),
                 is_connected(true) {
-	socket.bind();
+//	socket.bind();
 }
 
 void ClientManager::operator()(GamesHandler& games) {

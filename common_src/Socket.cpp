@@ -7,49 +7,41 @@
 #define FD_ERROR -1
 #define MAX_CLIENTS 10
 
-Socket::Socket(const char* ip, const char* port, int flag) :
-				file_descriptor(FD_ERROR) {
-	struct addrinfo hints;
+Socket::Socket(const char* ip, const char* port, int flag, bool is_server) :
+				file_descriptor(FD_ERROR), peer(PEER_ERROR) {
+	AddrInfo result(ip, port, flag);
 
-	memset(&hints, 0, sizeof(hints));
-
-	hints.ai_family = AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags = flag;
-
-	int status = getaddrinfo(ip, port, &hints, &result);
-
-	if (status != SUCCESS) {
-		freeaddrinfo(result);
-		throw ErrorSocket("Error initializing socket.");
-	}
+	if (is_server) Socket::bind(result);
+	else Socket::connect(result);
 }
 
-Peer Socket::connect() {
-	struct addrinfo* result_tmp = result;
+void Socket::connect(const AddrInfo& result) {
+	bool is_connected = false;
+	struct addrinfo* result_tmp = result.getResult();
 
-	while (result_tmp) {
-		int peer = socket(result_tmp->ai_family, result_tmp->ai_socktype,
+	while (result_tmp && !is_connected) {
+		int _peer = socket(result_tmp->ai_family, result_tmp->ai_socktype,
 							result_tmp->ai_protocol);
 
-		if (peer != PEER_ERROR) {
-			if (::connect(peer, result_tmp->ai_addr,
+		if (_peer != PEER_ERROR) {
+			if (::connect(_peer, result_tmp->ai_addr,
 				result_tmp->ai_addrlen)	== SUCCESS) {
-				return Peer(peer);
+				this->peer = _peer;
+				is_connected = true;
 			} else {
-				close(peer);
+				close(_peer);
 			}
 		}
 
 		result_tmp = result_tmp->ai_next;
 	}
 
-	throw ErrorSocket("Can't connect to the server.");
+	if (!is_connected) throw ErrorSocket("Can't connect to the server.");
 }
 
-void Socket::bind() {
+void Socket::bind(const AddrInfo& result) {
 	bool is_connected = false;
-	struct addrinfo* result_tmp = result;
+	struct addrinfo* result_tmp = result.getResult();
 
 	while (result_tmp && !is_connected) {
 		file_descriptor = socket(result_tmp->ai_family,
@@ -74,6 +66,10 @@ void Socket::bind() {
 	if (!is_connected) throw ErrorSocket("Can't bind to the server.");
 }
 
+int Socket::getPeer() const {
+	return this->peer;
+}
+
 void Socket::listen() {
 	::listen(file_descriptor, MAX_CLIENTS);
 }
@@ -95,6 +91,4 @@ Socket::~Socket() noexcept {
 		shutdown(file_descriptor, SHUT_RDWR);
 		close(file_descriptor);
 	}
-
-	freeaddrinfo(result);
 }

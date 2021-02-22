@@ -24,7 +24,7 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         client_src/Window.h client_src/Window.cpp common_src/Exceptions/WindowException.cpp
         client_src/Raycaster.h client_src/Raycaster.cpp
         client_src/PlayerView.h client_src/PlayerView.cpp
-        common_src/Socket.h common_src/Socket.cpp
+        common_src/Socket.h common_src/Socket.cpp common_src/AddrInfo.cpp
         common_src/Exceptions/ErrorSocket.h common_src/Exceptions/ErrorSocket.cpp
         common_src/Peer.h common_src/Peer.cpp
         common_src/DirectedPositionable.h common_src/DirectedPositionable.cpp
@@ -93,7 +93,7 @@ add_executable(server server_src/server_main.cpp
         server_src/ClientManager.cpp server_src/Lobby.cpp
         server_src/MapsReader.cpp server_src/DirectoryWalker.cpp
         common_src/ProtectedQueue.h
-        common_src/Socket.cpp
+        common_src/Socket.cpp common_src/AddrInfo.cpp
         common_src/Peer.cpp
         common_src/Exceptions/ErrorSocket.cpp
         common_src/Thread.cpp
