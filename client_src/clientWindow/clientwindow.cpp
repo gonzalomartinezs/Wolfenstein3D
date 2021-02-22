@@ -25,6 +25,7 @@ void ClientWindow::linkToUI() {
     optionPage = findChild<QWidget*>("optionPage");
     newGamePage = findChild<QWidget*>("newGamePage");
     joinGamePage = findChild<QWidget*>("joinGamePage");
+    inGamePage  = findChild<QWidget*>("inGamePage");
     stack = findChild<QStackedWidget*>("stack");
     name = findChild<QLineEdit*>("name");
     host = findChild<QLineEdit*>("host");
@@ -89,12 +90,14 @@ void ClientWindow::createMatchMenu() {
 }
 
 void ClientWindow::createMatch() {
+    stack->setCurrentWidget(inGamePage);
     resolution = resoList.getSelected();
     this->client->sendMapChoice(mapList.getSelected() );
     this->gameLoop();
 }
 
 void ClientWindow::joinMatch() {
+    stack->setCurrentWidget(inGamePage);
     resolution = resoList.getSelected();
     this->client->sendMatchChoice(matchList.getSelected() );
     this->gameLoop();

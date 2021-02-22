@@ -36,6 +36,8 @@ private:
     QWidget* optionPage;
     QWidget* newGamePage;
     QWidget* joinGamePage;
+    QWidget *inGamePage;
+
     QStackedWidget* stack;
     QPushButton *loginButton;
     QPushButton *optionjoinButton;
@@ -59,6 +61,7 @@ private:
     void gameLoop();
     QPushButton *selectMatchButton;
     QPushButton *selectMapButton;
+
 
 };
 
