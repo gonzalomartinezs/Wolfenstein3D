@@ -1,10 +1,12 @@
 #include "SoundHandler.h"
 #include <cstdlib>
 #include <iostream>
+#include <unistd.h>
 #include "sound/SoundID.h"
 #include "textures/TextureID.h"
 #include "../common_src/GameConstants.h"
 #include "../common_src/Doors.h"
+
 
 #define FOREVER -1
 #define LIMIT_DISTANCE 7

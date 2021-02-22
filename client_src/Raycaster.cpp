@@ -80,7 +80,7 @@ Raycaster::_calculatePerpWallDist(DirectedPositionable &player, RayDirection ray
             hit_axis = 'y';
         }
         int current_cell = map.get(map_x, map_y);
-        if (current_cell >= AUTOMATIC_DOOR) {
+        if (current_cell >= LOCKED_DOOR) {
             float hit_x, hit_y;
             _calculateHitPoint(hit_x, hit_y, map_x, map_y, hit_axis, player, ray_dir);
             current_cell = _processSlidingPassage(hit_x, hit_y, map_x, map_y, ray_dir,

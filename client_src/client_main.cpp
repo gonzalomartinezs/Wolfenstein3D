@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
         std::thread recv_thread(&Client::receiveInformation, &client);
 
         game_interface.start();
-        while (!quit && client.isPlaying() && i<1000) {
+        while (!quit && client.isPlaying()) {
             time_between_updates.start();
             const Uint8 *keys = SDL_GetKeyboardState(NULL);
 
