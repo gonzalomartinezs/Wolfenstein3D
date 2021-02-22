@@ -1,15 +1,18 @@
 #include <iostream>
+#include <thread>
 #include "UI_Handler.h"
+#include "../common_src/GameConstants.h"
 #define TTF_TEXTURES 4
 #define WEAPONS 5
 #define BJ_FACES 8
 #define TOTAL_HP 100
 
-enum ttfTextures {Lives, HP, Weapon, Key, Firing, Ammo, Score};
+enum HUD_Order {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
-                       TexturesContainer &tex, std::string font_path, int width,
-                       int height) : renderer(renderer), raycaster(raycaster), tex(tex){
+                       TexturesContainer &tex, const std::string& font_path, int width,
+                       int height) : renderer(renderer), tex(tex),
+                       leaderboard(renderer, tex, font_path, height, width){
     int cell_height = (4*height)/18;
     int cell_y_pos = (14*height)/18;
 
@@ -32,15 +35,21 @@ UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
     }
 }
 
+UI_Handler::UI_Handler(SDL_Renderer *renderer, TexturesContainer &tex,
+                       const std::string &font_path, int width, int height): renderer(renderer), tex(tex),
+                                                                             leaderboard(renderer, tex, font_path, height, width) {
+
+}
+
 void UI_Handler::raycast(DirectedPositionable &player_pos, PlayerView &view,
                          std::vector<Positionable> &objects,
                          std::vector<DirectedPositionable> &directed_objects,
                          std::vector<int> &doors_states) {
-    this->raycaster.draw(player_pos, view, objects, directed_objects, doors_states);
+    //this->raycaster.draw(player_pos, view, objects, directed_objects, doors_states);
 }
 
 void UI_Handler::render() {
-    SDL_RenderPresent(this->renderer);
+    SDL_RenderPresent(this->renderer);;
 }
 
 void UI_Handler::clearScreen() {
@@ -74,5 +83,9 @@ void UI_Handler::loadPlayerHUD(std::vector<int> &player_info) {
     // arreglar hardcodeo
 }
 
-
+void UI_Handler::loadLeaderboard(std::vector<std::string> &names,
+                                 std::vector<int> &values) {
+    clearScreen();
+    leaderboard.render(names, values);
+}
 

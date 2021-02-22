@@ -6,6 +6,7 @@
 #include "textures/TexturesContainer.h"
 #include "textures/FontTexture.h"
 #include "textures/DynamicTexture.h"
+#include "LeaderboardRenderer.h"
 
 struct HUDElements{
     SDL_Rect score;
@@ -21,16 +22,21 @@ struct HUDElements{
 class UI_Handler {
 private:
     SDL_Renderer* renderer;
-    Raycaster& raycaster;
+   // Raycaster& raycaster;
     TexturesContainer& tex;
     HUDElements elements;
+    LeaderboardRenderer leaderboard;
     std::vector<FontTexture> font_textures;
     std::vector<DynamicTexture> dynamic;
 
 public:
     // Crea un UI_Handler listo para ser utilizado.
     UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
-               TexturesContainer &tex, std::string font_path, int width,
+               TexturesContainer &tex, const std::string& font_path, int width,
+               int height);
+
+    UI_Handler(SDL_Renderer *renderer,
+               TexturesContainer &tex, const std::string& font_path, int width,
                int height);
 
     // Aplica el raycasting sobre el target de renderizado (no lo muestra por
@@ -49,11 +55,18 @@ public:
     // Carga la interfaz informativa de los datos del jugador(vidas, salud, ...)
     void loadPlayerHUD(std::vector<int> &player_info);
 
+    // Muestra el leaderboard del juego por pantalla.
+    void loadLeaderboard(std::vector<std::string> &names,
+                         std::vector<int> &values);
+
     // Renderiza el contenido de la ventana.
     void render();
 
     // Libera los recursos utilzador por el UI_Handler
     ~UI_Handler(){}
+
+private:
+    void _renderLeaderboard(bool *keep_rendering);
 };
 
 

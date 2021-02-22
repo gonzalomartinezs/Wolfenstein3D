@@ -5,7 +5,7 @@ GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler
                              ProtectedQueue<UI_Info> &queue,
                              UI_Info initial_info, int refresh_rate):
                         ui_handler(ui_handler), sound_handler(sound_handler),
-                        queue(queue), keep_running(true),refresh_rate(refresh_rate),
+                        queue(queue), keep_running(true), refresh_rate(refresh_rate),
                         latest_info(initial_info){
     //this->sound_handler.startBackMusic();
 }
@@ -28,13 +28,25 @@ void GameInterface::run() {
     }
 }
 
+void GameInterface::showLeaderboard(std::vector<std::string> &names,
+                                    std::vector<int> &values) {
+    sound_handler.startLeaderBoardMusic();
+    std::thread leaderboard_sound(&SoundHandler::loadLeaderBoardSfx, &sound_handler);
+    ui_handler.loadLeaderboard(names, values);
+    leaderboard_sound.join();
+}
+
 void GameInterface::stop() {
     this->keep_running = false;
+    sound_handler.stopBackMusic();
 }
 
 bool GameInterface::finished() {
     return !(this->keep_running);
 }
+
+GameInterface::~GameInterface() {}
+
 
 // ------------------------- Metodos privados --------------------------------//
 // Refresca la pantalla gradualmente tras un movimiento de camara o del

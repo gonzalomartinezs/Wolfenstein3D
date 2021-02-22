@@ -20,6 +20,16 @@ void SoundHandler::startBackMusic() {
     music.setVolume(0.2);
 }
 
+void SoundHandler::startLeaderBoardMusic() {
+    Music& music = this->sounds.getMusic(LB_Music);
+    music.play(FOREVER);
+    music.setVolume(0.2);
+}
+
+void SoundHandler::stopBackMusic() {
+    this->sounds.getMusic(BackMusic).stop();
+}
+
 void SoundHandler::loadGameSfx(std::vector<int> &player_info,
                                DirectedPositionable &player_pos,
                                std::vector<DirectedPositionable> &positionables,
@@ -31,6 +41,18 @@ void SoundHandler::loadGameSfx(std::vector<int> &player_info,
     _loadRemainingSfx(sounds);
 }
 
+void SoundHandler::loadLeaderBoardSfx() {
+    usleep(LEADERBOARD_SLEEP_TIME_1);
+    this->sounds.getSFX(LB_Title).play();;
+
+    for (int i=0; i<LEADERBOARD_ELEMENTS/3; i++) {
+        usleep(LEADERBOARD_SLEEP_TIME_2);
+        this->sounds.getSFX(LB_Name).play();
+        usleep(LEADERBOARD_SLEEP_TIME_2);
+        this->sounds.getSFX(LB_Value).play();
+    }
+}
+
 SoundHandler::~SoundHandler() {}
 
 
@@ -39,7 +61,7 @@ SoundHandler::~SoundHandler() {}
 void SoundHandler::_loadWeaponSfx(std::vector<int> &player_info) {
     if (player_info[Firing]){
         auto id = SoundID(KnifeSFX + player_info[Weapon]);
-        this->sounds.getSFX(id).play(0);
+        this->sounds.getSFX(id).play();
     }
 }
 
@@ -72,7 +94,7 @@ void SoundHandler::_loadObjectSfx(DirectedPositionable &player_pos,
         else id = HeavyStep;
         SoundEffect& sfx = this->sounds.getSFX(id);
         sfx.setVolume(1-distance/(float)LIMIT_DISTANCE);
-        sfx.play(0);
+        sfx.play();
     }
 }
 
@@ -92,7 +114,7 @@ void SoundHandler::_loadSlidersSfx(DirectedPositionable &player_pos,
                     else id = DoorMoving;
                     SoundEffect& sfx = this->sounds.getSFX(id);
                     sfx.setVolume(1-distance/(float)LIMIT_DISTANCE);
-                    sfx.play(0);
+                    sfx.play();
                     sfx.setVolume(1);
                 }
             }
@@ -105,7 +127,7 @@ void SoundHandler::_loadRemainingSfx(std::vector<std::pair<int, float>> &sounds)
         auto id = SoundID(sound.first);
         SoundEffect& sfx = this->sounds.getSFX(id);
         sfx.setVolume(1-sound.second/(float)LIMIT_DISTANCE);
-        sfx.play(0);
+        sfx.play();
     }
 }
 
@@ -115,6 +137,7 @@ bool SoundHandler::_hasMoved(DirectedPositionable &first,
                              DirectedPositionable &second) {
     return (abs(first.getX()-second.getX())>0.001 && abs(first.getY()-second.getY())>0.001);
 }
+
 
 
 

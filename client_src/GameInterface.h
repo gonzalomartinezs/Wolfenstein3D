@@ -35,7 +35,11 @@ public:
     // Retorna un bool que indica si se finalizo el proceso o no.
     bool finished() override;
 
-    ~GameInterface(){}
+    // Muestra el leaderboard del juego por pantalla.
+    void showLeaderboard(std::vector<std::string> &names,
+                         std::vector<int> &values);
+
+    ~GameInterface();
 
 private:
     void _updateScreen(UI_Info new_info);

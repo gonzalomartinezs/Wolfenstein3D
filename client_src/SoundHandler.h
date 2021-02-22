@@ -17,14 +17,24 @@ public:
     // Crea un handler de sonidos listo para ser utilizado.
     SoundHandler(SoundsContainer &sounds, Map &map);
 
-    // Comienza la reproduccion de la musica de fondo del juego.
+    //Comienza la reproduccion de la musica de fondo del juego.
     void startBackMusic();
 
+    // Comienza la reproduccion de la musica de fondo del leaderboard.
+    void startLeaderBoardMusic();
+
+    // Detiene la reproduccion de la musica de fondo del juego.
+    void stopBackMusic();
+
+    // Reproduce los efectos de sonido del juego.
     void
     loadGameSfx(std::vector<int> &player_info, DirectedPositionable &player_pos,
                 std::vector<DirectedPositionable> &positionables,
                 std::vector<int> &doors_states,
                 std::vector<std::pair<int, float>> &sounds);
+
+    // Reproduce los efectos de sonido del leaderboard.
+    void loadLeaderBoardSfx();
 
     // Libera los recursos utilizados por el objeto.
     ~SoundHandler();
