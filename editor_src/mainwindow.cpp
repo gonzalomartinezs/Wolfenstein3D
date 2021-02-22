@@ -81,8 +81,8 @@ void MainWindow::connectEvents() {
 }
 
 void MainWindow::resizeMap() {
-    mapHandler->resizeMap( spinX->value(), spinY->value() );
-    //mapHandler->setName
+    mapHandler->resizeMap( spinX->value(), spinY->value(),
+                           nameLabel->text().toStdString());
 }
 
 void MainWindow::openFile() {

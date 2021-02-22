@@ -77,3 +77,32 @@ unsigned Map::getNumberOfPlayers() const{
     }
     return i;
 }
+
+void Map::setOutline() {
+    /*
+    for (int i = 0; i < x; ++i) {
+        Coordinate coor(i,0);
+        this->matrix.insert ({coor.toString(),MapElement(Wall0,
+                                                        QRect(QPoint(i*ITEMSIZE,0),
+                                                              QSize(ITEMSIZE,ITEMSIZE)))});
+    }
+    for (int i = 0; i < x ; i++) {
+        Coordinate coor(i,y-1);
+        this->matrix.insert ({coor.toString(),MapElement(Wall0,
+                                                         QRect(QPoint(i*ITEMSIZE,(y-1)*ITEMSIZE),
+                                                               QSize(ITEMSIZE,ITEMSIZE)))});
+    }
+    for (int i = 0; i < y ; i++) {
+        Coordinate coor(0,i);
+        this->matrix.insert ({coor.toString(),MapElement(Wall0,
+                                                         QRect(QPoint(0,i*ITEMSIZE),
+                                                               QSize(ITEMSIZE,ITEMSIZE)))});
+    }
+    for (int i = 0; i < y ; i++) {
+        Coordinate coor(x-1,i);
+        this->matrix.insert ({coor.toString(),MapElement(Wall0,
+                                                         QRect(QPoint((x-1)*ITEMSIZE,i*ITEMSIZE),
+                                                               QSize(ITEMSIZE,ITEMSIZE)))});
+    }
+     */
+}

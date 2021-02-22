@@ -2,31 +2,35 @@
 #define ICONSCONTAINER_H
 
 #include <QPixmap>
-#include <map>
+#include <unordered_map>
 #include "iconsPaths.h"
 
 class ItemList;
 
 enum Editor_icon {
-    Barrel,
-    Blood,
-    Bullet,
+
+    Spawn,
+    Wall0,
+    Wall1,
+    Door,
+    Slider,
+    LockedDoor,
+    Key,
+
     Chaingun,
+    Machinegun,
+    Rpg,
+    Bullet,
+
+    Food,
+    Health,
+    Blood,
+
     Crown,
     Cross,
     Cup,
-    Door,
-    Food,
-    Health,
-    Jewelry,
-    Key,
-    Machinegun,
-    //Pistol,
-    Rpg,
-    Slider,
-    Spawn,
-    Wall0,
-    Wall1
+    Jewelry
+
 };
 
 class IconsContainer {

@@ -8,25 +8,28 @@
 
 
 IconsContainer::IconsContainer(const unsigned& size) : iconSize(size) {
-    this->add(Barrel, BARREL_PATH);
-    this->add(Blood, BLOOD_PATH);
-    this->add(Bullet, BULLET_PATH);
-    this->add(Chaingun, CHAINGUN_PATH);
-    this->add(Crown, CROWN_PATH);
-    this->add(Cross,CROSS_PATH);
-    this->add(Cup, CUP_PATH);
-    this->add(Door, DOOR_PATH);
-    this->add(Food,FOOD_PATH);
-    this->add(Health, HEALTH_PATH);
-    this->add(Jewelry, JEWELRY_PATH);
-    this->add(Key,  KEY_PATH);
-    this->add(Machinegun, MACHINEGUN_PATH);
-   //this->add(Pistol, PISTOL_PATH);
-    this->add(Rpg, RPG_PATH);
-    this->add(Slider, SLIDER_PATH);
     this->add(Spawn, SPAWN_PATH);
     this->add(Wall0, WALL0_PATH);
     this->add(Wall1, WALL1_PATH);
+    this->add(Door, DOOR_PATH);
+    this->add(Slider, SLIDER_PATH);
+    this->add(Key,  KEY_PATH);
+    this->add(LockedDoor, LOCKED_DOOR_PATH);
+
+    this->add(Chaingun, CHAINGUN_PATH);
+    this->add(Machinegun, MACHINEGUN_PATH);
+    this->add(Rpg, RPG_PATH);
+
+    //this->add(Barrel, BARREL_PATH);
+    this->add(Bullet, BULLET_PATH);
+    this->add(Blood, BLOOD_PATH);
+    this->add(Food,FOOD_PATH);
+    this->add(Health, HEALTH_PATH);
+    this->add(Jewelry, JEWELRY_PATH);
+    this->add(Crown, CROWN_PATH);
+    this->add(Cross,CROSS_PATH);
+    this->add(Cup, CUP_PATH);
+   //this->add(Pistol, PISTOL_PATH);
 }
 
 const QPixmap& IconsContainer::getIcon(Editor_icon id)const {
