@@ -159,6 +159,10 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber) {
     this->players[clientNumber]->getHUDData(msg + currentByte);
     currentByte += HUD_INFO_SIZE;
 
+    uint8_t hasLost = this->players[clientNumber]->hasLost();
+    memcpy(msg + currentByte, &hasLost, sizeof(uint8_t));
+    currentByte += sizeof(uint8_t);
+
     this->players[clientNumber]->getPositionDataWithPlane(msg + currentByte);
     currentByte += POS_DATA_PLANE_SIZE;
 
