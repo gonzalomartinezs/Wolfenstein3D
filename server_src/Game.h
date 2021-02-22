@@ -33,32 +33,46 @@ public:
     Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map);
 
+    /* Lleva a cabo la ejecución del juego */
     void execute();
 
+    /* Finaliza la ejecución del GameLoop */
     void stop();
 
     /* Destructor */
     ~Game();
 
  private:
+    /* Desacola una instrucción de cada cliente (Si es que las hay) */
     void getInstructions();
 
+    /* Actualiza todos los elementos del juego en un timeStep */
     void update(double timeSlice);
 
+    /* Envía el correspondiente mensaje a cada uno de los clientes */
     void sendUpdate();
 
+    /* Crea el mensaje correspondiante para cada Player */
     int createMsg(uint8_t* msg, size_t clientNumber, bool hasLost);
 
+    /* Crea y envía la LeaderBoard a cada Player */
     void createLeaderBoard();
 
+    /* Envía el mapa a los clientes */
     void sendMap();
 
+    /* Carga en el mensaje los sonidos que se produjeron en el último update */
     void loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber);
 
+    /* Devuelve la textura del jugador que le corresponda según el arma */
     TextureID getTexture(uint8_t weapon_id) const;
 
+    /* Devuelve el índice del primer jugador en el vector al que todavía
+     * le queden vidas */
     size_t getFirstStillPlayingPlayer();
 
+    /* Devuelve la cantidad de Players a los cuales todavía les queden vidas
+     * (Jugadores que no hayan perdido)*/
     size_t livePlayersCounter();
 };
 
