@@ -26,6 +26,7 @@ void ClientWindow::linkToUI() {
     newGamePage = findChild<QWidget*>("newGamePage");
     joinGamePage = findChild<QWidget*>("joinGamePage");
     inGamePage  = findChild<QWidget*>("inGamePage");
+    wantToJoin =  findChild<QWidget*>("wantToJoin");
     stack = findChild<QStackedWidget*>("stack");
     name = findChild<QLineEdit*>("name");
     host = findChild<QLineEdit*>("host");
@@ -35,6 +36,7 @@ void ClientWindow::linkToUI() {
     optionCreateButton = findChild<QPushButton*>("createMatchButton");
     selectMapButton = findChild<QPushButton*>("selectMapButton");
     selectMatchButton = findChild<QPushButton*>("selectMatchButton");
+    playButton = findChild<QPushButton*>("Play");
     QWidget* aux = findChild<QWidget*>("frameMaps");
     mapList.setParent(aux);
     aux = findChild<QWidget*>("frameMatchs");
@@ -60,6 +62,8 @@ void ClientWindow::connectEvents() {
              this, &ClientWindow::joinMatch);
     connect (selectMapButton, &QPushButton::clicked,
              this, &ClientWindow::createMatch );
+    connect (playButton, &QPushButton::clicked,
+             this, &ClientWindow::joinCreated );
 }
 
 ClientWindow::~ClientWindow() {
@@ -93,7 +97,7 @@ void ClientWindow::createMatch() {
     stack->setCurrentWidget(inGamePage);
     resolution = resoList.getSelected();
     this->client->sendMapChoice(mapList.getSelected() );
-    this->gameLoop();
+    this->stack->setCurrentWidget(wantToJoin);
 }
 
 void ClientWindow::joinMatch() {
@@ -168,4 +172,10 @@ void ClientWindow::gameLoop() {
         }
     }
     client->shutdown();
+    this->close();
+}
+
+void ClientWindow::joinCreated() {
+    client->sendPlay();
+    this->gameLoop();
 }
