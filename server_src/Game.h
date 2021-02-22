@@ -26,6 +26,7 @@ private:
     Doors doors;
     const size_t bots_amount;
     double TICK_RATE;
+    float gameDuration;
 
 public:
     /* Constructor */

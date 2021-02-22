@@ -1,5 +1,7 @@
 port: 8080
 tick_rate: 128
+game_duration: 5  #Minutos
+
 weapons_general:
   machine_gun:
     time_between_shots: &machine_gun_shots 0.1

@@ -10,18 +10,20 @@
 
 #define END_GAME_CHAR 0
 #define MAX_MSG_SIZE 256
+#define SEND_LEADERBOARD_TOLERANCE 1
 #define EPSILON 0.02
 #define KEY_ITEMS "items"
 #define KEY_PLAYER "player"
 #define KEY_MAX_PLAYERS "max_players"
 #define KEY_TICK_RATE "tick_rate"
+#define KEY_GAME_DURATION "game_duration"
 
 Game::Game(std::vector<ThClient*>& _clients, const Configuration& config,
         const Configuration& config_map) : clients(_clients),
         map(config_map), items(Configuration(config, KEY_ITEMS),
         Configuration(config_map, KEY_ITEMS), this->rockets), doors(this->map),
         bots_amount(config_map.getInt(KEY_MAX_PLAYERS) - this->clients.size()),
-        TICK_RATE(1/config.getFloat(KEY_TICK_RATE)){
+        TICK_RATE(1/config.getFloat(KEY_TICK_RATE)), gameDuration(config.getFloat(KEY_GAME_DURATION)){
     this->isRunning = true;
 
     Configuration config_stats(config, KEY_PLAYER);
@@ -50,7 +52,7 @@ void Game::execute() {
 
     try {
         gameTimer.start();
-        while (this->isRunning && gameTimer.getTime() < 10000) {
+        while (this->isRunning && gameTimer.getTime() < this->gameDuration * 60 * 1000) {
             timeBetweenUpdates.start();
 
             this->getInstructions();
@@ -174,6 +176,8 @@ void Game::createLeaderBoard() {
         this->clients[i]->push(&msgLen, 1);
         this->clients[i]->push(msg, msgLen);
     }
+
+    usleep(SEND_LEADERBOARD_TOLERANCE);
 }
 
 void Game::stop() {
