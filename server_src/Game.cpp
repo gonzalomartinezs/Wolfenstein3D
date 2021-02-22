@@ -239,19 +239,24 @@ void Game::sendMap() {
 
 void Game::loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber) {
     uint8_t size = static_cast<uint8_t>(this->sounds.size());
-    memcpy(msg + currentByte, &size, sizeof(uint8_t));
+    uint8_t posByte = currentByte;
     currentByte += sizeof(uint8_t);
 
     for (size_t i = 0; i < this->sounds.size(); i++) {
         uint8_t sound = this->sounds[i].getSound();
         float distance = this->players[playerNumber]->distanceTo(this->sounds[i]);
 
-        memcpy(msg + currentByte, &sound, sizeof(uint8_t));
-        currentByte += sizeof(uint8_t);
+        if (distance > EPSILON) {
+            memcpy(msg + currentByte, &sound, sizeof(uint8_t));
+            currentByte += sizeof(uint8_t);
 
-        memcpy(msg + currentByte, &distance, sizeof(float));
-        currentByte += sizeof(float);
+            memcpy(msg + currentByte, &distance, sizeof(float));
+            currentByte += sizeof(float);
+        } else {
+            size--;
+        }
     }
+    memcpy(msg + posByte, &size, sizeof(uint8_t));
 }
 
 TextureID Game::getTexture(uint8_t weapon_id) const {
