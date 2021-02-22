@@ -13,7 +13,11 @@ enum SoundID{
     Step_2,
     HeavyStep,
     DoorMoving,
-    PassageMoving
+    PassageMoving,
+    LB_Music,
+    LB_Title,
+    LB_Name,
+    LB_Value
 };
 
 #endif //SOUNDID_H

@@ -12,6 +12,10 @@
 #define HEAVY_STEP "../client_src/sound/resources/heavy_step.wav"
 #define DOOR "../client_src/sound/resources/door.wav"
 #define PASSAGE "../client_src/sound/resources/passage.wav"
+#define LB_TITLE "../client_src/sound/resources/lb_title.wav"
+#define LB_NAME "../client_src/sound/resources/lb_name.wav"
+#define LB_VALUE "../client_src/sound/resources/lb_value.wav"
+#define LB_MUSIC "../client_src/sound/resources/lb_music.wav"
 
 SoundsContainer::SoundsContainer() {
     _loadMusic();
@@ -30,6 +34,7 @@ SoundsContainer::~SoundsContainer() {}
 
 void SoundsContainer::_loadMusic() {
     this->music.emplace(BackMusic, BACK_MUSIC);
+    this->music.emplace(LB_Music, LB_MUSIC);
 }
 
 void SoundsContainer::_loadSFX() {
@@ -44,4 +49,7 @@ void SoundsContainer::_loadSFX() {
     this->sfx.emplace(HeavyStep, HEAVY_STEP);
     this->sfx.emplace(DoorMoving, DOOR);
     this->sfx.emplace(PassageMoving, PASSAGE);
+    this->sfx.emplace(LB_Title, LB_TITLE);
+    this->sfx.emplace(LB_Value, LB_VALUE);
+    this->sfx.emplace(LB_Name, LB_NAME);
 }
