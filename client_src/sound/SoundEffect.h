@@ -14,7 +14,7 @@ public:
 
     // Reproduce el sfx cargado de acuerdo a la cantidad de loops indicados.
     // Con -1 el sfx se repite hasta la destruccion del objeto.
-    void play(int loops);
+    void play(int loops = 0);
 
     // Modifica el volumen de reproduccion en funcion al float recibido.
     // Se toma 0 como volumen en off y 1 volumen al maximo.
