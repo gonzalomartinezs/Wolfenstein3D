@@ -103,57 +103,59 @@ void Player::lookForDoor(Doors& doors, const Collider& collider) {
 
 void Player::updatePlayer(const Map& map, Items& items,
                         std::vector<Player*>& players, Doors& doors, double timeSlice) {
-    float old_x = this->x, old_y = this->y;
 
-    try {
-        Player::_move(timeSlice);
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
+    if (!this->hasLost()) {
+        float old_x = this->x, old_y = this->y;
+
+        try {
+            Player::_move(timeSlice);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
+
+        Collider collider = Player::getCollider();
+
+        try {
+            Player::lookForWallCollision(map, collider);
+            Player::lookForItem(items, collider);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+            this->x = old_x;
+            this->y = old_y;
+        }
+
+        if (this->state == INTERACT_WITH_DOOR) {
+            Player::lookForDoor(doors, collider);
+        }
+
+        if (this->action.isShooting()) {
+            this->action.fireTheGun(players, this->player_number, map);
+        }
+
+        if (this->action.isDead()) {
+            Player::_respawn(items);
+        }
+
+    } else {
+        _sendPlayerToMordor();
     }
-
-    Collider collider = Player::getCollider();
-
-    try {
-        Player::lookForWallCollision(map, collider);
-        Player::lookForItem(items, collider);
-    } catch(const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-        this->x = old_x;
-        this->y = old_y;
-    }
-
-    if (this->state == INTERACT_WITH_DOOR) {
-        Player::lookForDoor(doors, collider);
-    }
-
-    if (this->action.isShooting()) {
-        this->action.fireTheGun(players, this->player_number, map);
-    }
-
-    if (this->action.isDead()) {
-        Player::_respawn(items);
-    }
-/*
-    // Borrar
-    std::cout << "posX: " << this->x;
-    std::cout << ", posY: " << this->y;
-    std::cout << ", dir_x: " << this->dir_x;
-    std::cout << ", dir_y: " << this->dir_y << std::endl;*/
 }
 
 void Player::setState(uint8_t newState) {
-    if (newState == STARTSHOOTING) {
-        this->action.startShooting();
-    } else if (newState == STOPSHOOTING) {
-        this->action.stopShooting();
-    } else if (newState == NEXT_WEAPON) {
-        this->action.stopShooting();
-        this->action.nextWeapon();
-    } else if (newState == PREV_WEAPON) {
-        this->action.stopShooting();
-        this->action.prevWeapon();
-    } else {
-        this->state = newState;
+    if (!this->hasLost()) {
+        if (newState == STARTSHOOTING) {
+            this->action.startShooting();
+        } else if (newState == STOPSHOOTING) {
+            this->action.stopShooting();
+        } else if (newState == NEXT_WEAPON) {
+            this->action.stopShooting();
+            this->action.nextWeapon();
+        } else if (newState == PREV_WEAPON) {
+            this->action.stopShooting();
+            this->action.prevWeapon();
+        } else {
+            this->state = newState;
+        }
     }
 }
 
@@ -289,6 +291,12 @@ void Player::getPositionDataWithPlane(uint8_t *msg) {
 
 void Player::getHUDData(uint8_t *msg) {
     this->action.getHUDInfo(msg);
+}
+
+void Player::_sendPlayerToMordor() {
+    /* Posicion invalida, nunca un jugador podria ver o estar en esa posicion  */
+    this->x = 0.5;
+    this->y = 0.5;
 }
 
 Player::~Player() {}

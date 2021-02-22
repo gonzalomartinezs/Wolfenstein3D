@@ -8,8 +8,9 @@
 #include <cstring>
 #include <algorithm>
 
+#define END_GAME_PLAYERS 1
 #define END_GAME_CHAR 0
-#define MAX_MSG_SIZE 256
+#define MAX_MSG_SIZE 512
 #define SEND_LEADERBOARD_TOLERANCE 1
 #define EPSILON 0.02
 #define KEY_ITEMS "items"
@@ -49,10 +50,11 @@ void Game::execute() {
     Timer timeBetweenUpdates;
     Timer gameTimer;
     this->sendMap();
+    float gameDurationMillis = this->gameDuration * 60 * 1000;
 
     try {
         gameTimer.start();
-        while (this->isRunning && gameTimer.getTime() < this->gameDuration * 60 * 1000) {
+        while (this->isRunning && gameTimer.getTime() < gameDurationMillis && this->livePlayersCounter() > END_GAME_PLAYERS) {
             timeBetweenUpdates.start();
 
             this->getInstructions();
@@ -93,6 +95,16 @@ bool _rocketHasExploded(const Rocket& rocket) {
     return rocket.hasExploded();
 }
 
+size_t Game::livePlayersCounter() {
+    size_t livePlayers = 0;
+    for (size_t i = 0; i < this->players.size(); ++i) {
+        if (this->players[i]->hasLost() == false) {
+            livePlayers++;
+        }
+    }
+    return livePlayers;
+}
+
 void Game::update(double timeSlice) {
     std::vector<Collider> colliders;
 
@@ -116,12 +128,27 @@ void Game::update(double timeSlice) {
     }
 }
 
+size_t Game::getFirstStillPlayingPlayer() {
+    for (size_t i = 0; i < this->players.size(); ++i) {
+        if (this->players[i]->hasLost() == false) {
+            return i;
+        }
+    }
+    throw GameException("No player left alive\n");
+}
+
 void Game::sendUpdate() {
     /* Enviar update a los clientes */
     uint8_t msg[MAX_MSG_SIZE];
     for (size_t i = 0; i < this->clients.size(); i++) {
-        int bytesToSend = this->createMsg(msg, i);
-        this->clients[i]->push(msg, bytesToSend);
+        if (players[i]->hasLost() == false) {
+            int bytesToSend = this->createMsg(msg, i);
+            this->clients[i]->push(msg, bytesToSend);
+
+        } else {
+            int bytesToSend = this->createMsg(msg, getFirstStillPlayingPlayer());
+            this->clients[i]->push(msg, bytesToSend);
+        }
     }
     this->sounds.clear();
 }

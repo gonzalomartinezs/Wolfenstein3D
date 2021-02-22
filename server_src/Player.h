@@ -114,6 +114,7 @@ private:
     void _moveBackwards(double timeSlice);
     void _turnLeft(double timeSlice);
     void _turnRight(double timeSlice);
+    void _sendPlayerToMordor();
 };
 
 #endif  // WOLFENSTEIN3D_PLAYER_H_
