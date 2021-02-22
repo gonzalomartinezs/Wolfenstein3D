@@ -2,7 +2,7 @@
 #include "GameConstants.h"
 #include <cstring>
 
-#define ID_WALL 1
+#define ID_MIN 9
 
 Doors::Doors(const Map& map) {
 	long int n_rows = map.get_n_row(), n_cols = map.get_n_col();
@@ -10,7 +10,7 @@ Doors::Doors(const Map& map) {
 	for (long int i = 0; i < n_rows; ++i) {
 		for (long int j = 0; j < n_cols; ++j) {
 			int value = map.get(i, j);
-			if (value > ID_WALL) {
+			if (value > ID_MIN) {
 				int dir_x = 0, dir_y = 0;
 				Doors::_calculateDirection(map, i, j, &dir_x, &dir_y);
 				if (value == LOCKED_DOOR) {
