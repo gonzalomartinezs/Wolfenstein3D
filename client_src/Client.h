@@ -36,9 +36,6 @@ public:
 
     std::vector<std::vector<int>> receiveMap();
 
-    // Lleva a cabo la interaccion de seleccion de partida con el servidor.
-    void lobbyInteraction(const std::string& username);
-
     // Envia al servidor la proxima instruccion contenida en 'instructions',
     // hasta que surja un error o se corte la conexion.
     void sendInstruction();
@@ -63,8 +60,6 @@ public:
     ~Client();
 
 private:
-    void _createGame();
-    void _joinGame();
     static void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
                            bool &important, int &already_parsed);
     static void _assignPlayerState(bool& not_playing, uint8_t *bytes_received, int &already_parsed);

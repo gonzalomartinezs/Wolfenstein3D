@@ -1,5 +1,4 @@
 #include <cstring>
-#include <sstream>
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -88,32 +87,6 @@ void Client::sendJoinGameChoice(){
 void Client::sendNewGameChoice(){
     uint8_t uint_choice = (uint8_t)NEW_GAME;
     this->peer.send(&uint_choice, sizeof(uint8_t));
-}
-
-void Client::lobbyInteraction(const std::string& username) {
-    int choice;
-    uint8_t uint_choice, name_len;
-    uint8_t bytes_sent[MAX_MESSAGE_SIZE];
-    memset(bytes_sent, 0, MAX_MESSAGE_SIZE);
-
-    name_len = username.size();
-    this->peer.send(&name_len, 1);
-    memcpy(bytes_sent, username.c_str(), name_len);
-    this->peer.send(bytes_sent, name_len);
-
-    std::cout << "Ingrese 0 si desea crear una nueva partida o 1 si "
-                 "desea unirse a una existente." << std::endl;
-
-    std::cin >> choice;
-    while (choice != NEW_GAME && choice != JOIN_GAME){
-        std::cout << "Input incorrecto. Intente de nuevo." << std::endl;
-        std::cin >> choice;
-    }
-    uint_choice = (uint8_t)choice;
-    this->peer.send(&uint_choice, sizeof(uint8_t));
-
-    if (choice == NEW_GAME) _createGame();
-    else _joinGame();
 }
 
 ssize_t Client::receiveInformation() {
@@ -308,7 +281,6 @@ void Client::_assignSounds(uint8_t *bytes_received,
 }
 
 
-
 // Parsea los estados de las puertas.
 void Client::_assignSlidersStates(uint8_t *bytes_received,
                                   std::vector<int> &sliders_states,
@@ -396,105 +368,6 @@ void Client::sendMapChoice(uint8_t choice){
 void Client::sendPlay() {
     uint8_t choice = (uint8_t) 'p'; //ver esto, meter un sleep?
     this->peer.send(&choice, sizeof(uint8_t));
-}
-
-void Client::_createGame() {
-    int choice;
-    uint8_t uint_choice;
-    uint8_t maps_to_receive, string_length, max_players;
-    uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
-    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
-
-    std::vector<std::string> map_names;
-    std::vector<int> players_amounts;
-
-    this->peer.recv(&maps_to_receive, 1);
-
-    for (int i=0; i<maps_to_receive; i++){
-        this->peer.recv(&string_length, 1);
-        this->peer.recv(bytes_received, string_length);
-        this->peer.recv(&max_players, 1);
-
-        std::ostringstream convert;
-        for (int j = 0; j < string_length; j++) {
-            convert << (char)bytes_received[j];
-        }
-        std::string map_name = convert.str();
-
-        map_names.push_back(map_name);
-        players_amounts.push_back(int(max_players));
-    }
-
-    std::cout << "ID: Mapa -> Tope de Jugadores" << std::endl;
-    for (int i=0; i<maps_to_receive; i++)
-        std::cout << i << ": " << map_names[i] << " -> " << players_amounts[i] << std::endl;
-
-    std::cout << "Introduzca el ID del mapa deseado:" << std::endl;
-    std::cin >> choice;
-    while (choice < 0 || choice > maps_to_receive){
-        std::cout << "Input incorrecto. Intente de nuevo." << std::endl;
-        std::cin >> choice;
-    }
-
-    uint_choice = (uint8_t) choice;
-    this->peer.send(&uint_choice, sizeof(uint8_t));
-    std::cout << "Para comenzar la partida introduzca 'p'." << std::endl;
-
-    std::cin >> uint_choice;
-    while (uint_choice != 'p'){
-        std::cout << "Input incorrecto. Intente de nuevo." << std::endl;
-        std::cin >> choice;
-    }
-    this->peer.send(&uint_choice, sizeof(uint8_t));
-}
-
-void Client::_joinGame() {
-    uint8_t games, game_id, string_length, actual_players, players_limit;
-    uint8_t bytes_received[MAX_MESSAGE_SIZE]; //almacena info recibida
-    memset(bytes_received, 0, MAX_MESSAGE_SIZE);
-
-    std::vector<std::string> map_names;
-    std::vector<int> ids, connected_players, max_players;
-
-    this->peer.recv(&games, 1);
-
-    for (int i=0; i<games; i++){
-        this->peer.recv(&game_id, 1);
-        this->peer.recv(&string_length, 1);
-        this->peer.recv(bytes_received, string_length);
-        this->peer.recv(&actual_players, 1);
-        this->peer.recv(&players_limit, 1);
-
-        std::ostringstream convert;
-        for (int j = 0; j < string_length; j++) {
-            convert << (char)bytes_received[j];
-        }
-        std::string map_name = convert.str();
-
-        map_names.push_back(map_name);
-        ids.push_back(int(game_id));
-        connected_players.push_back(int(actual_players));
-        max_players.push_back(int(players_limit));
-    }
-
-    std::cout << "ID: Mapa -> Jugadores conectados/Jugadores maximos" << std::endl;
-    std::cout << "--------------------------------------------------" << std::endl;
-    for (int i=0; i<games; i++) {
-        std::cout << ids[i] << ": " << map_names[i] << " -> " << connected_players[i]
-                  << "/" << max_players[i] << std::endl;
-    }
-
-    std::cout << "Introduzca el ID del mapa al que desea conectarse:" << std::endl;
-    int choice;
-    uint8_t uint_choice;
-    std::cin >> choice;
-    while (std::find(ids.begin(), ids.end(), choice) == ids.end()){
-        std::cout << "Input incorrecto. Intente de nuevo." << std::endl;
-        std::cin >> choice;
-    }
-    std::cout << "Conectando..." << std::endl;
-    uint_choice = (uint8_t) choice;
-    this->peer.send(&uint_choice, sizeof(uint8_t));
 }
 
 void Client::getGames(StringList &list) {

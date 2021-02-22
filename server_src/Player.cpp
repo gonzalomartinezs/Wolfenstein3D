@@ -79,7 +79,7 @@ void Player::lookForItem(Items& items, const Collider& collider) {
 		if (items[i]->collidesWith(collider)) {
             try {
                 items[i]->equipTo(this->action);
-//                Player::makeSound(PickItemSFX);
+                Player::makeSound(PickItemSFX);
                 items.remove(i);
             } catch (const std::exception& e) {
                 std::cerr << e.what() << std::endl;
