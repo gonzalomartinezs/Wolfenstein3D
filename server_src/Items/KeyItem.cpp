@@ -1,5 +1,5 @@
 #include "KeyItem.h"
-#include "../../common_src/Exceptions/ItemException.h"
+#include "../Exceptions/ItemException.h"
 #include "../Key.h"
 
 #define VALUE 0

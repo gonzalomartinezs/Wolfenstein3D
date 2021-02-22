@@ -1,6 +1,6 @@
 #include "RocketLauncherItem.h"
 #include "../Weapons/RocketLauncher.h"
-#include "../../common_src/Exceptions/ItemException.h"
+#include "../Exceptions/ItemException.h"
 
 #define KEY_MOVE_SPEED "move_speed"
 #define KEY_SIZE "size"
