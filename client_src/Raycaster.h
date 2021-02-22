@@ -37,7 +37,7 @@ public:
     void draw(DirectedPositionable &player_pos, PlayerView &view,
               std::vector<Positionable> &objects,
               std::vector<DirectedPositionable> &directed_objects,
-              std::vector<int> &doors_state);
+              std::vector<int> &doors_state, bool &not_playing);
 
     // Libera los recursos utilizados por el RayCaster
     ~Raycaster(){}
@@ -45,8 +45,8 @@ public:
 
 
 private:
-    void _drawMap(const DirectedPositionable& player_pos, float camera_plane_x,
-                  float camera_plane_y);
+    void _drawMap(const DirectedPositionable &player_pos, float camera_plane_x,
+                  float camera_plane_y, bool not_playing);
 
     float _calculatePerpWallDist(DirectedPositionable &player, RayDirection ray_dir,
                                  char &hit_axis, int &map_x, int &map_y);

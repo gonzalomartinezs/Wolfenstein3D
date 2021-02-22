@@ -1,6 +1,7 @@
 #include "SpriteRenderer.h"
 #include <cmath>
 #include <algorithm>
+#include "../common_src/GameConstants.h"
 
 #define TEX_HEIGHT 64
 #define TEX_WIDTH 64
@@ -13,10 +14,12 @@ SpriteRenderer::SpriteRenderer(TexturesContainer &textures, int begin_x,
         width(width), height(height), begin_x(begin_x),
         begin_y(begin_y), initialized(false){}
 
-void SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView view,
+void
+SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView view,
                             std::vector<DirectedPositionable> &directed_objects,
                             std::vector<Positionable> &objects,
-                            const std::vector<float> &wall_dist) {
+                            const std::vector<float> &wall_dist,
+                            bool not_playing) {
     if (!initialized) {
         selector.initializePlayers(directed_objects);
         initialized = (!directed_objects.empty());
@@ -28,7 +31,7 @@ void SpriteRenderer::drawSprites(DirectedPositionable &player_pos, PlayerView vi
     _combineAndSortSprites(player_pos, objects, directed_sprites,
                            final_sprites);
     _renderizeSprites(player_pos, final_sprites, view.getPlaneX(),
-                      view.getPlaneY(), wall_dist);
+                      view.getPlaneY(), wall_dist, not_playing);
 }
 
 // ------------------------- Metodos privados --------------------------------//
@@ -73,7 +76,8 @@ void SpriteRenderer::_renderizeSprites(DirectedPositionable &player_pos,
                                        std::vector<Positionable> &sprites,
                                        float camera_plane_x,
                                        float camera_plane_y,
-                                       const std::vector<float> &wall_distances) {
+                                       const std::vector<float> &wall_distances,
+                                       bool &not_playing) {
     for (Positionable sprite: sprites){
         double sprite_x = sprite.getX() - player_pos.getX();
         double sprite_y = sprite.getY() - player_pos.getY();
@@ -89,7 +93,7 @@ void SpriteRenderer::_renderizeSprites(DirectedPositionable &player_pos,
 
         SpriteInfo sp_info;
         _initializeSpriteInfo(sp_info, transform_x, transform_y, wall_distances);
-        _showSprite(sp_info, sprite);
+        _showSprite(sp_info, sprite, not_playing);
     }
 }
 
@@ -129,8 +133,8 @@ void SpriteRenderer::_initializeSpriteInfo(SpriteInfo &info,
 }
 
 // Muestra el sprite por pantalla
-void SpriteRenderer::_showSprite(const SpriteInfo &info,
-                                 Positionable &sprite) {
+void SpriteRenderer::_showSprite(const SpriteInfo &info, Positionable &sprite,
+                                 bool &not_playing) {
     if (info.sprite_begin != -1 && info.sprite_end != -1) {
         int sprite_height = TEX_HEIGHT;
         int sprite_width = TEX_WIDTH;
@@ -159,7 +163,11 @@ void SpriteRenderer::_showSprite(const SpriteInfo &info,
                               info.sprite_end-info.sprite_begin,
                               info.draw_end_y-info.draw_start_y};
         Texture* texture = selector.selectTexture(sprite);
+
+        if (not_playing) texture->changeColorModulation(SHADE_TEX);
+
         texture->render(&tex_portion, &stretched);
+        texture->changeColorModulation(ORIGINAL_TEX); // vuelvo al color original
     }
 }
 

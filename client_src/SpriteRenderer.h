@@ -41,7 +41,7 @@ public:
     void drawSprites(DirectedPositionable &player_pos, PlayerView view,
                      std::vector<DirectedPositionable> &directed_objects,
                      std::vector<Positionable> &objects,
-                     const std::vector<float> &wall_dist);
+                     const std::vector<float> &wall_dist, bool not_playing);
 
     // Libera los recursos utilizados por el spriteRenderer
     ~SpriteRenderer(){}
@@ -57,16 +57,19 @@ private:
                                        std::vector<Positionable> &final_sprites);
 
     void _renderizeSprites(DirectedPositionable &player_pos,
-                                  std::vector<Positionable> &sprites,
-                                  float camera_plane_x, float camera_plane_y,
-                                  const std::vector<float> &wall_distances);
+                           std::vector<Positionable> &sprites,
+                           float camera_plane_x,
+                           float camera_plane_y,
+                           const std::vector<float> &wall_distances,
+                           bool &not_playing);
 
     void _initializeSpriteInfo(SpriteInfo &info,
                                 double transform_x,
                                 double transform_y,
                                 const std::vector<float> &wall_distances);
 
-    void _showSprite(const SpriteInfo& info, Positionable &sprite);
+    void
+    _showSprite(const SpriteInfo &info, Positionable &sprite, bool &not_playing);
 };
 
 

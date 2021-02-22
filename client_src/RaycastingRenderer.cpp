@@ -1,3 +1,4 @@
+#include <iostream>
 #include "RaycastingRenderer.h"
 #include "Raycaster.h"
 #include "textures/TextureID.h"
@@ -16,7 +17,8 @@ RaycastingRenderer::RaycastingRenderer(TexturesContainer &textures, Map &map,
 
 void RaycastingRenderer::render(float wall_dist, char hit_axis, int ray_number,
                                 const DirectedPositionable &player,
-                                RayDirection ray_dir, int map_x, int map_y) {
+                                RayDirection ray_dir, int map_x,
+                                int map_y, bool not_playing) {
     int line_height = (int)(height/(wall_dist * VISUAL_PROPORTION));
 
     int draw_start = (-line_height/2) + (height/2);
@@ -43,9 +45,10 @@ void RaycastingRenderer::render(float wall_dist, char hit_axis, int ray_number,
 
     SDL_Rect stretched = {ray_number + begin_x, draw_start + begin_y,
                           1,draw_end-draw_start};
-    if (hit_axis == 'y'){
-        texture->changeColorModulation(SHADE_TEX);
-    }
+
+    if (hit_axis == 'y') texture->changeColorModulation(SHADE_TEX);
+    if (not_playing) texture->changeColorModulation(SHADE_TEX);
+
     texture->render(&tex_portion, &stretched);
     texture->changeColorModulation(ORIGINAL_TEX); // vuelvo al color original
 }

@@ -24,8 +24,9 @@ public:
                        int begin_x, int begin_y, int width, int height);
 
     void render(float wall_dist, char hit_axis, int ray_number,
-                const DirectedPositionable& player, RayDirection ray_dir,
-                int map_x, int map_y);
+                const DirectedPositionable &player, RayDirection ray_dir,
+                int map_x,
+                int map_y, bool not_playing);
 
     ~RaycastingRenderer(){}
 

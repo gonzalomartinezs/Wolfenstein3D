@@ -14,15 +14,15 @@ Raycaster::Raycaster(Map &map, int begin_x, int begin_y, int width,
 void Raycaster::draw(DirectedPositionable &player_pos, PlayerView &view,
                      std::vector<Positionable> &objects,
                      std::vector<DirectedPositionable> &directed_objects,
-                     std::vector<int> &doors_state) {
+                     std::vector<int> &doors_state, bool &not_playing) {
 
     for (int i=0; i<doors_state.size() ; i++) {
         doors[i].update(doors_state[i]);
     }
 
-    _drawMap(player_pos, view.getPlaneX(), view.getPlaneY());
-    this->sprite_renderer.drawSprites(player_pos, view,directed_objects,
-                                      objects, this->wall_distances);
+    _drawMap(player_pos, view.getPlaneX(), view.getPlaneY(), not_playing);
+    this->sprite_renderer.drawSprites(player_pos, view, directed_objects,
+                                      objects, this->wall_distances, not_playing);
     this->wall_distances.clear();
 }
 
@@ -31,8 +31,9 @@ void Raycaster::draw(DirectedPositionable &player_pos, PlayerView &view,
 // ------------------------- Metodos privados --------------------------------//
 
 // Dibuja las paredes del juego.
-void Raycaster::_drawMap(const DirectedPositionable& player_pos, float camera_plane_x,
-                         float camera_plane_y) {
+void Raycaster::_drawMap(const DirectedPositionable &player_pos,
+                         float camera_plane_x,
+                         float camera_plane_y, bool not_playing) {
 
     DirectedPositionable player = player_pos;
     RayDirection ray_dir;
@@ -48,7 +49,8 @@ void Raycaster::_drawMap(const DirectedPositionable& player_pos, float camera_pl
         float perp_wall_dist = _calculatePerpWallDist(player, ray_dir,
                                                       hit_axis, map_x, map_y);
         this->wall_distances.push_back(perp_wall_dist);
-        this->renderer.render(perp_wall_dist, hit_axis, i, player, ray_dir, map_x, map_y);
+        this->renderer.render(perp_wall_dist, hit_axis, i, player, ray_dir,
+                              map_x, map_y, not_playing);
     }
 }
 

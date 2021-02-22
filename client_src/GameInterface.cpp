@@ -88,8 +88,10 @@ void GameInterface::_updateScreen(UI_Info new_info) {
 
         ui_handler.raycast(old_pos, old_view, new_info.getStaticObjects(),
                            new_info.getDirectedObjects(),
-                           new_info.getDoorStates());
+                           new_info.getDoorStates(), new_info.isNotPlaying());
         ui_handler.loadPlayerHUD(new_info.getPlayerInfo());
+
+        if (new_info.isNotPlaying()) ui_handler.loadDeathMessage();
         ui_handler.render();
     }
     sound_handler.loadGameSfx(new_info.getPlayerInfo(), new_pos,
