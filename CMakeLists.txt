@@ -127,56 +127,35 @@ target_link_libraries(Wolfenstein3D PRIVATE SDL2 Qt5::Widgets ${YAMLCPP_LIBRARIE
                         ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES}
                         ${SDL2_MIXER_LIBRARIES})
 
-install(TARGETS serverW3D
-    RUNTIME DESTINATION "/usr/games/Wolfenstein3D/server/executable/")
+install(TARGETS Wolfenstein3D
+    RUNTIME DESTINATION "/usr/games/Wolfenstein3D/client/executable")
 
-install(DIRECTORY "server_src/Maps"
-    DESTINATION "/usr/games/Wolfenstein3D/server/server_src/Maps"
-    COMPONENT serverW3D)
+install(DIRECTORY "client_src/fonts"
+    DESTINATION "/usr/games/Wolfenstein3D/client/client_src/"
+    COMPONENT Wolfenstein3D)
+
+install(DIRECTORY "client_src/sound/resources"
+    DESTINATION "/usr/games/Wolfenstein3D/client/client_src/sound/"
+    COMPONENT Wolfenstein3D)
+
+install(DIRECTORY "client_src/textures/img"
+    DESTINATION "/usr/games/Wolfenstein3D/client/client_src/textures/"
+    COMPONENT Wolfenstein3D)
 
 set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-set(CPACK_PACKAGE_NAME "Wolfenstein3DServer")
-set(CPACK_PACKAGE_FILE_NAME "W3DServer")
+set(CPACK_PACKAGE_NAME "Wolfenstein3D")
+set(CPACK_PACKAGE_FILE_NAME "W3DClient")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Grupo 4 - Taller - 2c2020")
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
-set(CPACK_PACKAGE_DESCRIPTION "Wolfenstein3D server.")
+set(CPACK_PACKAGE_DESCRIPTION "Wolfenstein3D cliente.")
 set(CPACK_PACKAGE_ICON "logo.png")
 
-install(FILES server_src/Bots/Destripador.lua DESTINATION /usr/games/Wolfenstein3D/server/server_src/Bots/ COMPONENT serverW3D)
-install(FILES executable/logo.png DESTINATION share/icons/Wolfenstein3D/ COMPONENT serverW3D)
-install(FILES executable/Editor.desktop DESTINATION /usr/share/applications/ COMPONENT serverW3D) 
-
-#install(TARGETS Wolfenstein3D
-#    RUNTIME DESTINATION "/usr/games/Wolfenstein3D/client/executable")
-
-#install(DIRECTORY "client_src/fonts"
-#    DESTINATION "/usr/games/Wolfenstein3D/client/client_src"
-#    COMPONENT Wolfenstein3D)
-
-#install(DIRECTORY "client_src/login"
-#    DESTINATION "/usr/games/Wolfenstein3D/client/client_src"
-#    COMPONENT Wolfenstein3D)
-
-#install(DIRECTORY "client_src/textures"
-#    DESTINATION "/usr/games/Wolfenstein3D/client/client_src"
-#    COMPONENT Wolfenstein3D)
-
-#set(CPACK_GENERATOR "DEB")
-#set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-#set(CPACK_PACKAGE_NAME "Wolfenstein3D")
-#set(CPACK_PACKAGE_FILE_NAME "W3DClient")
-#set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Grupo 4 - Taller - 2c2020")
-#set(CPACK_PACKAGE_VERSION_MAJOR "1")
-#set(CPACK_PACKAGE_VERSION_MINOR "0")
-#set(CPACK_PACKAGE_VERSION_PATCH "0")
-#set(CPACK_PACKAGE_DESCRIPTION "Wolfenstein3D cliente.")
-#set(CPACK_PACKAGE_ICON "logo.png")
-
-#install(FILES executable/logo.png DESTINATION share/icons/Wolfenstein3D/ COMPONENT Wolfenstein3D)
-#install(FILES executable/Editor.desktop DESTINATION /usr/share/applications/ COMPONENT Wolfenstein3D) 
+install(FILES client_src/clientWindow/background.jpg DESTINATION /usr/games/Wolfenstein3D/client/client_src/clientWindow/ COMPONENT Wolfenstein3D)
+install(FILES executable/logo.png DESTINATION share/icons/Wolfenstein3D/client COMPONENT Wolfenstein3D)
+install(FILES executable/Wolfenstein3D.desktop DESTINATION /usr/share/applications/ COMPONENT Wolfenstein3D) 
 
 
 INCLUDE(CPack)
