@@ -24,6 +24,9 @@ public:
     // Retorna la superficie de la ventana.
     SDL_Surface* getSurface() const;
 
+    // Mantiene la ventana abierta hasta que el usuario la cierre manualmente.
+    void waitForClose();
+
     // Libera los recursos utilizados por la ventana.
     ~Window();
 

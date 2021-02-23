@@ -21,15 +21,16 @@ Window::Window(std::string name, int width, int height, int pos_x, int pos_y,
     if (err_code_sdl) throw WindowException("Failed to initiate SDL_mixer.");
     mixer_initiated = true;
 
-    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) throw WindowException("Failed to initiate SDL_image.");
+    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
+        throw WindowException("Failed to initiate SDL_image.");
 
-    this->window = SDL_CreateWindow(name.c_str(), pos_x, pos_y, width,
-                                    height, flag);
-    if (this->window == nullptr) throw WindowException("Failed to create window.");
+    this->window = SDL_CreateWindow(name.c_str(), pos_x, pos_y, width, height, flag);
+    if (this->window == nullptr)
+        throw WindowException("Failed to create window.");
 
-    this->renderer = SDL_CreateRenderer(this->window, -1,
-                                        SDL_RENDERER_ACCELERATED);
-    if (this->renderer == nullptr) throw WindowException("Failed to create renderer.");
+    this->renderer = SDL_CreateRenderer(this->window, -1,SDL_RENDERER_ACCELERATED);
+    if (this->renderer == nullptr)
+        throw WindowException("Failed to create renderer.");
 }
 
 SDL_Renderer *Window::getRenderer() const {
@@ -38,6 +39,18 @@ SDL_Renderer *Window::getRenderer() const {
 
 SDL_Surface *Window::getSurface() const {
     return SDL_GetWindowSurface(this->window);
+}
+
+void Window::waitForClose() {
+    SDL_Event event;
+    bool quit;
+    while(!quit) {
+        while (SDL_PollEvent(&event) != 0) {
+            if (event.type == SDL_QUIT) {
+                quit = true;
+            }
+        }
+    }
 }
 
 Window::~Window() {
@@ -50,13 +63,11 @@ Window::~Window() {
         this->window = nullptr;
     }
     if (TTF_WasInit()) TTF_Quit();
+    if (img_initiated) IMG_Quit();
+    if (sdl_initiated) SDL_Quit();
     if (mixer_initiated) {
         Mix_CloseAudio();
         Mix_Quit();
         SDL_AudioQuit();
     }
-    if (img_initiated) IMG_Quit();
-    if (sdl_initiated) SDL_Quit();
 }
-
-
