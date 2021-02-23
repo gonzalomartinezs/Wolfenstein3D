@@ -1,10 +1,10 @@
 #include "SoundEffect.h"
-#include "../Exceptions/SoundLoadingException.h"
+#include "../Exceptions/SDLException.h"
 
 SoundEffect::SoundEffect(std::string path) {
     this->sfx = Mix_LoadWAV(path.c_str());
     if (this->sfx == nullptr)
-        throw SoundLoadingException("Unable to load sound effect file");
+        throw SDLException("Unable to load sound effect file");
 }
 
 void SoundEffect::play(int loops) {

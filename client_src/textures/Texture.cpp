@@ -2,7 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <algorithm>
 #include <iostream>
-#include "../Exceptions/TextureLoadingException.h"
+#include "../Exceptions/SDLException.h"
 
 #define R 152
 #define G 0
@@ -21,20 +21,20 @@ Texture::Texture(std::string path, SDL_Renderer* renderer, SDL_Surface* surface)
         }
     } else if (extension == "png" && surface){
         SDL_Surface* aux_surface = IMG_Load(path.c_str());
-        if (aux_surface == nullptr) throw TextureLoadingException("Unable to load PNG image.");
+        if (aux_surface == nullptr) throw SDLException("Unable to load PNG image.");
         loaded_surface = SDL_ConvertSurface(aux_surface, surface->format, 0);
         SDL_FreeSurface(aux_surface);
-    } else throw TextureLoadingException("Unsupported image format.");
+    } else throw SDLException("Unsupported image format.");
 
     if (loaded_surface == nullptr){
-        throw TextureLoadingException("Failed to create surface.");
+        throw SDLException("Failed to create surface.");
     } else {
         SDL_SetColorKey(loaded_surface, SDL_TRUE,
                         SDL_MapRGB(loaded_surface->format, R, G, B));
         texture = SDL_CreateTextureFromSurface(this->renderer, loaded_surface);
         SDL_FreeSurface(loaded_surface);
         if (texture == nullptr){
-            throw TextureLoadingException("Failed to generate texture.");
+            throw SDLException("Failed to generate texture.");
         }
     }
 }
