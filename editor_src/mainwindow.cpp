@@ -1,46 +1,27 @@
+#include <QWidget>
+#include <QHBoxLayout>
+#include <QFileDialog>
+#include <list>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "mapelement.h"
-#include <QWidget>
-#include <QFrame>
-#include <QHBoxLayout>
-#include <QMessageBox>
-#include <QFileDialog>
 
-#include <string>
-#include <list>
 #include "InvalidFileException.h"
-
 #include "mapparser.h"
 #include "mapelement.h"
-#include "MessageBox.h"
 
-#define TAM_MAP_DEF 25
+
+#define TAM_MAP_DEF 13
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
-      container(ITEMSIZE){
+      container(ITEMSIZE) {
     ui->setupUi(this);
-    this->setWindowTitle("Editor de niveles");
+    this->setWindowTitle("Editor De Niveles");
     this->initWidgets();
     this->initBar();
     this->connectEvents();
-}
-
-void MainWindow::linkToUI() {
-    this->itemList = findChild<ItemList*>("itemList");
-    this->mapScrollArea = findChild<QScrollArea*>("mapArea");
-    this->trashBin = findChild<TrashBin*>("trashBin");
-    this->spinX = findChild<QSpinBox*>("spinX");
-    this->spinY = findChild<QSpinBox*>("spinY");
-    this->button = findChild<QPushButton*>("button");
-    this->nameLabel = findChild <QLineEdit*>("nameLabel");
-}
-
-MainWindow::~MainWindow() {
-    delete ui;
-    delete mapHandler;
 }
 
 void MainWindow::initWidgets() {
@@ -51,6 +32,16 @@ void MainWindow::initWidgets() {
     this->spinY->setValue(TAM_MAP_DEF);
     this->nameLabel->setPlaceholderText("Name of the map");
     mapScrollArea->setWidget(mapHandler);
+}
+
+void MainWindow::linkToUI() {
+    this->itemList = findChild<ItemList*>("itemList");
+    this->mapScrollArea = findChild<QScrollArea*>("mapArea");
+    this->trashBin = findChild<TrashBin*>("trashBin");
+    this->spinX = findChild<QSpinBox*>("spinX");
+    this->spinY = findChild<QSpinBox*>("spinY");
+    this->button = findChild<QPushButton*>("button");
+    this->nameLabel = findChild <QLineEdit*>("nameLabel");
 }
 
 void MainWindow::initBar() {
@@ -133,4 +124,7 @@ void MainWindow::restart() {
     mapScrollArea->setWidget(mapHandler);
 }
 
-
+MainWindow::~MainWindow() {
+    delete ui;
+    delete mapHandler;
+}

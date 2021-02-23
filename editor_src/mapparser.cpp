@@ -2,10 +2,9 @@
 #include <yaml-cpp/yaml.h>
 #include "mapparser.h"
 #include "iconscontainer.h"
-#include "coordinate.h"
+#include  "mapelement.h"
 #include "InvalidFileException.h"
 
-#include <QRect>
 #include "mainwindow.h"
 #include <fstream>
 
@@ -45,24 +44,24 @@ void MapParser::exportStructures(const Map& exported) {
     std::list<MapElement> list = exported.getElements();
     std::vector<std::vector<int>> matrix;
 
+    //cargamos la matrix
     for (int i = 0; i <  y; ++i) {
         std::vector<int> v1;
         for (int j = 0; j < x ; ++j) {
             v1.push_back(0);
         }
         matrix.push_back(v1);
-}
+    }
 
     for(const auto &i : list) {
         if (isStructure( i.getId() ) ) {
-            Coordinate cor = calculateCoor(i.getRect());
             int aux;
             if(i.getId() == Wall0) aux = WALL0;
             if(i.getId() == Wall1) aux = WALL1;
             if(i.getId() == LockedDoor) aux = LOCKED_DOOR;
             if(i.getId() == Door)  aux = DOOR;
             if(i.getId() == Slider) aux = SLIDER;
-            matrix[cor.getY()][cor.getX()] = aux;
+            matrix[i.getCoor().getY()][i.getCoor().getX()] = aux;
         }
     }
     emitter << YAML::BeginSeq;
@@ -84,7 +83,7 @@ Map MapParser::loadMap(std::string path) {
     this->loadElements();
     Map map(this->x,this->y);
     for(const auto&i : elements) {
-        map.add(Coordinate(i.calculateX(), i.calculateY()) , i);
+        map.add(i.getCoor() , i);
     }
     map.setName(name);
     return map;
@@ -131,7 +130,7 @@ void MapParser::loadItem (const YAML::Node& item, const std::string& keyName ) {
        const YAML::Node& nodePos = item[keyName+"_"+std::to_string(i)];
         int posX = (int) nodePos["pos_x"].as<float>();
         int posY = (int) nodePos["pos_y"].as<float>();
-        this->elements.emplace_back(MapElement(id, calculateRect(posX, posY) ));
+        this->elements.emplace_back(MapElement(id, Coordinate(posX, posY) ));
     }
 }
 
@@ -143,14 +142,11 @@ void MapParser::loadPlayers(){
         YAML::Node player = this->mapFile[aux];
         int posX = (int) player["pos_x"].as<float>();
         int posY = (int) player["pos_y"].as<float>();
-        this->elements.emplace_back(MapElement(Spawn, calculateRect(posX, posY) ));
+        this->elements.emplace_back(MapElement(Spawn, Coordinate(posX, posY) ));
     }
+
 }
 
-QRect MapParser::calculateRect(int _x, int _y ) {
-    return QRect(QPoint(_x*ITEMSIZE, _y*ITEMSIZE),
-                 QSize(ITEMSIZE, ITEMSIZE));
-}
 
 void MapParser::loadMatrix() {
     for (int i = 0; i < y; i++) {
@@ -158,19 +154,19 @@ void MapParser::loadMatrix() {
             int element = this->mapFile["map"][i][j].as<int>();
             switch (element) {
                 case DOOR :
-                    elements.emplace_back(MapElement(Door, calculateRect(j, i)));
+                    elements.emplace_back(MapElement(Door, Coordinate(j, i)));
                     break;
                 case WALL0 :
-                    elements.emplace_back(MapElement(Wall0, calculateRect(j, i)));
+                    elements.emplace_back(MapElement(Wall0, Coordinate(j, i)));
                     break;
                 case LOCKED_DOOR :
-                    elements.emplace_back(MapElement(LockedDoor, calculateRect(j, i)));
+                    elements.emplace_back(MapElement(LockedDoor, Coordinate(j, i)));
                     break;
                 case WALL1 :
-                    elements.emplace_back(MapElement(Wall1, calculateRect(j, i)));
+                    elements.emplace_back(MapElement(Wall1, Coordinate(j, i)));
                     break;
                 case SLIDER:
-                    elements.emplace_back(MapElement(Slider, calculateRect(j, i)));
+                    elements.emplace_back(MapElement(Slider, Coordinate(j, i)));
                     break;
             }
         }
@@ -199,13 +195,6 @@ bool MapParser::isStructure (const Editor_icon &id) const {
     return false;
 }
 
-Coordinate MapParser::calculateCoor (const QRect &rect) const {
-    rect.x();
-    rect.y(); //error puede estar aca.
-    Coordinate coor( rect.x()/ITEMSIZE, rect.y()/ITEMSIZE);
-    return coor;
-}
-
 void MapParser::exportPlayers (const Map& exported) {
 
     std::list<MapElement> list = exported.getElements();
@@ -213,13 +202,11 @@ void MapParser::exportPlayers (const Map& exported) {
     int number = 0;
     for (const auto& i : list) {
         if(i.getId() == Spawn) {
-            int pos_x = i.calculateX();
-            int pos_y = i.calculateY();
             std::string aux  = "player_" + std::to_string(number);  number++;
             emitter << YAML::Key << aux;
             emitter << YAML::Value << YAML::BeginMap;
-                emitter << YAML::Key << "pos_x" << YAML::Value << pos_x + 0.5;
-                emitter << YAML::Key << "pos_y" << YAML::Value << pos_y + 0.5;
+                emitter << YAML::Key << "pos_x" << YAML::Value << i.getCoor().getX() + 0.5;
+                emitter << YAML::Key << "pos_y" << YAML::Value << i.getCoor().getY() + 0.5;
                 emitter << YAML::Key << "dir_x" << YAML::Value << 1;
                 emitter << YAML::Key << "dir_y" << YAML::Value << 0;
             emitter << YAML::EndMap;
@@ -244,8 +231,8 @@ void MapParser::exportItems (const Map& exported) {
         for (auto &j : it) {
             emitter << YAML::Key << name + "_" + std::to_string(n);
             emitter << YAML::Value << YAML::BeginMap;
-            emitter << YAML::Key << "pos_x" << YAML::Value << j.calculateX() + 0.5;
-            emitter << YAML::Key << "pos_y" << YAML::Value << j.calculateY() + 0.5;
+            emitter << YAML::Key << "pos_x" << YAML::Value << j.getCoor().getX() + 0.5;
+            emitter << YAML::Key << "pos_y" << YAML::Value << j.getCoor().getY() + 0.5;
             emitter << YAML::EndMap;
             n++;
         }

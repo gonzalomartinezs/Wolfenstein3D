@@ -5,7 +5,6 @@
 #include "maphandler.h"
 #include "trashbin.h"
 #include "iconscontainer.h"
-#include "mapparser.h"
 
 #include <QMainWindow>
 #include <vector>
@@ -34,7 +33,7 @@ class MainWindow : public QMainWindow {
     void restart();
 
  signals:
-    void showYamlError ();
+    void showYamlError();
 
  private:
     void initWidgets();

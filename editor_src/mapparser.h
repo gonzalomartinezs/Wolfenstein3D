@@ -6,7 +6,6 @@
 #include "iconscontainer.h"
 #include <string>
 #include <yaml-cpp/yaml.h>
-#include <QRect>
 
 class MapParser {
 
@@ -30,8 +29,6 @@ private:
     void loadElements();
     void loadPlayers();
     void loadMatrix();
-    QRect calculateRect(int x, int y);
-    Coordinate calculateCoor(const QRect&) const;
     Editor_icon getID(const std::string& key);
     void loadItems();
 
