@@ -75,3 +75,26 @@ endif()
 
 target_link_libraries(Editor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(Editor PRIVATE ${YAMLCPP_LIBRARIES})
+
+install(TARGETS Editor
+    RUNTIME DESTINATION "/usr/bin/")
+
+install(DIRECTORY "icons"
+    DESTINATION "/usr/games/Wolfenstein3D"
+    COMPONENT Editor)
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_PACKAGE_NAME "Wolfenstein3DEditor")
+set(CPACK_PACKAGE_FILE_NAME "W3DEditor")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Grupo 4 - Taller - 2c2020")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_PACKAGE_DESCRIPTION "Wolfenstein3D map editor.")
+set(CPACK_PACKAGE_ICON "logo.png")
+
+install(FILES executable/logo.png DESTINATION share/icons/Wolfenstein3D/ COMPONENT Editor)
+install(FILES executable/Editor.desktop DESTINATION /usr/share/applications/ COMPONENT Editor) 
+
+INCLUDE(CPack)
