@@ -3,6 +3,7 @@
 #include <cstring>
 
 #define ID_MIN 9
+#define ID_WALKABLE 0
 
 Doors::Doors(const Map& map) {
 	long int n_rows = map.get_n_row(), n_cols = map.get_n_col();
@@ -51,10 +52,11 @@ void Doors::loadDoorsInfo(uint8_t* msg, uint8_t &currentByte) {
 
 void Doors::_calculateDirection(const Map& map, long x, long y,
 								int* dir_x, int* dir_y) {
-	if ((map.get(x + 1, y) == WALL) && (map.get(x - 1, y) == WALL)) {
-		(*dir_y) = 1;
-	} else {
+	if ((map.get(x + 1, y) <= ID_WALKABLE) &&
+		(map.get(x - 1, y) <= ID_WALKABLE)) {
 		(*dir_x) = 1;
+	} else {
+		(*dir_y) = 1;
 	}
 }
 
