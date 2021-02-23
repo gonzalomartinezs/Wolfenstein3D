@@ -38,6 +38,7 @@ void MapHandler::paintEvent (QPaintEvent *event) {
 
     std::list < MapElement> filled = this->map.getElements();
     for (const MapElement &i : filled) {
+        QRect view = i.getRect();
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
 }
@@ -81,24 +82,19 @@ void MapHandler::dropEvent(QDropEvent *event) {
 
         QByteArray pieceData = event->mimeData()->data(ItemList::editorMimeType());
         QDataStream dataStream(&pieceData, QIODevice::ReadOnly);
-        MapElement element;
-        element.rect = targetSquare(event->pos());
+        QRect auxRect;
+        auxRect = targetSquare(event->pos());
         int auxInt;
         dataStream  >> auxInt;
 
-        element.id = (Editor_icon) auxInt;
-        map.add(targetCoordinate(event->pos() ) ,element);
+        map.add(targetCoordinate(event->pos() ) ,
+                MapElement( (Editor_icon) auxInt ,auxRect) );
 
         focused = QRect();
-        update(element.rect);
+        update(auxRect);
 
         event->setDropAction(Qt::MoveAction);
         event->accept();
-        /*if (piece.location == piece.rect.topLeft() / pieceSize()) {
-            inPlace++;
-            if (inPlace == 25)
-                emit puzzleCompleted();
-        }*/
         } else {
         focused = QRect();
         event->ignore();
@@ -111,7 +107,8 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
     Coordinate coor = targetCoordinate(event->pos());
     QRect square = targetSquare(event->pos());
 
-    if (map.isEmpty(targetCoordinate(event->pos()))) return;
+    if ( map.isEmpty(targetCoordinate(event->pos() ) ) )
+        return;
 
     MapElement element = map.get(coor);
     map.remove(coor);
@@ -119,10 +116,10 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
     update(square);
 
     QByteArray itemData;
-    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+    QDataStream dataStream (&itemData, QIODevice::WriteOnly);
 
-    dataStream << element.id;
-    QPixmap pixmap = icons.getIcon(element.id);
+    dataStream << (int) element.getId();
+    const QPixmap& pixmap = icons.getIcon( element.getId() );
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(ItemList::editorMimeType(), itemData);
@@ -134,11 +131,10 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
 
     if (drag->exec(Qt::MoveAction) != Qt::MoveAction) {
         map.add(coor,element);
-        //elements.insert(found, element);
         update(targetSquare(event->pos()));
 
-        /*if (piece.location == square.topLeft() / pieceSize())
-            inPlace++;*/
+    } else {
+        // cartel?
     }
 }
 
@@ -160,17 +156,17 @@ const Map& MapHandler::getMap() {
     return map;
 }
 
-void MapHandler::loadElements(std::list<MapElement>& in){
+void MapHandler::loadElements(std::list<MapElement>& in) {
+
     for(auto &i : in){
-        Coordinate coor(i.calculateX(), i.calculateY());
-        if( map.inRange(coor) ) {
-            map.add(coor, i);
+        if( map.inRange(i.getCoor()) ) {
+            map.add(i.getCoor(), i);
         }
     }
+
 }
 
 void MapHandler::resizeMap (int x, int y, std::string inName) {
-    printf("se llamo");
     setMinimumSize(x*ITEMSIZE, y*ITEMSIZE);
     setMaximumSize(x*ITEMSIZE, y*ITEMSIZE);
     this->map.resizeMap(x, y);

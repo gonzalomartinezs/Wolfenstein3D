@@ -1,6 +1,7 @@
 #include "Rocket.h"
 #include "../Player.h"
 #include <cstring>
+#include <endian.h>
 
 #define WALL_SIZE 1
 #define WALKABLE 0
@@ -79,10 +80,19 @@ uint8_t Rocket::_calculateDamage(float distance) {
 }
 
 void Rocket::getPositionData(uint8_t *msg) {
-    memcpy(msg, &this->x, sizeof(float));
-    memcpy(msg + sizeof(float), &this->y, sizeof(float));
-    memcpy(msg + 2 * sizeof(float), &this->dir_x, sizeof(float));
-    memcpy(msg + 3 * sizeof(float), &this->dir_y, sizeof(float));
+    uint32_t aux;
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->x)));
+    memcpy(msg, &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->y)));
+    memcpy(msg + sizeof(float), &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->dir_x)));
+    memcpy(msg + 2 * sizeof(float), &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->dir_y)));
+    memcpy(msg + 3 * sizeof(float), &aux, sizeof(float));
 }
 
 bool Rocket::hasExploded() const {

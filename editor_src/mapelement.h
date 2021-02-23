@@ -2,27 +2,26 @@
 #define MAPELEMENT_H
 
 #include "iconscontainer.h"
+#include "coordinate.h"
 #include <QRect>
-
 
 class MapElement {
 public:
     MapElement();
+    MapElement(const Editor_icon& id, const Coordinate& coor);
     MapElement(const Editor_icon& id, const QRect& rect);
-    Editor_icon id;
-    QRect rect;
+    const Editor_icon& getId() const;
+    const Coordinate& getCoor() const;
+    QRect getRect() const;
+
     MapElement(MapElement &in);
-
     MapElement(MapElement &&in);
-
     MapElement(const MapElement &in);
     bool operator==( const MapElement& rhs);
-
     MapElement& operator=(const MapElement& in);
-    Editor_icon getId()const;
-    const QRect& getRect() const;
-    int calculateX() const;
-    int calculateY() const;
+private:
+    Editor_icon id;
+    Coordinate coor;
 };
 
 #endif // MAPELEMENT_H

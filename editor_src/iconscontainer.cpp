@@ -38,7 +38,8 @@ void IconsContainer::loadItemList( ItemList &list) const {
 void IconsContainer::add(const Editor_icon& id, const std::string& path) {
     QPixmap newImage;
     newImage.load( path.c_str() );
-    icons.insert ( std::pair<Editor_icon,QPixmap>(id,
-                                                  newImage.scaled(this->iconSize, this->iconSize)) );
+    icons.insert ( std::pair<Editor_icon,
+                   QPixmap>(id,
+                            newImage.scaled(this->iconSize, this->iconSize)) );
 }
 

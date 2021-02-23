@@ -5,6 +5,7 @@
 #include "Items/Items.h"
 #include "Exceptions/GameException.h"
 #include <cstring>
+#include <endian.h>
 
 #define KEY_INITIAL_HEALTH "initial_health"
 #define KEY_INITIAL_SCORE "initial_score"
@@ -167,11 +168,19 @@ void PlayerActions::getHUDInfo(uint8_t* msg) {
     memcpy(msg + 3 * sizeof(uint8_t) + sizeof(bool), &weapon_is_shooting,
             sizeof(bool));
 
+
     int bullets = this->weapons.getBullets();
-    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &bullets,
-            sizeof(int));
+    uint32_t aux;
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&bullets)));
+
+    memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool), &aux,
+           sizeof(int));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->score)));
+
     memcpy(msg + 3 * sizeof(uint8_t) + 2 * sizeof(bool) + sizeof(int),
-            &this->score, sizeof(int));
+           &aux, sizeof(int));
 }
 
 PlayerActions::~PlayerActions() {}
