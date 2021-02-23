@@ -1,10 +1,11 @@
 
 #include "map.h"
 #include  "mapelement.h"
-
+#include "coordinate.h"
 
 Map::Map(const unsigned& x, const unsigned& y): x(x), y(y) {
     std::string name = "-";
+    this->setPerimeter();
 }
 
 bool Map::isEmpty(const Coordinate &coor) const{
@@ -15,8 +16,12 @@ bool Map::isEmpty(const Coordinate &coor) const{
 }
 
 void Map::add(const Coordinate& coor, const MapElement& element){
-    if( this->isEmpty(coor) ) //agregar si esta en rango
+    if( this->inRange(coor)  ) {
+        if( !this->isEmpty(coor) ) {
+            remove(coor);
+        }
         this->matrix.insert({coor.toString(),element});
+    }
 }
 
 void Map::remove(const Coordinate& coor){
@@ -62,8 +67,10 @@ void Map::setName (const std::string& inName) {
 }
 
 void Map::resizeMap(int _x, int _y) {
+    this->clearPerimeter();
     x = _x, y = _y;
- }
+    this->setPerimeter();
+}
 
 unsigned Map::getNumberOfPlayers() const {
     unsigned i = 0;
@@ -73,3 +80,38 @@ unsigned Map::getNumberOfPlayers() const {
     }
     return i;
 }
+
+
+void Map::setPerimeter() {
+    std::list<Coordinate> peri = calculatePerimeter();
+    for (const auto &i : peri){
+        this->add(i,MapElement(Wall0,i));
+    }
+}
+
+void Map::clearPerimeter() {
+    std::list<Coordinate> peri = calculatePerimeter();
+    for (const auto &i : peri){
+        this->remove(i);
+    }
+}
+
+bool Map::isBorder(const Coordinate& coor) const{
+    if (coor.getX() == (x-1)) return true;
+    if (coor.getX() == 0) return true;
+    if((coor.getY() == (y-1))) return true;
+    if((coor.getY() == 0)) return true;
+    return false;
+}
+
+std::list<Coordinate> Map::calculatePerimeter() const {
+    std::list<Coordinate> list;
+    for (int i = 0; i < x ; ++i) {
+        for (int j = 0; j < y; ++j) {
+            Coordinate aux(i,j);
+            if(isBorder(aux)) list.emplace_back(aux);
+        }
+    }
+    return list;
+}
+

@@ -48,10 +48,6 @@ bool MapElement::operator==( const MapElement &rhs) {
     return (this->coor == rhs.coor);
 }
 
-void MapElement::setCoor(const Coordinate &coor) {
-    this->coor = coor;
-}
-
 MapElement::MapElement(const Editor_icon &id, const QRect &rect) {
     this->id = id;
     this ->coor =  Coordinate(rect.topLeft().x() /ITEMSIZE
