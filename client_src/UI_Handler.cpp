@@ -1,4 +1,3 @@
-#include <iostream>
 #include <thread>
 #include "UI_Handler.h"
 #include "../common_src/GameConstants.h"

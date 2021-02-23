@@ -1,4 +1,3 @@
-#include <iostream>
 #include "clientwindow.h"
 #include "./ui_clientwindow.h"
 #include "../Window.h"

@@ -1,6 +1,5 @@
 #include "SpriteSelector.h"
 #include <math.h>
-#include <iostream>
 
 #define PI 3.141592
 #define TEXTURES_AMOUNT 8

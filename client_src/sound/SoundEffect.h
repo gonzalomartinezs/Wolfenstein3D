@@ -18,7 +18,7 @@ public:
 
     // Modifica el volumen de reproduccion en funcion al float recibido.
     // Se toma 0 como volumen en off y 1 volumen al maximo.
-    void setVolume(float relative_volume);;
+    void setVolume(float relative_volume);
 
     // Libera los recuros utilizados por el objeto.
     ~SoundEffect();

@@ -1,6 +1,5 @@
 #include "TexturesContainer.h"
 #include <SDL2/SDL_image.h>
-#include <iostream>
 
 #define WALKING_TIME 800
 
