@@ -5,7 +5,6 @@
 #include "maphandler.h"
 #include "trashbin.h"
 #include "iconscontainer.h"
-#include "mapparser.h"
 
 #include <QMainWindow>
 #include <vector>

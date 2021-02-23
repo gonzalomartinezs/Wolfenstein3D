@@ -3,12 +3,13 @@
 #include <QFileDialog>
 #include <list>
 
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
 #include "InvalidFileException.h"
 #include "mapparser.h"
 #include "mapelement.h"
-#include "MessageBox.h"
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+
 
 #define TAM_MAP_DEF 13
 

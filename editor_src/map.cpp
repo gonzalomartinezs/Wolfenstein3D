@@ -1,6 +1,7 @@
-#include "coordinate.h"
+
 #include "map.h"
-#include "mainwindow.h"
+#include  "mapelement.h"
+
 
 Map::Map(const unsigned& x, const unsigned& y): x(x), y(y) {
     std::string name = "-";
@@ -34,7 +35,7 @@ unsigned Map::getY() const {
 }
 
 bool Map::inRange(const Coordinate& coor) const{
-    return coor.inRange(*this);
+    return (coor.getX() < x && coor.getY() < y);
 }
 
 const MapElement& Map::get(const Coordinate& coor)const{
@@ -44,18 +45,13 @@ const MapElement& Map::get(const Coordinate& coor)const{
 std::list<MapElement> Map::getElements() const{
     std::list< MapElement> elementList;
     for(auto &kv : this->matrix){
-        if( inRange ( Coordinate (kv.second.calculateX(), kv.second.calculateY() ) ) )
-        elementList.push_back( (kv.second) ) ;
+        if ( inRange ( kv.second.getCoor() ) ) {
+            elementList.push_back( (kv.second) ) ;
+        }
     }
     return elementList;
 }
 
-const MapElement& Map::get(const QPoint& point) const {
-    QRect rect(point / ITEMSIZE * ITEMSIZE,
-               QSize(ITEMSIZE, ITEMSIZE));
-     Coordinate coor( (rect.left() / ITEMSIZE), (rect.top() /ITEMSIZE ) );
-    return ( this->matrix.at( coor.toString() ) );
-}
 
 const std::string& Map::getName() const {
     return name;
@@ -69,40 +65,11 @@ void Map::resizeMap(int _x, int _y) {
     x = _x, y = _y;
  }
 
-unsigned Map::getNumberOfPlayers() const{
+unsigned Map::getNumberOfPlayers() const {
     unsigned i = 0;
     for(auto &kv : this->matrix){
-        if( inRange ( Coordinate (kv.second.calculateX(), kv.second.calculateY() ) ) )
-            if(kv.second.id == Spawn) i++;
+        if( inRange ( kv.second.getCoor() ) )
+            if(kv.second.getId() == Spawn) i++;
     }
     return i;
-}
-
-void Map::setOutline() {
-    /*
-    for (int i = 0; i < x; ++i) {
-        Coordinate coor(i,0);
-        this->matrix.insert ({coor.toString(),MapElement(Wall0,
-                                                        QRect(QPoint(i*ITEMSIZE,0),
-                                                              QSize(ITEMSIZE,ITEMSIZE)))});
-    }
-    for (int i = 0; i < x ; i++) {
-        Coordinate coor(i,y-1);
-        this->matrix.insert ({coor.toString(),MapElement(Wall0,
-                                                         QRect(QPoint(i*ITEMSIZE,(y-1)*ITEMSIZE),
-                                                               QSize(ITEMSIZE,ITEMSIZE)))});
-    }
-    for (int i = 0; i < y ; i++) {
-        Coordinate coor(0,i);
-        this->matrix.insert ({coor.toString(),MapElement(Wall0,
-                                                         QRect(QPoint(0,i*ITEMSIZE),
-                                                               QSize(ITEMSIZE,ITEMSIZE)))});
-    }
-    for (int i = 0; i < y ; i++) {
-        Coordinate coor(x-1,i);
-        this->matrix.insert ({coor.toString(),MapElement(Wall0,
-                                                         QRect(QPoint((x-1)*ITEMSIZE,i*ITEMSIZE),
-                                                               QSize(ITEMSIZE,ITEMSIZE)))});
-    }
-     */
 }

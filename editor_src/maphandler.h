@@ -1,3 +1,4 @@
+
 #ifndef MAPHANDLER_H
 #define MAPHANDLER_H
 
@@ -6,20 +7,17 @@
 
 #include "map.h"
 #include "iconscontainer.h"
-#include "coordinate.h"
 
 class MapHandler : public QWidget {
     Q_OBJECT
 
-
 public:
     void resizeMap( int x, int y, std::string name = "NoName");
 
-    explicit MapHandler(const IconsContainer& container,const std::string& name = "NoName",
+    MapHandler(const IconsContainer& container,const std::string& name = "NoName",
                         unsigned x = 5, unsigned y= 5 , QWidget *parent = nullptr);
     const Map& getMap();
     void loadElements(std::list<MapElement>& in);
-
 
 signals:
     void showOccupiedPosition ();
