@@ -16,7 +16,7 @@ Configuration::Configuration(const Configuration& config,
 }
 
 bool Configuration::hasKey(const std::string& key) const {
-	return this->file[key];
+	return ((bool)this->file[key]);
 }
 
 std::string Configuration::getString(const std::string& key) const {
