@@ -19,7 +19,11 @@ public:
 	GameManager(GameManager& other) = delete;
 	GameManager& operator=(const GameManager& other) = delete;
 
+	/* Comienza la ejecucion del ClientManager */
 	void operator()();
+
+	/* Detiene la ejecucion del ClientManager y la de todas las
+	 * partidas que estan siendo ejecutadas */
 	void stop();
 
 	/* Destructor */
