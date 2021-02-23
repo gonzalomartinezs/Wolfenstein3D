@@ -13,7 +13,7 @@ public:
     // Agrega item a la lista, cada item tiene un id y un string.
     // El string es el que se ve por pantalla.
     void addItem(uint8_t key, const std::string& string);
-    // Develvue el icono seleccionado por el usuario.
+    // Devuelve el icono seleccionado por el usuario.
     uint8_t getSelected();
 };
 

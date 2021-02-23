@@ -1,4 +1,3 @@
-
 #include "StringList.h"
 
 StringList::StringList(QWidget *parent) : QListWidget(parent) {
@@ -12,7 +11,6 @@ void StringList::addItem(uint8_t key, const std::string &name) {
     pieceItem->setText ( name.c_str() );
     pieceItem->setData(Qt::UserRole, key);
     pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-
     setCurrentItem(pieceItem); // Tener el ultimo por default.
 }
 
