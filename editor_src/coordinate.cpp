@@ -1,11 +1,8 @@
-
 #include "coordinate.h"
-#include "map.h"
 
 Coordinate::Coordinate(unsigned x, unsigned y):x(x), y(y) {
 
 }
-
 
 unsigned Coordinate::getX()const {
     return x;
@@ -15,7 +12,7 @@ unsigned Coordinate::getY()const {
     return y;
 }
 
-bool Coordinate::operator==(const Coordinate& r) const{
+bool Coordinate::operator==(const Coordinate& r) const {
     return (x == r.x && y ==r.y);
 }
 

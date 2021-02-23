@@ -28,7 +28,6 @@ void Map::remove(const Coordinate& coor){
     if( !this->isEmpty(coor)) {
         matrix.erase(coor.toString());
     }
-
 }
 
 unsigned Map::getX() const{
@@ -81,7 +80,7 @@ unsigned Map::getNumberOfPlayers() const {
     return i;
 }
 
-
+// Fija Pared En el perimetro del mapa.
 void Map::setPerimeter() {
     std::list<Coordinate> peri = calculatePerimeter();
     for (const auto &i : peri){
@@ -89,6 +88,7 @@ void Map::setPerimeter() {
     }
 }
 
+// Limpia perimetro del mapa.
 void Map::clearPerimeter() {
     std::list<Coordinate> peri = calculatePerimeter();
     for (const auto &i : peri){
@@ -96,6 +96,7 @@ void Map::clearPerimeter() {
     }
 }
 
+// Responde a la pregunta si una coordenada es border.
 bool Map::isBorder(const Coordinate& coor) const{
     if (coor.getX() == (x-1)) return true;
     if (coor.getX() == 0) return true;
@@ -104,6 +105,7 @@ bool Map::isBorder(const Coordinate& coor) const{
     return false;
 }
 
+// Devuelve una lista con las posiciones del perimetro.
 std::list<Coordinate> Map::calculatePerimeter() const {
     std::list<Coordinate> list;
     for (int i = 0; i < x ; ++i) {

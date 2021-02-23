@@ -87,7 +87,7 @@ Map MapParser::loadMap(std::string path) {
 }
 
 bool MapParser::hasKey(const std::string &key) const {
-    return (this->mapFile[key]);
+    return (bool) (this->mapFile[key]);
 }
 
 void MapParser::loadSize() {
@@ -183,7 +183,7 @@ Editor_icon MapParser::getID (const std::string &key) {
     if (key == "machine_gun") return Machinegun ;
     if (key == "chain_gun") return Chaingun;
     if (key == "rocket_launcher") return Rpg;
-    return Wall1; // default ??
+    return Wall1; // por si las moscas  ...
 }
 
 bool MapParser::isStructure (const Editor_icon &id) const {

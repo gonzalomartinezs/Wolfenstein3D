@@ -1,5 +1,4 @@
 #include "maphandler.h"
-#include "mainwindow.h"
 #include "itemList.h"
 #include <QDrag>
 #include <QDragEnterEvent>
@@ -38,7 +37,6 @@ void MapHandler::paintEvent (QPaintEvent *event) {
 
     std::list < MapElement> filled = this->map.getElements();
     for (const MapElement &i : filled) {
-        QRect view = i.getRect();
         painter.drawPixmap(i.getRect() , this->icons.getIcon(i.getId() ) );
     }
 }
@@ -70,7 +68,6 @@ void MapHandler::dragMoveEvent(QDragMoveEvent *event) {
     } else {
         this->focused = QRect();
         event->ignore();
-        // emit showOccupiedPosition();
     }
     update(updateRect);
 }
@@ -98,7 +95,6 @@ void MapHandler::dropEvent(QDropEvent *event) {
         } else {
         focused = QRect();
         event->ignore();
-        // emit showOccupiedPosition();
         }
 }
 
@@ -133,8 +129,6 @@ void MapHandler::mousePressEvent(QMouseEvent *event) {
         map.add(coor,element);
         update(targetSquare(event->pos()));
 
-    } else {
-        // cartel?
     }
 }
 
@@ -163,7 +157,6 @@ void MapHandler::loadElements(std::list<MapElement>& in) {
             map.add(i.getCoor(), i);
         }
     }
-
 }
 
 void MapHandler::resizeMap (int x, int y, std::string inName) {

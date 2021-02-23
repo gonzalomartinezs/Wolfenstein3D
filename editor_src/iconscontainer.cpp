@@ -1,6 +1,7 @@
 #include <iostream>
 #include "iconscontainer.h"
 #include "itemList.h"
+#include "EditorIcon.h"
 
 
 IconsContainer::IconsContainer(const unsigned& size) : iconSize(size) {
@@ -40,6 +41,5 @@ void IconsContainer::add(const Editor_icon& id, const std::string& path) {
     newImage.load( path.c_str() );
     icons.insert ( std::pair<Editor_icon,
                    QPixmap>(id,
-                            newImage.scaled(this->iconSize, this->iconSize)) );
+                            newImage.scaled(this->iconSize, this->iconSize)));
 }
-

@@ -2,6 +2,8 @@
 #ifndef EDITOR_ICONSPATHS_H
 #define EDITOR_ICONSPATHS_H
 
+// Header con los paths a los iconos.
+
 #define BLOOD_PATH "../icons/blood.png"
 #define BULLET_PATH "../icons/bullet.png"
 #define CHAINGUN_PATH "../icons/chaingun.png"

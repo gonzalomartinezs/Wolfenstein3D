@@ -1,7 +1,5 @@
 #include "mapelement.h"
 
-#define ITEMSIZE 50 // HACER EL .H COMUN
-
 
 MapElement::MapElement() {
 

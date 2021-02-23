@@ -6,6 +6,7 @@
 #include <QPaintEvent>
 #include <atomic>
 
+// Modela un tacho de basura, recibe drops.
 class TrashBin : public QWidget {
     Q_OBJECT
 public:
