@@ -85,7 +85,6 @@ Texture *SpriteSelector::selectTexture(Positionable &positionable) {
         dynamic_tex[i].updateSet(new_set);
         int state = (players[i].distanceTo(latest_players[i]) > 0.01) ? MOVED: NOT_MOVED;
         return dynamic_tex[i].getTexture(state);
-    //} else if (positionable.getTexture() > Missile_0) {
     } else {
         return tex.getStatic(tex_id);
     }
