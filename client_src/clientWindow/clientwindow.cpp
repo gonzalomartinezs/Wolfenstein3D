@@ -107,6 +107,7 @@ void ClientWindow::joinMatch() {
 }
 // Une a partida Creada.
 void ClientWindow::joinCreated() {
+    stack->setCurrentWidget(inGamePage);
     client->sendPlay();
     this->gameLoop();
 }
