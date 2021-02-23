@@ -38,7 +38,7 @@ size_t Doors::size() const {
 	return this->doors.size();
 }
 
-void Doors::loadDoorsInfo(uint8_t* msg, uint8_t &currentByte) {
+void Doors::loadDoorsInfo(uint8_t* msg, uint32_t &currentByte) {
     uint8_t size = static_cast<uint8_t>(this->doors.size());
     memcpy(msg + currentByte, &size, sizeof(uint8_t));
     currentByte += sizeof(uint8_t);

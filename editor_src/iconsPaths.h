@@ -2,7 +2,8 @@
 #ifndef EDITOR_ICONSPATHS_H
 #define EDITOR_ICONSPATHS_H
 
-//#define BARREL_PATH "../icons/barrel.png"
+// Header con los paths a los iconos.
+
 #define BLOOD_PATH "../icons/blood.png"
 #define BULLET_PATH "../icons/bullet.png"
 #define CHAINGUN_PATH "../icons/chaingun.png"
@@ -16,7 +17,6 @@
 #define KEY_PATH "../icons/key.png"
 #define MACHINEGUN_PATH "../icons/machineGun.png"
 #define OPENED_TRASH_BIN_PATH "../icons/openedTrashBin.png"
-//#define PISTOL_PATH "../icons/pistol.png"
 #define RPG_PATH "../icons/rpg.png"
 #define SLIDER_PATH "../icons/slider.png"
 #define SPAWN_PATH "../icons/spawn.png"
@@ -24,8 +24,5 @@
 #define WALL0_PATH "../icons/wall0.png"
 #define WALL1_PATH "../icons/wall1.png"
 #define LOCKED_DOOR_PATH "../icons/lockedDoor.png"
-
-
-
 
 #endif //EDITOR_ICONSPATHS_H

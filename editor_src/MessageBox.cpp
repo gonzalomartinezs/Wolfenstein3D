@@ -1,7 +1,3 @@
-//
-// Created by riedel on 19/2/21.
-//
-
 #include "MessageBox.h"
 
 MessageBox::MessageBox(QWidget *parent) : QMessageBox(parent) {
@@ -13,9 +9,8 @@ void MessageBox::showYamlError() {
     this->exec();
 }
 
-void MessageBox::showOccupiedPosition() {
-    this->setText( "Posicion Ocupada" );
+void MessageBox::showInstructions() {
+    this->setText( "Editor de Niveles de Wolfestein 3D, "
+                   "para ver usos leer el manual de usuario" );
     this->exec();
 }
-
-

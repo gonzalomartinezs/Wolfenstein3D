@@ -8,6 +8,7 @@
 #include <exception>
 #include <string>
 
+  //Exception arrojada cuando se carga un archivo no valido.
 class InvalidFileException: std::exception {
  public:
     InvalidFileException(const std::string& error);

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "GameInterface.h"
+#include "sound/SoundID.h"
 #include "../common_src/GameConstants.h"
 
 GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler,
@@ -9,9 +10,8 @@ GameInterface::GameInterface(UI_Handler& ui_handler, SoundHandler& sound_handler
                         ui_handler(ui_handler), sound_handler(sound_handler),
                         queue(queue), keep_running(true), refresh_rate(refresh_rate),
                         latest_info(initial_info){
-    //this->sound_handler.startBackMusic();
+    this->sound_handler.startBackMusic();
 }
-
 
 void GameInterface::run() {
     while(keep_running){
@@ -55,7 +55,7 @@ GameInterface::~GameInterface() {}
 // ------------------------- Metodos privados --------------------------------//
 // Refresca la pantalla gradualmente tras un movimiento de camara o del
 // jugador, de acuerdo a refresh_rate.
-void GameInterface::_updateScreen(UI_Info new_info) {
+void GameInterface::_updateScreen(UI_Info &new_info) {
     DirectedPositionable old_pos = latest_info.getPlayerPos();
     DirectedPositionable new_pos = new_info.getPlayerPos();
     PlayerView old_view = latest_info.getCameraPlanes();
@@ -76,6 +76,8 @@ void GameInterface::_updateScreen(UI_Info new_info) {
     float step_plane_y = (new_info.getCameraPlanes().getPlaneY() -
                           latest_info.getCameraPlanes().getPlaneY())/refresh_rate;
 
+    std::vector<std::pair<int,float>>& sounds = new_info.getSounds();
+
     for (int i=0; i<refresh_rate; i++){
         ui_handler.clearScreen();
         ui_handler.loadBackground();
@@ -91,14 +93,31 @@ void GameInterface::_updateScreen(UI_Info new_info) {
                            new_info.getDoorStates(), new_info.isNotPlaying());
         ui_handler.loadPlayerHUD(new_info.getPlayerInfo());
 
-        if (new_info.isNotPlaying()) ui_handler.loadDeathMessage();
+        _processDeath(new_info);
         ui_handler.render();
     }
+    _processDeathSound(new_info, sounds);
     sound_handler.loadGameSfx(new_info.getPlayerInfo(), new_pos,
                               new_info.getDirectedObjects(),
-                              new_info.getDoorStates(),
-                              new_info.getSounds());
+                              new_info.getDoorStates(),sounds);
     this->latest_info = new_info;
+}
+
+void GameInterface::_processDeath(UI_Info& new_info) {
+    if (_hasDied(new_info)) death_timer.start();
+    if (death_timer.getTime()/DEATH_TIME < 1) ui_handler.loadDeathTilt();
+    if (new_info.isNotPlaying()) ui_handler.loadGameOverMessage();
+}
+
+
+bool GameInterface::_hasDied(UI_Info &new_info) {
+    return new_info.getPlayerInfo()[LIVES_HUD] < latest_info.getPlayerInfo()[LIVES_HUD];
+}
+
+void GameInterface::_processDeathSound(UI_Info &new_info,
+                                       std::vector<std::pair<int, float>> &sounds) {
+    if(_hasDied(new_info))
+        sounds.emplace_back(DeathSFX, 0);
 }
 
 

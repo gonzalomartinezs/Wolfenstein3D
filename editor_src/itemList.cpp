@@ -1,9 +1,8 @@
-#include "itemList.h"
-#include "mainwindow.h" // def del tam.
-
 #include <QDrag>
 #include <QDragEnterEvent>
 #include <QMimeData>
+
+#include "itemList.h"
 
 ItemList::ItemList(QWidget *parent)
     : QListWidget(parent) {
@@ -62,4 +61,3 @@ void ItemList::addIcon(const int &key, const QPixmap &icon) {
                         Qt::ItemIsSelectable |
                         Qt::ItemIsDragEnabled);
 }
-

@@ -1,33 +1,39 @@
+#include <QWidget>
+#include <QHBoxLayout>
+#include <QFileDialog>
+#include <list>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "mapelement.h"
-#include <QWidget>
-#include <QFrame>
-#include <QHBoxLayout>
-#include <QMessageBox>
-#include <QFileDialog>
-
-#include <string>
-#include <list>
 #include "InvalidFileException.h"
-
 #include "mapparser.h"
 #include "mapelement.h"
-#include "MessageBox.h"
+#include "EditorIcon.h"
 
-#define TAM_MAP_DEF 25
+#define TAM_MAP_DEF 13 //Tamano del mapa por default
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
-      container(ITEMSIZE){
+      container(ITEMSIZE) {
     ui->setupUi(this);
-    this->setWindowTitle("Editor de niveles");
+    this->setWindowTitle("Editor De Niveles");
     this->initWidgets();
     this->initBar();
     this->connectEvents();
 }
-
+   //Inicializa los widgets que son instanciados por la ventana principal.
+void MainWindow::initWidgets() {
+    this->linkToUI();
+    this->itemList->loadList(this->container);
+    this->mapHandler = new MapHandler(this->container,
+                                      "-",TAM_MAP_DEF ,TAM_MAP_DEF ,this);
+    this->spinX->setValue(TAM_MAP_DEF);
+    this->spinY->setValue(TAM_MAP_DEF);
+    this->nameLabel->setPlaceholderText("Name of the map");
+    mapScrollArea->setWidget(mapHandler);
+}
+// Linkea los punteros a las referencias correspondientes en el archivo .ui .
 void MainWindow::linkToUI() {
     this->itemList = findChild<ItemList*>("itemList");
     this->mapScrollArea = findChild<QScrollArea*>("mapArea");
@@ -37,47 +43,34 @@ void MainWindow::linkToUI() {
     this->button = findChild<QPushButton*>("button");
     this->nameLabel = findChild <QLineEdit*>("nameLabel");
 }
-
-MainWindow::~MainWindow() {
-    delete ui;
-    delete mapHandler;
-}
-
-void MainWindow::initWidgets() {
-    this->linkToUI();
-    this->itemList->loadList(this->container);
-    this->mapHandler = new MapHandler(this->container,"-",TAM_MAP_DEF ,TAM_MAP_DEF ,this);
-    this->spinX->setValue(TAM_MAP_DEF);
-    this->spinY->setValue(TAM_MAP_DEF);
-    this->nameLabel->setPlaceholderText("Name of the map");
-    mapScrollArea->setWidget(mapHandler);
-}
-
+//Inicia la barra superior.
 void MainWindow::initBar() {
+
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
-    QAction *openAction = fileMenu->addAction(tr("&Open..."), this, &MainWindow::openFile);
-    openAction->setShortcuts(QKeySequence::Open);
+    QAction *openAction = fileMenu->addAction (tr("&Open..."),
+                                              this, &MainWindow::openFile);
+    openAction->setShortcuts (QKeySequence::Open);
 
-    QAction *saveAsAction = fileMenu->addAction(tr("&Save as..."), this, &MainWindow::saveFileAs);
-    saveAsAction->setShortcuts(QKeySequence::SaveAs);
+    QAction *saveAsAction = fileMenu->addAction (tr("&Save as..."),
+                                                this, &MainWindow::saveFileAs);
+    saveAsAction->setShortcuts (QKeySequence::SaveAs);
 
-    QAction *exitAction = fileMenu->addAction(tr("E&xit"), qApp, &QCoreApplication::quit);
+    QAction *exitAction = fileMenu->addAction (tr("E&xit"),
+                                              qApp, &QCoreApplication::quit);
     exitAction->setShortcuts(QKeySequence::Quit);
 
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     toolsMenu->addAction(tr("&Restart"), this, &MainWindow::restart);
-    QMenu* helpMenu = menuBar()->addMenu( tr("&Help") );
-    helpMenu->addAction( (tr(("&instructions"))) );
-}
 
+    QMenu* helpMenu = menuBar()->addMenu( tr("&Help") );
+    helpMenu->addAction( (tr(("&instructions"))),&notiBox,&MessageBox::showInstructions );
+}
+// Conect entre las distintas signals y slots que manejan el flujo del programa.
 void MainWindow::connectEvents() {
    QObject::connect(this->button, &QPushButton::clicked, this, &MainWindow::resizeMap);
    QObject::connect(this, &MainWindow::showYamlError,
                     &notiBox, &MessageBox::showYamlError);
-
-   QObject::connect(this->mapHandler, &MapHandler::showOccupiedPosition,
-                    &notiBox, &MessageBox::showOccupiedPosition);
 }
 
 void MainWindow::resizeMap() {
@@ -133,4 +126,7 @@ void MainWindow::restart() {
     mapScrollArea->setWidget(mapHandler);
 }
 
-
+MainWindow::~MainWindow() {
+    delete ui;
+    delete mapHandler;
+}

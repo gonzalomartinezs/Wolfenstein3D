@@ -18,7 +18,8 @@ enum SoundID{
     LB_Title,
     LB_Name,
     LB_Value,
-    PickItemSFX
+    PickItemSFX,
+    DeathSFX
 };
 
 #endif //SOUNDID_H

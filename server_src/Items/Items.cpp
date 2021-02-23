@@ -9,6 +9,7 @@
 #include "KeyItem.h"
 #include <cstring>
 #include <string>
+#include <endian.h>
 
 #include "../Exceptions/ItemsException.h"
 
@@ -136,9 +137,10 @@ void Items::push_back(Item* item) {
 	this->items.push_back(item);
 }
 
-void Items::loadItemsInfo(uint8_t* msg, uint8_t &currentByte) {
+void Items::loadItemsInfo(uint8_t* msg, uint32_t &currentByte) {
     float aux;
     uint8_t id, size;
+    uint32_t auxEnd;
 
     size = static_cast<uint8_t>(this->items.size());
     memcpy(msg + currentByte, &size, sizeof(uint8_t));
@@ -146,11 +148,15 @@ void Items::loadItemsInfo(uint8_t* msg, uint8_t &currentByte) {
 
     for (size_t i = 0; i < this->items.size(); i++) {
         aux = this->items[i]->getX();
-        memcpy(msg + currentByte, &aux, sizeof(float));
+
+        auxEnd = htole32(*reinterpret_cast<uint32_t *>((&aux)));
+        memcpy(msg + currentByte, &auxEnd, sizeof(float));
         currentByte += sizeof(float);
 
         aux = this->items[i]->getY();
-        memcpy(msg + currentByte, &aux, sizeof(float));
+
+        auxEnd = htole32(*reinterpret_cast<uint32_t *>((&aux)));
+        memcpy(msg + currentByte, &auxEnd, sizeof(float));
         currentByte += sizeof(float);
 
         id = this->items[i]->getTexture();

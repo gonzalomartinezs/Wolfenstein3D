@@ -8,15 +8,15 @@ LeaderboardRenderer::LeaderboardRenderer(SDL_Renderer *renderer,
                                          int height, int width):
                                          tex(tex), height(height),
                                          width(width), renderer(renderer) {
-    int title_font_size = height/15;
-    int name_font_size = height/20;
-    int value_font_size = height/24;
+    int title_font_size = width/15;
+    int name_font_size = width/36;
+    int value_font_size = width/42;
     SDL_Color title_color = {162, 31, 9};
     SDL_Color color = {240, 250, 252};
 
     titles.emplace_back(font_path, title_font_size, title_color, renderer, "Kills");
     titles.emplace_back(font_path, title_font_size, title_color, renderer, "Score");
-    titles.emplace_back(font_path, title_font_size, title_color, renderer, "Bullets Fired");
+    titles.emplace_back(font_path, title_font_size/2, title_color, renderer, "Bullets Fired");
 
     for(int i=0; i<LEADERBOARD_ELEMENTS; i++) {
         names.emplace_back(font_path, name_font_size, color, renderer, "0");
@@ -40,7 +40,7 @@ void LeaderboardRenderer::render(std::vector<std::string> &names,
 
     SDL_Rect kills = {big_margin, height/10, text_column, height/15};
     SDL_Rect score = {big_margin+margin+column, height/10, text_column, height/15};
-    SDL_Rect fired = {big_margin+2*margin+2*column, height/10, text_column, height/15};
+    SDL_Rect fired = {big_margin+2*margin+2*column, int(height/8.5), text_column, height/15};
     _render();
 
     usleep(LEADERBOARD_SLEEP_TIME_2);
@@ -50,19 +50,19 @@ void LeaderboardRenderer::render(std::vector<std::string> &names,
     titles[2].renderHorizontallyCentered("Bullets Fired", nullptr, &fired);
     _render();
 
-    int accumulated = height/10 + height/15 + thick_space;
+    int accumulated = height/10 + height/15 + 2*thick_space;
     int iterations = (LEADERBOARD_ELEMENTS/3)*2;
     int j = 0;
 
     for (int i=0; i<iterations; i++) {
         usleep(LEADERBOARD_SLEEP_TIME_2);
 
-        int text_heigth = (i%2 == 0)? height/20: height/28;
+        int text_height = (i%2 == 0)? height/20: height/28;
         int space = (i%2 == 0)? 0: 2*thick_space;
 
-        SDL_Rect kill_data = {big_margin, accumulated, text_column, text_heigth};
-        SDL_Rect score_data = {big_margin+margin+column, accumulated,text_column, text_heigth};
-        SDL_Rect fired_data = {big_margin+2*margin+2*column, accumulated,text_column, text_heigth};
+        SDL_Rect kill_data = {big_margin, accumulated, text_column, text_height};
+        SDL_Rect score_data = {big_margin+margin+column, accumulated,text_column, text_height};
+        SDL_Rect fired_data = {big_margin+2*margin+2*column, accumulated,text_column, text_height};
 
         if (i%2 == 0) {
             this->names[j].renderHorizontallyCentered(names[j], nullptr, &kill_data);
@@ -74,7 +74,7 @@ void LeaderboardRenderer::render(std::vector<std::string> &names,
             this->values[j+10].renderHorizontallyCentered(std::to_string(values[j+10]), nullptr, &fired_data);
             j++;
         }
-        accumulated += text_heigth + space;
+        accumulated += text_height + space;
         _render();
     }
 }

@@ -1,10 +1,10 @@
 #include "Music.h"
-#include "../Exceptions/SoundLoadingException.h"
+#include "../Exceptions/SDLException.h"
 
 Music::Music(std::string path) {
     this->music = Mix_LoadMUS(path.c_str());
     if (this->music == nullptr)
-        throw SoundLoadingException("Unable to load music file");
+        throw SDLException("Unable to load music file");
 }
 
 void Music::play(int loops) {

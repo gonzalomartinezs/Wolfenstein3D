@@ -62,7 +62,7 @@ public:
     void sendMap();
 
     /* Carga en el mensaje los sonidos que se produjeron en el último update */
-    void loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber);
+    void loadSounds(uint8_t* msg, uint32_t& currentByte, size_t playerNumber);
 
     /* Devuelve la textura del jugador que le corresponda según el arma */
     TextureID getTexture(uint8_t weapon_id) const;

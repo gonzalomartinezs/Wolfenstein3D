@@ -5,8 +5,6 @@
 #include "maphandler.h"
 #include "trashbin.h"
 #include "iconscontainer.h"
-#include "mapparser.h"
-
 #include <QMainWindow>
 #include <vector>
 #include <QScrollArea>
@@ -14,12 +12,11 @@
 #include <QPushButton>
 #include "MessageBox.h"
 
-#define ITEMSIZE 50
-
-QT_BEGIN_NAMESPACE
+QT_BEGIN_NAMESPACE // Magia de Qt.
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+// Ventana Principal de Qt.
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -28,13 +25,18 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
 
  private slots:
+    // Cambia el tam del mapa segun los valores de los spinbox de la ventana.
     void resizeMap();
+    // Abre ventana que permite seleccionar que archivo abrir.
     void openFile();
+    //Abre ventana que permite selecionar un archivo donde guardar el mapa.
     void saveFileAs();
+    // Reinicia el Editor.
     void restart();
 
  signals:
-    void showYamlError ();
+    // Emite senal indicando cuando no se pudo abrir un archivo.
+    void showYamlError();
 
  private:
     void initWidgets();

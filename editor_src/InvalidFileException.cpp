@@ -1,7 +1,3 @@
-//
-// Created by riedel on 19/2/21.
-//
-
 #include "InvalidFileException.h"
 
 InvalidFileException::InvalidFileException(const std::string &error) {

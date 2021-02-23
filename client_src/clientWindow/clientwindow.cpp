@@ -3,11 +3,9 @@
 #include "./ui_clientwindow.h"
 #include "../Window.h"
 #include "../EventHandler.h"
-
-
-#define REFRESH_RATE 10
-#define IS_NOT_MOVING 0
-const double TICK_DURATION = 1/256.f;
+#include "../ClientData.h"
+#include "../../common_src/GameConstants.h"
+#include "../InstructionLooper.h"
 
 ClientWindow::ClientWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -110,69 +108,46 @@ void ClientWindow::joinMatch() {
 }
 
 void ClientWindow::gameLoop() {
+    Map map(client->receiveMap());
     Window window("Wolfenstein 3D", resolution.getX(), resolution.getY(),
                   SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
                   SDL_WINDOW_SHOWN);
-    TexturesContainer tex(window.getRenderer(), window.getSurface());
-    SoundsContainer sounds;
-    Map map(client->receiveMap());
-    EventHandler event_handler(instructions);
-    Raycaster raycaster(map, resolution.getX() / 32, (-resolution.getY()) / 18,
-                        (30 * resolution.getX()) / 32, (17 * resolution.getY()) / 18,
-                        tex);
-    UI_Handler ui_handler(window.getRenderer(), raycaster, tex,
-                          "../client_src/fonts/Vermin Vibes 1989.ttf",
-                          resolution.getX(), resolution.getY());
-    SoundHandler sound_handler(sounds, map);
 
     DirectedPositionable player(2, 2, -1, 0, None);
     PlayerView view(0,1);
     std::vector<Positionable> static_objects;
     std::vector<DirectedPositionable> directed_objects;
     std::vector<int> door_states;
+    std::vector<int> player_hud(HUD_DATA, 0);
     std::vector<std::pair<int,float>> game_sounds;
 
-    UI_Info initial_info(player, view, std::vector<int>(7, 0),
-                         static_objects, directed_objects, door_states,
-                         false, game_sounds, false);
-    GameInterface game_interface(ui_handler, sound_handler, drawing_info, initial_info, REFRESH_RATE);
+    UI_Info initial_info(player, view, player_hud, static_objects,
+                         directed_objects, door_states, game_sounds,
+                         false, false);
 
-    int flag = IS_NOT_MOVING;
-    Timer time_between_updates;
-    double last_tick_time;
+    ClientData data(window.getRenderer(), window.getSurface(), map, resolution,
+               drawing_info, instructions, initial_info);
+
+    GameInterface& game_interface = data.getGameInterface();
+    EventHandler& event_handler = data.getEventHandler();
+    InstructionLooper instruction_looper(client, event_handler);
+    bool player_quited = false;
 
     std::thread send_thread(&Client::sendInstruction, client);
     std::thread recv_thread(&Client::receiveInformation, client);
 
     game_interface.start();
 
-    bool quit = false;
-    while (!quit && client->isPlaying()) {
-        time_between_updates.start();
-        const Uint8 *keys = SDL_GetKeyboardState(NULL);
-
-        event_handler.run(quit, flag, keys);
-        last_tick_time = time_between_updates.getTime();
-        if (last_tick_time < TICK_DURATION*1000) {
-            usleep((TICK_DURATION * 1000 - last_tick_time) * 1000);
-        }
-    }
-    if (quit) client->stopInGameInteraction();
+    instruction_looper.run(player_quited);
 
     game_interface.stop();
     game_interface.join();
     send_thread.join();
     recv_thread.join();
 
-    if (!quit) client->loadLeaderboard(game_interface);
-    SDL_Event event;
-    while(!quit) {
-        while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
-    }
+    if (!player_quited) client->loadLeaderboard(game_interface);
+
+    window.waitForClose();
     client->shutdown();
     this->close();
 }

@@ -25,7 +25,7 @@ public:
 	// Devuelve la cantidad de items
 	size_t size() const;
 	// Carga en msg la información de los items
-	void loadItemsInfo(uint8_t* msg, uint8_t& currentByte);
+	void loadItemsInfo(uint8_t* msg, uint32_t& currentByte);
 	// Elimina un item del vector
 	void remove(size_t i);
 	// Agrega un item al vector
