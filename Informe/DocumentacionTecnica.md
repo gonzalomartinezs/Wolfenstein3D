@@ -105,7 +105,7 @@ Es la clase raíz del server, cuya funcionalidad se limita a comenzar la ejecuci
 #### TheClient
 ​	Esta clase es el medio de comunicación que tiene el servidor con cada cliente. Por cada cliente que se conecta al servidor se crea una instancia de la misma la cual a su vez lanza 2 threads que se encargan específicamente de iterar las funciones Receive y Send del socket (Peer). En el caso del Receive está constantemente recibiendo y acolando las instrucciones en una cola protegida, por otro lado el Send itera constantemente una cola bloqueante enviando todos los bytes que ingresen en ella.
 
-![DiagramaDeClaseThClient](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClasesThClient.png)
+![DiagramaDeClaseThClient](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseThClient.png)
 
 #### Weapon
 
@@ -426,8 +426,8 @@ Es instanciada al momento que se requiere hacer alguna de estas operaciones.
 
 #### Diagramas UML
 
-![ClasesEdtir](/Images/DiagramaDeClasesEditor.png)
-![seqDrop](/Images/SeqDropEvent.png)
+![ClasesEdtir](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClasesEditor.png.png)
+![seqDrop](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/SeqDropEvent.png)
 
 
 
