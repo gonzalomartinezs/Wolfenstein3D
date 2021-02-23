@@ -10,7 +10,6 @@ void MessageBox::showYamlError() {
 }
 
 void MessageBox::showInstructions() {
-    //this->setText( "Ver Manual De usuario" );
     this->setText( "Editor de Niveles de Wolfestein 3D, "
                    "para ver usos leer el manual de usuario" );
     this->exec();
