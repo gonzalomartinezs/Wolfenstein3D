@@ -56,9 +56,12 @@ public:
     void loadLeaderboard(std::vector<std::string> &names,
                          std::vector<int> &values);
 
+    // Realiza la animacion de la vista del jugador.
+    void loadDeathTilt();
+
     // Muestra por pantalla un mensaje indicando que el jugador ha perdido
     // todas sus vidas.
-    void loadDeathMessage();
+    void loadGameOverMessage();
 
     // Renderiza el contenido de la ventana.
     void render();
