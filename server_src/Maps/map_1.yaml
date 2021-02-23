@@ -1,116 +1,55 @@
-map_name: "Soy el mapa, soy el mapa..."
-max_players: 3
-
-#Map
-length: 17 #Arriba a abajo
-width: 14 #Izquierda a derecha
+map_name: 1V1 enfrentados
+max_players: 2
+length: 13
+width: 13
 map:
-  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-  - [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 1, 0, 0, 10, 0, 0, 1, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
-  - [1, 0, 0, 0, 0, 1, 1, 12, 1, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 1]
-  - [1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1]
-  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-
-#Players
-#(dir_x, dir_y) debe ser perpendicular a (cam_plane_x, cam_plane_y)
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 1, 1, 1, 1, 12, 1, 1, 1, 1, 1, 1, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 1, 1, 1, 1, 12, 1, 1, 1, 1, 1, 1, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  - [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 player_0:
-  pos_x: 2.0
-  pos_y: 2.0
+  pos_x: 7.5
+  pos_y: 1.5
   dir_x: 1
   dir_y: 0
-
 player_1:
-  pos_x: 3.0
-  pos_y: 3.0
+  pos_x: 7.5
+  pos_y: 11.5
   dir_x: 1
   dir_y: 0
-
-player_2:
-  pos_x: 5.0
-  pos_y: 5.0
-  dir_x: 1
-  dir_y: 0
-
-#Items
 items:
-  #Treasures
+  crown:
+    cant_crown: 1
+    crown_0:
+      pos_x: 3.5
+      pos_y: 2.5
   cross:
-    cant_cross: 2
+    cant_cross: 1
     cross_0:
-      pos_x: 6.0
-      pos_y: 1.0
-    cross_1:
-      pos_x: 3.0
-      pos_y: 3.5
-  cup:
-    cant_cup: 1
-    cup_0:
-      pos_x: 15
-      pos_y: 1
-  #Food
-  food:
-    cant_food: 1
-    food_0:
-      pos_x: 5
-      pos_y: 5
-  #Medical kit
+      pos_x: 2.5
+      pos_y: 2.5
   medical_kit:
-    cant_medical_kit: 1
+    cant_medical_kit: 2
     medical_kit_0:
-      pos_x: 6
-      pos_y: 7
-  #Blood
-  blood:
-    cant_blood: 1
-    blood_0:
-      pos_x: 2.0
-      pos_y: 12.0
-  #Keys
-  key:
-    cant_key: 2
-    key_0:
-      pos_x: 15
-      pos_y: 2
-    key_1:
-      pos_x: 3
-      pos_y: 10
-  #Bullets
-  bullet:
-    cant_bullet: 1
-    bullet_0:
-      pos_x: 2
-      pos_y: 12
-  #Weapons
-  machine_gun:
-    cant_machine_gun: 2
-    machine_gun_0:
-      pos_x: 6
-      pos_y: 6
-    machine_gun_1:
-      pos_x: 7
-      pos_y: 7
-  chain_gun:
-    cant_chain_gun: 2
-    chain_gun_0:
-      pos_x: 8
-      pos_y: 8
-    chain_gun_1:
-      pos_x: 9
-      pos_y: 9
+      pos_x: 3.5
+      pos_y: 1.5
+    medical_kit_1:
+      pos_x: 2.5
+      pos_y: 1.5
   rocket_launcher:
-    cant_rocket_launcher: 1
+    cant_rocket_launcher: 2
     rocket_launcher_0:
-      pos_x: 10
-      pos_y: 9
+      pos_x: 7.5
+      pos_y: 7.5
+    rocket_launcher_1:
+      pos_x: 7.5
+      pos_y: 5.5

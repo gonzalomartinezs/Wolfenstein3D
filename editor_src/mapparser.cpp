@@ -2,7 +2,6 @@
 #include <yaml-cpp/yaml.h>
 #include "mapparser.h"
 #include "iconscontainer.h"
-#include  "mapelement.h"
 #include "InvalidFileException.h"
 
 #include "mainwindow.h"
@@ -18,8 +17,6 @@
 
 
 
-
-
 MapParser::MapParser() {
 }
 
@@ -27,7 +24,7 @@ void MapParser::exportMap(const Map& exported, std::string path) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "map_name" << YAML::Value << exported.getName();
     emitter << YAML::Key << "max_players" << YAML::Value << exported.getNumberOfPlayers();
-    x = exported.getY(); y = exported.getY();
+    x = exported.getX(); y = exported.getY();
     emitter << YAML::Key << "length" << YAML::Value << y;
     emitter << YAML::Key << "width" << YAML::Value << x;
 
@@ -115,8 +112,8 @@ void MapParser::loadElements() {
 }
 
 void MapParser::loadItems() {
-     YAML::Node items = this->mapFile["items"];
-     
+    YAML::Node items = this->mapFile["items"];
+
     for(YAML::const_iterator it=items.begin(); it!=items.end(); ++it) {
         loadItem(it->second, it->first.as<std::string>() );
     }
@@ -127,9 +124,9 @@ void MapParser::loadItem (const YAML::Node& item, const std::string& keyName ) {
     int n = item.begin()->second.as<int>();
     int _x = 0, _y = 0;
     for (int i = 0; i < n; i++) {
-       const YAML::Node& nodePos = item[keyName+"_"+std::to_string(i)];
-        int posX = (int) nodePos["pos_x"].as<float>();
-        int posY = (int) nodePos["pos_y"].as<float>();
+        const YAML::Node& nodePos = item[keyName+"_"+std::to_string(i)];
+        int posY = (int) nodePos["pos_x"].as<float>();
+        int posX = (int) nodePos["pos_y"].as<float>();
         this->elements.emplace_back(MapElement(id, Coordinate(posX, posY) ));
     }
 }
@@ -140,8 +137,8 @@ void MapParser::loadPlayers(){
     for (int i = 0; i < n ; i++) {
         std::string aux = "player_" + std::to_string(i);
         YAML::Node player = this->mapFile[aux];
-        int posX = (int) player["pos_x"].as<float>();
-        int posY = (int) player["pos_y"].as<float>();
+        int posY = (int) player["pos_x"].as<float>();
+        int posX = (int) player["pos_y"].as<float>();
         this->elements.emplace_back(MapElement(Spawn, Coordinate(posX, posY) ));
     }
 
@@ -191,7 +188,7 @@ Editor_icon MapParser::getID (const std::string &key) {
 
 bool MapParser::isStructure (const Editor_icon &id) const {
     if ( id ==Wall0 || id == Wall1 || id == Slider
-           || id == Door || id == LockedDoor) return true;
+         || id == Door || id == LockedDoor) return true;
     return false;
 }
 
@@ -205,10 +202,10 @@ void MapParser::exportPlayers (const Map& exported) {
             std::string aux  = "player_" + std::to_string(number);  number++;
             emitter << YAML::Key << aux;
             emitter << YAML::Value << YAML::BeginMap;
-                emitter << YAML::Key << "pos_x" << YAML::Value << i.getCoor().getX() + 0.5;
-                emitter << YAML::Key << "pos_y" << YAML::Value << i.getCoor().getY() + 0.5;
-                emitter << YAML::Key << "dir_x" << YAML::Value << 1;
-                emitter << YAML::Key << "dir_y" << YAML::Value << 0;
+            emitter << YAML::Key << "pos_x" << YAML::Value << i.getCoor().getY() + 0.5;
+            emitter << YAML::Key << "pos_y" << YAML::Value << i.getCoor().getX() + 0.5;
+            emitter << YAML::Key << "dir_x" << YAML::Value << 1;
+            emitter << YAML::Key << "dir_y" << YAML::Value << 0;
             emitter << YAML::EndMap;
         }
     }
@@ -231,8 +228,8 @@ void MapParser::exportItems (const Map& exported) {
         for (auto &j : it) {
             emitter << YAML::Key << name + "_" + std::to_string(n);
             emitter << YAML::Value << YAML::BeginMap;
-            emitter << YAML::Key << "pos_x" << YAML::Value << j.getCoor().getX() + 0.5;
-            emitter << YAML::Key << "pos_y" << YAML::Value << j.getCoor().getY() + 0.5;
+            emitter << YAML::Key << "pos_x" << YAML::Value << j.getCoor().getY() + 0.5;
+            emitter << YAML::Key << "pos_y" << YAML::Value << j.getCoor().getX() + 0.5;
             emitter << YAML::EndMap;
             n++;
         }
@@ -286,7 +283,7 @@ std::string MapParser::getItemName (Editor_icon in) {
 }
 
 std::list<MapElement> MapParser::getItems (Editor_icon in,
-                                          std::list<MapElement>& list) {
+                                           std::list<MapElement>& list) {
     std::list<MapElement> r;
     for (auto i : list) {
         if(i.getId() == in) {

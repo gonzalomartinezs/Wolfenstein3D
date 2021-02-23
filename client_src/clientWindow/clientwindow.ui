@@ -29,7 +29,7 @@
    <widget class="QStackedWidget" name="stack">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>10</y>
       <width>551</width>
       <height>331</height>
