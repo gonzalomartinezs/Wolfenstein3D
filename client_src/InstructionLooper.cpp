@@ -28,4 +28,6 @@ void InstructionLooper::run(bool &quit) {
     if (quit) client->stopInGameInteraction();
 }
 
+InstructionLooper::~InstructionLooper() {}
+
 

@@ -15,6 +15,9 @@ public:
 
     // Ejecuta el loop de envio de instrucciones al servidor.
     void run(bool &quit);
+
+    // Libera los recursos uitilizados por el objeto.
+    ~InstructionLooper();
 };
 
 
