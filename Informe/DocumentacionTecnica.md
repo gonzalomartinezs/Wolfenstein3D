@@ -18,7 +18,7 @@
 
 Pone el socket aceptador a la espera de conexiones entrantes de manera permanente y los deriva con un ClientHandler que se encarga de la comunicación inicial. A su vez, cada vez que un nuevo cliente se conecta se eliminan y liberan los recursos de los ClientHandler que hayan terminado su ejecución. En el caso de que el servidor se cierre se encarga de finalizar la ejecución de todos los ClientHandler sin importar el estado en el que se encuentren.
 
-![DiagramaDeClaseMultiplesPartidas]https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseMultiplesPartidas.png)
+![DiagramaDeClaseMultiplesPartidas](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseMultiplesPartidas.png)
 
 #### DirectoryWalker
 
@@ -87,6 +87,8 @@ Es la clase raíz del server, cuya funcionalidad se limita a comenzar la ejecuci
 
 ​	Es una clase central ya que almacena todos los atributos correspondientes al estado del jugador. La clase tiene una interfaz extensa que maneja el comportamiento del mismo.
 
+![SeqIteracionItemsEnPlayer](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/SeqIteracionItemsEnPlayer.png)
+
 #### PlayerActions
 
 ​	Es la clase a la que Player delega sus métodos. Se encarga de la interacción con los ítems y de delegar el comportamiento de las armas a la clase Weapons. Contiene además el contador de muertes, balas usadas y puntos hechos a lo largo de la partida.
@@ -103,7 +105,7 @@ Es la clase raíz del server, cuya funcionalidad se limita a comenzar la ejecuci
 #### TheClient
 ​	Esta clase es el medio de comunicación que tiene el servidor con cada cliente. Por cada cliente que se conecta al servidor se crea una instancia de la misma la cual a su vez lanza 2 threads que se encargan específicamente de iterar las funciones Receive y Send del socket (Peer). En el caso del Receive está constantemente recibiendo y acolando las instrucciones en una cola protegida, por otro lado el Send itera constantemente una cola bloqueante enviando todos los bytes que ingresen en ella.
 
-![DiagramaDeClaseThClient](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClasesThClient.png)
+![DiagramaDeClaseThClient](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseThClient.png)
 
 #### Weapon
 
@@ -118,61 +120,107 @@ Es la clase raíz del server, cuya funcionalidad se limita a comenzar la ejecuci
 
 
 
-El RocketLauncher es el arma que más difiere al resto. Esto es debido a que la lógica del disparo es completamente diferente. Cada vez que dispara se crea un objeto Rocket, el cual comienza a ser actualizado por el GameLoop y enviada la correspondiente información a los clientes.
+​	El RocketLauncher es el arma que más difiere al resto. Esto es debido a que la lógica del disparo es completamente diferente. Cada vez que dispara se crea un objeto Rocket, el cual comienza a ser actualizado por el GameLoop y enviada la correspondiente información a los clientes.
+
+
+
+![DiagramaDeClaseItems](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseItems.png)
+
+
 
 ##### Descripción de archivos y protocolos
-Los archivos utilizados están en formato yaml. Del lado del servidor se utilizan 2 tipos, uno de configuración (config.yaml) y otro para mapas.
+​	Los archivos utilizados están en formato yaml. Del lado del servidor se utilizan 2 tipos, uno de configuración (config.yaml) y otro para mapas.
 ###### config.yaml
-Contiene valores ajustables del juego para hacerlo más balanceado según el usuario. Los valores son: 
-	port (puerto) por el que escuchará el socket del servidor.
-	tick_rate es la cantidad de veces que se actualiza el servidor por segundo.
-	game_duration es la duración de las partidas en caso que haya más de un jugador vivo.
-	weapons_general tiene los valores usados por cada arma para facilitar ajustes.
+​	Contiene valores ajustables del juego para hacerlo más balanceado según el usuario. Los valores son:
+
+port (puerto) por el que escuchará el socket del servidor.
+
+tick_rate es la cantidad de veces que se actualiza el servidor por segundo.
+
+game_duration es la duración de las partidas en caso que haya más de un jugador vivo.
+
+weapons_general tiene los valores usados por cada arma para facilitar ajustes.
+
 Dentro de weapons_general cada arma tiene sus propios valores:
-	time_between_shots es el tiempo entre cada disparo del arma.
-	time_between_bursts es el tiempo entre cada ráfaga de disparo.
-	bullets_per_burst cantidad de balas que se usan por ráfaga de disparo.
-	move_speed es la velocidad a la que el rocket (cohete) se mueve.
-	size es el tamaño del cohete, se usa para calcular cuándo hay colisión.
-	max_damage es el daño máximo que puede provocar el rocket.
-	max_damage_distance representa el alcance del cohete una vez que explota, medido en 	distancia euclidiana.
-	max_health es la vida máxima del jugador.
+
+- time_between_shots es el tiempo entre cada disparo del arma.
+
+- time_between_bursts es el tiempo entre cada ráfaga de disparo.
+
+- bullets_per_burst cantidad de balas que se usan por ráfaga de disparo.
+
+- move_speed es la velocidad a la que el rocket (cohete) se mueve.
+
+- size es el tamaño del cohete, se usa para calcular cuándo hay colisión
+
+- max_damage es el daño máximo que puede provocar el rocket.
+
+- max_damage_distance representa el alcance del cohete una vez que explota, medido en 	distancia euclidiana.
+
+- max_health es la vida máxima del jugador.
+
 A continuación se detallan los atributos de player (jugador):
-	move_speed es la velocidad a la que se mueve el jugador.
-	rot_speed es la velocidad a la que gira hacia los lados el jugador.
-	size es el tamaño del jugador, se usa para calcular las colisiones.
-	initial_health es la vida inicial.
-	initial_score es la puntuación inicial.
-	total_lives es la cantidad total de vidas de cada jugador.
-	key contiene el radio del key item.
+
+- move_speed es la velocidad a la que se mueve el jugador.
+
+- rot_speed es la velocidad a la que gira hacia los lados el jugador.
+
+- size es el tamaño del jugador, se usa para calcular las colisiones.
+
+- initial_health es la vida inicial.
+
+- initial_score es la puntuación inicial.
+
+- total_lives es la cantidad total de vidas de cada jugador.
+
+- key contiene el radio del key item.
+
 En el apartado weapons hay:
-	initial_weapon puede valer 0 si se empieza con knife o 1 si se empieza con pistol.
-	bullet contiene la cantidad inicial de balas (initial_bullets), la cantidad máxima 	(max_bullets) y el radio de bullet item.
-Los atributos de knife representan el tiempo que pasa entre un ataque y otro (time_between_stabs) y el rango (range) desde el cual hace daño.
-	bot_path indica la ruta hacia un archivo Lua que contiene instrucciones de la inteligencia artificial del bot.
-	ítems tiene un listado de todos los items del juego con sus respectivos valores. En todos los casos radius representa el tamaño del ítem usado para saber si el jugador lo agarró o no.
-	cross, crown, cup y chest son las cruces, coronas, copas y tesoros respectivamente. Su value representa los puntos que otorga al jugador.
-	food, medical_kit, blood representan la comida, kit médicos y la sangre respectivamente. Su value representa la vida que cura al jugador. Tienen una referencia a la vida máxima para que el jugador no se pueda curar más allá de su vida máxima.
-	bullet tiene como value la cantidad de balas que tiene el jugador al momento de pasar por el ítem. A su vez contiene la cantidad máxima de balas para no cargar más allá del máximo.
+
+- initial_weapon puede valer 0 si se empieza con knife o 1 si se empieza con pistol.
+
+- bullet contiene la cantidad inicial de balas (initial_bullets), la cantidad máxima 	(max_bullets) y el radio de bullet item.
+
+- Los atributos de knife representan el tiempo que pasa entre un ataque y otro (time_between_stabs) y el rango (range) desde el cual hace daño.
+
+- bot_path indica la ruta hacia un archivo Lua que contiene instrucciones de la inteligencia artificial del bot.
+
+- ítems tiene un listado de todos los items del juego con sus respectivos valores. En todos los casos radius representa el tamaño del ítem usado para saber si el jugador lo agarró o no.
+
+- cross, crown, cup y chest son las cruces, coronas, copas y tesoros respectivamente. Su value representa los puntos que otorga al jugador.
+
+- food, medical_kit, blood representan la comida, kit médicos y la sangre respectivamente. Su value representa la vida que cura al jugador. Tienen una referencia a la vida máxima para que el jugador no se pueda curar más allá de su vida máxima.
+
+- bullet tiene como value la cantidad de balas que tiene el jugador al momento de pasar por el ítem. A su vez contiene la cantidad máxima de balas para no cargar más allá del máximo.
 
 ###### map.yaml
 En el caso del mapa estos contienen:
-	map_name indica el nombre del mapa
-	max_players es la cantidad máxima de jugadores en ese mapa.
-	lenght y width indican el largo y ancho del mapa respectivamente.
-	map representa el mapa en sí. Los valores que puede tener entre sus elementos son:
-		0 representa un espacio vacío.
-		1 representa una pared naranja.
-		2 representa un pared grid con musgo.
-		10 representa una puerta con llave.
-		11 representa un pasadizo.
-		12 representa una puerta automática.
-	player representa cada uno de los jugadores, dependiendo de la cantidad máxima de jugadores que puedan haber en la partida. Entre sus atributos contiene:
-	pos_x, pos_y que representan la posición inicial en el mapa.
-	dir_x, dir_y que representan la dirección a la cual el jugador estará apuntando al inicio de la partida.
+
+- map_name indica el nombre del mapa
+
+- max_players es la cantidad máxima de jugadores en ese mapa.
+
+- lenght y width indican el largo y ancho del mapa respectivamente.
+
+- map representa el mapa en sí. Los valores que puede tener entre sus elementos son:
+  - 0 representa un espacio vacío.
+  - 1 representa una pared naranja.
+  - 2 representa un pared grid con musgo.
+  - 10 representa una puerta con llave.
+  - 11 representa un pasadizo.
+  - 12 representa una puerta automática.
+
+- player representa cada uno de los jugadores, dependiendo de la cantidad máxima de jugadores que puedan haber en la partida. Entre sus atributos contiene:
+
+- pos_x, pos_y que representan la posición inicial en el mapa.
+
+- dir_x, dir_y que representan la dirección a la cual el jugador estará apuntando al inicio de la partida.
+
 En cuanto a los items pueden estar todos como no. Cada estará representado por su nombre (como en config.yaml) y dentro tendrá:
-	cant_item representa la cantidad de ese mismo tipo de item en el mapa.
-	item_i representa el item i desde el 0 hasta cant_item conteniendo dentro la pos_x y pos_y respecto del mapa.
+
+- cant_item representa la cantidad de ese mismo tipo de item en el mapa.
+
+- item_i representa el item i desde el 0 hasta cant_item conteniendo dentro la pos_x y pos_y respecto del mapa.
 
 
 
@@ -289,6 +337,15 @@ En cuanto a los items pueden estar todos como no. Cada estará representado por 
 #### Window
 ​	Esta clase se encarga de crear un ventana de SDL y el renderer asociado a esta, así como también inicializar las bibliotecas de SDL, SDL_image, SDL_ttf y SDL_mixer.
 
+#### StringList
+Usada para mostrar strings por pantalla, permite al usuario seleccionar uno. En el caso de este tp se usa para dar a elegir entre una lista de mapas/partidas a las cuales conectar
+#### Resolution
+Representa una resolucion de pantalla, son dos componentes enteros.
+#### ResolutionList
+Lista de resoluciones, interacciona con el usuario y le permite elegir una para cargar la partida.
+#### clientwindow
+Maneja la ventana Principal del login, es la encargada de encontrar las referencias a los widgets del “.ui” y de ir manejando el flujo de conectar/crear una partida. La totalidad del cliente corre en su tiempo de ejecucion.
+
 ### Diagramas UML
 
 ![Client](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/Client.png)
@@ -369,8 +426,8 @@ Es instanciada al momento que se requiere hacer alguna de estas operaciones.
 
 #### Diagramas UML
 
-![ClasesEdtir](/Images/DiagramaDeClasesEditor.png)
-![seqDrop](/Images/SeqDropEvent.png)
+![ClasesEdtir](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClasesEditor.png)
+![seqDrop](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/SeqDropEvent.png)
 
 
 
