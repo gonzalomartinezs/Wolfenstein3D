@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <endian.h>
 #include "Client.h"
 #include "../common_src/GameConstants.h"
 #include "clientWindow/StringList.h"
@@ -29,8 +30,6 @@
 #define OTHER_PLAYERS_COORDS 5
 #define OTHER_PLAYERS_SIZE (4 * sizeof(float) + 1)
 #define MAX_MESSAGE_SIZE 256
-
-#define IS_SHOOTING 4
 
 Client::Client(const std::string &host, const std::string &service,
                BlockingQueue<int> &instructions,
@@ -65,7 +64,7 @@ void Client::sendInstruction() {
             sent = this->peer.send(&instruction, sizeof(uint8_t));
         }
     } catch (WolfensteinException& e){
-        std::cerr << "Failed to send instructions to the server.\n";
+        std::cerr << "Connection ended.\n";
     }
 }
 
@@ -120,10 +119,6 @@ ssize_t Client::receiveInformation() {
             _assignOtherPlayersCoordenates(bytes_received, bytes_to_receive,directed_objects,
                                            coordinates,already_parsed);
 
-            if (not_playing) {
-                std::cout << "mraibo" << std::endl;
-            }
-
             UI_Info new_info(player, view, player_info, objects,
                              directed_objects, doors_states, not_playing,
                              sounds, important);
@@ -139,7 +134,7 @@ ssize_t Client::receiveInformation() {
 
 
 void Client::loadLeaderboard(GameInterface &interface) {
-    int number, current_byte = 0;
+    uint32_t number, current_byte = 0;
     uint8_t bytes_to_receive, name_len;
     std::string name;
 
@@ -158,10 +153,11 @@ void Client::loadLeaderboard(GameInterface &interface) {
         current_byte += name_len;
 
         memcpy(&number, received.data() + current_byte, sizeof(int));
-        current_byte += sizeof(int);
+        number = le32toh(number);
+        current_byte += sizeof(uint32_t);
 
         names.push_back(name);
-        values.push_back(number);
+        values.push_back((int)*(int*)&received);
     }
     interface.showLeaderboard(names, values);
 }
@@ -200,9 +196,9 @@ void Client::_assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
     for(int i=0; i< INT_ATTRIBUTES; i++){
         memcpy(&received_int, bytes_received +
                 UINT_ATTRIBUTES*sizeof(uint8_t) + i*sizeof(int), sizeof(int)); //ammo
-        info.push_back(received_int);
+        info.push_back(le32toh(received_int));
     }
-    important = (important || info[IS_SHOOTING] != 0);
+    important = (important || info[FIRING_HUD] != 0);
     already_parsed += PLAYER_INFO_SIZE;
 }
 
@@ -220,10 +216,11 @@ void
 Client::_assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
                                  std::vector<float> &coordinates,
                                  uint8_t *bytes_received, int &already_parsed) {
-    float received;
+    uint32_t received;
     for (std::size_t i = 0; i < PLAYER_COORDS; i++) {
         memcpy(&received, bytes_received + already_parsed + FLOAT_SIZE * i, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
     }
     player.setX(coordinates[0]);
     player.setY(coordinates[1]);
@@ -240,15 +237,17 @@ void Client::_assignItemsCoordenates(uint8_t *bytes_received,
                                      std::vector<Positionable> &objects,
                                      std::vector<float> &coordinates,
                                      int &already_parsed) {
-    float received;
+    uint32_t received;
     uint8_t texture, objects_parsed;
     memcpy(&objects_parsed, bytes_received + already_parsed, 1);
 
     for (int i = 0; i < objects_parsed; i++) {
         memcpy(&received, bytes_received + already_parsed + i*OBJECTS_SIZE + 1, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
         memcpy(&received, bytes_received + already_parsed + i*OBJECTS_SIZE + FLOAT_SIZE + 1, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
         memcpy(&texture, bytes_received + already_parsed + i*OBJECTS_SIZE + 2*FLOAT_SIZE + 1, 1);
         coordinates.push_back((float)texture);
     }
@@ -268,13 +267,14 @@ void Client::_assignSounds(uint8_t *bytes_received,
                            bool &important,
                            int &already_parsed) {
     uint8_t sounds_amount, sound_id;
-    float distance;
+    uint32_t distance;
     memcpy(&sounds_amount, bytes_received + already_parsed, 1);
 
     for (int i=0; i<sounds_amount; i++) {
         memcpy(&sound_id, bytes_received + already_parsed + i*SOUND_SIZE + 1, 1);
         memcpy(&distance, bytes_received + already_parsed + i*SOUND_SIZE + 2, sizeof(float));
-        sounds.emplace_back(sound_id, distance);
+        distance = le32toh(distance);
+        sounds.emplace_back(sound_id, (float)*(float*)&distance);
     }
     already_parsed += (sounds_amount * SOUND_SIZE) + 1;
     important = (important || sounds_amount!=0);
@@ -301,19 +301,23 @@ void Client::_assignOtherPlayersCoordenates(uint8_t *bytes_received,
                                             std::vector<DirectedPositionable> &players,
                                             std::vector<float> &coordinates,
                                             int &already_parsed) {
-    float received;
+    uint32_t received;
     uint8_t texture;
     int players_amount = (bytes_to_receive - already_parsed) / OTHER_PLAYERS_SIZE;
 
     for (int i = 0; i < players_amount; i++) {
         memcpy(&received, bytes_received + already_parsed + i*OTHER_PLAYERS_SIZE, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
         memcpy(&received, bytes_received + already_parsed + i*OTHER_PLAYERS_SIZE + FLOAT_SIZE, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
         memcpy(&received, bytes_received + already_parsed + i*OTHER_PLAYERS_SIZE + 2*FLOAT_SIZE, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
         memcpy(&received, bytes_received + already_parsed + i*OTHER_PLAYERS_SIZE + 3*FLOAT_SIZE, FLOAT_SIZE);
-        coordinates.push_back(received);
+        received = le32toh(received);
+        coordinates.push_back((float)*(float*)&received);
         memcpy(&texture, bytes_received + already_parsed + i*OTHER_PLAYERS_SIZE + 4*FLOAT_SIZE, 1);
         coordinates.push_back((float)texture);
     }

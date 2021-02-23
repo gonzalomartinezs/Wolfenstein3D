@@ -1,9 +1,6 @@
 #ifndef GAMECONSTANTS_H
 #define GAMECONSTANTS_H
 
-//#define STATIC_TEXTURE 0
-//#define DYNAMIC_TEXTURE 1
-
 #define WALL 1
 
 #define LOCKED_DOOR 10
@@ -31,5 +28,15 @@
 #define LEADERBOARD_ELEMENTS 15
 #define LEADERBOARD_SLEEP_TIME_1 800000
 #define LEADERBOARD_SLEEP_TIME_2 550000
+
+#define LIVES_HUD 0
+#define HP_HUD 1
+#define WEAPON_HUD 2
+#define KEY_HUD 3
+#define FIRING_HUD 4
+#define AMMO_HUD 5
+#define SCORE_HUD 6
+
+#define DEATH_TIME 500
 
 #endif //GAMECONSTANTS_H
