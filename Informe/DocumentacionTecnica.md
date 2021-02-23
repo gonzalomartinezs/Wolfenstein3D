@@ -18,7 +18,7 @@
 
 Pone el socket aceptador a la espera de conexiones entrantes de manera permanente y los deriva con un ClientHandler que se encarga de la comunicación inicial. A su vez, cada vez que un nuevo cliente se conecta se eliminan y liberan los recursos de los ClientHandler que hayan terminado su ejecución. En el caso de que el servidor se cierre se encarga de finalizar la ejecución de todos los ClientHandler sin importar el estado en el que se encuentren.
 
-![DiagramaDeClaseMultiplesPartidas]https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseMultiplesPartidas.png)
+![DiagramaDeClaseMultiplesPartidas](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClaseMultiplesPartidas.png)
 
 #### DirectoryWalker
 
@@ -426,7 +426,7 @@ Es instanciada al momento que se requiere hacer alguna de estas operaciones.
 
 #### Diagramas UML
 
-![ClasesEdtir](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClasesEditor.png.png)
+![ClasesEdtir](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/DiagramaDeClasesEditor.png)
 ![seqDrop](https://github.com/gonzalomartinezs/Wolfenstein3D/blob/master/Informe/Images/SeqDropEvent.png)
 
 
