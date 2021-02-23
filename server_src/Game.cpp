@@ -9,7 +9,7 @@
 #include <algorithm>
 
 #define END_GAME_PLAYERS 1
-#define END_GAME_CHAR 0
+#define UINT32_SIZE 4
 #define MAX_MSG_SIZE 2048
 #define SEND_LEADERBOARD_TOLERANCE 1
 #define EPSILON 0.02
@@ -203,7 +203,8 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber, bool hasLost) {
 }
 
 void Game::createLeaderBoard() {
-    uint8_t endGameChar = END_GAME_CHAR;
+    uint8_t endGameCharBuf[UINT32_SIZE];
+    memset(endGameCharBuf, 0, UINT32_SIZE);
     uint8_t msg[MAX_MSG_SIZE];
     uint8_t msgLen;
     LeaderBoard leaderBoard;
@@ -211,7 +212,7 @@ void Game::createLeaderBoard() {
     msgLen = leaderBoard.loadLeaderBoard(msg, this->players);
 
     for (size_t i = 0; i < this->clients.size(); i++) {
-        this->clients[i]->push(&endGameChar, 1);
+        this->clients[i]->push(endGameCharBuf, UINT32_SIZE);
         this->clients[i]->push(&msgLen, 1);
         this->clients[i]->push(msg, msgLen);
     }
