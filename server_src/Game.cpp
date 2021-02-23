@@ -250,7 +250,8 @@ void Game::loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber) {
             memcpy(msg + currentByte, &sound, sizeof(uint8_t));
             currentByte += sizeof(uint8_t);
 
-            memcpy(msg + currentByte, &distance, sizeof(float));
+            uint32_t auxEnd = htole32(*reinterpret_cast<uint32_t *>((&distance)));
+            memcpy(msg + currentByte, &auxEnd, sizeof(float));
             currentByte += sizeof(float);
         } else {
             size--;
