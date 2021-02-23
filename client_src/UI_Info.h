@@ -23,10 +23,12 @@ private:
 public:
     // Crea un UI_Info listo para ser utilizado.
     UI_Info(DirectedPositionable player_pos, PlayerView view,
-            std::vector<int> player_info, std::vector<Positionable> objects,
+            std::vector<int> player_info,
+            std::vector<Positionable> objects,
             std::vector<DirectedPositionable> directed_objects,
-            std::vector<int> doors_states, bool not_playing,
-            std::vector<std::pair<int, float>> sounds, bool important);
+            std::vector<int> doors_states,
+            std::vector<std::pair<int, float>> sounds,
+            bool not_playing, bool important);
 
     // Retorna un arreglo con los valores de vidas, hp, balas,... del jugador.
     std::vector<int>& getPlayerInfo();

@@ -1,6 +1,8 @@
 #ifndef GAMECONSTANTS_H
 #define GAMECONSTANTS_H
 
+#define REFRESH_RATE 10
+
 #define WALL 1
 
 #define LOCKED_DOOR 10
@@ -36,6 +38,8 @@
 #define FIRING_HUD 4
 #define AMMO_HUD 5
 #define SCORE_HUD 6
+
+#define HUD_DATA 7
 
 #define DEATH_TIME 400
 
