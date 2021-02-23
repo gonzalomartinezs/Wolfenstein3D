@@ -249,7 +249,7 @@ void Game::loadSounds(uint8_t* msg, uint32_t& currentByte, size_t playerNumber) 
         uint8_t sound = this->sounds[i].getSound();
         float distance = this->players[playerNumber]->distanceTo(this->sounds[i]);
 
-        if (distance > EPSILON) {
+        if (distance > EPSILON || sound == PickItemSFX) {
             memcpy(msg + currentByte, &sound, sizeof(uint8_t));
             currentByte += sizeof(uint8_t);
 
