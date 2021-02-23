@@ -37,6 +37,6 @@
 #define AMMO_HUD 5
 #define SCORE_HUD 6
 
-#define DEATH_TIME 500
+#define DEATH_TIME 400
 
 #endif //GAMECONSTANTS_H
