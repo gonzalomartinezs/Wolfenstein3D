@@ -82,7 +82,6 @@ void UI_Handler::loadPlayerHUD(std::vector<int> &player_info) {
     font_textures[HP_].renderHorizontallyCentered(std::to_string(player_info[HP_HUD]), nullptr, &this->elements.hp);
     if (player_info[WEAPON_HUD] != 0)
         font_textures[AMMO].renderHorizontallyCentered(std::to_string(player_info[AMMO_HUD]), nullptr, &this->elements.ammo);
-    // arreglar hardcodeo
 }
 
 void UI_Handler::loadLeaderboard(std::vector<std::string> &names,
