@@ -1,17 +1,13 @@
 #include "SoundHandler.h"
 #include <cstdlib>
-#include <iostream>
 #include <unistd.h>
 #include "sound/SoundID.h"
 #include "textures/TextureID.h"
 #include "../common_src/GameConstants.h"
 #include "../common_src/Doors.h"
 
-
 #define FOREVER -1
 #define LIMIT_DISTANCE 7
-
-enum PlayerInfo {Lives, HP, Weapon, Key, Firing, Ammo, Score};
 
 SoundHandler::SoundHandler(SoundsContainer &sounds, Map &map)
         : sounds(sounds), doors(map){}
@@ -61,8 +57,8 @@ SoundHandler::~SoundHandler() {}
 // ------------------------- Metodos privados --------------------------------//
 // Carga los sfx del arma del jugador.
 void SoundHandler::_loadWeaponSfx(std::vector<int> &player_info) {
-    if (player_info[Firing]){
-        auto id = SoundID(KnifeSFX + player_info[Weapon]);
+    if (player_info[FIRING_HUD]){
+        auto id = SoundID(KnifeSFX + player_info[WEAPON_HUD]);
         this->sounds.getSFX(id).play();
     }
 }

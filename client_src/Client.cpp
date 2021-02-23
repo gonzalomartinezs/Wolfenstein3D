@@ -135,7 +135,6 @@ ssize_t Client::receiveInformation() {
         } else {
             this->playing = false;
             this->instructions.doneAdding();
-            std::cout << "alala" << std::endl;
         }
     }
     return 0;

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "DynamicTexture.h"
 #define MOVING 1
 #define STILL 0

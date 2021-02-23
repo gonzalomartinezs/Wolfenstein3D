@@ -20,31 +20,30 @@ find_package(SDL2_mixer REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS})
 
 add_executable(Wolfenstein3D client_src/client_main.cpp
-        client_src/Client.h client_src/Client.cpp
-        client_src/Window.h client_src/Window.cpp common_src/Exceptions/WindowException.cpp
-        client_src/Raycaster.h client_src/Raycaster.cpp
-        client_src/PlayerView.h client_src/PlayerView.cpp
-        common_src/Socket.h common_src/Socket.cpp common_src/AddrInfo.cpp
-        common_src/Exceptions/ErrorSocket.h common_src/Exceptions/ErrorSocket.cpp
-        common_src/Peer.h common_src/Peer.cpp
-        common_src/DirectedPositionable.h common_src/DirectedPositionable.cpp
-        common_src/Map.h common_src/Map.cpp
+        client_src/Client.cpp
+        client_src/Window.cpp common_src/Exceptions/WindowException.cpp
+        client_src/Raycaster.cpp
+        client_src/PlayerView.cpp
+        common_src/Socket.cpp common_src/AddrInfo.cpp
+        common_src/Exceptions/ErrorSocket.cpp
+        common_src/Peer.cpp
+        common_src/DirectedPositionable.cpp
+        common_src/Map.cpp
         common_src/SlidingSurface.cpp common_src/Collider.cpp common_src/RectCollider.cpp
         common_src/ManualDoor.cpp common_src/Doors.cpp
         server_src/Exceptions/GameException.cpp
         common_src/GameConstants.h
-        client_src/textures/TexturesContainer.h client_src/textures/TexturesContainer.cpp
-        client_src/textures/Texture.h client_src/textures/Texture.cpp
+        client_src/textures/TexturesContainer.cpp
+        client_src/textures/Texture.cpp
         client_src/textures/DynamicTexture.cpp
-        client_src/Exceptions/TextureLoadingException.cpp
-        client_src/Exceptions/FontLoadingException.cpp
-        client_src/EventHandler.cpp client_src/EventHandler.h
-        common_src/Positionable.cpp common_src/Positionable.h
+        client_src/Exceptions/SDLException.cpp
+        client_src/EventHandler.cpp
+        common_src/Positionable.cpp
         common_src/Exceptions/ErrorMap.h common_src/Exceptions/ErrorMap.cpp
         common_src/Timer.cpp
-        client_src/SpriteRenderer.cpp client_src/SpriteRenderer.h
-        client_src/UI_Info.cpp client_src/UI_Info.h
-        client_src/GameInterface.cpp client_src/GameInterface.h
+        client_src/SpriteRenderer.cpp
+        client_src/UI_Info.cpp
+        client_src/GameInterface.cpp
         common_src/Thread.cpp
         common_src/Exceptions/WolfensteinException.cpp
         common_src/Configuration.cpp
@@ -52,33 +51,20 @@ add_executable(Wolfenstein3D client_src/client_main.cpp
         common_src/Exceptions/ConfigurationException.cpp
         client_src/textures/FontTexture.cpp
         client_src/RaycastingRenderer.cpp
-        client_src/Exceptions/RaycastingException.cpp
         client_src/sound/Music.cpp
-        client_src/sound/Music.h
-        client_src/Exceptions/SoundLoadingException.cpp
-        client_src/Exceptions/SoundLoadingException.h
         client_src/sound/SoundEffect.cpp
-        client_src/sound/SoundEffect.h
         client_src/sound/SoundsContainer.cpp
-        client_src/sound/SoundsContainer.h
-        client_src/sound/SoundID.h
         client_src/SoundHandler.cpp
-        client_src/SoundHandler.h
         client_src/textures/TextureSet.cpp
-        client_src/textures/TextureSet.h
         client_src/SpriteSelector.cpp
-        client_src/SpriteSelector.h
         client_src/clientWindow/clientwindow.cpp
-        client_src/clientWindow/clientwindow.h
         client_src/clientWindow/clientwindow.ui
         client_src/clientWindow/ResolutionList.cpp
-        client_src/clientWindow/ResolutionList.h
         client_src/clientWindow/StringList.cpp
-        client_src/clientWindow/StringList.h
         client_src/clientWindow/Resolution.cpp
-        client_src/clientWindow/Resolution.h
         client_src/LeaderboardRenderer.cpp
-        client_src/LeaderboardRenderer.h)
+        client_src/ClientData.cpp
+        client_src/InstructionLooper.cpp)
 
 add_executable(server server_src/server_main.cpp
         server_src/Game.cpp server_src/Bots/Bot.cpp

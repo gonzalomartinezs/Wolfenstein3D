@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Raycaster.h"
 #include "textures/TextureID.h"
 #include "PlayerView.h"

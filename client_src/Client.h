@@ -34,6 +34,7 @@ public:
     Client(const Client&) = delete;
     Client operator=(const Client&) = delete;
 
+    // Recibe el mapa del srvidor y lo carga en una matriz la cual retorna.
     std::vector<std::vector<int>> receiveMap();
 
     // Envia al servidor la proxima instruccion contenida en 'instructions',

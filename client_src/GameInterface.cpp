@@ -1,4 +1,3 @@
-#include <iostream>
 #include <unistd.h>
 #include "GameInterface.h"
 #include "sound/SoundID.h"
