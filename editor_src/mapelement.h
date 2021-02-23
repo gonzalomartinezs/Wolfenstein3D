@@ -12,7 +12,6 @@ public:
     MapElement(const Editor_icon& id, const QRect& rect);
     const Editor_icon& getId() const;
     const Coordinate& getCoor() const;
-    void setCoor(const Coordinate& coor);
     QRect getRect() const;
 
     MapElement(MapElement &in);

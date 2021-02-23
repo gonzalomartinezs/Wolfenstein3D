@@ -17,6 +17,7 @@ private:
     ProtectedQueue<UI_Info>& queue;
     UI_Info latest_info;
     int refresh_rate;
+    Timer death_timer;
     std::atomic<bool> keep_running;
 
 public:
@@ -42,7 +43,11 @@ public:
     ~GameInterface();
 
 private:
-    void _updateScreen(UI_Info new_info);
+    void _updateScreen(UI_Info &new_info);
+    bool _hasDied(UI_Info& new_info);
+    void _processDeath(UI_Info& new_info);
+    void _processDeathSound(UI_Info& new_info,
+                            std::vector<std::pair<int,float>>& sounds);
 };
 
 #endif //RAYCASTINGTHREAD_H

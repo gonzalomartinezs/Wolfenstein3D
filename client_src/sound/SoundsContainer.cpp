@@ -17,6 +17,7 @@
 #define LB_VALUE "../client_src/sound/resources/lb_value.wav"
 #define LB_MUSIC "../client_src/sound/resources/lb_music.wav"
 #define ITEM_SFX "../client_src/sound/resources/item.wav"
+#define DEATH_SFX "../client_src/sound/resources/death.wav"
 
 SoundsContainer::SoundsContainer() {
     _loadMusic();
@@ -54,4 +55,5 @@ void SoundsContainer::_loadSFX() {
     this->sfx.emplace(LB_Value, LB_VALUE);
     this->sfx.emplace(LB_Name, LB_NAME);
     this->sfx.emplace(PickItemSFX, ITEM_SFX);
+    this->sfx.emplace(DeathSFX, DEATH_SFX);
 }

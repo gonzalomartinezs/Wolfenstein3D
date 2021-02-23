@@ -13,9 +13,6 @@
 #define AMMO 3
 #define DEATH_MESSAGE 4
 
-
-enum HUD_Order {Lives, HP, Weapon, Key, Firing, Ammo, Score};
-
 UI_Handler::UI_Handler(SDL_Renderer *renderer, Raycaster &raycaster,
                        TexturesContainer &tex, const std::string& font_path, int width,
                        int height) : renderer(renderer), tex(tex), raycaster(raycaster),
@@ -67,24 +64,24 @@ void UI_Handler::loadBackground() {
 }
 
 void UI_Handler::loadPlayerHUD(std::vector<int> &player_info) {
-    int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP]-1))/TOTAL_HP);
+    int bj_face_tex = int(BJ_0) + int((BJ_FACES*(TOTAL_HP-player_info[HP_HUD]-1))/TOTAL_HP);
 
-    DynamicTexture& weapon = dynamic[player_info[Weapon]];
-    if (player_info[Firing]){
+    DynamicTexture& weapon = dynamic[player_info[WEAPON_HUD]];
+    if (player_info[FIRING_HUD]){
         weapon.getTexture(1)->render(nullptr, &this->elements.weapon_animation);
     } else {
         weapon.getTexture(0)->render(nullptr, &this->elements.weapon_animation);
     }
     tex.getStatic(HUD)->render(nullptr, nullptr);
-    tex.getStatic(TextureID(int(Knife_HUD) + player_info[Weapon]))->render(nullptr, &this->elements.weapon);
+    tex.getStatic(TextureID(int(Knife_HUD) + player_info[WEAPON_HUD]))->render(nullptr, &this->elements.weapon);
     tex.getStatic(TextureID(bj_face_tex))->render(nullptr, &this->elements.bj_face);
-    tex.getStatic(TextureID(int(HasNotKey) + player_info[Key]))->render(nullptr, &this->elements.key);
+    tex.getStatic(TextureID(int(HasNotKey) + player_info[KEY_HUD]))->render(nullptr, &this->elements.key);
 
-    font_textures[SCORE].renderHorizontallyCentered(std::to_string(player_info[Score]), nullptr, &this->elements.score);
-    font_textures[LIVES].renderHorizontallyCentered(std::to_string(player_info[Lives]), nullptr, &this->elements.lives);
-    font_textures[HP_].renderHorizontallyCentered(std::to_string(player_info[HP]), nullptr, &this->elements.hp);
-    if (player_info[Weapon] != 0)
-        font_textures[AMMO].renderHorizontallyCentered(std::to_string(player_info[Ammo]), nullptr, &this->elements.ammo);
+    font_textures[SCORE].renderHorizontallyCentered(std::to_string(player_info[SCORE_HUD]), nullptr, &this->elements.score);
+    font_textures[LIVES].renderHorizontallyCentered(std::to_string(player_info[LIVES_HUD]), nullptr, &this->elements.lives);
+    font_textures[HP_].renderHorizontallyCentered(std::to_string(player_info[HP_HUD]), nullptr, &this->elements.hp);
+    if (player_info[WEAPON_HUD] != 0)
+        font_textures[AMMO].renderHorizontallyCentered(std::to_string(player_info[AMMO_HUD]), nullptr, &this->elements.ammo);
     // arreglar hardcodeo
 }
 
@@ -93,8 +90,15 @@ void UI_Handler::loadLeaderboard(std::vector<std::string> &names,
     leaderboard.render(names, values);
 }
 
-void UI_Handler::loadDeathMessage() {
+void UI_Handler::loadGameOverMessage() {
     std::string message = "You lost all your lives. Specting another player.";
-    font_textures[DEATH_MESSAGE].renderHorizontallyCentered(message, nullptr, &this->elements.death_message);
+    font_textures[DEATH_MESSAGE].renderHorizontallyCentered(message, nullptr,
+                                                            &this->elements.death_message);
+}
+
+void UI_Handler::loadDeathTilt() {
+    int color = rand()/256;
+    SDL_SetRenderDrawColor(this->renderer, 255, color, color, 255);
+    SDL_RenderClear(this->renderer);
 }
 

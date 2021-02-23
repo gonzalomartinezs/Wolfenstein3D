@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 #include "mapelement.h"
-
+#include "coordinate.h"
 
 class Map {
 public:
@@ -24,10 +24,15 @@ public:
     void resizeMap(int x, int y);
 
 private:
+     void setPerimeter();
+     void clearPerimeter();
+     std::list<Coordinate> calculatePerimeter() const;
      unsigned x;
      unsigned y;
     std::string name;
     std::unordered_map <std::string, MapElement> matrix;
-    };
+
+    bool isBorder(const Coordinate &coor) const;
+};
 
 #endif // MAP_H

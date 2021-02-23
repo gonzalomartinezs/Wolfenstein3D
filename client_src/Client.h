@@ -60,28 +60,29 @@ public:
     ~Client();
 
 private:
-    static void _assignPlayerInfo(std::vector<int> &info, uint8_t *bytes_received,
-                           bool &important, int &already_parsed);
-    static void _assignPlayerState(bool& not_playing, uint8_t *bytes_received, int &already_parsed);
+    static void _assignPlayerInfo(std::vector<int> &info, std::vector<uint8_t> &bytes_received,
+                                  bool &important, int &already_parsed);
+    static void _assignPlayerState(bool& not_playing, std::vector<uint8_t> &bytes_received, int &already_parsed);
     static void _assignPlayerCoordenates(DirectedPositionable &player, PlayerView &view,
-                             std::vector<float> &coordinates,
-                             uint8_t *bytes_received, int &already_parsed);
-    static void _assignItemsCoordenates(uint8_t *bytes_received,
-                                 std::vector<Positionable> &objects,
-                                 std::vector<float> &coordinates,
-                                 int &already_parsed);
-    static void _assignSounds(uint8_t *bytes_received,
-                       std::vector<std::pair<int, float>> &sounds,
-                       bool &important,
-                       int &already_parsed);
-    static void _assignSlidersStates(uint8_t *bytes_received,
-                              std::vector<int> &sliders_states,
-                              int& already_parsed);
-    static void _assignOtherPlayersCoordenates(uint8_t *bytes_received,
-                                        uint8_t bytes_to_receive,
-                                        std::vector<DirectedPositionable> &players,
+                                         std::vector<float> &coordinates,
+                                         std::vector<uint8_t> &bytes_received, int &already_parsed);
+    static void _assignItemsCoordenates(std::vector<uint8_t> &bytes_received,
+                                        std::vector<Positionable> &objects,
                                         std::vector<float> &coordinates,
                                         int &already_parsed);
+    static void _assignSounds(std::vector<uint8_t> &bytes_received,
+                              std::vector<std::pair<int, float>> &sounds,
+                              bool &important,
+                              int &already_parsed);
+    static void _assignSlidersStates(std::vector<uint8_t> &bytes_received,
+                                     std::vector<int> &sliders_states,
+                                     int& already_parsed);
+    static void _assignOtherPlayersCoordenates(
+            std::vector<uint8_t> &bytes_received,
+            uint32_t bytes_to_receive,
+            std::vector<DirectedPositionable> &players,
+            std::vector<float> &coordinates,
+            int &already_parsed);
 
 public:
     void sendName(const std::string &username);
