@@ -6,8 +6,9 @@ UI_Info::UI_Info(DirectedPositionable player_pos, PlayerView view,
                  std::vector<int> player_info,
                  std::vector<Positionable> objects,
                  std::vector<DirectedPositionable> directed_objects,
-                 std::vector<int> doors_states, bool not_playing,
-                 std::vector<std::pair<int, float>> sounds, bool important) :
+                 std::vector<int> doors_states,
+                 std::vector<std::pair<int, float>> sounds,
+                 bool not_playing, bool important) :
             player_pos(player_pos), player_info(std::move(player_info)),
             objects(std::move(objects)), doors_states(std::move(doors_states)),
             directed_objects(std::move(directed_objects)), view(view),

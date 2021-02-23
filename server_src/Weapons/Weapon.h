@@ -24,6 +24,8 @@ public:
 
     Weapon(uint8_t _id, float radius);
 
+    /* Este metodo es implementado por las clases hijas, cada una lo implementa de manera tal
+     * que cumpla con la consigna de cada arma */
     virtual void fireTheGun(std::vector<Player*>& players,
                             int shootingPlayerNumber, const Map& map) = 0;
 
@@ -38,6 +40,7 @@ public:
 
     bool operator==(int other_id) const;
 
+    /* Devuelve el ID del arma */
     uint8_t getWeaponID() const;
 
     virtual Item* getWeaponItem(float x, float y);
@@ -54,8 +57,8 @@ protected:
     float _randomNumberGenerator();
 
 private:
-    // Devuelve true si no hay paredes entre los jugadores,
-    // en otro caso false
+    /* Devuelve true si no hay paredes entre los jugadores,
+     * en otro caso false */
     bool _isInTheFieldOfView(uint8_t* thisPlayerInfo,
                             uint8_t* otherPlayerInfo, const Map& map);
 

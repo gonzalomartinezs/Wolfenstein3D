@@ -101,8 +101,6 @@ ssize_t Client::receiveInformation() {
         bytes_to_receive = le32toh(bytes_to_receive);
         bytes_to_receive = (uint32_t)*(uint32_t*)& bytes_to_receive;
 
-        std::cout << bytes_to_receive << std::endl;
-
         std::vector<uint8_t> bytes_received(bytes_to_receive);
         bool important = false;
 
@@ -130,13 +128,14 @@ ssize_t Client::receiveInformation() {
                                            coordinates,already_parsed);
 
             UI_Info new_info(player, view, player_info, objects,
-                             directed_objects, doors_states, not_playing,
-                             sounds, important);
+                             directed_objects, doors_states,
+                             sounds, not_playing, important);
 
             this->drawing_info.push(new_info);
         } else {
             this->playing = false;
             this->instructions.doneAdding();
+            std::cout << "alala" << std::endl;
         }
     }
     return 0;
