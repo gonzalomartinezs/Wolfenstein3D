@@ -18,7 +18,7 @@ public:
 	size_t size() const;
 
 	// Carga en msg la información de las puertas
-	void loadDoorsInfo(uint8_t* msg, uint8_t &currentByte);
+	void loadDoorsInfo(uint8_t* msg, uint32_t &currentByte);
 
 	~Doors();
 

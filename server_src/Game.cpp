@@ -10,7 +10,7 @@
 
 #define END_GAME_PLAYERS 1
 #define END_GAME_CHAR 0
-#define MAX_MSG_SIZE 512
+#define MAX_MSG_SIZE 2048
 #define SEND_LEADERBOARD_TOLERANCE 1
 #define EPSILON 0.02
 #define KEY_ITEMS "items"
@@ -155,7 +155,7 @@ void Game::sendUpdate() {
 }
 
 int Game::createMsg(uint8_t* msg, size_t clientNumber, bool hasLost) {
-    uint8_t currentByte = 1;
+    uint32_t currentByte = 4;
 
     this->players[clientNumber]->getHUDData(msg + currentByte);
     currentByte += HUD_INFO_SIZE;
@@ -195,8 +195,10 @@ int Game::createMsg(uint8_t* msg, size_t clientNumber, bool hasLost) {
         currentByte += sizeof(uint8_t);
 
     }
+    uint32_t msgLen = currentByte - 4;
+    uint32_t auxEnd = htole32(msgLen);
+    memcpy(msg, &auxEnd, sizeof(uint32_t));
 
-    msg[0] = currentByte - 1;
     return currentByte;
 }
 
@@ -237,9 +239,9 @@ void Game::sendMap() {
     }
 }
 
-void Game::loadSounds(uint8_t* msg, uint8_t& currentByte, size_t playerNumber) {
+void Game::loadSounds(uint8_t* msg, uint32_t& currentByte, size_t playerNumber) {
     uint8_t size = static_cast<uint8_t>(this->sounds.size());
-    uint8_t posByte = currentByte;
+    uint32_t posByte = currentByte;
     currentByte += sizeof(uint8_t);
 
     for (size_t i = 0; i < this->sounds.size(); i++) {

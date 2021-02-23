@@ -137,7 +137,7 @@ void Items::push_back(Item* item) {
 	this->items.push_back(item);
 }
 
-void Items::loadItemsInfo(uint8_t* msg, uint8_t &currentByte) {
+void Items::loadItemsInfo(uint8_t* msg, uint32_t &currentByte) {
     float aux;
     uint8_t id, size;
     uint32_t auxEnd;
