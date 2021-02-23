@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstring>
 #include <string>
+#include <endian.h>
 
 #define WALKABLE 0
 #define WALL 1
@@ -277,16 +278,30 @@ void Player::_respawn(Items& items) {
 }
 
 void Player::getPositionData(uint8_t *msg) {
-    memcpy(msg, &this->x, sizeof(float));
-    memcpy(msg + sizeof(float), &this->y, sizeof(float));
-    memcpy(msg + 2 * sizeof(float), &this->dir_x, sizeof(float));
-    memcpy(msg + 3 * sizeof(float), &this->dir_y, sizeof(float));
+    uint32_t aux;
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->x)));
+    memcpy(msg, &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->y)));
+    memcpy(msg + sizeof(float), &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->dir_x)));
+    memcpy(msg + 2 * sizeof(float), &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->dir_y)));
+    memcpy(msg + 3 * sizeof(float), &aux, sizeof(float));
 }
 
 void Player::getPositionDataWithPlane(uint8_t *msg) {
+    uint32_t aux;
     this->getPositionData(msg);
-    memcpy(msg + 4 * sizeof(float), &this->camPlaneX, sizeof(float));
-    memcpy(msg + 5 * sizeof(float), &this->camPlaneY, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->camPlaneX)));
+    memcpy(msg + 4 * sizeof(float), &aux, sizeof(float));
+
+    aux = htole32(*reinterpret_cast<uint32_t *>((&this->camPlaneY)));
+    memcpy(msg + 5 * sizeof(float), &aux, sizeof(float));
 }
 
 void Player::getHUDData(uint8_t *msg) {
