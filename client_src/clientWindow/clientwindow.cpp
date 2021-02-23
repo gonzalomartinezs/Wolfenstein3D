@@ -7,7 +7,6 @@
 #include "../../common_src/GameConstants.h"
 #include "../InstructionLooper.h"
 
-
 ClientWindow::ClientWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ClientWindow) {
