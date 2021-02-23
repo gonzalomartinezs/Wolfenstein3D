@@ -1,7 +1,3 @@
-//
-// Created by riedel on 22/2/21.
-//
-
 #include "ResolutionList.h"
 
 ResolutionList::ResolutionList(QWidget *parent) : QListWidget(parent) {
@@ -22,7 +18,6 @@ void ResolutionList::addItem(const Resolution &in) {
     pieceItem->setData(Qt::UserRole, in.getX() );
     pieceItem->setData(Qt::UserRole+1, in.getY() );
     pieceItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable );
-
     setCurrentItem(pieceItem); // Tener el ultimo por default.
 }
 

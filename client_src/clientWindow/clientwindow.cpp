@@ -7,6 +7,8 @@
 #include "../../common_src/GameConstants.h"
 #include "../InstructionLooper.h"
 
+// Esta clase tiene una complejidad alta. Recomiendo leer documentacion.
+
 ClientWindow::ClientWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ClientWindow) {
@@ -22,7 +24,7 @@ ClientWindow::ClientWindow(QWidget *parent)
     this->connectEvents();
 }
 
-
+// Obtiene las referencias del .ui
 void ClientWindow::linkToUI() {
     loginPage = findChild<QWidget*>("loginPage");
     optionPage = findChild<QWidget*>("optionPage");
@@ -46,11 +48,11 @@ void ClientWindow::linkToUI() {
     matchList.setParent(aux);
 }
 
-
+// Inicializa los widgets.
 void ClientWindow::initWidgets() {
     stack->setCurrentWidget(loginPage);
 }
-
+// Conecta los distintos slots con sus correspondientes signals.
 void ClientWindow::connectEvents() {
     connect (loginButton, &QPushButton::clicked,
              this, &ClientWindow::connectToServer);
@@ -66,11 +68,7 @@ void ClientWindow::connectEvents() {
              this, &ClientWindow::joinCreated );
 }
 
-ClientWindow::~ClientWindow() {
-    delete ui;
-    delete client;
-}
-
+// Logica de conectar al cliente.
 void ClientWindow::connectToServer() {
   client = new Client(host->text().toStdString(),
                         std::to_string(port->value() ),
@@ -78,14 +76,14 @@ void ClientWindow::connectToServer() {
     client->sendName( name->text().toStdString() );
     stack->setCurrentWidget(optionPage);
 }
-
+// Si el usuario selecciona la opcion de conectarse a una partida.
 void ClientWindow::joinMatchMenu() {
     client->sendJoinGameChoice();
     resoList.setParent(findChild<QWidget*>("resolutionWidget_2"));
     client->getGames(matchList);
     stack->setCurrentWidget(joinGamePage);
 }
-
+// Si el usuario selecciona unirse a una partida.
 void ClientWindow::createMatchMenu() {
     client->sendNewGameChoice();
     resoList.setParent(findChild<QWidget*>("resolutionWidget_1"));
@@ -100,10 +98,16 @@ void ClientWindow::createMatch() {
     this->stack->setCurrentWidget(wantToJoin);
 }
 
+// Une a partida existente.
 void ClientWindow::joinMatch() {
     stack->setCurrentWidget(inGamePage);
     resolution = resoList.getSelected();
     this->client->sendMatchChoice(matchList.getSelected() );
+    this->gameLoop();
+}
+// Une a partida Creada.
+void ClientWindow::joinCreated() {
+    client->sendPlay();
     this->gameLoop();
 }
 
@@ -152,7 +156,7 @@ void ClientWindow::gameLoop() {
     this->close();
 }
 
-void ClientWindow::joinCreated() {
-    client->sendPlay();
-    this->gameLoop();
+ClientWindow::~ClientWindow() {
+    delete ui;
+    delete client;
 }

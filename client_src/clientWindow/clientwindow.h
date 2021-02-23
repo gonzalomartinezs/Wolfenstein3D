@@ -16,6 +16,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class ClientWindow; }
 QT_END_NAMESPACE
 
+// Ventana principal permite al usuario manejar el flujo del login.
 class ClientWindow : public QMainWindow {
     Q_OBJECT
 
@@ -26,6 +27,7 @@ public:
 private slots:
     void connectToServer();
     void joinMatchMenu();
+
     void createMatchMenu();
     void createMatch();
     void joinMatch();

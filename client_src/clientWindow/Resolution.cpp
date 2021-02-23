@@ -1,7 +1,3 @@
-//
-// Created by riedel on 22/2/21.
-//
-
 #include "Resolution.h"
 
 int Resolution::getX() const {
